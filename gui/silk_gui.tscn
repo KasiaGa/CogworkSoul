@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cfyfvjubvn4ki"]
+
+[ext_resource type="Texture2D" uid="uid://c146b73bx3foe" path="res://assets/images/gui/silk.png" id="1_katvu"]
+
+[node name="SilkGui" type="Panel" unique_id=470693608]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(12, 25)
+offset_left = 3.0
+offset_right = 15.0
+offset_bottom = 25.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1114570326]
+position = Vector2(6.000001, 13.000001)
+scale = Vector2(0.39285713, 0.39285713)
+texture = ExtResource("1_katvu")

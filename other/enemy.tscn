@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://16g0x5cxu58u"]
+
+[ext_resource type="Script" uid="uid://domhvj7rhgp17" path="res://other/enemy.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://dsyfys75h67tu" path="res://assets/images/enemy/cogbug.png" id="1_7k104"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7k104"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7k104")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_da6y2"]
+radius = 2.2
+height = 9.799999
+
+[node name="enemy" type="CharacterBody2D" unique_id=807049588]
+script = ExtResource("1_4gyqm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1867741833]
+position = Vector2(0.99999994, 0.9999962)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_7k104")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1179279708]
+position = Vector2(3.000002, 22.000002)
+rotation = 1.5707964
+scale = Vector2(10, 10)
+shape = SubResource("CapsuleShape2D_da6y2")

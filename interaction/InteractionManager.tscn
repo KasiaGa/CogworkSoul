@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://csmq10ut0rpei"]
+
+[ext_resource type="Script" uid="uid://xg74ts5w6vnx" path="res://interaction/interaction_manager.gd" id="1_spka6"]
+[ext_resource type="Script" uid="uid://bm5n2i1r00nuj" path="res://interaction/label.gd" id="2_lid7h"]
+[ext_resource type="Texture2D" uid="uid://csnbmcgl6wxrx" path="res://assets/images/gui/decor.png" id="2_p7j5n"]
+[ext_resource type="Script" uid="uid://cdbdt8xah3m5d" path="res://interaction/decor.gd" id="3_liwo0"]
+
+[sub_resource type="SystemFont" id="SystemFont_mjotr"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
+
+[node name="InteractionManager" type="Node2D" unique_id=925302570]
+script = ExtResource("1_spka6")
+
+[node name="Label" type="Label" parent="." unique_id=242570111]
+z_index = 60
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_fonts/font = SubResource("SystemFont_mjotr")
+theme_override_font_sizes/font_size = 40
+text = "Enter"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_lid7h")
+
+[node name="Decor" type="StaticBody2D" parent="." unique_id=1485538481]
+z_index = 60
+script = ExtResource("3_liwo0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Decor" unique_id=1884735867]
+position = Vector2(-0.9999924, -14)
+scale = Vector2(0.36764717, 0.36764717)
+texture = ExtResource("2_p7j5n")

@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://4x3bqyt7y308"]
+
+[ext_resource type="Script" uid="uid://b33x564fkhhtt" path="res://world/cogwork_factory.gd" id="1_um1bq"]
+[ext_resource type="PackedScene" uid="uid://16g0x5cxu58u" path="res://other/enemy.tscn" id="2_5at20"]
+[ext_resource type="Texture2D" uid="uid://c1cw4kse5cpa7" path="res://assets/images/world/background_test2.png" id="3_wnx1b"]
+[ext_resource type="Texture2D" uid="uid://dqft755m06alr" path="res://assets/images/world/ground.png" id="4_tgyrp"]
+[ext_resource type="PackedScene" uid="uid://bwqrnt0mdtxeb" path="res://player/rant.tscn" id="5_sg7as"]
+[ext_resource type="Script" uid="uid://rv7yt7k6gh24" path="res://other/entranceCogworkCore.gd" id="6_1wo6k"]
+[ext_resource type="Texture2D" uid="uid://o144t0exex1" path="res://assets/images/world/entrance.png" id="7_h7qu2"]
+[ext_resource type="PackedScene" uid="uid://cdnu1k3e8gd2a" path="res://interaction/interaction_area.tscn" id="8_jjbl6"]
+[ext_resource type="PackedScene" uid="uid://clwq3figvspdk" path="res://gui/health_container.tscn" id="9_xd341"]
+[ext_resource type="Texture2D" uid="uid://c4362iqxtqasf" path="res://assets/images/gui/health_bar.png" id="10_1eua6"]
+[ext_resource type="PackedScene" uid="uid://c45nk54o2gxg4" path="res://gui/silk_container.tscn" id="11_f4482"]
+[ext_resource type="Texture2D" uid="uid://yuhfp7ej1m4l" path="res://assets/images/gui/silkBar.png" id="12_1asw4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
+size = Vector2(1918.3335, 148.14282)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8kwh"]
+radius = 27.0
+height = 274.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uuwtc"]
+radius = 86.66
+height = 394.0
+
+[node name="CogworkFactory" type="Node2D" unique_id=2045856377]
+script = ExtResource("1_um1bq")
+
+[node name="enemy" parent="." unique_id=807049588 node_paths=PackedStringArray("endPoint") instance=ExtResource("2_5at20")]
+z_index = 5
+position = Vector2(916, 564)
+endPoint = NodePath("Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="enemy" unique_id=1380486588]
+position = Vector2(208, 6)
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=2123797011]
+scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(1366, 768)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1860392640]
+z_index = -2
+position = Vector2(142, 276)
+texture = ExtResource("3_wnx1b")
+
+[node name="ground_irregular" type="StaticBody2D" parent="." unique_id=486012346]
+z_index = -1
+position = Vector2(585, 632)
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular" unique_id=1547247797]
+texture = ExtResource("4_tgyrp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular" unique_id=1763188917]
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="CharacterBody2D" parent="." unique_id=1131129936 instance=ExtResource("5_sg7as")]
+position = Vector2(610, 458)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1433904281]
+position = Vector2(-14, 17)
+shape = SubResource("CapsuleShape2D_g8kwh")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=76796903]
+offset = Vector2(0, -80)
+limit_left = -1130
+limit_top = -237
+limit_right = 2468
+limit_bottom = 739
+
+[node name="Entrance3" type="StaticBody2D" parent="." unique_id=1069104210]
+position = Vector2(-547, 370)
+collision_mask = 2
+script = ExtResource("6_1wo6k")
+
+[node name="Sprite2D" type="Sprite2D" parent="Entrance3" unique_id=1123064334]
+z_index = -2
+position = Vector2(1140.9999, 41)
+scale = Vector2(0.6320755, 0.6320754)
+texture = ExtResource("7_h7qu2")
+
+[node name="InteractionArea" parent="Entrance3" unique_id=1179285320 instance=ExtResource("8_jjbl6")]
+position = Vector2(1160, -193)
+action_name = "Enter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance3/InteractionArea" unique_id=1773717072]
+position = Vector2(-10, 240)
+shape = SubResource("CapsuleShape2D_uuwtc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1707631933]
+
+[node name="HealthContainer" parent="CanvasLayer" unique_id=270179544 instance=ExtResource("9_xd341")]
+offset_left = 66.0
+offset_top = 18.0
+offset_right = 267.0
+offset_bottom = 62.0
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=2011665501]
+z_index = -1
+position = Vector2(146, 41)
+scale = Vector2(0.43965515, 0.43965518)
+texture = ExtResource("10_1eua6")
+
+[node name="SilkContainer" parent="CanvasLayer" unique_id=1531939010 instance=ExtResource("11_f4482")]
+offset_left = 47.0
+offset_top = 74.0
+offset_right = 91.0
+offset_bottom = 114.0
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer" unique_id=673259362]
+z_index = -1
+position = Vector2(68.76741, 87.375)
+scale = Vector2(0.4208861, 0.42088607)
+texture = ExtResource("12_1asw4")

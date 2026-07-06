@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c45nk54o2gxg4"]
+
+[ext_resource type="Script" uid="uid://b111qub6v1n6w" path="res://gui/silk_container.gd" id="1_7rj3r"]
+
+[node name="SilkContainer" type="HBoxContainer" unique_id=1531939010]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = -4
+script = ExtResource("1_7rj3r")
