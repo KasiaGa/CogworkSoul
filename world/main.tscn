@@ -209,12 +209,13 @@ action_name = "Enter"
 position = Vector2(-7, 280)
 shape = SubResource("CapsuleShape2D_fa3b3")
 
-[node name="Item" type="StaticBody2D" parent="." unique_id=1988137602]
+[node name="ItemNeedle" type="StaticBody2D" parent="." unique_id=1988137602]
 position = Vector2(-547, 370)
 collision_mask = 2
 script = ExtResource("11_37le6")
+item_id = "needle"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Item" unique_id=1776962086]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ItemNeedle" unique_id=1776962086]
 position = Vector2(2518.0002, 200)
 scale = Vector2(0.6749999, 0.6749999)
 sprite_frames = SubResource("SpriteFrames_mjotr")
@@ -222,12 +223,12 @@ autoplay = "default"
 frame = 2
 frame_progress = 0.90295535
 
-[node name="InteractionArea" parent="Item" unique_id=1531639577 instance=ExtResource("10_2s3h7")]
+[node name="InteractionArea" parent="ItemNeedle" unique_id=1531639577 instance=ExtResource("10_2s3h7")]
 z_index = 60
 position = Vector2(2519, 37)
 action_name = "Take"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Item/InteractionArea" unique_id=1554637182]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemNeedle/InteractionArea" unique_id=1554637182]
 position = Vector2(-2, 163)
 shape = SubResource("CircleShape2D_da6y2")
 

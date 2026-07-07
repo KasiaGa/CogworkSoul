@@ -9,6 +9,9 @@ func _ready() -> void:
 	health_container.setMaxHearts(character_body_2d.startHealth)
 	silk_container.setMaxSilk(character_body_2d.startSilk)
 	health_container.updateHearts(character_body_2d.currentHealth)
+	
+	# when i sit on bench:
+	#Global.player_current_health = Global.player_max_health
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
