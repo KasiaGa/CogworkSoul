@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CogworkSoul"
-run/main_scene="uid://cytuu6p7o7alp"
+run/main_scene="uid://bjd1qkeyowxns"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.png"
 
