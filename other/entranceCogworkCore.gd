@@ -15,4 +15,4 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_interact():
-	Global.change_scene_to_position("res://main.tscn", -520.0, 420.0)
+	Global.change_scene_to_position("res://world/main.tscn", -520.0, 420.0)

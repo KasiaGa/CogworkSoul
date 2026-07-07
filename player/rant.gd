@@ -12,6 +12,9 @@ extends CharacterBody2D
 @export var maxSilk: int = 5
 @onready var currentSilk: int = startSilk
 
+var is_attacking: bool = false
+var is_invincible: bool = false
+
 const SPEED = 300.0
 const RUN_SPEED = 600.0
 const JUMP_VELOCITY = -1400.0
@@ -29,12 +32,21 @@ func _physics_process(delta: float) -> void:
 	
 	if true:
 	#if !dialogue.visible :
-		if velocity.x > SPEED or velocity.x < -SPEED:
-			rant.animation = "run_no_needle"
-		elif velocity.x > 1 or velocity.x < -1:
-			rant.animation = "walk_no_needle"
-		else :
-			rant.animation = "idle_no_needle"
+		if not is_attacking:
+			if velocity.x > SPEED or velocity.x < -SPEED:
+				rant.animation = "run_no_needle"
+			elif velocity.x > 1 or velocity.x < -1:
+				rant.animation = "walk_no_needle"
+			else :
+				rant.animation = "idle_no_needle"
+			
+		if Input.is_action_just_pressed("attack") and not is_attacking:
+			is_attacking = true
+			rant.play("attack")
+			
+			# Wait for the 0.5s animation duration before letting the player move/attack again
+			await get_tree().create_timer(0.5).timeout
+			is_attacking = false
 			
 		if Input.is_action_pressed("run"):
 			current_speed = RUN_SPEED		
@@ -69,19 +81,34 @@ func _physics_process(delta: float) -> void:
 		handleCollision()
 			
 func handleCollision():
+	# If player recently took damage, don't check for more yet
+	if is_invincible:
+		return
+
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
-		#print_debug(collider.name)
-		if (collider.name == "enemy"):
-			currentHealth -= 1
-			if currentHealth < 0:
-				currentHealth = maxHealth
-			health_container.updateHearts(currentHealth)
-			
-			
-func _on_health_box_area_entered(area):
-	if area.name == "hitBox":
-		currentHealth -= 1
-		if currentHealth < 0:
-			currentHealth = maxHealth
+		
+		# Pro tip: Put your enemy nodes into a Group called "enemies" in the Godot inspector!
+		if collider.is_in_group("enemies"):
+			take_damage(1)
+			break # Break loop early so we don't process multiple collisions at once
+
+func take_damage(amount: int):
+	is_invincible = true
+	currentHealth -= amount
+	
+	if currentHealth <= 0:
+		# Handle death here! (Resetting to max health for now as per your original code)
+		currentHealth = maxHealth
+		
+	health_container.updateHearts(currentHealth)
+	
+	# Flashing/Invincibility period (e.g., 1 second of safety)
+	var tw = create_tween()
+	tw.tween_property(rant, "modulate:a", 0.5, 0.1)
+	tw.tween_property(rant, "modulate:a", 1.0, 0.1)
+	tw.set_loops(5) # Flash 5 times
+	
+	await get_tree().create_timer(1.0).timeout
+	is_invincible = false

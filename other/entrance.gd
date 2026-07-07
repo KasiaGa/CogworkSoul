@@ -13,4 +13,4 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_interact():
-	Global.change_scene_to_position("res://CogworkCore.tscn", 620, 420)
+	Global.change_scene_to_position("res://world/CogworkCore.tscn", 620, 420)
