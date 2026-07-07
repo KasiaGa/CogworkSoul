@@ -38,61 +38,61 @@ func _physics_process(delta: float) -> void:
 	
 	var current_speed = SPEED
 	
-	if true:
-	#if !dialogue.visible :
-		if not is_attacking:
-			if velocity.x > SPEED or velocity.x < -SPEED:
-				rant.animation = "run_no_needle"
-			elif velocity.x > 1 or velocity.x < -1:
-				rant.animation = "walk_no_needle"
-			else :
-				rant.animation = "idle_no_needle"
-			
-		if Input.is_action_just_pressed("attack") and not is_attacking:
-			is_attacking = true
-			rant.play("attack")
-			
-			attack_collision.disabled = false # Turn ON the attack hitbox
-			
-			# Wait for the 0.5s animation duration before letting the player move/attack again
-			await get_tree().create_timer(0.5).timeout
-			attack_collision.disabled = true # Turn OFF the attack hitbox after 0.5s
-			is_attacking = false
-			
-		if Input.is_action_pressed("run"):
-			current_speed = RUN_SPEED		
+	# 1. DYNAMIC ANIMATION HANDLING
+	if not is_attacking:
+		# If we have the needle, suffix is "". If not, suffix is "_no_needle"
+		var anim_suffix := "" if Global.has_needle else "_no_needle"
 		
-		# Add the gravity.
-		if not is_on_floor():
-			velocity += get_gravity() * delta
-			# rant.animation = "jump"
-
-#		if Input.is_action_just_pressed("attack"):
-#			rant.animation = "attack"
-
-		# Handle jump.
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
-
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var direction := Input.get_axis("left", "right")
-		if direction:
-			velocity.x = direction * current_speed
+		if velocity.x > SPEED or velocity.x < -SPEED:
+			rant.animation = "run" + anim_suffix
+		elif velocity.x > 1 or velocity.x < -1:
+			rant.animation = "walk" + anim_suffix
 		else:
-			velocity.x = move_toward(velocity.x, 0, current_speed)
+			rant.animation = "idle" + anim_suffix
 
-		move_and_slide()
+	# 2. GATED ATTACK INPUT
+	# Added "and Global.has_needle" so clicking 'X' does nothing without it!
+	if Input.is_action_just_pressed("attack") and not is_attacking and Global.has_needle:
+		is_attacking = true
+		rant.play("attack")
+		attack_collision.disabled = false 
+
+		await get_tree().create_timer(0.5).timeout
 		
-		if direction == 1.0:
-			rant.flip_h = true
-			$AttackArea.scale.x = 1
-		elif direction == -1.0:
-			rant.flip_h = false
-			$AttackArea.scale.x = -1
-			
-		handleCollision()
-			
+		attack_collision.disabled = true 
+		is_attacking = false
+
+	# Run modifier
+	if Input.is_action_pressed("run"):
+		current_speed = RUN_SPEED     
+
+	# Gravity
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Jump
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Movement input
+	var direction := Input.get_axis("left", "right")
+	if direction:
+		velocity.x = direction * current_speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, current_speed)
+
+	move_and_slide()
+
+	# Sprite & Hitbox flipping
+	if direction == 1.0:
+		rant.flip_h = true
+		$AttackArea.scale.x = 1
+	elif direction == -1.0:
+		rant.flip_h = false
+		$AttackArea.scale.x = -1
+
+	handleCollision()
+
 func handleCollision():
 	# If player recently took damage, don't check for more yet
 	if is_invincible:
