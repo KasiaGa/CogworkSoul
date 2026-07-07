@@ -19,6 +19,8 @@ var collected_items: Array[String] = []
 
 var current_scene_path: String = "res://world/main.tscn" 
 
+var intro_dialogue_played: bool = false
+
 # Path to the actual file on the computer
 const SAVE_PATH = "user://savegame.save"
 
@@ -33,7 +35,8 @@ func save_game():
 			"collected_items": collected_items,
 			"checkpoint_x": target_position.x,
 			"checkpoint_y": target_position.y,
-			"saved_scene": current_scene_path
+			"saved_scene": current_scene_path,
+			"intro_dialogue_played": intro_dialogue_played
 		}
 		
 		# Write it to the file
@@ -57,6 +60,7 @@ func load_game():
 		player_max_health = save_data.get("max_health", player_max_health)
 		player_max_silk = save_data.get("max_silk", player_max_silk)
 		has_needle = save_data.get("has_needle", false)
+		intro_dialogue_played = save_data.get("intro_dialogue_played", true)
 		
 		collected_items = Array(save_data.get("collected_items", []), TYPE_STRING, &"", null)
 		

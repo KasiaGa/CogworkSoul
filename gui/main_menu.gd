@@ -11,7 +11,7 @@ func _on_start_button_pressed() -> void:
 	Global.player_current_silk = 0
 	Global.has_needle = false
 	Global.collected_items.clear()
-	
+	Global.intro_dialogue_played = false
 	Global.should_reposition = false
 	Global.target_position = Vector2.ZERO
 	
