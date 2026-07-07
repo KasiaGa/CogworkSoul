@@ -28,6 +28,7 @@ func _ready():
 	
 	if Global.should_reposition:
 		global_position = Global.target_position
+		#callable(func(): global_position = Global.target_position).call_deferred()
 		# Resetujemy zmienną, aby nie teleportować gracza przy zwykłym starcie gry
 		Global.should_reposition = false
 		

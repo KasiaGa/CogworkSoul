@@ -8,6 +8,7 @@ var introShown = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Global.current_scene_path = scene_file_path
 	health_container.setMaxHearts(character_body_2d.startHealth)
 	silk_container.setMaxSilk(character_body_2d.startSilk)
 	health_container.updateHearts(character_body_2d.currentHealth)
