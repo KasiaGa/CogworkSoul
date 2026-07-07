@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://d1st7u8gw4f0j" path="res://assets/images/world/wall.png" id="14_uf2or"]
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="15_bqgm4"]
 [ext_resource type="PackedScene" uid="uid://clwq3figvspdk" path="res://gui/health_container.tscn" id="16_tx67v"]
+[ext_resource type="Script" uid="uid://vta6ajsp0sov" path="res://world/canvas_layer.gd" id="16_w6b5a"]
 [ext_resource type="Texture2D" uid="uid://c4362iqxtqasf" path="res://assets/images/gui/health_bar.png" id="17_iqxfi"]
 [ext_resource type="PackedScene" uid="uid://c45nk54o2gxg4" path="res://gui/silk_container.tscn" id="18_cjngt"]
 [ext_resource type="Texture2D" uid="uid://yuhfp7ej1m4l" path="res://assets/images/gui/silkBar.png" id="19_pk0e4"]
@@ -107,6 +108,10 @@ radius = 29.15476
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_da6y2"]
 size = Vector2(84, 1000)
+
+[sub_resource type="SystemFont" id="SystemFont_r8g5k"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ae5in"]
 size = Vector2(99, 139)
@@ -276,6 +281,7 @@ scale = Vector2(101.08334, 17.4693)
 texture = ExtResource("15_bqgm4")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2119329073]
+script = ExtResource("16_w6b5a")
 
 [node name="HealthContainer" parent="CanvasLayer" unique_id=270179544 instance=ExtResource("16_tx67v")]
 offset_left = 66.0
@@ -300,6 +306,21 @@ z_index = -1
 position = Vector2(68.76741, 87.375)
 scale = Vector2(0.4208861, 0.42088607)
 texture = ExtResource("19_pk0e4")
+
+[node name="NotificationBox" type="PanelContainer" parent="CanvasLayer" unique_id=1432874178]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -40.0
+offset_right = 50.0
+grow_vertical = 0
+
+[node name="NotificationLabel" type="Label" parent="CanvasLayer/NotificationBox" unique_id=2023510632]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_r8g5k")
+theme_override_font_sizes/font_size = 25
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=1092127715]
 
