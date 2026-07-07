@@ -420,6 +420,10 @@ animations = [{
 radius = 29.0
 height = 288.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_da6y2"]
+radius = 83.4075
+height = 268.46786
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1131129936 groups=["player"]]
 z_index = 50
 collision_layer = 2
@@ -428,9 +432,18 @@ script = ExtResource("1_1mopy")
 [node name="rant" type="AnimatedSprite2D" parent="." unique_id=1533657175]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ae5in")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle_no_needle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1052474574]
 position = Vector2(-16, 10)
 shape = SubResource("CapsuleShape2D_mjotr")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=2077513038]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1854880106]
+position = Vector2(-26.999998, 16)
+rotation = -0.20420352
+shape = SubResource("CapsuleShape2D_da6y2")
+
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

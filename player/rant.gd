@@ -2,6 +2,7 @@ extends CharacterBody2D
 @onready var rant: AnimatedSprite2D = $rant
 @onready var dialogue: CanvasLayer = $"../Dialogue"
 @onready var health_container: HBoxContainer = $"../CanvasLayer/HealthContainer"
+@onready var attack_collision: CollisionShape2D = $AttackArea/CollisionShape2D
 
 @onready var startHealth: int = 5
 @onready var startSilk: int = 0
@@ -24,6 +25,8 @@ func _ready():
 		global_position = Global.target_position
 		# Resetujemy zmienną, aby nie teleportować gracza przy zwykłym starcie gry
 		Global.should_reposition = false
+		
+	attack_collision.disabled = true
 
 
 func _physics_process(delta: float) -> void:
@@ -44,8 +47,11 @@ func _physics_process(delta: float) -> void:
 			is_attacking = true
 			rant.play("attack")
 			
+			attack_collision.disabled = false # Turn ON the attack hitbox
+			
 			# Wait for the 0.5s animation duration before letting the player move/attack again
 			await get_tree().create_timer(0.5).timeout
+			attack_collision.disabled = true # Turn OFF the attack hitbox after 0.5s
 			is_attacking = false
 			
 		if Input.is_action_pressed("run"):
@@ -75,8 +81,10 @@ func _physics_process(delta: float) -> void:
 		
 		if direction == 1.0:
 			rant.flip_h = true
+			$AttackArea.scale.x = 1
 		elif direction == -1.0:
 			rant.flip_h = false
+			$AttackArea.scale.x = -1
 			
 		handleCollision()
 			
@@ -112,3 +120,8 @@ func take_damage(amount: int):
 	
 	await get_tree().create_timer(1.0).timeout
 	is_invincible = false
+
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemies") and body.has_method("take_damage"):
+		body.take_damage(1)
