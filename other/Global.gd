@@ -6,6 +6,12 @@ var target_position: Vector2 = Vector2.ZERO
 # Zmienna informująca, czy gracz ma zmienić pozycję
 var should_reposition: bool = false
 
+var player_current_health: int = 5
+var player_max_health: int = 5
+
+var player_current_silk: int = 0
+var player_max_silk: int = 5
+
 # Funkcja do zmieniania sceny z ustawieniem pozycji
 func change_scene_to_position(scene_path: String, new_x: float, new_y: float):
 	target_position = Vector2(new_x, new_y)

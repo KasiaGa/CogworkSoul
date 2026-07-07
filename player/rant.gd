@@ -21,6 +21,11 @@ const RUN_SPEED = 600.0
 const JUMP_VELOCITY = -1400.0
 
 func _ready():
+	currentHealth = Global.player_current_health
+	maxHealth = Global.player_max_health
+	currentSilk = Global.player_current_silk
+	maxSilk = Global.player_max_silk
+	
 	if Global.should_reposition:
 		global_position = Global.target_position
 		# Resetujemy zmienną, aby nie teleportować gracza przy zwykłym starcie gry
@@ -109,6 +114,8 @@ func take_damage(amount: int):
 	if currentHealth <= 0:
 		# Handle death here! (Resetting to max health for now as per your original code)
 		currentHealth = maxHealth
+		
+	Global.player_current_health = currentHealth
 		
 	health_container.updateHearts(currentHealth)
 	

@@ -6,8 +6,9 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	health_container.setMaxHearts(character_body_2d.currentHealth)
-	silk_container.setMaxSilk(character_body_2d.currentSilk)
+	health_container.setMaxHearts(character_body_2d.startHealth)
+	silk_container.setMaxSilk(character_body_2d.startSilk)
+	health_container.updateHearts(character_body_2d.currentHealth)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
