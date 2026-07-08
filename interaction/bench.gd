@@ -18,6 +18,10 @@ func _on_interact():
 	# 3. Tell the game it needs to move the player when this level loads
 	Global.should_reposition = true
 	
+	var player = get_tree().get_first_node_in_group("player")
+	if player and player.has_method("sit_on_bench"):
+		player.sit_on_bench()
+	
 	# 4. Update the HUD UI immediately so the hearts visual fills up
 	var canvas_layer = get_node_or_null("../CanvasLayer")
 	if canvas_layer:

@@ -15,6 +15,8 @@ extends CharacterBody2D
 
 var is_attacking: bool = false
 var is_invincible: bool = false
+var is_sitting: bool = false
+var is_transitioning: bool = false
 
 const SPEED = 300.0
 const RUN_SPEED = 600.0
@@ -31,12 +33,27 @@ func _ready():
 		#callable(func(): global_position = Global.target_position).call_deferred()
 		# Resetujemy zmienną, aby nie teleportować gracza przy zwykłym starcie gry
 		Global.should_reposition = false
+		play_arrival_animation()
 		
 	attack_collision.disabled = true
 
 
 func _physics_process(delta: float) -> void:
-	
+	if is_transitioning:
+		return
+			
+	if is_sitting:
+		velocity = Vector2.ZERO
+		# If player tries to move or jump, stand up
+		if Input.is_action_just_pressed("jump") or Input.get_axis("left", "right") != 0:
+			is_sitting = false
+		else:
+			# Enforce sitting animation loop
+			var anim_suffix := "" if Global.has_needle else "_no_needle"
+			rant.animation = "sit" + anim_suffix
+			move_and_slide()
+			return # Skip the rest of the movement code
+		
 	var current_speed = SPEED
 	
 	# 1. DYNAMIC ANIMATION HANDLING
@@ -128,7 +145,26 @@ func take_damage(amount: int):
 	
 	await get_tree().create_timer(1.0).timeout
 	is_invincible = false
+	
+func play_entrance_animation() -> void:
+	is_transitioning = true
+	velocity = Vector2.ZERO
+	var anim_suffix := "" if Global.has_needle else "_no_needle"
+	rant.play("back" + anim_suffix)
+	# Wait briefly for the animation to look meaningful before screen fades
+	await get_tree().create_timer(0.1).timeout 
 
+func play_arrival_animation() -> void:
+	is_transitioning = true
+	var anim_suffix := "" if Global.has_needle else "_no_needle"
+	rant.play("front" + anim_suffix)
+	# Lock player for a moment while facing screen
+	await get_tree().create_timer(0.1).timeout 
+	is_transitioning = false
+
+func sit_on_bench() -> void:
+	is_sitting = true
+	velocity = Vector2.ZERO
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies") and body.has_method("take_damage"):

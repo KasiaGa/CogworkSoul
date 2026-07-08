@@ -6,10 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://du001uu5plfy5" path="res://assets/images/player/rant_idle_no_needle_sprite.png" id="2_d0hce"]
 [ext_resource type="Texture2D" uid="uid://djm4yqcmcskxj" path="res://assets/images/player/rant_jumping_scaled.png" id="3_8ib8x"]
 [ext_resource type="Texture2D" uid="uid://dxl3fma0n3kca" path="res://assets/images/player/rant_running_spritesheet.png" id="3_051pu"]
+[ext_resource type="Texture2D" uid="uid://b8kyoup38sgld" path="res://assets/images/player/rant_back_scaled.png" id="3_aeash"]
 [ext_resource type="Texture2D" uid="uid://cd2ctjerbs17j" path="res://assets/images/player/rant_picking_scaled.png" id="4_1mopy"]
 [ext_resource type="Texture2D" uid="uid://b40a7qwfu0jdl" path="res://assets/images/player/rant_running_spritesheet_no_needle.png" id="4_8ib8x"]
+[ext_resource type="Texture2D" uid="uid://bsrdm3n1qhric" path="res://assets/images/player/rant_front_scaled.png" id="4_ujdd3"]
 [ext_resource type="Texture2D" uid="uid://dokp8ktdnfosj" path="res://assets/images/player/rant_walking_spritesheet.png" id="5_1mopy"]
 [ext_resource type="Texture2D" uid="uid://bflp8xqs83ssl" path="res://assets/images/player/rant_walking_spritesheet_no_needle.png" id="6_lwtyp"]
+[ext_resource type="Texture2D" uid="uid://t7jssqeqnmlm" path="res://assets/images/player/rant_sitting_resized.png" id="11_rhl5p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1mopy"]
 atlas = ExtResource("1_8ib8x")
@@ -226,6 +229,38 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_aeash")
+}],
+"loop": 1,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_aeash")
+}],
+"loop": 1,
+"name": &"back_no_needle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ujdd3")
+}],
+"loop": 1,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ujdd3")
+}],
+"loop": 1,
+"name": &"front_no_needle",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.3,
 "texture": SubResource("AtlasTexture_0h2wa")
 }, {
@@ -340,6 +375,22 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_rhl5p")
+}],
+"loop": 1,
+"name": &"sit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_rhl5p")
+}],
+"loop": 1,
+"name": &"sit_no_needle",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 0.3,
 "texture": SubResource("AtlasTexture_ln10q")
 }, {
@@ -432,7 +483,7 @@ script = ExtResource("1_1mopy")
 [node name="rant" type="AnimatedSprite2D" parent="." unique_id=1533657175]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ae5in")
-animation = &"attack"
+animation = &"sit_no_needle"
 autoplay = "idle_no_needle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1052474574]
