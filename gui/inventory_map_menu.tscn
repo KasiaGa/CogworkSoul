@@ -132,5 +132,16 @@ offset_bottom = 366.0
 texture = ExtResource("1_4wr3o")
 expand_mode = 1
 
+[node name="ReferenceRect" type="ReferenceRect" parent="Background" unique_id=1270295291]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.49468488, 0.26660663, 0.030315105, 1)
+border_width = 2.2
+editor_only = false
+
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/InventoryButton" to="." method="show_inventory_tab"]
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/MapButton" to="." method="show_map_tab"]
