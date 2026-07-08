@@ -67,6 +67,34 @@ position = Vector2(-15.833374, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
+[node name="ground_irregular2" type="StaticBody2D" parent="." unique_id=96498192]
+z_index = -1
+position = Vector2(-600, 634)
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular2" unique_id=744179249]
+texture = ExtResource("4_tgyrp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular2" unique_id=559602545]
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular3" type="StaticBody2D" parent="." unique_id=546606945]
+z_index = -1
+position = Vector2(1777, 628)
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular3" unique_id=1461006395]
+texture = ExtResource("4_tgyrp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular3" unique_id=1832802466]
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
 [node name="CharacterBody2D" parent="." unique_id=1131129936 instance=ExtResource("5_sg7as")]
 position = Vector2(610, 458)
 
@@ -76,9 +104,9 @@ shape = SubResource("CapsuleShape2D_g8kwh")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=76796903]
 offset = Vector2(0, -80)
-limit_left = -1130
+limit_left = -1198
 limit_top = -237
-limit_right = 2468
+limit_right = 2375
 limit_bottom = 739
 
 [node name="Entrance3" type="StaticBody2D" parent="." unique_id=1069104210]
@@ -128,8 +156,10 @@ scale = Vector2(0.4208861, 0.42088607)
 texture = ExtResource("12_1asw4")
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=2077802288 instance=ExtResource("14_tgyrp")]
+visible = false
 
 [node name="InventoryMapMenu" parent="CanvasLayer" unique_id=1439938911 instance=ExtResource("15_sg7as")]
+visible = false
 
 [node name="NotificationBox" type="PanelContainer" parent="CanvasLayer" unique_id=216334181]
 self_modulate = Color(1, 1, 1, 0)

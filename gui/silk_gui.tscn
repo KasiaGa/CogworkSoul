@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cfyfvjubvn4ki"]
 
+[ext_resource type="Script" uid="uid://sahfhlhefyn5" path="res://gui/silk_gui.gd" id="1_h4gs1"]
 [ext_resource type="Texture2D" uid="uid://c146b73bx3foe" path="res://assets/images/gui/silk.png" id="1_katvu"]
 
 [node name="SilkGui" type="Panel" unique_id=470693608]
@@ -8,6 +9,7 @@ custom_minimum_size = Vector2(12, 25)
 offset_left = 3.0
 offset_right = 15.0
 offset_bottom = 25.0
+script = ExtResource("1_h4gs1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1114570326]
 position = Vector2(6.000001, 13.000001)

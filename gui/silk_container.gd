@@ -16,3 +16,11 @@ func setMaxSilk(max: int):
 		var silk = SilkGuiClass.instantiate()
 		add_child(silk)
 		
+func updateSilk(currentSilk: int):
+	var silks = get_children()
+	
+	for i in range(currentSilk):
+		silks[i].update(true)
+		
+	for i in range(currentSilk, silks.size()):
+		silks[i].update(false)

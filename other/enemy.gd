@@ -1,5 +1,6 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var silk_container: HBoxContainer = $"../CanvasLayer/SilkContainer"
 const SHARD_SCENE = preload("res://other/shard.tscn")
 
 @export var speed = 100
@@ -23,6 +24,8 @@ func _ready():
 	
 func take_damage(amount: int):
 	current_health -= amount
+	Global.player_current_silk += 1
+	silk_container.updateSilk(Global.player_current_silk)
 	
 	# Visual feedback: Flash white quickly when hit
 	var tween = create_tween()
