@@ -105,3 +105,6 @@ offset_right = 650.7067
 offset_bottom = 363.0
 texture = ExtResource("1_4wr3o")
 expand_mode = 1
+
+[connection signal="focus_entered" from="Background/MenuContainer/Tabs/InventoryButton" to="." method="show_inventory_tab"]
+[connection signal="focus_entered" from="Background/MenuContainer/Tabs/MapButton" to="." method="show_map_tab"]
