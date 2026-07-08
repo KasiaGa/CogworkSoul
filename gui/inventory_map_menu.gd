@@ -66,14 +66,14 @@ func update_inventory_display() -> void:
 		# Specialized check for the needle since it lives in its own Global variable
 		if item_id == "needle":
 			player_owns_it = Global.has_needle
-		else:
+		#else:
 			# Check your global string array for the remaining item IDs
-			player_owns_it = Global.collected_items.has(item_id)
+			#player_owns_it = Global.collected_items.has(item_id)
 		
 		if player_owns_it:
 			slot.modulate = Color(1, 1, 1, 1) # Normal color/fully visible
-		else:
-			slot.modulate = Color(0.15, 0.15, 0.15, 0.4) # Darkened and transparent (hidden look)
+		#else:
+			#slot.modulate = Color(0.15, 0.15, 0.15, 0.4) # Darkened and transparent (hidden look)
 
 func _on_item_slot_input(event: InputEvent, item_id: String) -> void:
 	# Detect when the mouse hovers or clicks an item to display information
