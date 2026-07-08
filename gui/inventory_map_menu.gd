@@ -29,15 +29,12 @@ func _ready() -> void:
 	# Loop through your TextureRects inside the ItemGrid to catch mouse hover events
 	for slot in item_grid.get_children():
 		if slot is TextureRect:
-			#slot.gui_input.connect(_on_item_slot_input.bind(slot.name))
 			slot.focus_mode = Control.FOCUS_ALL
 			slot.focus_entered.connect(_on_item_focused.bind(slot.name))
-			slot.mouse_entered.connect(func(): slot.grab_focus())
-	
-	setup_navigation_paths()
+			slot.mouse_entered.connect(func(): if slot.visible: slot.grab_focus())
 
 func _process(_delta: float) -> void:
-	# Check for the inventory shortcut key 'Q' (Set up "toggle_inventory" in your Input Map!)
+	# Check for the inventory shortcut key 'Q'
 	if Input.is_action_just_pressed("toggle_inventory"):
 		if visible:
 			close_menu()
@@ -47,10 +44,22 @@ func _process(_delta: float) -> void:
 func open_menu() -> void:
 	show()
 	get_tree().paused = true
+	
+	# 1. Hide/Show items first
 	update_inventory_display()
+	
+	# 2. Build navigation map ONLY using the visible items!
+	setup_navigation_paths()
+	
 	show_inventory_tab() # Defaults to inventory view upon opening
-	if item_grid.get_child_count() > 0:
-		item_grid.get_child(0).grab_focus()
+	
+	# 3. Focus on the first VISIBLE item if the player owns anything
+	var visible_items = item_grid.get_children().filter(func(node): return node.visible)
+	if visible_items.size() > 0:
+		visible_items[0].grab_focus()
+	else:
+		# If player has absolutely zero items, default focus directly to the tabs instead
+		inventory_button.grab_focus()
 
 func close_menu() -> void:
 	hide()
@@ -65,7 +74,11 @@ func show_map_tab() -> void:
 	map_view.show()
 
 func update_inventory_display() -> void:
-	# Update every item visually based on your real global data
+	# Clear out the text boxes by default in case nothing is highlighted yet
+	item_title.text = "???"
+	item_desc.text = "Select an item to inspect."
+	
+	# Update every item visibility based on your real global data
 	for slot in item_grid.get_children():
 		var item_id = slot.name
 		var player_owns_it: bool = false
@@ -73,35 +86,46 @@ func update_inventory_display() -> void:
 		# Specialized check for the needle since it lives in its own Global variable
 		if item_id == "needle":
 			player_owns_it = Global.has_needle
-		#else:
-			# Check your global string array for the remaining item IDs
-			#player_owns_it = Global.collected_items.has(item_id)
+		else:
+			player_owns_it = Global.collected_items.has(item_id)
 		
-		if player_owns_it:
-			slot.modulate = Color(1, 1, 1, 1) # Normal color/fully visible
-		#else:
-			#slot.modulate = Color(0.15, 0.15, 0.15, 0.4) # Darkened and transparent (hidden look)
+		# Toggle visibility completely
+		slot.visible = player_owns_it
 
 func setup_navigation_paths() -> void:
-	var total_items = item_grid.get_child_count()
-	if total_items == 0: return
+	# Get a clean array containing ONLY the slots that are currently visible
+	var visible_items = item_grid.get_children().filter(func(node): return node.visible)
 	
-	var first_item = item_grid.get_child(0) as Control
-	var last_item = item_grid.get_child(total_items - 1) as Control
+	# Clear fallback links on tabs if no items are held
+	inventory_button.focus_neighbor_right = map_button.get_path()
+	map_button.focus_neighbor_left = inventory_button.get_path()
 	
-	# 1. Last item to Map button link
-	# When on the last item, hitting Right Arrow moves focus to the Map button tab
+	if visible_items.size() == 0:
+		# If the inventory is completely empty, tabs just cycle between each other
+		inventory_button.focus_neighbor_left = map_button.get_path()
+		map_button.focus_neighbor_right = inventory_button.get_path()
+		return
+		
+	var first_item = visible_items[0] as Control
+	var last_item = visible_items[visible_items.size() - 1] as Control
+	
+	# Clean out default left/right path maps for all visible items first so they follow natural grid order
+	for i in range(visible_items.size()):
+		var item = visible_items[i] as Control
+		item.focus_neighbor_right = NodePath("")
+		item.focus_neighbor_left = NodePath("")
+	
+	# 1. Last visible item to Map button link
 	last_item.focus_neighbor_right = map_button.get_path()
 	
 	# 2. Map button to Inventory tab wrap-around link
 	# When on the Map tab button, hitting Right Arrow goes to the Inventory tab button
 	map_button.focus_neighbor_right = inventory_button.get_path()
 	
-	# 3. Inventory tab to First item wrap-around link
-	# Hitting Right Arrow on the Inventory tab button jumps down to the first item
+	# 3. Inventory tab to First visible item wrap-around link
 	inventory_button.focus_neighbor_right = first_item.get_path()
 	
-	# Optional: Allow Left Arrow to cycle backwards seamlessly too
+	# 4. Reverse cycling directions (Left Arrow Support)
 	first_item.focus_neighbor_left = inventory_button.get_path()
 	inventory_button.focus_neighbor_left = map_button.get_path()
 	map_button.focus_neighbor_left = last_item.get_path()
@@ -116,9 +140,6 @@ func _on_item_focused(item_id: String) -> void:
 	if player_owns_it and item_info.has(item_id):
 		item_title.text = item_info[item_id]["name"]
 		item_desc.text = item_info[item_id]["desc"]
-	else:
-		item_title.text = "???"
-		item_desc.text = "An undiscovered artifact hidden somewhere in the world."
 
 func _on_item_slot_input(event: InputEvent, item_id: String) -> void:
 	# Detect when the mouse hovers or clicks an item to display information
@@ -128,6 +149,3 @@ func _on_item_slot_input(event: InputEvent, item_id: String) -> void:
 		if player_owns_it and item_info.has(item_id):
 			item_title.text = item_info[item_id]["name"]
 			item_desc.text = item_info[item_id]["desc"]
-		else:
-			item_title.text = "???"
-			item_desc.text = "An undiscovered artifact hidden somewhere in the world."
