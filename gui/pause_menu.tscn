@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://dukuyortfhs52"]
+
+[ext_resource type="Script" uid="uid://b5whtfrd4jpm" path="res://gui/pause_menu.gd" id="1_r7i8h"]
+
+[sub_resource type="SystemFont" id="SystemFont_r7i8h"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
+
+[sub_resource type="SystemFont" id="SystemFont_7uvn2"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
+
+[sub_resource type="SystemFont" id="SystemFont_qdbs5"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=2077802288]
+process_mode = 3
+layer = 10
+script = ExtResource("1_r7i8h")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=923463076]
+offset_right = 1296.0
+offset_bottom = 697.0
+color = Color(0, 0, 0, 0.81960785)
+
+[node name="CenterContainer" type="CenterContainer" parent="ColorRect" unique_id=229613857]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -140.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/CenterContainer" unique_id=415586117]
+layout_mode = 2
+
+[node name="Game Paused" type="Label" parent="ColorRect/CenterContainer/VBoxContainer" unique_id=9688589]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = SubResource("SystemFont_r7i8h")
+theme_override_font_sizes/font_size = 26
+text = "Game Paused"
+
+[node name="Resume" type="Button" parent="ColorRect/CenterContainer/VBoxContainer" unique_id=1639641569]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_7uvn2")
+theme_override_font_sizes/font_size = 23
+text = "Resume"
+
+[node name="Quit to Main Menu" type="Button" parent="ColorRect/CenterContainer/VBoxContainer" unique_id=1001393954]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_qdbs5")
+theme_override_font_sizes/font_size = 23
+text = "Quit to Main Menu"
