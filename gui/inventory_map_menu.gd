@@ -7,8 +7,8 @@ extends CanvasLayer
 @onready var map_button: Button = $Background/MenuContainer/Tabs/MapButton
 
 @onready var item_grid: GridContainer = $Background/MenuContainer/InventoryView/ItemGrid
-@onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/VBoxContainer/ItemTitle
-@onready var item_desc: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/VBoxContainer/ItemDesc
+@onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitle
+@onready var item_desc: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemDesc
 @onready var shards_label: Label = $Background/MenuContainer/InventoryView/ShardsLabel
 
 # Simple local item database matching your exact naming style for descriptions

@@ -98,17 +98,49 @@ layout_mode = 2
 texture = ExtResource("2_okbrl")
 expand_mode = 4
 
+[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/needle" unique_id=1712112236]
+z_index = -1
+layout_mode = 0
+offset_left = -2.0
+offset_top = -3.0
+offset_right = 83.0
+offset_bottom = 83.049385
+
 [node name="cogwork_battery" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=672894153]
 layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/cogwork_battery" unique_id=966168266]
+z_index = -1
+layout_mode = 0
+offset_left = 19.0
+offset_top = -3.0
+offset_right = 104.0
+offset_bottom = 83.049385
 
 [node name="key_to_lab_21" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=611539053]
 layout_mode = 2
 
+[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/key_to_lab_21" unique_id=1007492812]
+z_index = -1
+layout_mode = 0
+offset_left = 119.0
+offset_top = -4.0
+offset_right = 204.0
+offset_bottom = 82.049385
+
 [node name="health_upgrade" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=357184808]
 layout_mode = 2
 
+[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/health_upgrade" unique_id=1903540252]
+z_index = -1
+layout_mode = 0
+offset_left = 219.0
+offset_top = -3.0
+offset_right = 304.0
+offset_bottom = 83.049385
+
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/InventoryView" unique_id=431507155]
-self_modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 0.76036006, 0.71446484, 1)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -116,19 +148,26 @@ anchor_right = 1.0
 offset_left = -139.0
 offset_top = 42.0
 offset_right = 2.0
-offset_bottom = 383.0
+offset_bottom = 314.0
 grow_horizontal = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel" unique_id=568140490]
+[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel" unique_id=1605739397]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer" unique_id=568140490]
 layout_mode = 2
 
-[node name="ItemTitle" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/VBoxContainer" unique_id=612034895]
+[node name="ItemTitle" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=612034895]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
 theme_override_font_sizes/font_size = 18
 clip_text = true
 
-[node name="ItemDesc" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/VBoxContainer" unique_id=2119655486]
+[node name="ItemDesc" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2119655486]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 14
