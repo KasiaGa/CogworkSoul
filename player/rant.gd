@@ -39,6 +39,17 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
+	if Global.is_dialogue_active:
+		velocity.x = move_toward(velocity.x, 0, SPEED) # Slow down to a stop if running
+		if not is_on_floor():
+			velocity += get_gravity() * delta # Allow gravity so player doesn't float
+		move_and_slide()
+		
+		# Force idle animation
+		var anim_suffix := "" if Global.has_needle else "_no_needle"
+		rant.animation = "idle" + anim_suffix
+		return
+	
 	if is_transitioning:
 		return
 			

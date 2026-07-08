@@ -44,6 +44,9 @@ var dialogue_line: DialogueLine:
 			dialogue_line = value
 			apply_dialogue_line()
 		else:
+			# DIALOGUE FINISHED: Unfreeze the player
+			Global.is_dialogue_active = false
+			
 			# The dialogue has finished so close the balloon
 			if owner == null:
 				queue_free()
@@ -112,6 +115,9 @@ func _notification(what: int) -> void:
 
 ## Start some dialogue
 func start(with_dialogue_resource: DialogueResource = null, title: String = "", extra_game_states: Array = []) -> void:
+	# DIALOGUE STARTED: Freeze the player
+	Global.is_dialogue_active = true
+	
 	temporary_game_states = [self] + extra_game_states
 	is_waiting_for_input = false
 	if is_instance_valid(with_dialogue_resource):

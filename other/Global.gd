@@ -20,6 +20,7 @@ var collected_items: Array[String] = []
 var current_scene_path: String = "res://world/main.tscn" 
 
 var intro_dialogue_played: bool = false
+var is_dialogue_active: bool = false
 
 # Path to the actual file on the computer
 const SAVE_PATH = "user://savegame.save"
