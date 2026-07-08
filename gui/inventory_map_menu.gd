@@ -26,11 +26,12 @@ func _ready() -> void:
 	inventory_button.pressed.connect(show_inventory_tab)
 	map_button.pressed.connect(show_map_tab)
 	
-	# Loop through your TextureRects inside the ItemGrid to catch mouse hover events
+	# Connect focus events directly to the nodes themselves
 	for slot in item_grid.get_children():
 		if slot is TextureRect:
 			slot.focus_mode = Control.FOCUS_ALL
-			slot.focus_entered.connect(_on_item_focused.bind(slot.name))
+			slot.focus_entered.connect(_on_item_focused.bind(slot))
+			slot.focus_exited.connect(_on_item_unfocused.bind(slot))
 			slot.mouse_entered.connect(func(): if slot.visible: slot.grab_focus())
 
 func _process(_delta: float) -> void:
@@ -50,10 +51,9 @@ func open_menu() -> void:
 	
 	# 2. Build navigation map ONLY using the visible items!
 	setup_navigation_paths()
+	show_inventory_tab()
 	
-	show_inventory_tab() # Defaults to inventory view upon opening
-	
-	# 3. Focus on the first VISIBLE item if the player owns anything
+	# Focus on the first visible item
 	var visible_items = item_grid.get_children().filter(func(node): return node.visible)
 	if visible_items.size() > 0:
 		visible_items[0].grab_focus()
@@ -91,6 +91,8 @@ func update_inventory_display() -> void:
 		
 		# Toggle visibility completely
 		slot.visible = player_owns_it
+		# Reset tint to normal full color when hidden or drawn
+		slot.modulate = Color(1, 1, 1, 1)
 
 func setup_navigation_paths() -> void:
 	# Get a clean array containing ONLY the slots that are currently visible
@@ -109,20 +111,20 @@ func setup_navigation_paths() -> void:
 	var first_item = visible_items[0] as Control
 	var last_item = visible_items[visible_items.size() - 1] as Control
 	
-	# Clean out default left/right path maps for all visible items first so they follow natural grid order
-	for i in range(visible_items.size()):
-		var item = visible_items[i] as Control
+	# CLEAN ALL NEIGHBORS: Stops hidden elements from pulling focus up or down randomly
+	for item in visible_items:
 		item.focus_neighbor_right = NodePath("")
 		item.focus_neighbor_left = NodePath("")
+		item.focus_neighbor_top = NodePath("")
+		item.focus_neighbor_bottom = NodePath("")
 	
-	# 1. Last visible item to Map button link
+	# 1. Last item -> Map button
 	last_item.focus_neighbor_right = map_button.get_path()
 	
-	# 2. Map button to Inventory tab wrap-around link
-	# When on the Map tab button, hitting Right Arrow goes to the Inventory tab button
+	# 2. Map button -> Inventory button
 	map_button.focus_neighbor_right = inventory_button.get_path()
 	
-	# 3. Inventory tab to First visible item wrap-around link
+	# 3. Inventory button -> First item
 	inventory_button.focus_neighbor_right = first_item.get_path()
 	
 	# 4. Reverse cycling directions (Left Arrow Support)
@@ -130,16 +132,34 @@ func setup_navigation_paths() -> void:
 	inventory_button.focus_neighbor_left = map_button.get_path()
 	map_button.focus_neighbor_left = last_item.get_path()
 	
-func _on_item_focused(item_id: String) -> void:
-	# Automatically switch to inventory view tab if an item gets focus
+	# 5. Prevent UP Arrow on items from breaking UI. It will now jump cleanly back up to the tabs
+	for item in visible_items:
+		item.focus_neighbor_top = inventory_button.get_path()
+
+func _on_item_focused(slot: TextureRect) -> void:
 	if not inventory_view.visible:
 		show_inventory_tab()
 
+	var item_id = slot.name
 	var player_owns_it: bool = (item_id == "needle" and Global.has_needle) or Global.collected_items.has(item_id)
 	
-	if player_owns_it and item_info.has(item_id):
-		item_title.text = item_info[item_id]["name"]
-		item_desc.text = item_info[item_id]["desc"]
+	if player_owns_it:
+		slot.modulate = Color(1.6, 1.6, 1.6, 1.0) 
+		
+		if item_info.has(item_id):
+			item_title.text = item_info[item_id]["name"]
+			item_desc.text = item_info[item_id]["desc"]
+	else:
+		# Fallback just in case a hidden or missing item somehow triggers focus
+		slot.modulate = Color(1, 1, 1, 1) # Keep normal tint if they don't own it
+		item_title.text = "???"
+		item_desc.text = "An undiscovered artifact hidden somewhere in the world."
+
+func _on_item_unfocused(slot: TextureRect) -> void:
+	# RESET TINT: Return back to default white lighting
+	slot.modulate = Color(1, 1, 1, 1)
+	item_title.text = ""
+	item_desc.text = ""
 
 func _on_item_slot_input(event: InputEvent, item_id: String) -> void:
 	# Detect when the mouse hovers or clicks an item to display information
