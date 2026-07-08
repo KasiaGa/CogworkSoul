@@ -12,6 +12,10 @@ font_weight = 999
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
 
+[sub_resource type="SystemFont" id="SystemFont_qblpg"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
+
 [sub_resource type="SystemFont" id="SystemFont_okbrl"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
@@ -71,12 +75,21 @@ text = "Map"
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
 
+[node name="ShardsLabel" type="Label" parent="Background/MenuContainer/InventoryView" unique_id=1722245629]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 9.0
+offset_right = 73.0
+offset_bottom = 32.0
+theme_override_fonts/font = SubResource("SystemFont_qblpg")
+text = "Shards: 0"
+
 [node name="ItemGrid" type="GridContainer" parent="Background/MenuContainer/InventoryView" unique_id=470268612]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 11.0
-offset_right = 679.0
-offset_bottom = 377.0
+offset_left = 18.0
+offset_top = 44.0
+offset_right = 695.0
+offset_bottom = 346.0
 columns = 4
 
 [node name="needle" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=1039175191]
@@ -101,8 +114,9 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -139.0
+offset_top = 42.0
 offset_right = 2.0
-offset_bottom = 341.0
+offset_bottom = 383.0
 grow_horizontal = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel" unique_id=568140490]
@@ -133,6 +147,7 @@ texture = ExtResource("1_4wr3o")
 expand_mode = 1
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Background" unique_id=1270295291]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

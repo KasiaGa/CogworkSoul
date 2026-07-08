@@ -9,6 +9,7 @@ extends CanvasLayer
 @onready var item_grid: GridContainer = $Background/MenuContainer/InventoryView/ItemGrid
 @onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/VBoxContainer/ItemTitle
 @onready var item_desc: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/VBoxContainer/ItemDesc
+@onready var shards_label: Label = $Background/MenuContainer/InventoryView/ShardsLabel
 
 # Simple local item database matching your exact naming style for descriptions
 var item_info: Dictionary = {
@@ -74,6 +75,7 @@ func show_map_tab() -> void:
 	map_view.show()
 
 func update_inventory_display() -> void:
+	shards_label.text = "Shards: " + str(Global.shards_collected)
 	# Clear out the text boxes by default in case nothing is highlighted yet
 	item_title.text = "???"
 	item_desc.text = "Select an item to inspect."
