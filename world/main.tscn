@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://ceh0vu50g1u7t" path="res://assets/images/world/cable.png" id="20_oypec"]
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="21_dxnsj"]
 [ext_resource type="Texture2D" uid="uid://lcde56peimrp" path="res://assets/images/world/pipe.png" id="21_m3fen"]
+[ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="22_r8g5k"]
 [ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="22_u2g0j"]
 [ext_resource type="Texture2D" uid="uid://cg655xks88sbk" path="res://assets/images/world/cog2.png" id="23_nt7of"]
 [ext_resource type="Texture2D" uid="uid://ba52ned4dav28" path="res://assets/images/world/cog1.png" id="24_umvl8"]
@@ -309,6 +310,8 @@ scale = Vector2(0.4208861, 0.42088607)
 texture = ExtResource("19_pk0e4")
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=2077802288 instance=ExtResource("21_dxnsj")]
+
+[node name="InventoryMapMenu" parent="CanvasLayer" unique_id=1439938911 instance=ExtResource("22_r8g5k")]
 
 [node name="NotificationBox" type="PanelContainer" parent="CanvasLayer" unique_id=1432874178]
 self_modulate = Color(1, 1, 1, 0)

@@ -49,5 +49,8 @@ func _on_interact():
 			Global.player_current_silk = Global.player_max_silk
 			if canvas_layer:
 				canvas_layer.show_notification("Acquired: Silk Upgrade")
+	
+	Global.save_game()
+	
 	# 4. Make the item disappear
 	queue_free()

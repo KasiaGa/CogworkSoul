@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://yuhfp7ej1m4l" path="res://assets/images/gui/silkBar.png" id="12_1asw4"]
 [ext_resource type="PackedScene" uid="uid://dioe1s4xwg1ke" path="res://interaction/bench.tscn" id="13_5at20"]
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="14_tgyrp"]
+[ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="15_sg7as"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(1918.3335, 148.14282)
@@ -127,6 +128,8 @@ scale = Vector2(0.4208861, 0.42088607)
 texture = ExtResource("12_1asw4")
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=2077802288 instance=ExtResource("14_tgyrp")]
+
+[node name="InventoryMapMenu" parent="CanvasLayer" unique_id=1439938911 instance=ExtResource("15_sg7as")]
 
 [node name="NotificationBox" type="PanelContainer" parent="CanvasLayer" unique_id=216334181]
 self_modulate = Color(1, 1, 1, 0)
