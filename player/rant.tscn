@@ -481,6 +481,7 @@ collision_layer = 2
 script = ExtResource("1_1mopy")
 
 [node name="rant" type="AnimatedSprite2D" parent="." unique_id=1533657175]
+visibility_layer = 2
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ae5in")
 animation = &"sit_no_needle"

@@ -1,5 +1,6 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+const SHARD_SCENE = preload("res://other/shard.tscn")
 
 @export var speed = 100
 @export var limit = 0.5
@@ -10,6 +11,9 @@ var endPosition
 
 @export var max_health: int = 3
 var current_health: int = max_health
+
+@export var min_shards_dropped: int = 2
+@export var max_shards_dropped: int = 5
 
 func _ready():
 	startPosition = position
@@ -26,7 +30,29 @@ func take_damage(amount: int):
 	tween.tween_property(animated_sprite_2d, "modulate", Color(1, 1, 1), 0.1)
 	
 	if current_health <= 0:
-		queue_free() # Makes the enemy disappear completely
+		die_and_drop_shards()
+		
+func die_and_drop_shards():
+	# Determine a random amount of shards to scatter
+	var drop_count = randi_range(min_shards_dropped, max_shards_dropped)
+	
+	for i in range(drop_count):
+		var shard_instance = SHARD_SCENE.instantiate() as RigidBody2D
+		
+		# Set its initial starting point to match the enemy's location
+		shard_instance.global_position = global_position
+		
+		# Add it to the world level (root scene) so it doesn't vanish when the enemy is freed
+		get_parent().add_child(shard_instance)
+		
+		# Blast them outwards and upwards randomly!
+		var launch_force_x = randf_range(-250.0, 250.0)
+		var launch_force_y = randf_range(-400.0, -600.0) # Negative Y is upward
+		
+		shard_instance.linear_velocity = Vector2(launch_force_x, launch_force_y)
+	
+	# Finally, delete the enemy from the scene
+	queue_free()
 	
 func changeDirection():
 	var tempStart = startPosition

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://7ygsoogv044t"]
+
+[ext_resource type="Script" uid="uid://chafdyh3cor4i" path="res://other/shard.gd" id="1_d47v5"]
+[ext_resource type="Texture2D" uid="uid://b6kbt5du6ldrm" path="res://assets/images/item/shard.png" id="1_q4id6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d47v5"]
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mjotr"]
+radius = 18.110771
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_da6y2"]
+radius = 20.396078
+
+[node name="Shard" type="RigidBody2D" unique_id=846937336]
+visibility_layer = 8
+collision_layer = 8
+physics_material_override = SubResource("PhysicsMaterial_d47v5")
+script = ExtResource("1_d47v5")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1899986987]
+position = Vector2(-1.7465739, 1.499999)
+scale = Vector2(0.47945204, 0.47945204)
+texture = ExtResource("1_q4id6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2129484494]
+position = Vector2(-1, 3)
+shape = SubResource("CircleShape2D_mjotr")
+
+[node name="CollectionArea" type="Area2D" parent="." unique_id=1584702237]
+light_mask = 2
+position = Vector2(-2, 2)
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea" unique_id=1965041474]
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_da6y2")

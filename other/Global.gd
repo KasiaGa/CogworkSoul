@@ -17,6 +17,8 @@ var has_needle: bool = false
 enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE }
 var collected_items: Array[String] = []
 
+var shards_collected: int = 0
+
 var current_scene_path: String = "res://world/main.tscn" 
 
 var intro_dialogue_played: bool = false
@@ -37,7 +39,8 @@ func save_game():
 			"checkpoint_x": target_position.x,
 			"checkpoint_y": target_position.y,
 			"saved_scene": current_scene_path,
-			"intro_dialogue_played": intro_dialogue_played
+			"intro_dialogue_played": intro_dialogue_played,
+			"shards_collected": shards_collected
 		}
 		
 		# Write it to the file
@@ -62,6 +65,7 @@ func load_game():
 		player_max_silk = save_data.get("max_silk", player_max_silk)
 		has_needle = save_data.get("has_needle", false)
 		intro_dialogue_played = save_data.get("intro_dialogue_played", true)
+		shards_collected = save_data.get("shards_collected", 0)
 		
 		collected_items = Array(save_data.get("collected_items", []), TYPE_STRING, &"", null)
 		
