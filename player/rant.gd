@@ -17,6 +17,7 @@ var is_attacking: bool = false
 var is_invincible: bool = false
 var is_sitting: bool = false
 var is_transitioning: bool = false
+var is_dead: bool = false
 
 const SPEED = 300.0
 const RUN_SPEED = 600.0
@@ -48,6 +49,11 @@ func _physics_process(delta: float) -> void:
 		# Force idle animation
 		var anim_suffix := "" if Global.has_needle else "_no_needle"
 		rant.animation = "idle" + anim_suffix
+		return
+
+	# If player is dead, block input and movement
+	if is_dead:
+		velocity = Vector2.ZERO
 		return
 	
 	if is_transitioning:
@@ -138,22 +144,42 @@ func handleCollision():
 
 func take_damage(amount: int):
 	is_invincible = true
+	# Prevent further damage triggers once dead
+	if is_dead:
+		return
+
 	currentHealth -= amount
-	
+
+	# If health reaches zero or below -> trigger game over (load last saved state)
 	if currentHealth <= 0:
-		# Handle death here! (Resetting to max health for now as per your original code)
-		currentHealth = maxHealth
-		
+		is_dead = true
+		is_invincible = true
+		# Stop any ongoing attack and disable hitbox
+		is_attacking = false
+		attack_collision.disabled = true
+		rant.play("death")
+		# Flash the player a few times to indicate death
+		var tw_death = create_tween()
+		tw_death.tween_property(rant, "modulate:a", 0.2, 0.12)
+		tw_death.tween_property(rant, "modulate:a", 1.0, 0.12)
+		tw_death.set_loops(6)
+		# Wait for the blinking to finish (and any short death animation)
+		await tw_death.finished
+		# Small pause to make transition feel smoother
+		await get_tree().create_timer(0.15).timeout
+		# Load the last saved state (Global.load_game will change scene to the saved checkpoint)
+		Global.load_game()
+		return
+
+	# Normal damage flow: update global and HUD, flash invincibility
 	Global.player_current_health = currentHealth
-		
 	health_container.updateHearts(currentHealth)
-	
-	# Flashing/Invincibility period (e.g., 1 second of safety)
+
 	var tw = create_tween()
 	tw.tween_property(rant, "modulate:a", 0.5, 0.1)
 	tw.tween_property(rant, "modulate:a", 1.0, 0.1)
 	tw.set_loops(5) # Flash 5 times
-	
+
 	await get_tree().create_timer(1.0).timeout
 	is_invincible = false
 	
