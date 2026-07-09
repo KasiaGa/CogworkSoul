@@ -266,6 +266,10 @@ func play_arrival_animation() -> void:
 	# Lock player for a moment while facing screen
 	await get_tree().create_timer(0.1).timeout 
 	is_transitioning = false
+	
+func sit_on_bench() -> void:
+	is_sitting = true
+	velocity = Vector2.ZERO
 
 # Public helper to set the player's current health from other systems
 func set_current_health(new_health: int) -> void:
