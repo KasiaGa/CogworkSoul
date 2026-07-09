@@ -25,6 +25,7 @@ func _on_interact():
 	Global.collected_items.append(item_id)
 	
 	var canvas_layer = get_node_or_null("../CanvasLayer")
+	var player = get_tree().get_first_node_in_group("player")
 	
 	# 3. Give the player their reward depending on what type of item this is
 	match item_type:
@@ -40,13 +41,19 @@ func _on_interact():
 		Global.ItemType.HEALTH_UPGRADE:
 			print("Max health increased!")
 			Global.player_max_health += 1
-			Global.player_current_health = Global.player_max_health
+			if player and player.has_method("set_current_health"):
+				player.set_current_health(Global.player_max_health)
+			else:
+				Global.player_current_health = Global.player_max_health
 			if canvas_layer:
 				canvas_layer.show_notification("Acquired: Health Upgrade")
 		Global.ItemType.SILK_UPGRADE:
 			print("Max silk increased!")
 			Global.player_max_silk += 1
-			Global.player_current_silk = Global.player_max_silk
+			if player and player.has_method("set_current_silk"):
+				player.set_current_silk(Global.player_max_silk)
+			else:
+				Global.player_current_silk = Global.player_max_silk
 			if canvas_layer:
 				canvas_layer.show_notification("Acquired: Silk Upgrade")
 	

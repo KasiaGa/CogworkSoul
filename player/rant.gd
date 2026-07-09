@@ -18,6 +18,8 @@ var is_invincible: bool = false
 var is_sitting: bool = false
 var is_transitioning: bool = false
 var is_dead: bool = false
+var fade_layer: CanvasLayer = null
+var fade_rect: ColorRect = null
 
 const SPEED = 300.0
 const RUN_SPEED = 600.0
@@ -29,6 +31,9 @@ func _ready():
 	currentSilk = Global.player_current_silk
 	maxSilk = Global.player_max_silk
 	
+	# Save the reposition state before clearing it
+	var should_fade_in = Global.should_reposition
+	
 	if Global.should_reposition:
 		global_position = Global.target_position
 		#callable(func(): global_position = Global.target_position).call_deferred()
@@ -37,6 +42,10 @@ func _ready():
 		play_arrival_animation()
 		
 	attack_collision.disabled = true
+	
+	# If we just respawned via checkpoint (and screen was faded to black), fade back in
+	if should_fade_in:
+		await create_fade_in(0.8)
 
 
 func _physics_process(delta: float) -> void:
@@ -165,8 +174,8 @@ func take_damage(amount: int):
 		tw_death.set_loops(6)
 		# Wait for the blinking to finish (and any short death animation)
 		await tw_death.finished
-		# Small pause to make transition feel smoother
-		await get_tree().create_timer(0.15).timeout
+		# Smooth fade to black before loading save
+		await create_fade_out(0.6)
 		# Load the last saved state (Global.load_game will change scene to the saved checkpoint)
 		Global.load_game()
 		return
@@ -211,6 +220,47 @@ func set_current_health(new_health: int) -> void:
 func set_current_silk(new_silk: int) -> void:
 	currentSilk = new_silk
 	Global.player_current_silk = currentSilk
+
+# Create a fade layer with ColorRect for screen fade effects
+func create_fade_layer() -> void:
+	if fade_layer != null:
+		return # Already created
+	
+	fade_layer = CanvasLayer.new()
+	fade_layer.layer = 1000 # High layer so it's on top
+	add_child(fade_layer)
+	
+	fade_rect = ColorRect.new()
+	fade_rect.color = Color(0, 0, 0, 0) # Start transparent
+	fade_rect.anchor_left = 0
+	fade_rect.anchor_top = 0
+	fade_rect.anchor_right = 1
+	fade_rect.anchor_bottom = 1
+	fade_layer.add_child(fade_rect)
+
+# Fade to black (used before loading save on death)
+func create_fade_out(duration: float = 0.5) -> void:
+	create_fade_layer()
+	var tw = create_tween()
+	tw.tween_property(fade_rect, "color", Color(0, 0, 0, 1.0), duration)
+	await tw.finished
+
+# Fade from black (used after loading save on respawn)
+func create_fade_in(duration: float = 0.5) -> void:
+	create_fade_layer()
+	# Start at full black, fade to transparent
+	fade_rect.color = Color(0, 0, 0, 1.0)
+	var tw = create_tween()
+	tw.tween_property(fade_rect, "color", Color(0, 0, 0, 0.0), duration)
+	await tw.finished
+	cleanup_fade()
+
+# Clean up fade layer when no longer needed
+func cleanup_fade() -> void:
+	if fade_layer != null:
+		fade_layer.queue_free()
+		fade_layer = null
+		fade_rect = null
 
 func sit_on_bench() -> void:
 	is_sitting = true
