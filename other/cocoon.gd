@@ -32,4 +32,6 @@ func break_cocoon() -> void:
 		if player.has_method("break_cocoon"):
 			player.break_cocoon()
 			
+	Global.cocoon_spawned = false
+			
 	queue_free()
