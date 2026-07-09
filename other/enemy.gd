@@ -26,6 +26,8 @@ func take_damage(amount: int):
 	current_health -= amount
 	if (Global.player_current_silk < Global.player_max_silk):
 		Global.player_current_silk += 1
+		var player = get_tree().get_first_node_in_group("player")
+		player.set_current_silk(Global.player_current_silk)
 		silk_container.updateSilk(Global.player_current_silk)
 	
 	# Visual feedback: Flash white quickly when hit
