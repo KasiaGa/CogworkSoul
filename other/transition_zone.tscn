@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bgserly7ccnr7"]
+
+[ext_resource type="Script" uid="uid://ddy2j2lrtja06" path="res://other/transition_zone.gd" id="1_yk1gm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
+size = Vector2(102, 108)
+
+[node name="TransitionZone" type="Area2D" unique_id=704157100]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_yk1gm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1104640318]
+position = Vector2(41, 44)
+shape = SubResource("RectangleShape2D_mjotr")

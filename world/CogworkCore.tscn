@@ -16,9 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://dioe1s4xwg1ke" path="res://interaction/bench.tscn" id="13_5at20"]
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="14_tgyrp"]
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="15_sg7as"]
+[ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="17_1wo6k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
-size = Vector2(1918.3335, 148.14282)
+size = Vector2(1990.0001, 148.14282)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8kwh"]
 radius = 27.0
@@ -63,6 +64,7 @@ metadata/_edit_group_ = true
 texture = ExtResource("4_tgyrp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular" unique_id=1763188917]
+z_index = 2
 position = Vector2(-15.833374, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
@@ -77,6 +79,7 @@ metadata/_edit_group_ = true
 texture = ExtResource("4_tgyrp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular2" unique_id=559602545]
+z_index = 2
 position = Vector2(-15.833374, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
@@ -91,6 +94,7 @@ metadata/_edit_group_ = true
 texture = ExtResource("4_tgyrp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular3" unique_id=1832802466]
+z_index = 2
 position = Vector2(-15.833374, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
@@ -178,3 +182,8 @@ theme_override_font_sizes/font_size = 25
 
 [node name="Bench" parent="." unique_id=1253106123 instance=ExtResource("13_5at20")]
 position = Vector2(145, 552)
+
+[node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("17_1wo6k")]
+position = Vector2(2351, 492)
+target_scene = "uid://c7ygk2nqmy030"
+spawn_location = Vector2(-1000, 455)

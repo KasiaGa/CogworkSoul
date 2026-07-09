@@ -18,6 +18,8 @@ var cocoon_scene_path: String = ""
 var cocoon_position: Vector2 = Vector2.ZERO
 var cocoon_spawned: bool = false
 
+var player_facing_right: bool = true
+
 enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE }
 var collected_items: Array[String] = []
 

@@ -41,6 +41,10 @@ func _ready():
 	
 	if Global.should_reposition:
 		global_position = Global.target_position
+		
+		rant.flip_h = Global.player_facing_right
+		$AttackArea.scale.x = 1 if Global.player_facing_right else -1
+		
 		#callable(func(): global_position = Global.target_position).call_deferred()
 		# Resetujemy zmienną, aby nie teleportować gracza przy zwykłym starcie gry
 		Global.should_reposition = false
@@ -57,6 +61,7 @@ func _ready():
 	
 	# If we just respawned via checkpoint (and screen was faded to black), fade back in
 	if should_fade_in:
+		velocity.x = SPEED * (1.0 if Global.player_facing_right else -1.0)
 		await create_fade_in(0.8)
 	
 	# If player was sitting at the checkpoint when saved, restore sitting state
