@@ -14,6 +14,9 @@ var player_max_silk: int = 5
 
 var has_needle: bool = false
 var player_is_sitting: bool = false
+var cocoon_scene_path: String = ""
+var cocoon_position: Vector2 = Vector2.ZERO
+var cocoon_spawned: bool = false
 
 enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE }
 var collected_items: Array[String] = []
@@ -42,7 +45,11 @@ func save_game():
 			"saved_scene": current_scene_path,
 			"intro_dialogue_played": intro_dialogue_played,
 			"shards_collected": shards_collected,
-			"player_is_sitting": player_is_sitting
+			"player_is_sitting": player_is_sitting,
+			"cocoon_saved_scene": cocoon_scene_path,
+			"cocoon_position_x": cocoon_position.x,
+			"cocoon_position_y": cocoon_position.y,
+			"cocoon_spawned": cocoon_spawned
 		}
 		
 		# Write it to the file
@@ -84,6 +91,13 @@ func load_game():
 		)
 		should_reposition = true
 		
+		cocoon_scene_path = save_data.get("cocoon_saved_scene", "")
+		cocoon_position = Vector2(
+			save_data.get("cocoon_position_x", 0.0),
+			save_data.get("cocoon_position_y", 0.0)
+		)
+		cocoon_spawned = save_data.get("cocoon_spawned", false)
+
 		# 4. Load the level
 		var level_to_load = save_data.get("saved_scene", current_scene_path)
 		get_tree().change_scene_to_file(level_to_load)

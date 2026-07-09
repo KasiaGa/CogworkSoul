@@ -2,6 +2,7 @@ extends CharacterBody2D
 @onready var rant: AnimatedSprite2D = $rant
 @onready var dialogue: CanvasLayer = $"../Dialogue"
 @onready var health_container: HBoxContainer = $"../CanvasLayer/HealthContainer"
+@onready var silk_container: HBoxContainer = $"../CanvasLayer/SilkContainer"
 @onready var attack_collision: CollisionShape2D = $AttackArea/CollisionShape2D
 
 @onready var startHealth: int = 5
@@ -67,7 +68,7 @@ func _ready():
 		rant.animation = "sit" + anim_suffix
 		# Reset the flag so it doesn't carry over to other loads
 		Global.player_is_sitting = false
-
+	
 
 func _physics_process(delta: float) -> void:
 	if Global.is_dialogue_active:
@@ -230,6 +231,11 @@ func take_damage(amount: int):
 		# Smooth fade to black before loading save
 		await create_fade_out(0.6)
 		# Load the last saved state (Global.load_game will change scene to the saved checkpoint)
+		# Mark that player should respawn in cocoon (they'll break free to get max silk)
+		Global.cocoon_spawned = true
+		Global.cocoon_scene_path = get_tree().current_scene.scene_file_path
+		Global.cocoon_position = global_position
+		Global.save_game()
 		Global.load_game()
 		return
 
@@ -315,12 +321,18 @@ func cleanup_fade() -> void:
 		fade_layer = null
 		fade_rect = null
 
-func sit_on_bench() -> void:
-	is_sitting = true
-	velocity = Vector2.ZERO
-	# Mark in Global that player is sitting (for save/load system)
-	Global.player_is_sitting = true
+# Called when cocoon breaks - restore player and grant max silk
+func break_cocoon() -> void:
+	set_current_silk(maxSilk)  # Grant max silk for breaking free
+	silk_container.updateSilk(currentSilk)
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies") and body.has_method("take_damage"):
 		body.take_damage(1)
+	elif body.is_in_group("cocoon") and body.has_method("take_cocoon_damage"):
+		body.take_cocoon_damage(1)
+		
+func _on_attack_area_area_entered(area: Area2D) -> void:
+	# Check if the player's attack hit the Cocoon Area2D
+	if area.is_in_group("cocoon") and area.has_method("take_cocoon_damage"):
+		area.take_cocoon_damage(1)

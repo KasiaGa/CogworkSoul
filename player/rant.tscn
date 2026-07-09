@@ -589,4 +589,5 @@ position = Vector2(-26.999998, 16)
 rotation = -0.20420352
 shape = SubResource("CapsuleShape2D_da6y2")
 
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
