@@ -10,6 +10,7 @@ func _on_start_button_pressed() -> void:
 	Global.player_max_silk = 5
 	Global.player_current_silk = 0
 	Global.has_needle = false
+	Global.player_is_sitting = false
 	Global.collected_items.clear()
 	Global.intro_dialogue_played = false
 	Global.should_reposition = false

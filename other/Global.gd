@@ -13,6 +13,7 @@ var player_current_silk: int = 0
 var player_max_silk: int = 5
 
 var has_needle: bool = false
+var player_is_sitting: bool = false
 
 enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE }
 var collected_items: Array[String] = []
@@ -40,7 +41,8 @@ func save_game():
 			"checkpoint_y": target_position.y,
 			"saved_scene": current_scene_path,
 			"intro_dialogue_played": intro_dialogue_played,
-			"shards_collected": shards_collected
+			"shards_collected": shards_collected,
+			"player_is_sitting": player_is_sitting
 		}
 		
 		# Write it to the file
@@ -72,6 +74,8 @@ func load_game():
 		# 2. ENFORCE YOUR RULE: Reset current stats to max health and zero silk on load
 		player_current_health = player_max_health
 		player_current_silk = 0
+		# Restore sitting state if it was saved
+		player_is_sitting = save_data.get("player_is_sitting", false)
 		
 		# 3. Handle positioning
 		target_position = Vector2(

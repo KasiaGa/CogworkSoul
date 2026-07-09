@@ -34,18 +34,38 @@ func _ready():
 	# Save the reposition state before clearing it
 	var should_fade_in = Global.should_reposition
 	
+	# Check if player should be sitting before playing arrival animation
+	var should_start_sitting = Global.player_is_sitting
+	
 	if Global.should_reposition:
 		global_position = Global.target_position
 		#callable(func(): global_position = Global.target_position).call_deferred()
 		# Resetujemy zmienną, aby nie teleportować gracza przy zwykłym starcie gry
 		Global.should_reposition = false
-		play_arrival_animation()
+		# Only play standing arrival animation if not starting in sitting state
+		if not should_start_sitting:
+			play_arrival_animation()
+		else:
+			# If sitting, just transition without the standing animation
+			is_transitioning = true
+			await get_tree().create_timer(0.1).timeout
+			is_transitioning = false
 		
 	attack_collision.disabled = true
 	
 	# If we just respawned via checkpoint (and screen was faded to black), fade back in
 	if should_fade_in:
 		await create_fade_in(0.8)
+	
+	# If player was sitting at the checkpoint when saved, restore sitting state
+	if should_start_sitting:
+		is_sitting = true
+		velocity = Vector2.ZERO
+		# Play sitting animation
+		var anim_suffix := "" if Global.has_needle else "_no_needle"
+		rant.animation = "sit" + anim_suffix
+		# Reset the flag so it doesn't carry over to other loads
+		Global.player_is_sitting = false
 
 
 func _physics_process(delta: float) -> void:
@@ -73,6 +93,7 @@ func _physics_process(delta: float) -> void:
 		# If player tries to move or jump, stand up
 		if Input.is_action_just_pressed("jump") or Input.get_axis("left", "right") != 0:
 			is_sitting = false
+			Global.player_is_sitting = false
 		else:
 			# Enforce sitting animation loop
 			var anim_suffix := "" if Global.has_needle else "_no_needle"
@@ -265,6 +286,8 @@ func cleanup_fade() -> void:
 func sit_on_bench() -> void:
 	is_sitting = true
 	velocity = Vector2.ZERO
+	# Mark in Global that player is sitting (for save/load system)
+	Global.player_is_sitting = true
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies") and body.has_method("take_damage"):

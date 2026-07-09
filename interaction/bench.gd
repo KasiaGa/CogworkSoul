@@ -19,8 +19,10 @@ func _on_interact():
 		# 3. Refill player health and reset silk through setter methods
 		if player.has_method("sit_on_bench"):
 			player.sit_on_bench()
+		# Mark that player is sitting at this checkpoint
+		Global.player_is_sitting = true
 		if player.has_method("set_current_health"):
-			player.set_current_health(Global.player_current_health)
+			player.set_current_health(Global.player_max_health)
 		if player.has_method("set_current_silk"):
 			player.set_current_silk(0)
 	
