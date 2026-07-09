@@ -173,6 +173,19 @@ func play_arrival_animation() -> void:
 	await get_tree().create_timer(0.1).timeout 
 	is_transitioning = false
 
+# Public helper to set the player's current health from other systems
+func set_current_health(new_health: int) -> void:
+	currentHealth = new_health
+	Global.player_current_health = currentHealth
+	# Update HUD immediately
+	if health_container and health_container.has_method("updateHearts"):
+		health_container.updateHearts(currentHealth)
+
+# Public helper to set the player's current silk from other systems
+func set_current_silk(new_silk: int) -> void:
+	currentSilk = new_silk
+	Global.player_current_silk = currentSilk
+
 func sit_on_bench() -> void:
 	is_sitting = true
 	velocity = Vector2.ZERO
