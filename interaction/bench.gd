@@ -16,19 +16,21 @@ func _on_interact():
 	
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
-		# 3. Refill player health and reset silk through setter methods
+		# 3. Refill player health and preserve silk through setter methods
 		if player.has_method("sit_on_bench"):
 			player.sit_on_bench()
 		# Mark that player is sitting at this checkpoint
 		Global.player_is_sitting = true
 		if player.has_method("set_current_health"):
 			player.set_current_health(Global.player_max_health)
-		if player.has_method("set_current_silk"):
-			player.set_current_silk(0)
+		# Preserve current silk (don't reset to 0 here)
+		# Just sync the current silk to Global for consistency
+		#if "currentSilk" in player:
+		#	Global.player_current_silk = player.currentSilk
 	
-	# 4. Also set Global values for systems that might check them (and fallback if player doesn't exist)
+	# 4. Also set Global values for systems that might check them
 	Global.player_current_health = Global.player_max_health
-	Global.player_current_silk = 0
+	# Keep current silk as-is (don't reset to 0 at checkpoint)
 	
 	# 5. Update the HUD UI immediately so the hearts visual fills up
 	var canvas_layer = get_node_or_null("../CanvasLayer")

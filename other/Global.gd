@@ -71,7 +71,7 @@ func load_game():
 		
 		collected_items = Array(save_data.get("collected_items", []), TYPE_STRING, &"", null)
 		
-		# 2. ENFORCE YOUR RULE: Reset current stats to max health and zero silk on load
+		# 2. ENFORCE YOUR RULE: Always reset to max health and zero silk on load (respawn from checkpoint)
 		player_current_health = player_max_health
 		player_current_silk = 0
 		# Restore sitting state if it was saved

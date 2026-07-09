@@ -18,6 +18,7 @@ var is_invincible: bool = false
 var is_sitting: bool = false
 var is_transitioning: bool = false
 var is_dead: bool = false
+var is_wren_active: bool = false
 var fade_layer: CanvasLayer = null
 var fade_rect: ColorRect = null
 
@@ -85,6 +86,11 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		return
 	
+	# If wren ability is active, block input and movement
+	if is_wren_active:
+		velocity = Vector2.ZERO
+		return
+	
 	if is_transitioning:
 		return
 			
@@ -126,6 +132,32 @@ func _physics_process(delta: float) -> void:
 		
 		attack_collision.disabled = true 
 		is_attacking = false
+
+	# 3. WREN ABILITY - Convert 5 silk to 5 health
+	if Input.is_action_just_pressed("wren") and not is_wren_active and not is_attacking and currentSilk >= 5:
+		is_wren_active = true
+		# Consume silk and restore health
+		currentSilk -= 5
+		currentHealth = min(currentHealth + 5, maxHealth) # Cap health at max
+		Global.player_current_silk = currentSilk
+		Global.player_current_health = currentHealth
+		# Update HUD
+		if health_container and health_container.has_method("updateHearts"):
+			health_container.updateHearts(currentHealth)
+		# Update silk HUD if available
+		var silk_container = get_node_or_null("../CanvasLayer/SilkContainer")
+		if silk_container and silk_container.has_method("updateSilk"):
+			silk_container.updateSilk(currentSilk)
+		# Play wren animation and effects
+		rant.play("wren")
+		# Flash effect during wren
+		var tw = create_tween()
+		tw.tween_property(rant, "modulate:a", 0.5, 0.1)
+		tw.tween_property(rant, "modulate:a", 1.0, 0.1)
+		tw.set_loops(3) # Flash 3 times
+		# Wait for animation and flash to finish
+		await get_tree().create_timer(0.8).timeout
+		is_wren_active = false
 
 	# Run modifier
 	if Input.is_action_pressed("run"):

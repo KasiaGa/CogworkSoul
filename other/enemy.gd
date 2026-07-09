@@ -24,8 +24,9 @@ func _ready():
 	
 func take_damage(amount: int):
 	current_health -= amount
-	Global.player_current_silk += 1
-	silk_container.updateSilk(Global.player_current_silk)
+	if (Global.player_current_silk < Global.player_max_silk):
+		Global.player_current_silk += 1
+		silk_container.updateSilk(Global.player_current_silk)
 	
 	# Visual feedback: Flash white quickly when hit
 	var tween = create_tween()
