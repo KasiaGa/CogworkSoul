@@ -171,13 +171,13 @@ shape = SubResource("RectangleShape2D_lquwl")
 position = Vector2(608, 571)
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_metal2" unique_id=100269648]
-position = Vector2(151.5715, -623.99994)
+position = Vector2(151.57153, -831.99994)
 rotation = -3.1415925
 scale = Vector2(1.8044192, 0.7831631)
 texture = ExtResource("5_xqpbi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_metal2" unique_id=1303715309]
-position = Vector2(57, -503)
+position = Vector2(57, -708)
 shape = SubResource("RectangleShape2D_lquwl")
 
 [node name="CharacterBody2D" parent="." unique_id=1131129936 instance=ExtResource("6_igmhy")]
@@ -249,6 +249,16 @@ texture = ExtResource("14_uf2or")
 position = Vector2(-1072, 262)
 shape = SubResource("RectangleShape2D_da6y2")
 
+[node name="wall4" type="StaticBody2D" parent="." unique_id=1631153939]
+
+[node name="Sprite2D" type="Sprite2D" parent="wall4" unique_id=1661797894]
+position = Vector2(-991, -735)
+texture = ExtResource("14_uf2or")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall4" unique_id=856614529]
+position = Vector2(-1118, -403)
+shape = SubResource("RectangleShape2D_da6y2")
+
 [node name="wall2" type="StaticBody2D" parent="." unique_id=4871535]
 
 [node name="Sprite2D" type="Sprite2D" parent="wall2" unique_id=2072668536]
@@ -258,6 +268,18 @@ texture = ExtResource("14_uf2or")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="wall2" unique_id=1052735118]
 position = Vector2(2397, 240)
+shape = SubResource("RectangleShape2D_da6y2")
+
+[node name="wall3" type="StaticBody2D" parent="." unique_id=767395086]
+position = Vector2(0, -254)
+
+[node name="Sprite2D" type="Sprite2D" parent="wall3" unique_id=524034283]
+position = Vector2(2456, -498)
+rotation = -3.1415927
+texture = ExtResource("14_uf2or")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall3" unique_id=414618323]
+position = Vector2(2436, 69)
 shape = SubResource("RectangleShape2D_da6y2")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1229838044]
@@ -312,6 +334,7 @@ texture = ExtResource("19_pk0e4")
 [node name="PauseMenu" parent="CanvasLayer" unique_id=2077802288 instance=ExtResource("21_dxnsj")]
 
 [node name="InventoryMapMenu" parent="CanvasLayer" unique_id=1439938911 instance=ExtResource("22_r8g5k")]
+visible = false
 
 [node name="NotificationBox" type="PanelContainer" parent="CanvasLayer" unique_id=1432874178]
 self_modulate = Color(1, 1, 1, 0)
@@ -358,21 +381,21 @@ shape = SubResource("RectangleShape2D_ae5in")
 [node name="StaticBody2D6" type="StaticBody2D" parent="." unique_id=548629497]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6" unique_id=544023553]
-position = Vector2(966, 185)
+position = Vector2(966.00006, -24)
 scale = Vector2(0.82530123, 0.82530123)
 texture = ExtResource("22_u2g0j")
 
 [node name="StaticBody2D16" type="StaticBody2D" parent="." unique_id=1719446944]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D16" unique_id=802988071]
-position = Vector2(1027, 167)
+position = Vector2(1027, -42)
 scale = Vector2(0.5933734, 0.5933734)
 texture = ExtResource("22_u2g0j")
 
 [node name="StaticBody2D18" type="StaticBody2D" parent="." unique_id=215353585]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D18" unique_id=483328848]
-position = Vector2(1558, 162)
+position = Vector2(1558, -43.99997)
 scale = Vector2(0.5933734, 0.5933734)
 skew = -0.13613568
 texture = ExtResource("22_u2g0j")
@@ -380,7 +403,7 @@ texture = ExtResource("22_u2g0j")
 [node name="StaticBody2D17" type="StaticBody2D" parent="." unique_id=1675215355]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D17" unique_id=2000220763]
-position = Vector2(163.1875, 176.6423)
+position = Vector2(163.1875, -32.357697)
 scale = Vector2(0.74246967, 0.74246967)
 skew = 0.050614547
 texture = ExtResource("22_u2g0j")

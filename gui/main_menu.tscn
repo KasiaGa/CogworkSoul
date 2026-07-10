@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bjd1qkeyowxns"]
 
 [ext_resource type="Script" uid="uid://cku0bettunt6j" path="res://gui/main_menu.gd" id="1_reecx"]
+[ext_resource type="Texture2D" uid="uid://i50gefpehtqn" path="res://other/HOLLOW KNIGHT COGWORK SOUL.png" id="2_xkvi0"]
 
 [sub_resource type="SystemFont" id="SystemFont_mjotr"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -22,6 +23,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_reecx")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=229547101]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.81960785)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="ColorRect" unique_id=623304993]
+
+[node name="Sprite2D" type="Sprite2D" parent="ColorRect/StaticBody2D" unique_id=1326666925]
+position = Vector2(793.00006, 217.99998)
+scale = Vector2(0.56717855, 0.5671785)
+texture = ExtResource("2_xkvi0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1363059040]
 layout_mode = 1

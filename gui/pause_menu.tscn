@@ -20,8 +20,11 @@ layer = 10
 script = ExtResource("1_r7i8h")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=923463076]
-offset_right = 1296.0
-offset_bottom = 697.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 0.81960785)
 
 [node name="CenterContainer" type="CenterContainer" parent="ColorRect" unique_id=229613857]
@@ -29,8 +32,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -140.0
-offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
 
