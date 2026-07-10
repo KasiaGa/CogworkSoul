@@ -34,10 +34,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -545.0
-offset_top = -301.0
-offset_right = 548.0
-offset_bottom = 300.0
+offset_left = -805.0
+offset_top = -453.0
+offset_right = 802.0
+offset_bottom = 466.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.03137255, 0, 0, 0.92156863)
@@ -49,10 +49,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -509.5
-offset_top = -260.5
-offset_right = 503.5
-offset_bottom = 263.5
+offset_left = -715.5
+offset_top = -391.5
+offset_right = 737.5
+offset_bottom = 382.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -62,13 +62,13 @@ layout_mode = 2
 [node name="InventoryButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=1744551112]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_vg86a")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 25
 text = "Inventory"
 
 [node name="MapButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=431280213]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 25
 text = "Map"
 
 [node name="InventoryView" type="Control" parent="Background/MenuContainer" unique_id=293217413]
@@ -82,6 +82,7 @@ offset_top = 9.0
 offset_right = 73.0
 offset_bottom = 32.0
 theme_override_fonts/font = SubResource("SystemFont_qblpg")
+theme_override_font_sizes/font_size = 22
 text = "Shards: 0"
 
 [node name="ItemGrid" type="GridContainer" parent="Background/MenuContainer/InventoryView" unique_id=470268612]
@@ -90,10 +91,13 @@ offset_left = 18.0
 offset_top = 44.0
 offset_right = 695.0
 offset_bottom = 346.0
+offset_transform_enabled = true
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
 columns = 4
 
 [node name="needle" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=1039175191]
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 texture = ExtResource("2_okbrl")
 expand_mode = 4
@@ -103,13 +107,15 @@ z_index = -1
 layout_mode = 0
 offset_left = -2.0
 offset_top = -3.0
-offset_right = 83.0
-offset_bottom = 83.049385
+offset_right = 148.0
+offset_bottom = 147.0
 
 [node name="cogwork_battery" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=672894153]
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/cogwork_battery" unique_id=966168266]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_left = 19.0
@@ -118,9 +124,11 @@ offset_right = 104.0
 offset_bottom = 83.049385
 
 [node name="key_to_lab_21" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=611539053]
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/key_to_lab_21" unique_id=1007492812]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_left = 119.0
@@ -129,9 +137,11 @@ offset_right = 204.0
 offset_bottom = 82.049385
 
 [node name="health_upgrade" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=357184808]
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/health_upgrade" unique_id=1903540252]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_left = 219.0
@@ -164,13 +174,13 @@ layout_mode = 2
 [node name="ItemTitle" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=612034895]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 22
 clip_text = true
 
 [node name="ItemDesc" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2119655486]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
 
 [node name="MapView" type="Control" parent="Background/MenuContainer" unique_id=1097567820]
@@ -178,10 +188,10 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Background/MenuContainer/MapView" unique_id=1169644597]
 layout_mode = 0
-offset_left = 252.0
+offset_left = 298.0
 offset_top = -5.0
-offset_right = 780.6974
-offset_bottom = 438.0
+offset_right = 1145.3479
+offset_bottom = 705.0
 texture = ExtResource("1_4wr3o")
 expand_mode = 1
 
