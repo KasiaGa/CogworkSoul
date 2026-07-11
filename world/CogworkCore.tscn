@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://b33x564fkhhtt" path="res://world/cogwork_factory.gd" id="1_um1bq"]
 [ext_resource type="PackedScene" uid="uid://16g0x5cxu58u" path="res://other/enemy.tscn" id="2_5at20"]
-[ext_resource type="Texture2D" uid="uid://c1cw4kse5cpa7" path="res://assets/images/world/background_test2.png" id="3_wnx1b"]
+[ext_resource type="Texture2D" uid="uid://bgne3pqcsms1r" path="res://assets/images/world/bg1_7.png" id="3_1eua6"]
 [ext_resource type="Texture2D" uid="uid://dqft755m06alr" path="res://assets/images/world/ground.png" id="4_tgyrp"]
+[ext_resource type="Texture2D" uid="uid://dh7ethna2yx6t" path="res://assets/images/world/ground_irregular2.png" id="5_f4482"]
 [ext_resource type="PackedScene" uid="uid://bwqrnt0mdtxeb" path="res://player/rant.tscn" id="5_sg7as"]
 [ext_resource type="Script" uid="uid://rv7yt7k6gh24" path="res://other/entranceCogworkCore.gd" id="6_1wo6k"]
 [ext_resource type="Texture2D" uid="uid://o144t0exex1" path="res://assets/images/world/entrance.png" id="7_h7qu2"]
@@ -17,6 +18,10 @@
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="14_tgyrp"]
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="15_sg7as"]
 [ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="17_1wo6k"]
+[ext_resource type="Texture2D" uid="uid://bikmpy1pq7nsv" path="res://assets/images/world/paralax3_3.png" id="18_h7qu2"]
+[ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="19_xd341"]
+[ext_resource type="Texture2D" uid="uid://sgy4tmm57o2n" path="res://assets/images/world/entrance2_2.png" id="20_1eua6"]
+[ext_resource type="Texture2D" uid="uid://w0t0v4mwiewt" path="res://assets/images/world/line.png" id="20_f4482"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(1990.0001, 148.14282)
@@ -33,6 +38,9 @@ height = 394.0
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
+size = Vector2(54.025017, 63.199997)
+
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_um1bq")
 
@@ -46,13 +54,14 @@ position = Vector2(208, 6)
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=2123797011]
 scroll_scale = Vector2(1.1, 1.1)
-repeat_size = Vector2(1366, 768)
+repeat_size = Vector2(2252, 1559)
 repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1860392640]
 z_index = -2
-position = Vector2(142, 276)
-texture = ExtResource("3_wnx1b")
+position = Vector2(192, -151)
+scale = Vector2(0.7238889, 0.72388893)
+texture = ExtResource("3_1eua6")
 
 [node name="ground_irregular" type="StaticBody2D" parent="." unique_id=486012346]
 z_index = -1
@@ -98,6 +107,57 @@ z_index = 2
 position = Vector2(-15.833374, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular4" type="StaticBody2D" parent="." unique_id=1056505588]
+z_index = 99
+position = Vector2(2941, 624)
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular4" unique_id=616564656]
+texture = ExtResource("4_tgyrp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular4" unique_id=377909425]
+z_index = 2
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular5" type="StaticBody2D" parent="." unique_id=927278211]
+z_index = 99
+position = Vector2(-1142, 355)
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular5" unique_id=1289670210]
+texture = ExtResource("5_f4482")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular5" unique_id=982243353]
+z_index = 2
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular6" type="StaticBody2D" parent="." unique_id=236591807]
+z_index = 99
+position = Vector2(-583, 913)
+rotation = 1.5707964
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular6" unique_id=266513972]
+texture = ExtResource("5_f4482")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular6" unique_id=85670883]
+z_index = 2
+position = Vector2(-15.833374, -3.071289)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ground_irregular6" unique_id=947776589]
+position = Vector2(-399.00232, 642.2986)
+scale = Vector2(17.625095, 18.566036)
+texture = ExtResource("19_xd341")
 
 [node name="CharacterBody2D" parent="." unique_id=1131129936 instance=ExtResource("5_sg7as")]
 position = Vector2(610, 458)
@@ -181,9 +241,60 @@ theme_override_fonts/font = SubResource("SystemFont_5at20")
 theme_override_font_sizes/font_size = 25
 
 [node name="Bench" parent="." unique_id=1253106123 instance=ExtResource("13_5at20")]
-position = Vector2(145, 552)
+position = Vector2(116.00001, 502.00003)
+scale = Vector2(0.42, 0.42)
 
 [node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("17_1wo6k")]
 position = Vector2(2351, 492)
 target_scene = "uid://c7ygk2nqmy030"
 spawn_location = Vector2(-1100, 455)
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1669351059]
+z_index = 100
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(0, -341)
+repeat_size = Vector2(1366, 0)
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=1279626696]
+z_index = 100
+position = Vector2(-271.25, 844.71875)
+scale = Vector2(0.4862288, 0.4862288)
+texture = ExtResource("18_h7qu2")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1403947929]
+z_index = 99
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=608606040]
+position = Vector2(2483.0002, -157.25)
+scale = Vector2(9.833331, 10.973685)
+texture = ExtResource("19_xd341")
+
+[node name="Sprite2D2" type="Sprite2D" parent="StaticBody2D2" unique_id=92586495]
+position = Vector2(2541.0002, 334.99997)
+scale = Vector2(7.499995, 8.807017)
+texture = ExtResource("19_xd341")
+
+[node name="Sprite2D3" type="Sprite2D" parent="StaticBody2D2" unique_id=46785702]
+position = Vector2(2417.9998, 167.99997)
+rotation = -0.3403392
+scale = Vector2(3.7500026, 6.4144745)
+texture = ExtResource("19_xd341")
+
+[node name="Sprite2D4" type="Sprite2D" parent="StaticBody2D2" unique_id=378090947]
+position = Vector2(2247, -316.71646)
+scale = Vector2(0.6405093, 1.1564547)
+texture = ExtResource("20_f4482")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=357928229]
+position = Vector2(2473.125, -158.99998)
+scale = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=245195005]
+z_index = 100
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1505432526]
+position = Vector2(2317.25, 212.65865)
+scale = Vector2(0.8096447, 0.80964464)
+texture = ExtResource("20_1eua6")
