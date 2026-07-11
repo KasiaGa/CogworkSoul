@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://h6i28m6u5tid"
+path="res://.godot/imported/flowey.dialogue-1dbd5d7c88ec7847f8f19de56dfe13b6.tres"
+
+[deps]
+
+source_file="res://dialogue/flowey.dialogue"
+dest_files=["res://.godot/imported/flowey.dialogue-1dbd5d7c88ec7847f8f19de56dfe13b6.tres"]
+
+[params]
+
+defaults=true

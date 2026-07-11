@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dy7lim2r7tqk7"
+path="res://.godot/imported/zekrom.dialogue-dd6106eabc309010741e0becc15edc9c.tres"
+
+[deps]
+
+source_file="res://dialogue/zekrom.dialogue"
+dest_files=["res://.godot/imported/zekrom.dialogue-dd6106eabc309010741e0becc15edc9c.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d0f5qjmvvdcyv"
+path="res://.godot/imported/yang.dialogue-e2a01e02db962e8865ea3e34564f4829.tres"
+
+[deps]
+
+source_file="res://dialogue/yang.dialogue"
+dest_files=["res://.godot/imported/yang.dialogue-e2a01e02db962e8865ea3e34564f4829.tres"]
+
+[params]
+
+defaults=true

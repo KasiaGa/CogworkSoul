@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dpiuj050q10w4"
+path="res://.godot/imported/hornet.dialogue-1af91bdf3487413ed01919e68fecd854.tres"
+
+[deps]
+
+source_file="res://dialogue/hornet.dialogue"
+dest_files=["res://.godot/imported/hornet.dialogue-1af91bdf3487413ed01919e68fecd854.tres"]
+
+[params]
+
+defaults=true

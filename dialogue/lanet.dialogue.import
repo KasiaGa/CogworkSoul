@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://mgu8xlvwfv1c"
+path="res://.godot/imported/lanet.dialogue-a2985f96dbae39bf241163eed4bfd2bd.tres"
+
+[deps]
+
+source_file="res://dialogue/lanet.dialogue"
+dest_files=["res://.godot/imported/lanet.dialogue-a2985f96dbae39bf241163eed4bfd2bd.tres"]
+
+[params]
+
+defaults=true

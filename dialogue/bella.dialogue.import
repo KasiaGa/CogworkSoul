@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c5d0hypx5fmty"
+path="res://.godot/imported/bella.dialogue-b9812aab1be23779bd9f170f0d57d49c.tres"
+
+[deps]
+
+source_file="res://dialogue/bella.dialogue"
+dest_files=["res://.godot/imported/bella.dialogue-b9812aab1be23779bd9f170f0d57d49c.tres"]
+
+[params]
+
+defaults=true
