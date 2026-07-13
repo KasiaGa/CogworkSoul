@@ -1,10 +1,13 @@
 extends Node2D
-@onready var dialogue = $Dialogue
+@onready var dialogue = $CanvasLayer/Dialogue
 @onready var health_container: HBoxContainer = $CanvasLayer/HealthContainer
 @onready var silk_container: HBoxContainer = $CanvasLayer/SilkContainer
 @onready var character_body_2d: CharacterBody2D = $CharacterBody2D
 
 var introShown = false;
+
+const DIALOGUE_FILE = preload("res://dialogue/intro.dialogue")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,7 +21,7 @@ func _ready() -> void:
 		spawn_persistant_cocoon()
 
 	if not Global.intro_dialogue_played:
-		dialogue.start()
+		dialogue.start(DIALOGUE_FILE, "start")
 		Global.intro_dialogue_played = true # Mark it done so it never auto-triggers agai
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

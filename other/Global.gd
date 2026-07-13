@@ -28,6 +28,7 @@ var shards_collected: int = 0
 var current_scene_path: String = "res://world/main.tscn" 
 
 var intro_dialogue_played: bool = false
+var rant_needle_played: bool = false
 var is_dialogue_active: bool = false
 
 var broken_objects: Dictionary = {} # Format: {"res://levels/room1.tscn:BreakableObject3": true}
@@ -48,6 +49,7 @@ func save_game():
 			"checkpoint_y": target_position.y,
 			"saved_scene": current_scene_path,
 			"intro_dialogue_played": intro_dialogue_played,
+			"rant_needle_played": rant_needle_played,
 			"shards_collected": shards_collected,
 			"player_is_sitting": player_is_sitting,
 			"cocoon_saved_scene": cocoon_scene_path,
@@ -79,6 +81,7 @@ func load_game():
 		player_max_silk = save_data.get("max_silk", player_max_silk)
 		has_needle = save_data.get("has_needle", false)
 		intro_dialogue_played = save_data.get("intro_dialogue_played", true)
+		rant_needle_played = save_data.get("rant_needle_played", false)
 		shards_collected = save_data.get("shards_collected", 0)
 		
 		collected_items = Array(save_data.get("collected_items", []), TYPE_STRING, &"", null)

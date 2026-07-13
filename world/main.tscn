@@ -140,11 +140,6 @@ z_index = -2
 position = Vector2(142, 276)
 texture = ExtResource("2_w6b5a")
 
-[node name="Dialogue" parent="." unique_id=1126728371 instance=ExtResource("7_pmoxg")]
-offset = Vector2(-195, -230)
-transform = Transform2D(1, 0, 0, 1, -195, -230)
-follow_viewport_enabled = true
-
 [node name="ground_irregular" type="StaticBody2D" parent="." unique_id=527478190]
 visible = false
 z_index = -1
@@ -356,6 +351,8 @@ grow_vertical = 0
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_r8g5k")
 theme_override_font_sizes/font_size = 25
+
+[node name="Dialogue" parent="CanvasLayer" unique_id=1126728371 instance=ExtResource("7_pmoxg")]
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=1092127715]
 

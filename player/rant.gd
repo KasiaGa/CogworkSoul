@@ -1,6 +1,6 @@
 extends CharacterBody2D
 @onready var rant: AnimatedSprite2D = $rant
-@onready var dialogue: CanvasLayer = $"../Dialogue"
+@onready var dialogue: CanvasLayer = $"../CanvasLayer/Dialogue"
 @onready var health_container: HBoxContainer = $"../CanvasLayer/HealthContainer"
 @onready var silk_container: HBoxContainer = $"../CanvasLayer/SilkContainer"
 @onready var attack_collision: CollisionShape2D = $AttackArea/CollisionShape2D
@@ -26,6 +26,8 @@ var fade_rect: ColorRect = null
 const SPEED = 300.0
 const RUN_SPEED = 600.0
 const JUMP_VELOCITY = -1400.0
+
+const DIALOGUE_FILE = preload("res://dialogue/rant_needle.dialogue")
 
 func _ready():
 	currentHealth = Global.player_current_health
@@ -130,6 +132,14 @@ func _physics_process(delta: float) -> void:
 	# 2. GATED ATTACK INPUT
 	# Added "and Global.has_needle" so clicking 'X' does nothing without it!
 	if Input.is_action_just_pressed("attack") and not is_attacking and Global.has_needle:
+		if not Global.rant_needle_played:
+			Global.rant_needle_played = true
+			Global.save_game() # Permanently remember they did this
+			
+			# Trigger the dialogue node attached to your level
+			if dialogue and dialogue.has_method("start"):
+				dialogue.start(DIALOGUE_FILE, "rant_needle")
+		
 		is_attacking = true
 		rant.play("attack")
 		attack_collision.disabled = false 
