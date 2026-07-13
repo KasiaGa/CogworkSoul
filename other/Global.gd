@@ -32,6 +32,7 @@ var rant_needle_played: bool = false
 var is_dialogue_active: bool = false
 
 var broken_objects: Dictionary = {} # Format: {"res://levels/room1.tscn:BreakableObject3": true}
+var discovered_locations: Dictionary = {}
 
 # Path to the actual file on the computer
 const SAVE_PATH = "user://savegame.save"
@@ -56,7 +57,8 @@ func save_game():
 			"cocoon_position_x": cocoon_position.x,
 			"cocoon_position_y": cocoon_position.y,
 			"cocoon_spawned": cocoon_spawned,
-			"broken_objects": broken_objects
+			"broken_objects": broken_objects,
+			"discovered_locations": discovered_locations
 		}
 		
 		# Write it to the file
@@ -107,6 +109,7 @@ func load_game():
 		cocoon_spawned = save_data.get("cocoon_spawned", false)
 		
 		broken_objects = save_data.get("broken_objects", {})
+		discovered_locations = save_data.get("discovered_locations", {})
 
 		# 4. Load the level
 		var level_to_load = save_data.get("saved_scene", current_scene_path)

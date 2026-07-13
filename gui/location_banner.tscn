@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://ccpu8cqejpais"]
+
+[ext_resource type="Script" uid="uid://0nq40db788fg" path="res://gui/location_banner.gd" id="1_6do72"]
+[ext_resource type="Texture2D" uid="uid://csnbmcgl6wxrx" path="res://assets/images/gui/decor.png" id="2_6jk33"]
+
+[sub_resource type="SystemFont" id="SystemFont_6do72"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
+
+[node name="LocationBanner" type="CanvasLayer" unique_id=2123919144]
+script = ExtResource("1_6do72")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1428832582]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 43.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer" unique_id=273565961]
+layout_mode = 2
+theme_override_constants/margin_top = 200
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer" unique_id=1078279121]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/MarginContainer/VBoxContainer" unique_id=1814261009]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_6do72")
+theme_override_font_sizes/font_size = 56
+text = "Cogwork Factory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="CenterContainer/MarginContainer/VBoxContainer" unique_id=227600272]
+position = Vector2(216.95935, 73.430786)
+rotation = -3.1415925
+scale = Vector2(0.5689594, 0.5689594)
+texture = ExtResource("2_6jk33")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/MarginContainer/VBoxContainer" unique_id=1057091063]
+root_node = NodePath("../../../..")
