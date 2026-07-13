@@ -573,10 +573,8 @@ script = ExtResource("1_1mopy")
 visibility_layer = 2
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ae5in")
-animation = &"wren"
+animation = &"walk"
 autoplay = "idle_no_needle"
-frame = 11
-frame_progress = 0.7035333
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1052474574]
 position = Vector2(-16, 10)
@@ -588,6 +586,14 @@ shape = SubResource("CapsuleShape2D_mjotr")
 position = Vector2(-26.999998, 16)
 rotation = -0.20420352
 shape = SubResource("CapsuleShape2D_da6y2")
+
+[node name="WallDetector" type="RayCast2D" parent="AttackArea" unique_id=755355487]
+position = Vector2(-14, 107)
+target_position = Vector2(60, 0)
+
+[node name="LedgeDetector" type="RayCast2D" parent="AttackArea" unique_id=1132133233]
+position = Vector2(-16, 59)
+target_position = Vector2(60, 0)
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

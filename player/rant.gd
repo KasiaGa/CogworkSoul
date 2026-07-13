@@ -14,6 +14,9 @@ extends CharacterBody2D
 @export var maxSilk: int = 5
 @onready var currentSilk: int = startSilk
 
+@onready var wall_detector: RayCast2D = $AttackArea/WallDetector
+@onready var ledge_detector: RayCast2D = $AttackArea/LedgeDetector
+
 var is_attacking: bool = false
 var is_invincible: bool = false
 var is_sitting: bool = false
@@ -22,6 +25,8 @@ var is_dead: bool = false
 var is_wren_active: bool = false
 var fade_layer: CanvasLayer = null
 var fade_rect: ColorRect = null
+var is_climbing: bool = false
+var can_climb: bool = true
 
 const SPEED = 300.0
 const RUN_SPEED = 600.0
@@ -78,6 +83,12 @@ func _ready():
 	
 
 func _physics_process(delta: float) -> void:
+	if is_climbing:
+		return # Skip all gravity, inputs, and slide collisions while climbing!
+			
+	# Run our check every frame we are mid-air
+	check_ledge_climb()
+
 	if Global.is_dialogue_active:
 		velocity.x = move_toward(velocity.x, 0, SPEED) # Slow down to a stop if running
 		if not is_on_floor():
@@ -357,3 +368,42 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 		area.take_cocoon_damage(1)
 	if area.is_in_group("breakable") and area.has_method("take_damage"):
 		area.take_damage(1)
+		
+		
+func check_ledge_climb():
+	# If the player is back on the ground, reset their ability to climb again
+	if is_on_floor():
+		can_climb = true
+		return
+		
+	# If they are already climbing or already used up their climb this jump, block it
+	if is_climbing or not can_climb:
+		return
+	
+	# If we are pressing against a wall, but our head is clear of the top edge
+	if wall_detector.is_colliding() and not ledge_detector.is_colliding():
+		can_climb = false # Immediately consume the climb charge!
+		start_ledge_climb()
+
+func start_ledge_climb():
+	is_climbing = true
+	velocity = Vector2.ZERO # Halt physics movement
+	
+	# Play your climb animation here if you have one
+	# rant.play("climb") 
+	
+	# Determine which direction we are facing to calculate the step forward
+	var direction_modifier = 1.0 if Global.player_facing_right else -1.0
+	
+	# Calculate target position: Up over the ledge and slightly forward onto it
+	var target_pos = global_position + Vector2(30 * direction_modifier, -100)
+	
+	# Smoothly move the player onto the platform using a Tween
+	var tween = create_tween()
+	
+	# Optional: Break it into two steps (Up, then Forward) for a cleaner mechanical feel
+	tween.tween_property(self, "global_position:y", global_position.y - 150, 0.2)
+	tween.tween_property(self, "global_position:x", global_position.x + (30 * direction_modifier), 0.1)
+	
+	await tween.finished
+	is_climbing = false
