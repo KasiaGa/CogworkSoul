@@ -11,7 +11,17 @@ var current_health: int = max_health
 var is_wiggling: bool = false
 
 func _ready() -> void:
-	# If a door is assigned, turn off its interaction area at the start
+	# 1. Generate a unique key based on the current scene and this node's name
+	var unique_id = get_unique_id()
+	
+	# 2. If this object is already in the Global broken list, instantly delete it
+	if Global.broken_objects.get(unique_id, false):
+		# If it blocks a door, make sure the door stays open!
+		if door_to_block and door_to_block.has_node("InteractionArea2"):
+			door_to_block.get_node("InteractionArea2").monitoring = true
+		queue_free()
+		return
+
 	if door_to_block and door_to_block.has_node("InteractionArea2"):
 		door_to_block.get_node("InteractionArea2").monitoring = false
 
@@ -48,7 +58,13 @@ func wiggle_effect():
 	is_wiggling = false
 
 func break_object():
-	# 1. Re-enable the door's interaction zone!
+	# Mark this specific object as broken in Global storage
+	var unique_id = get_unique_id()
+	Global.broken_objects[unique_id] = true
+	
+	# (Optional) If you want the game to save immediately upon breaking:
+	# Global.save_game()
+
 	if door_to_block and door_to_block.has_node("InteractionArea2"):
 		door_to_block.get_node("InteractionArea2").monitoring = true
 		
@@ -56,3 +72,9 @@ func break_object():
 	
 	# 3. Destroy this object
 	queue_free()
+
+func get_unique_id() -> String:
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		return current_scene.scene_file_path + ":" + String(get_path())
+	return String(get_path())
