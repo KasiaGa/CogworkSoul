@@ -32,6 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://dsou5shg5ht1x" path="res://assets/images/world/cable2.png" id="27_mgog5"]
 [ext_resource type="Texture2D" uid="uid://hne5r4gwo4wd" path="res://assets/images/world/boxes.png" id="28_5jab7"]
 [ext_resource type="Texture2D" uid="uid://r8vvtlcimyu7" path="res://assets/images/world/electricity.png" id="29_3nist"]
+[ext_resource type="PackedScene" uid="uid://dxj4hcxho5pcm" path="res://interaction/breakable_object.tscn" id="33_igmhy"]
 [ext_resource type="Texture2D" uid="uid://koa06g66wusf" path="res://assets/images/world/paralax1.png" id="33_xqpbi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
@@ -115,6 +116,7 @@ size = Vector2(84, 1000)
 [sub_resource type="SystemFont" id="SystemFont_r8g5k"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
+subpixel_positioning = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ae5in"]
 size = Vector2(99, 139)
@@ -137,6 +139,11 @@ repeat_times = 3
 z_index = -2
 position = Vector2(142, 276)
 texture = ExtResource("2_w6b5a")
+
+[node name="Dialogue" parent="." unique_id=1126728371 instance=ExtResource("7_pmoxg")]
+offset = Vector2(-195, -230)
+transform = Transform2D(1, 0, 0, 1, -195, -230)
+follow_viewport_enabled = true
 
 [node name="ground_irregular" type="StaticBody2D" parent="." unique_id=527478190]
 visible = false
@@ -194,9 +201,6 @@ limit_left = -1130
 limit_top = -237
 limit_right = 2468
 limit_bottom = 739
-
-[node name="Dialogue" parent="." unique_id=1126728371 instance=ExtResource("7_pmoxg")]
-visible = false
 
 [node name="Entrance" type="StaticBody2D" parent="." unique_id=1710243070]
 position = Vector2(-547, 370)
@@ -486,6 +490,7 @@ scale = Vector2(0.44029847, 0.4402985)
 texture = ExtResource("27_mgog5")
 
 [node name="StaticBody2D19" type="StaticBody2D" parent="." unique_id=1872292358]
+visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D19" unique_id=1616839025]
 position = Vector2(-531, 469)
@@ -498,6 +503,11 @@ texture = ExtResource("28_5jab7")
 position = Vector2(-417, 370)
 scale = Vector2(0.26666668, 0.26666668)
 texture = ExtResource("29_3nist")
+
+[node name="BreakableObject" parent="." unique_id=1467808251 node_paths=PackedStringArray("door_to_block") instance=ExtResource("33_igmhy")]
+position = Vector2(-533, 459)
+scale = Vector2(0.6, 0.6)
+door_to_block = NodePath("../Entrance")
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=618581205]
 z_index = 3

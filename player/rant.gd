@@ -345,3 +345,5 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 	# Check if the player's attack hit the Cocoon Area2D
 	if area.is_in_group("cocoon") and area.has_method("take_cocoon_damage"):
 		area.take_cocoon_damage(1)
+	if area.is_in_group("breakable") and area.has_method("take_damage"):
+		area.take_damage(1)

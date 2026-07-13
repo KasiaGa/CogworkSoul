@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dxj4hcxho5pcm"]
+
+[ext_resource type="Script" uid="uid://bu0io3q4u8kpg" path="res://interaction/breakable_object.gd" id="1_eh52r"]
+[ext_resource type="Texture2D" uid="uid://hne5r4gwo4wd" path="res://assets/images/world/boxes.png" id="2_3kl68"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
+size = Vector2(345, 236)
+
+[node name="BreakableObject" type="Area2D" unique_id=1467808251 groups=["breakable"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_eh52r")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1330327916]
+texture = ExtResource("2_3kl68")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1751319916]
+position = Vector2(14.5, 21)
+shape = SubResource("RectangleShape2D_mjotr")
