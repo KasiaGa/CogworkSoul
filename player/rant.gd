@@ -47,8 +47,11 @@ func _ready():
 	var should_start_sitting = Global.player_is_sitting
 	
 	if Global.should_reposition:
-		global_position = Global.target_position
-		
+		if Global.current_target_position != Vector2.ZERO:
+			global_position = Global.current_target_position
+		else:
+			global_position = Global.target_position
+			
 		rant.flip_h = Global.player_facing_right
 		$AttackArea.scale.x = 1 if Global.player_facing_right else -1
 		

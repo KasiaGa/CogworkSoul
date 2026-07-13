@@ -2,6 +2,7 @@ extends Node
 
 # Przechowuje pozycję docelową (X, Y)
 var target_position: Vector2 = Vector2.ZERO
+var current_target_position: Vector2 = Vector2.ZERO
 
 # Zmienna informująca, czy gracz ma zmienić pozycję
 var should_reposition: bool = false
@@ -26,6 +27,7 @@ var collected_items: Array[String] = []
 var shards_collected: int = 0
 
 var current_scene_path: String = "res://world/main.tscn" 
+var scene_path: String = "res://world/main.tscn" 
 
 var intro_dialogue_played: bool = false
 var rant_needle_played: bool = false
@@ -48,7 +50,7 @@ func save_game():
 			"collected_items": collected_items,
 			"checkpoint_x": target_position.x,
 			"checkpoint_y": target_position.y,
-			"saved_scene": current_scene_path,
+			"saved_scene": scene_path,
 			"intro_dialogue_played": intro_dialogue_played,
 			"rant_needle_played": rant_needle_played,
 			"shards_collected": shards_collected,
@@ -112,7 +114,7 @@ func load_game():
 		discovered_locations = save_data.get("discovered_locations", {})
 
 		# 4. Load the level
-		var level_to_load = save_data.get("saved_scene", current_scene_path)
+		var level_to_load = save_data.get("saved_scene", scene_path)
 		get_tree().change_scene_to_file(level_to_load)
 		
 		print("Game loaded! Player restored to full health.")
@@ -120,6 +122,6 @@ func load_game():
 
 # Funkcja do zmieniania sceny z ustawieniem pozycji
 func change_scene_to_position(scene_path: String, new_x: float, new_y: float):
-	target_position = Vector2(new_x, new_y)
+	current_target_position = Vector2(new_x, new_y)
 	should_reposition = true
 	get_tree().change_scene_to_file(scene_path)

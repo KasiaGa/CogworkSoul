@@ -10,7 +10,7 @@ func _on_interact():
 	# 1. Set this bench's location as the checkpoint respawn point
 	# We offset the Y slightly so the player doesn't spawn stuck inside the bench
 	Global.target_position = global_position + Vector2(0, -20)
-	
+	Global.scene_path = Global.current_scene_path
 	# 2. Tell the game it needs to move the player when this level loads
 	Global.should_reposition = true
 	

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://xgqimsy5qo7g"]
+
+[ext_resource type="Texture2D" uid="uid://w8r1552ki8js" path="res://assets/images/world/arrows2.png" id="1_3eisx"]
+[ext_resource type="Script" uid="uid://3kuud5jsl3ax" path="res://other/spikes.gd" id="1_aw1k6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ae5in"]
+size = Vector2(417, 215)
+
+[node name="Spikes" type="Area2D" unique_id=1456546059]
+collision_layer = 256
+collision_mask = 3
+script = ExtResource("1_aw1k6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1573537617]
+texture = ExtResource("1_3eisx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=585280640]
+position = Vector2(-0.5, 26.5)
+shape = SubResource("RectangleShape2D_ae5in")
