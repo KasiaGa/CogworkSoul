@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bmjsm1epevhis"]
 
-[ext_resource type="Script" uid="uid://bdfqv8oym002p" path="res://world/main.gd" id="1_wmx37"]
+[ext_resource type="Script" uid="uid://ds45yd30m2b4o" path="res://world/bellas_cave.gd" id="1_26sh8"]
 [ext_resource type="Texture2D" uid="uid://bgne3pqcsms1r" path="res://assets/images/world/bg1_7.png" id="2_26sh8"]
 [ext_resource type="Texture2D" uid="uid://dqft755m06alr" path="res://assets/images/world/ground.png" id="3_abrmv"]
 [ext_resource type="Texture2D" uid="uid://b6o5t0m8xf3ov" path="res://assets/images/world/ground5.png" id="4_vsdyx"]
@@ -38,7 +38,7 @@ font_weight = 999
 subpixel_positioning = 0
 
 [node name="BellasCave" type="Node2D" unique_id=1190991945]
-script = ExtResource("1_wmx37")
+script = ExtResource("1_26sh8")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=1131683336]
 scroll_scale = Vector2(1.1, 1.1)
