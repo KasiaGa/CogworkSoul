@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="19_xd341"]
 [ext_resource type="Texture2D" uid="uid://sgy4tmm57o2n" path="res://assets/images/world/entrance2_2.png" id="20_1eua6"]
 [ext_resource type="Texture2D" uid="uid://w0t0v4mwiewt" path="res://assets/images/world/line.png" id="20_f4482"]
+[ext_resource type="Texture2D" uid="uid://bgcgcj88e61as" path="res://assets/images/world/platform1.png" id="23_1asw4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(1990.0001, 148.14282)
@@ -40,6 +41,9 @@ font_weight = 999
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(54.025017, 63.199997)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_da6y2"]
+size = Vector2(297, 35)
 
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_um1bq")
@@ -303,3 +307,14 @@ texture = ExtResource("20_1eua6")
 position = Vector2(-1730, 210)
 target_scene = "uid://dy8x5xyss8ie5"
 spawn_location = Vector2(2200, 455)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=32329325]
+
+[node name="Sprite2D2" type="Sprite2D" parent="StaticBody2D3" unique_id=1734065261]
+position = Vector2(-158, 130)
+scale = Vector2(0.4719298, 0.4719298)
+texture = ExtResource("23_1asw4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=900606415]
+position = Vector2(-156, 98.5)
+shape = SubResource("RectangleShape2D_da6y2")

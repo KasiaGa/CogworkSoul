@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://0dmofwcvp6ji"
+path="res://.godot/imported/rant_needle.dialogue-470993a3b80bb35b54977fa158574f9e.tres"
+
+[deps]
+
+source_file="res://dialogue/rant_needle.dialogue"
+dest_files=["res://.godot/imported/rant_needle.dialogue-470993a3b80bb35b54977fa158574f9e.tres"]
+
+[params]
+
+defaults=true
