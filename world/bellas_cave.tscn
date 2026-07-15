@@ -1,0 +1,210 @@
+[gd_scene format=3 uid="uid://bmjsm1epevhis"]
+
+[ext_resource type="Script" uid="uid://bdfqv8oym002p" path="res://world/main.gd" id="1_wmx37"]
+[ext_resource type="Texture2D" uid="uid://bgne3pqcsms1r" path="res://assets/images/world/bg1_7.png" id="2_26sh8"]
+[ext_resource type="Texture2D" uid="uid://dqft755m06alr" path="res://assets/images/world/ground.png" id="3_abrmv"]
+[ext_resource type="Texture2D" uid="uid://b6o5t0m8xf3ov" path="res://assets/images/world/ground5.png" id="4_vsdyx"]
+[ext_resource type="Texture2D" uid="uid://bmfq1nbcmbmna" path="res://assets/images/world/ground6.png" id="5_bi1hk"]
+[ext_resource type="PackedScene" uid="uid://bwqrnt0mdtxeb" path="res://player/rant.tscn" id="6_her3y"]
+[ext_resource type="Texture2D" uid="uid://d1st7u8gw4f0j" path="res://assets/images/world/wall.png" id="7_4cntq"]
+[ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="8_v2qna"]
+[ext_resource type="Script" uid="uid://vta6ajsp0sov" path="res://world/canvas_layer.gd" id="9_fy7fa"]
+[ext_resource type="PackedScene" uid="uid://clwq3figvspdk" path="res://gui/health_container.tscn" id="10_f5taq"]
+[ext_resource type="Texture2D" uid="uid://c4362iqxtqasf" path="res://assets/images/gui/health_bar.png" id="11_uek1g"]
+[ext_resource type="PackedScene" uid="uid://c45nk54o2gxg4" path="res://gui/silk_container.tscn" id="12_pluqe"]
+[ext_resource type="Texture2D" uid="uid://yuhfp7ej1m4l" path="res://assets/images/gui/silkBar.png" id="13_1syum"]
+[ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="14_1dvoh"]
+[ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="15_b1tbh"]
+[ext_resource type="PackedScene" uid="uid://tpmienvgt00o" path="res://dialogue/balloon.tscn" id="16_rfm42"]
+[ext_resource type="Texture2D" uid="uid://koa06g66wusf" path="res://assets/images/world/paralax1.png" id="17_r3keo"]
+[ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="18_26sh8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
+size = Vector2(1918.3335, 148.14282)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(3439, 83)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ae5in"]
+radius = 27.0
+height = 274.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_da6y2"]
+size = Vector2(84, 1000)
+
+[sub_resource type="SystemFont" id="SystemFont_r8g5k"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
+subpixel_positioning = 0
+
+[node name="BellasCave" type="Node2D" unique_id=1190991945]
+script = ExtResource("1_wmx37")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=1131683336]
+scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(1366, 768)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1980547259]
+z_index = -2
+position = Vector2(142, 276)
+texture = ExtResource("2_26sh8")
+
+[node name="ground_irregular" type="StaticBody2D" parent="." unique_id=527478190]
+visible = false
+z_index = -1
+position = Vector2(585, 632)
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular" unique_id=2057561338]
+visible = false
+texture = ExtResource("3_abrmv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular" unique_id=643351938]
+visible = false
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="ground_metal" type="StaticBody2D" parent="." unique_id=1100955614]
+position = Vector2(608, 571)
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_metal" unique_id=367862025]
+z_index = -1
+position = Vector2(60.00003, 102)
+scale = Vector2(1.7279999, 0.61401665)
+texture = ExtResource("4_vsdyx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_metal" unique_id=1741540639]
+position = Vector2(61.5, 77)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="ground_metal2" type="StaticBody2D" parent="." unique_id=1538387405]
+position = Vector2(608, 571)
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_metal2" unique_id=100269648]
+position = Vector2(151.57153, -831.99994)
+rotation = -3.1415925
+scale = Vector2(1.8044192, 0.7831631)
+texture = ExtResource("5_bi1hk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_metal2" unique_id=1303715309]
+position = Vector2(57, -708)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="CharacterBody2D" parent="." unique_id=1131129936 instance=ExtResource("6_her3y")]
+position = Vector2(610, 458)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D" unique_id=732423934]
+position = Vector2(-14, 17)
+shape = SubResource("CapsuleShape2D_ae5in")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=2034467906]
+offset = Vector2(0, -80)
+limit_left = -1035
+limit_top = -237
+limit_right = 2468
+limit_bottom = 739
+
+[node name="wall2" type="StaticBody2D" parent="." unique_id=4871535]
+
+[node name="Sprite2D" type="Sprite2D" parent="wall2" unique_id=2072668536]
+position = Vector2(2395, 241)
+rotation = -3.1415927
+texture = ExtResource("7_4cntq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall2" unique_id=1052735118]
+position = Vector2(2397, 240)
+shape = SubResource("RectangleShape2D_da6y2")
+
+[node name="wall3" type="StaticBody2D" parent="." unique_id=767395086]
+position = Vector2(0, -254)
+
+[node name="Sprite2D" type="Sprite2D" parent="wall3" unique_id=524034283]
+position = Vector2(2456, -498)
+rotation = -3.1415927
+texture = ExtResource("7_4cntq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall3" unique_id=414618323]
+position = Vector2(2436, 69)
+shape = SubResource("RectangleShape2D_da6y2")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=2068630730]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=936856724]
+position = Vector2(2772, 256)
+scale = Vector2(13.447916, 17.4693)
+texture = ExtResource("8_v2qna")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=680519864]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2119329073]
+script = ExtResource("9_fy7fa")
+
+[node name="HealthContainer" parent="CanvasLayer" unique_id=270179544 instance=ExtResource("10_f5taq")]
+offset_left = 66.0
+offset_top = 18.0
+offset_right = 267.0
+offset_bottom = 62.0
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=1961805443]
+z_index = -1
+position = Vector2(146, 41)
+scale = Vector2(0.43965515, 0.43965518)
+texture = ExtResource("11_uek1g")
+
+[node name="SilkContainer" parent="CanvasLayer" unique_id=1531939010 instance=ExtResource("12_pluqe")]
+offset_left = 47.0
+offset_top = 74.0
+offset_right = 91.0
+offset_bottom = 114.0
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer" unique_id=269055119]
+z_index = -1
+position = Vector2(68.76741, 87.375)
+scale = Vector2(0.4208861, 0.42088607)
+texture = ExtResource("13_1syum")
+
+[node name="PauseMenu" parent="CanvasLayer" unique_id=2077802288 instance=ExtResource("14_1dvoh")]
+visible = false
+
+[node name="InventoryMapMenu" parent="CanvasLayer" unique_id=1439938911 instance=ExtResource("15_b1tbh")]
+visible = false
+
+[node name="NotificationBox" type="PanelContainer" parent="CanvasLayer" unique_id=1432874178]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -40.0
+offset_right = 50.0
+grow_vertical = 0
+
+[node name="NotificationLabel" type="Label" parent="CanvasLayer/NotificationBox" unique_id=2023510632]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_r8g5k")
+theme_override_font_sizes/font_size = 25
+
+[node name="Dialogue" parent="CanvasLayer" unique_id=1126728371 instance=ExtResource("16_rfm42")]
+visible = false
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=618581205]
+z_index = 3
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(0, -341)
+repeat_size = Vector2(1366, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=255102567]
+visible = false
+z_index = -2
+position = Vector2(142, 313)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("17_r3keo")
+
+[node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("18_26sh8")]
+position = Vector2(-1051, 442)
+target_scene = "uid://4x3bqyt7y308"
+spawn_location = Vector2(2300, -1400)

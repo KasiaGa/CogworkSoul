@@ -119,7 +119,7 @@ func _physics_process(delta: float) -> void:
 	if is_sitting:
 		velocity = Vector2.ZERO
 		# If player tries to move or jump, stand up
-		if Input.is_action_just_pressed("jump") or Input.get_axis("left", "right") != 0:
+		if Input.is_action_pressed("jump") or Input.get_axis("left", "right") != 0:
 			is_sitting = false
 			Global.player_is_sitting = false
 		else:
