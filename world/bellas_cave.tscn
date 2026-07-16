@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://tpmienvgt00o" path="res://dialogue/balloon.tscn" id="16_rfm42"]
 [ext_resource type="Texture2D" uid="uid://koa06g66wusf" path="res://assets/images/world/paralax1.png" id="17_r3keo"]
 [ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="18_26sh8"]
+[ext_resource type="PackedScene" uid="uid://0y4e038w6ioy" path="res://npc/bella.tscn" id="19_abrmv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(1918.3335, 148.14282)
@@ -208,3 +209,7 @@ texture = ExtResource("17_r3keo")
 position = Vector2(-1051, 442)
 target_scene = "uid://4x3bqyt7y308"
 spawn_location = Vector2(2300, -1400)
+
+[node name="Bella" parent="." unique_id=1998102934 instance=ExtResource("19_abrmv")]
+position = Vector2(1739, 457)
+scale = Vector2(0.4, 0.4)

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://0y4e038w6ioy"]
+
+[ext_resource type="Script" uid="uid://datll07n2eic4" path="res://npc/bella.gd" id="1_4ujbf"]
+[ext_resource type="Texture2D" uid="uid://cgceacwq4npmy" path="res://assets/images/npc/bella_transparent1.png" id="1_aewyi"]
+[ext_resource type="PackedScene" uid="uid://cdnu1k3e8gd2a" path="res://interaction/interaction_area.tscn" id="4_li4r1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mjotr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_aewyi")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_da6y2"]
+radius = 71.0
+height = 598.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ae5in"]
+radius = 400.0
+height = 800.0
+
+[node name="Bella" type="CharacterBody2D" unique_id=1998102934]
+script = ExtResource("1_4ujbf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=315283443]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_mjotr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1920307877]
+visible = false
+shape = SubResource("CapsuleShape2D_da6y2")
+
+[node name="InteractionArea" parent="." unique_id=1179285320 instance=ExtResource("4_li4r1")]
+action_name = "Speak"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1821460109]
+shape = SubResource("CapsuleShape2D_ae5in")
