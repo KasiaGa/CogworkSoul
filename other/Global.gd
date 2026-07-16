@@ -106,6 +106,8 @@ func load_game():
 		)
 		should_reposition = true
 		
+		scene_path = save_data.get("saved_scene", scene_path)
+		
 		cocoon_scene_path = save_data.get("cocoon_saved_scene", "")
 		cocoon_position = Vector2(
 			save_data.get("cocoon_position_x", 0.0),
