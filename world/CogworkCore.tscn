@@ -63,6 +63,7 @@ position = Vector2(208, 6)
 [node name="enemy2" parent="." unique_id=744047554 node_paths=PackedStringArray("endPoint") instance=ExtResource("2_5at20")]
 z_index = 5
 position = Vector2(290, -181)
+limit = 10.0
 endPoint = NodePath("Marker2D")
 
 [node name="Marker2D" type="Marker2D" parent="enemy2" unique_id=1072653]
