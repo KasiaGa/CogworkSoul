@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cof12poc1mayv"]
+
+[ext_resource type="Script" uid="uid://dxwa2a2iym0ll" path="res://interaction/blocking_breakable_object.gd" id="1_a08t4"]
+[ext_resource type="Texture2D" uid="uid://cy4ixkkxcxvi8" path="res://assets/images/world/breakable2.png" id="2_7bb8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
+size = Vector2(196, 481)
+
+[node name="BlockingBreakableObject" type="StaticBody2D" unique_id=1048927086 groups=["breakable"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_a08t4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1330327916]
+texture = ExtResource("2_7bb8e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1002208539]
+position = Vector2(14, -1.5)
+shape = SubResource("RectangleShape2D_mjotr")

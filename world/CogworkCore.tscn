@@ -264,7 +264,7 @@ scale = Vector2(0.42, 0.42)
 [node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("17_1wo6k")]
 position = Vector2(2351, 492)
 target_scene = "uid://c7ygk2nqmy030"
-spawn_location = Vector2(-1100, 455)
+spawn_location = Vector2(-1000, 455)
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1669351059]
 z_index = 100

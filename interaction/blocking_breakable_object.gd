@@ -1,12 +1,10 @@
-extends Area2D
+extends StaticBody2D
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 @export var max_health: int = 3
 var current_health: int = max_health
-
-# Exported variable so you can assign the door directly in the Inspector
-@export var door_to_block: StaticBody2D 
 
 @export var object_texture: Texture2D
 
@@ -21,19 +19,13 @@ func _ready() -> void:
 	
 	# 2. If this object is already in the Global broken list, instantly delete it
 	if Global.broken_objects.get(unique_id, false):
-		# If it blocks a door, make sure the door stays open!
-		if door_to_block and door_to_block.has_node("InteractionArea2"):
-			door_to_block.get_node("InteractionArea2").monitoring = true
 		queue_free()
 		return
-
-	if door_to_block and door_to_block.has_node("InteractionArea2"):
-		door_to_block.get_node("InteractionArea2").monitoring = false
 
 func take_damage(amount: int):
 	if current_health <= 0:
 		return
-		
+	   
 	current_health -= amount
 	
 	if current_health > 0:
@@ -55,7 +47,7 @@ func wiggle_effect():
 	tween.tween_property(sprite, "position", original_pos + Vector2(-3, 0), 0.05)
 	tween.tween_property(sprite, "position", original_pos, 0.05)
 	
-	# Quick flash white (borrowing from your enemy logic!)
+	# Quick flash white 
 	tween.parallel().tween_property(sprite, "modulate", Color(100.006, 100.006, 100.006, 0.576), 0.05)
 	tween.chain().tween_property(sprite, "modulate", Color(1, 1, 1), 0.05)
 	
@@ -67,15 +59,13 @@ func break_object():
 	var unique_id = get_unique_id()
 	Global.broken_objects[unique_id] = true
 	
-	# (Optional) If you want the game to save immediately upon breaking:
-	# Global.save_game()
-
-	if door_to_block and door_to_block.has_node("InteractionArea2"):
-		door_to_block.get_node("InteractionArea2").monitoring = true
-		
-	# 2. (Optional) Play a breaking sound or spawn particles here!
+	# Turn off collision immediately to prevent weird interactions while dying
+	if collision_shape:
+		collision_shape.set_deferred("disabled", true)
 	
-	# 3. Destroy this object
+	# (Optional) Play a breaking sound or spawn particles here!
+	
+	# Destroy this object
 	queue_free()
 
 func get_unique_id() -> String:

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bmskttqco2fa"]
+
+[ext_resource type="Script" uid="uid://cud2tgbla3q1c" path="res://other/enemy_2.gd" id="1_w7l65"]
+[ext_resource type="Texture2D" uid="uid://djcqd3sklis8v" path="res://assets/images/enemy/flying_cogbug.png" id="2_w7l65"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mjotr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_w7l65")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mjotr"]
+radius = 110.0
+height = 530.0
+
+[node name="enemy2" type="CharacterBody2D" unique_id=807049588 groups=["enemies"]]
+script = ExtResource("1_w7l65")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=32601802]
+sprite_frames = SubResource("SpriteFrames_mjotr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1316199973]
+shape = SubResource("CapsuleShape2D_mjotr")
