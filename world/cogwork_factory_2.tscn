@@ -26,10 +26,13 @@
 [ext_resource type="Texture2D" uid="uid://d2mpsnb6ynwjb" path="res://assets/images/world/chain_parallax.png" id="24_pamtp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
-size = Vector2(777.5001, 148.14282)
+size = Vector2(2052.0835, 148.14282)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(2013.3335, 126.66675)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_da6y2"]
+size = Vector2(758.3333, 148.33331)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8kwh"]
 radius = 27.0
@@ -45,15 +48,19 @@ size = Vector2(3439, 83)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bi0kt"]
 size = Vector2(54.025017, 151)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ae5in"]
+size = Vector2(1024.9999, 120)
+
 [node name="CogworkFactory2" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_rd041")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=2123797011]
-scroll_scale = Vector2(1.1, 1.1)
+scroll_scale = Vector2(0.8, 0.8)
 repeat_size = Vector2(1366, 768)
 repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1860392640]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
 z_index = -2
 position = Vector2(142, 276)
 texture = ExtResource("2_d1wjk")
@@ -74,12 +81,14 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular2" type="StaticBody2D" parent="." unique_id=96498192]
+self_modulate = Color(0.16862746, 0.16862746, 0.16862746, 1)
 z_index = -1
 position = Vector2(-600, 634)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular2" unique_id=744179249]
+self_modulate = Color(0.52906674, 0.5290667, 0.5290667, 1)
 texture = ExtResource("3_gi1jn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular2" unique_id=1981672563]
@@ -103,14 +112,14 @@ scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular3" unique_id=1461006395]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
 position = Vector2(-620, 0)
 scale = Vector2(0.38, 1)
 texture = ExtResource("3_gi1jn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular3" unique_id=1832802466]
-position = Vector2(-622.0834, 46.92871)
-scale = Vector2(0.99999994, 0.99999994)
-shape = SubResource("RectangleShape2D_53s0n")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular3" unique_id=281291512]
+position = Vector2(-622.5, 47.5)
+shape = SubResource("RectangleShape2D_da6y2")
 
 [node name="CharacterBody2D" parent="." unique_id=1131129936 instance=ExtResource("4_l5x8i")]
 position = Vector2(610, 458)
@@ -267,14 +276,10 @@ scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular4" unique_id=325749516]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
 position = Vector2(-620, 0)
 scale = Vector2(0.38, 1)
 texture = ExtResource("3_gi1jn")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular4" unique_id=503551274]
-position = Vector2(-622.0834, 46.92871)
-scale = Vector2(0.99999994, 0.99999994)
-shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="Sprite2D5" type="Sprite2D" parent="ground_irregular4" unique_id=185340344]
 position = Vector2(-1002.4575, -5.3986816)
@@ -286,6 +291,10 @@ position = Vector2(-1484.1237, -8.732056)
 scale = Vector2(1.1447806, 0.48248369)
 texture = ExtResource("16_amo0d")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular4" unique_id=642629252]
+position = Vector2(-502.5, 50)
+shape = SubResource("RectangleShape2D_ae5in")
+
 [node name="ground_irregular5" type="StaticBody2D" parent="." unique_id=232801923]
 z_index = -1
 position = Vector2(2086, 623)
@@ -293,6 +302,7 @@ scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular5" unique_id=733170524]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
 texture = ExtResource("3_gi1jn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular5" unique_id=578491537]
@@ -357,7 +367,7 @@ texture = ExtResource("23_ho8eb")
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=435001111]
 modulate = Color(1, 1, 1, 0.6431373)
 z_index = 14
-scroll_scale = Vector2(0.8, 0.8)
+scroll_scale = Vector2(1.1, 1.1)
 scroll_offset = Vector2(0, -341)
 repeat_size = Vector2(1366, 0)
 repeat_times = 3

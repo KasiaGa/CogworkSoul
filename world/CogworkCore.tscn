@@ -26,7 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://cx4h1o3a47mx6" path="res://assets/images/world/platform2.png" id="24_gcxy5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
-size = Vector2(1990.0001, 148.14282)
+size = Vector2(2052.0835, 148.14282)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8kwh"]
 radius = 27.0
@@ -55,6 +55,7 @@ script = ExtResource("1_um1bq")
 [node name="enemy" parent="." unique_id=807049588 node_paths=PackedStringArray("endPoint") instance=ExtResource("2_5at20")]
 z_index = 5
 position = Vector2(916, 564)
+limit = 10.0
 endPoint = NodePath("Marker2D")
 
 [node name="Marker2D" type="Marker2D" parent="enemy" unique_id=1380486588]
@@ -70,7 +71,7 @@ endPoint = NodePath("Marker2D")
 position = Vector2(208, 6)
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=2123797011]
-scroll_scale = Vector2(1.1, 1.1)
+scroll_scale = Vector2(0.8, 0.8)
 repeat_size = Vector2(2252, 1559)
 repeat_times = 3
 
@@ -91,7 +92,7 @@ texture = ExtResource("4_tgyrp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular" unique_id=1763188917]
 z_index = 2
-position = Vector2(-15.833374, 46.92871)
+position = Vector2(121.666626, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
@@ -106,7 +107,7 @@ texture = ExtResource("4_tgyrp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular2" unique_id=559602545]
 z_index = 2
-position = Vector2(-15.833374, 46.92871)
+position = Vector2(52.29181, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
@@ -136,7 +137,7 @@ texture = ExtResource("4_tgyrp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular4" unique_id=377909425]
 z_index = 2
-position = Vector2(-15.833374, 46.92871)
+position = Vector2(-45.416504, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
@@ -167,7 +168,7 @@ texture = ExtResource("5_f4482")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular6" unique_id=85670883]
 z_index = 2
-position = Vector2(39.166626, -3.071289)
+position = Vector2(65.833374, -3.071289)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
@@ -268,10 +269,10 @@ spawn_location = Vector2(-1000, 455)
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1669351059]
 z_index = 100
-scroll_scale = Vector2(0.8, 0.8)
+scroll_scale = Vector2(1.1, 1.1)
 scroll_offset = Vector2(0, -341)
 repeat_size = Vector2(1366, 0)
-ignore_camera_scroll = true
+repeat_times = 6
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=1279626696]
 z_index = 100

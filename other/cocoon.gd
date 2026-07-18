@@ -1,7 +1,7 @@
 extends Area2D # Changed from Node2D/StaticBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-var cocoon_health: int = 3  
+var cocoon_health: int = 1
 
 func _ready() -> void:
 	add_to_group("cocoon")

@@ -46,7 +46,11 @@ func _ready():
 	# Check if player should be sitting before playing arrival animation
 	var should_start_sitting = Global.player_is_sitting
 	
-	if Global.should_reposition:
+	if Global.should_go_back_to_checkpoint:
+		# If we are returning to a checkpoint, fade out the screen first
+		global_position = Global.target_position
+		Global.should_go_back_to_checkpoint = false
+	elif Global.should_reposition:
 		if Global.current_target_position != Vector2.ZERO:
 			global_position = Global.current_target_position
 		else:
@@ -264,6 +268,7 @@ func take_damage(amount: int):
 		Global.cocoon_spawned = true
 		Global.cocoon_scene_path = get_tree().current_scene.scene_file_path
 		Global.cocoon_position = global_position
+		Global.should_go_back_to_checkpoint = true
 		Global.save_game()
 		Global.load_game()
 		return

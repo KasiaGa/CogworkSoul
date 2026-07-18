@@ -6,6 +6,7 @@ var current_target_position: Vector2 = Vector2.ZERO
 
 # Zmienna informująca, czy gracz ma zmienić pozycję
 var should_reposition: bool = false
+var should_go_back_to_checkpoint: bool = false
 
 var player_current_health: int = 5
 var player_max_health: int = 5
