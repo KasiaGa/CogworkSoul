@@ -19,6 +19,11 @@
 [ext_resource type="PackedScene" uid="uid://xgqimsy5qo7g" path="res://other/spikes.tscn" id="17_x1cqy"]
 [ext_resource type="PackedScene" uid="uid://cof12poc1mayv" path="res://interaction/blocking_breakable_object.tscn" id="18_amo0d"]
 [ext_resource type="PackedScene" uid="uid://bmskttqco2fa" path="res://other/enemy_2.tscn" id="19_bi0kt"]
+[ext_resource type="Texture2D" uid="uid://c4mub02jinokl" path="res://assets/images/world/chain.png" id="20_ayw5v"]
+[ext_resource type="Texture2D" uid="uid://bi8ag0ax8mh0j" path="res://assets/images/world/bricks1_2.png" id="21_pamtp"]
+[ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="22_ew3r1"]
+[ext_resource type="Texture2D" uid="uid://hm2k6qs71p01" path="res://assets/images/world/chain2.png" id="23_ho8eb"]
+[ext_resource type="Texture2D" uid="uid://d2mpsnb6ynwjb" path="res://assets/images/world/chain_parallax.png" id="24_pamtp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(777.5001, 148.14282)
@@ -313,3 +318,52 @@ endPoint = NodePath("Marker2D")
 
 [node name="Marker2D" type="Marker2D" parent="enemy2" unique_id=957653376]
 position = Vector2(15.000137, 380.00006)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=1995435112]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=1864459686]
+position = Vector2(383, 37)
+texture = ExtResource("20_ayw5v")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="." unique_id=1830973681]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6" unique_id=2067622118]
+position = Vector2(1292, 587)
+rotation = 1.5707964
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("21_pamtp")
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="." unique_id=1047782121]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D7" unique_id=1652989772]
+position = Vector2(-546.99976, 591)
+rotation = 1.5707964
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("21_pamtp")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="." unique_id=1666241971]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5" unique_id=546721644]
+position = Vector2(158, -16)
+texture = ExtResource("22_ew3r1")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=155222722]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4" unique_id=857991672]
+position = Vector2(459, -5)
+rotation = -0.06806784
+texture = ExtResource("23_ho8eb")
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=435001111]
+modulate = Color(1, 1, 1, 0.6431373)
+z_index = 14
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(0, -341)
+repeat_size = Vector2(1366, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=1716609684]
+z_index = 100
+position = Vector2(840.49994, 514)
+scale = Vector2(1.18625, 1.3594937)
+texture = ExtResource("24_pamtp")
