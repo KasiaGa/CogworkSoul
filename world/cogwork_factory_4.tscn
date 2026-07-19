@@ -20,7 +20,13 @@
 [ext_resource type="Texture2D" uid="uid://bi8ag0ax8mh0j" path="res://assets/images/world/bricks1_2.png" id="19_wy8tv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
-size = Vector2(734, 88)
+size = Vector2(746, 88)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2t5p2"]
+size = Vector2(1567.0002, 142.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mwa8a"]
+size = Vector2(752, 1713.5001)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8kwh"]
 radius = 27.0
@@ -30,14 +36,17 @@ height = 274.0
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5x8i"]
-size = Vector2(3439, 83)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l85j0"]
+size = Vector2(1594, 428)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_da6y2"]
 size = Vector2(849, 100)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ae5in"]
 size = Vector2(220, 33)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fa3b3"]
+size = Vector2(70, 350)
 
 [node name="CogworkFactory4" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_1uh52")
@@ -69,8 +78,14 @@ texture = ExtResource("3_dknio")
 
 [node name="Sprite2D4" type="Sprite2D" parent="StaticBody2D4" unique_id=767505004]
 self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
-position = Vector2(368, 1675.0002)
-scale = Vector2(18.546875, 9.934208)
+position = Vector2(853.9375, 1675.0002)
+scale = Vector2(38.79427, 9.934208)
+texture = ExtResource("3_dknio")
+
+[node name="Sprite2D10" type="Sprite2D" parent="StaticBody2D4" unique_id=468879433]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(1590.5, 1433.0625)
+scale = Vector2(7.229165, 3.054823)
 texture = ExtResource("3_dknio")
 
 [node name="Sprite2D3" type="Sprite2D" parent="StaticBody2D4" unique_id=1506491229]
@@ -99,6 +114,12 @@ z_index = 2
 position = Vector2(-82, 1756)
 texture = ExtResource("4_qemlc")
 
+[node name="Sprite2D9" type="Sprite2D" parent="StaticBody2D4" unique_id=1081421437]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(2448, 958)
+scale = Vector2(38.79427, 38.175438)
+texture = ExtResource("3_dknio")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=477166365]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=906442724]
@@ -122,6 +143,125 @@ scale = Vector2(0.3745502, 0.6841004)
 texture = ExtResource("3_0xmh1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=1399974444]
+position = Vector2(-822, 678)
+shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="." unique_id=796237330]
+position = Vector2(1874, 751)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D7" unique_id=1049904357]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(-827.55023, 645)
+scale = Vector2(0.3745502, 0.6841004)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7" unique_id=1704800275]
+position = Vector2(-828, 678)
+shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="." unique_id=589556740]
+position = Vector2(956, 475)
+rotation = -1.5707964
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D8" unique_id=204392211]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(-497, 509.16724)
+scale = Vector2(0.3745502, 0.6841004)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D8" unique_id=1337991265]
+position = Vector2(-162.50015, 531.75)
+shape = SubResource("RectangleShape2D_2t5p2")
+
+[node name="StaticBody2D16" type="StaticBody2D" parent="." unique_id=1034976453]
+position = Vector2(814, -602)
+rotation = -1.5707964
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D16" unique_id=451966742]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(-827.55023, 645)
+scale = Vector2(0.3745502, 0.6841004)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D16" unique_id=1805736701]
+position = Vector2(-828, 678)
+shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="." unique_id=1747986245]
+position = Vector2(1683, 1406)
+rotation = 1.5707964
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D9" unique_id=106637601]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(-827.55023, 645)
+scale = Vector2(0.3745502, 0.6841004)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D9" unique_id=492871858]
+position = Vector2(-828, 678)
+shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="StaticBody2D14" type="StaticBody2D" parent="." unique_id=2103785226]
+z_index = 1
+position = Vector2(1682, 400)
+rotation = 1.5707964
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D14" unique_id=1685911182]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(-827.55023, 645)
+scale = Vector2(0.3745502, 0.6841004)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D14" unique_id=135579007]
+position = Vector2(-828, 678)
+shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="StaticBody2D10" type="StaticBody2D" parent="." unique_id=689584599]
+position = Vector2(-127, 1553)
+rotation = 3.1415927
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D10" unique_id=1485567540]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(-827.55023, 645)
+scale = Vector2(0.3745502, 0.6841004)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D10" unique_id=1971116027]
+position = Vector2(-830.99994, 1456.25)
+shape = SubResource("RectangleShape2D_mwa8a")
+
+[node name="StaticBody2D11" type="StaticBody2D" parent="." unique_id=1336540710]
+position = Vector2(-275, -259)
+rotation = 4.712389
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D11" unique_id=1914914917]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(-827.55023, 645)
+scale = Vector2(0.3745502, 0.6841004)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D11" unique_id=1887788555]
+position = Vector2(-828, 678)
+shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="StaticBody2D15" type="StaticBody2D" parent="." unique_id=1327919941]
+z_index = 1
+position = Vector2(-281, -1294)
+rotation = 4.712389
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D15" unique_id=1014926466]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(-827.55023, 645)
+scale = Vector2(0.3745502, 0.6841004)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D15" unique_id=897496231]
 position = Vector2(-828, 678)
 shape = SubResource("RectangleShape2D_mjotr")
 
@@ -149,7 +289,7 @@ shape = SubResource("CapsuleShape2D_g8kwh")
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=76796903]
 offset = Vector2(0, -80)
 limit_left = -1198
-limit_top = -237
+limit_top = -780
 limit_right = 2375
 limit_bottom = 1859
 
@@ -210,14 +350,14 @@ spawn_location = Vector2(2200, 455)
 position = Vector2(608, 571)
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_metal2" unique_id=1173175169]
-position = Vector2(-15.428467, -831.99994)
+position = Vector2(-697.699, -832.00006)
 rotation = -3.1415925
-scale = Vector2(1.8044192, 0.7831631)
+scale = Vector2(1.1221486, 0.7831631)
 texture = ExtResource("13_68mxp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_metal2" unique_id=929635809]
-position = Vector2(57, -708)
-shape = SubResource("RectangleShape2D_l5x8i")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_metal2" unique_id=92969191]
+position = Vector2(-1025, -885)
+shape = SubResource("RectangleShape2D_l85j0")
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=435001111]
 modulate = Color(1, 1, 1, 0.6431373)
@@ -230,6 +370,21 @@ repeat_times = 3
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=1716609684]
 z_index = 100
 position = Vector2(840.49994, 514)
+scale = Vector2(1.18625, 1.3594937)
+texture = ExtResource("14_twr2r")
+
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=2087082879]
+modulate = Color(1, 1, 1, 0.6431373)
+z_index = 14
+rotation = 3.1415927
+scroll_scale = Vector2(1.1, 1.1)
+scroll_offset = Vector2(0, -192)
+repeat_size = Vector2(1366, 0)
+repeat_times = 8
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D3" unique_id=1131817977]
+z_index = 100
+position = Vector2(559.9998, -1439)
 scale = Vector2(1.18625, 1.3594937)
 texture = ExtResource("14_twr2r")
 
@@ -276,3 +431,35 @@ texture = ExtResource("19_wy8tv")
 z_index = 2
 position = Vector2(-179, 1376)
 shape = SubResource("RectangleShape2D_ae5in")
+
+[node name="StaticBody2D12" type="StaticBody2D" parent="." unique_id=1489061533]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D12" unique_id=1040486940]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(353, 49.853947)
+rotation = -1.5707964
+scale = Vector2(0.14565241, 0.48632163)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D12" unique_id=524671709]
+position = Vector2(393, 55)
+shape = SubResource("RectangleShape2D_fa3b3")
+
+[node name="StaticBody2D13" type="StaticBody2D" parent="." unique_id=195682673]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D13" unique_id=1173027177]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(1047, 54.592117)
+rotation = 1.5707964
+scale = Vector2(0.14924453, 0.48632163)
+texture = ExtResource("3_0xmh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D13" unique_id=386139384]
+position = Vector2(1012, 90)
+shape = SubResource("RectangleShape2D_fa3b3")
+
+[node name="Sprite2D2" type="Sprite2D" parent="StaticBody2D13" unique_id=2106998493]
+self_modulate = Color(0.5294118, 0.5294118, 0.5294118, 1)
+position = Vector2(709, 47.99997)
+scale = Vector2(12.375, 29.192984)
+texture = ExtResource("3_dknio")

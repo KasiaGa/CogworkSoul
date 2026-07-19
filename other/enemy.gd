@@ -7,6 +7,7 @@ const SHARD_SCENE = preload("res://other/shard.tscn")
 @export var limit = 0.5
 @export var endPoint: Marker2D
 @export var flip_h: bool = false
+@export var object_texture: Texture2D
 
 var startPosition
 var endPosition
@@ -18,6 +19,9 @@ var current_health: int = max_health
 @export var max_shards_dropped: int = 5
 
 func _ready():
+	if object_texture and animated_sprite_2d:
+		animated_sprite_2d.texture = object_texture
+		
 	startPosition = position
 	#endPosition = startPosition + Vector2(200, 0)
 	endPosition = endPoint.global_position
