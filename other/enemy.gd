@@ -6,6 +6,7 @@ const SHARD_SCENE = preload("res://other/shard.tscn")
 @export var speed = 100
 @export var limit = 0.5
 @export var endPoint: Marker2D
+@export var flip_h: bool = false
 
 var startPosition
 var endPosition
@@ -20,7 +21,10 @@ func _ready():
 	startPosition = position
 	#endPosition = startPosition + Vector2(200, 0)
 	endPosition = endPoint.global_position
-	animated_sprite_2d.flip_h = true
+	if (flip_h):
+		animated_sprite_2d.flip_h = false
+	else:
+		animated_sprite_2d.flip_h = true
 	
 func take_damage(amount: int):
 	current_health -= amount

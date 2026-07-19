@@ -335,6 +335,20 @@ position = Vector2(15.000137, 380.00006)
 position = Vector2(383, 37)
 texture = ExtResource("20_ayw5v")
 
+[node name="StaticBody2D8" type="StaticBody2D" parent="." unique_id=1400287402]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D8" unique_id=2063113275]
+position = Vector2(2292, 40)
+texture = ExtResource("20_ayw5v")
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="." unique_id=1572988258]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D9" unique_id=1880352438]
+position = Vector2(2320, 9)
+scale = Vector2(0.7777778, 0.77777773)
+texture = ExtResource("20_ayw5v")
+flip_v = true
+
 [node name="StaticBody2D6" type="StaticBody2D" parent="." unique_id=1830973681]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6" unique_id=2067622118]
@@ -364,6 +378,13 @@ position = Vector2(459, -5)
 rotation = -0.06806784
 texture = ExtResource("23_ho8eb")
 
+[node name="StaticBody2D10" type="StaticBody2D" parent="." unique_id=872408925]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D10" unique_id=518264956]
+position = Vector2(2245, -4.999996)
+rotation = -0.06806784
+texture = ExtResource("23_ho8eb")
+
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=435001111]
 modulate = Color(1, 1, 1, 0.6431373)
 z_index = 14
@@ -377,3 +398,8 @@ z_index = 100
 position = Vector2(840.49994, 514)
 scale = Vector2(1.18625, 1.3594937)
 texture = ExtResource("24_pamtp")
+
+[node name="TransitionZone" parent="." unique_id=214859532 instance=ExtResource("12_d1wjk")]
+position = Vector2(2298, 472)
+target_scene = "uid://d1idh6loi6m1t"
+spawn_location = Vector2(-1000, 455)
