@@ -3,17 +3,30 @@
 [ext_resource type="Script" uid="uid://3t4dumg8suby" path="res://player/rant.gd" id="1_1mopy"]
 [ext_resource type="Texture2D" uid="uid://bsxr3f48d1gbt" path="res://assets/images/player/attack.png" id="1_8ib8x"]
 [ext_resource type="Texture2D" uid="uid://dkhavqrbtwemu" path="res://assets/images/player/rant_idle_sprite.png" id="1_jmujq"]
+[ext_resource type="AudioStream" uid="uid://883a3uh2pa8u" path="res://assets/sounds/wren1.wav" id="2_13v2o"]
 [ext_resource type="Texture2D" uid="uid://du001uu5plfy5" path="res://assets/images/player/rant_idle_no_needle_sprite.png" id="2_d0hce"]
+[ext_resource type="AudioStream" uid="uid://6srsco7uv23w" path="res://assets/sounds/ha2.wav" id="2_vytcd"]
+[ext_resource type="AudioStream" uid="uid://ccldhrpjbp1au" path="res://assets/sounds/ha3.wav" id="3_8bg10"]
 [ext_resource type="Texture2D" uid="uid://djm4yqcmcskxj" path="res://assets/images/player/rant_jumping_scaled.png" id="3_8ib8x"]
 [ext_resource type="Texture2D" uid="uid://dxl3fma0n3kca" path="res://assets/images/player/rant_running_spritesheet.png" id="3_051pu"]
 [ext_resource type="Texture2D" uid="uid://b8kyoup38sgld" path="res://assets/images/player/rant_back_scaled.png" id="3_aeash"]
+[ext_resource type="AudioStream" uid="uid://bstqi2a4bsam1" path="res://assets/sounds/wren2.wav" id="3_m7f1f"]
 [ext_resource type="Texture2D" uid="uid://cd2ctjerbs17j" path="res://assets/images/player/rant_picking_scaled.png" id="4_1mopy"]
+[ext_resource type="AudioStream" uid="uid://dwgndmoq2h026" path="res://assets/sounds/wren3.wav" id="4_6aivm"]
 [ext_resource type="Texture2D" uid="uid://b40a7qwfu0jdl" path="res://assets/images/player/rant_running_spritesheet_no_needle.png" id="4_8ib8x"]
+[ext_resource type="AudioStream" uid="uid://cfndikelfwja6" path="res://assets/sounds/ha4.wav" id="4_oxl1s"]
 [ext_resource type="Texture2D" uid="uid://bsrdm3n1qhric" path="res://assets/images/player/rant_front_scaled.png" id="4_ujdd3"]
 [ext_resource type="Texture2D" uid="uid://dokp8ktdnfosj" path="res://assets/images/player/rant_walking_spritesheet.png" id="5_1mopy"]
 [ext_resource type="Texture2D" uid="uid://bflp8xqs83ssl" path="res://assets/images/player/rant_walking_spritesheet_no_needle.png" id="6_lwtyp"]
+[ext_resource type="AudioStream" uid="uid://b40gv8wgc755s" path="res://assets/sounds/uh.wav" id="9_aui27"]
+[ext_resource type="AudioStream" uid="uid://dvi78ttqg848b" path="res://assets/sounds/talk1.wav" id="10_vol7i"]
 [ext_resource type="Texture2D" uid="uid://t7jssqeqnmlm" path="res://assets/images/player/rant_sitting_resized.png" id="11_rhl5p"]
+[ext_resource type="AudioStream" uid="uid://gp5alv6phlah" path="res://assets/sounds/talk2.wav" id="11_utlov"]
+[ext_resource type="AudioStream" uid="uid://d3ykyjpp8oo1" path="res://assets/sounds/talk3.wav" id="12_vnc7o"]
+[ext_resource type="AudioStream" uid="uid://d3f2yfl5hxch0" path="res://assets/sounds/talk4.wav" id="13_e2537"]
 [ext_resource type="Texture2D" uid="uid://de71hay11s20b" path="res://assets/images/player/rant_wren1.png" id="14_iyrkd"]
+[ext_resource type="AudioStream" uid="uid://52calo85cyl7" path="res://assets/sounds/talk5.wav" id="14_o2hxr"]
+[ext_resource type="AudioStream" uid="uid://don3suisd2pnw" path="res://assets/sounds/aaaaa.wav" id="15_aui27"]
 [ext_resource type="Texture2D" uid="uid://dhqk2se7i0dti" path="res://assets/images/player/rant_wren2.png" id="15_q6fc4"]
 [ext_resource type="Texture2D" uid="uid://c7vluky5auo6j" path="res://assets/images/player/rant_wren3.png" id="16_cvklb"]
 [ext_resource type="Texture2D" uid="uid://c7okli6fld3dx" path="res://assets/images/player/rant_wren4.png" id="17_13v2o"]
@@ -568,6 +581,11 @@ height = 268.46786
 z_index = 50
 collision_layer = 2
 script = ExtResource("1_1mopy")
+attack_sounds = Array[AudioStream]([ExtResource("2_vytcd"), ExtResource("3_8bg10"), ExtResource("4_oxl1s")])
+wren_sounds = Array[AudioStream]([ExtResource("2_13v2o"), ExtResource("3_m7f1f"), ExtResource("4_6aivm")])
+hurt_sounds = Array[AudioStream]([ExtResource("9_aui27")])
+talk_sounds = Array[AudioStream]([ExtResource("10_vol7i"), ExtResource("11_utlov"), ExtResource("12_vnc7o"), ExtResource("13_e2537"), ExtResource("14_o2hxr")])
+surprised_sounds = Array[AudioStream]([ExtResource("15_aui27")])
 
 [node name="rant" type="AnimatedSprite2D" parent="." unique_id=1533657175]
 visibility_layer = 2
@@ -594,6 +612,16 @@ target_position = Vector2(60, 0)
 [node name="LedgeDetector" type="RayCast2D" parent="AttackArea" unique_id=1132133233]
 position = Vector2(-16, 59)
 target_position = Vector2(60, 0)
+
+[node name="AttackSfx" type="AudioStreamPlayer" parent="." unique_id=1561673047]
+
+[node name="WrenSfx" type="AudioStreamPlayer" parent="." unique_id=571822804]
+
+[node name="HurtSfx" type="AudioStreamPlayer" parent="." unique_id=2086491964]
+
+[node name="TalkSfx" type="AudioStreamPlayer" parent="." unique_id=1761548856]
+
+[node name="SurprisedSfx" type="AudioStreamPlayer" parent="." unique_id=388796420]
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

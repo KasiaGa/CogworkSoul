@@ -17,6 +17,18 @@ extends CharacterBody2D
 @onready var wall_detector: RayCast2D = $AttackArea/WallDetector
 @onready var ledge_detector: RayCast2D = $AttackArea/LedgeDetector
 
+@onready var attack_sfx: AudioStreamPlayer = $AttackSfx
+@onready var wren_sfx: AudioStreamPlayer = $WrenSfx
+@onready var hurt_sfx: AudioStreamPlayer = $HurtSfx
+@onready var talk_sfx: AudioStreamPlayer = $TalkSfx
+@onready var surprised_sfx: AudioStreamPlayer = $SurprisedSfx
+
+@export var attack_sounds: Array[AudioStream] = []
+@export var wren_sounds: Array[AudioStream] = []
+@export var hurt_sounds: Array[AudioStream] = []
+@export var talk_sounds: Array[AudioStream] = []
+@export var surprised_sounds: Array[AudioStream] = []
+
 var is_attacking: bool = false
 var is_invincible: bool = false
 var is_sitting: bool = false
@@ -102,6 +114,10 @@ func _physics_process(delta: float) -> void:
 			velocity += get_gravity() * delta # Allow gravity so player doesn't float
 		move_and_slide()
 		
+#		if talk_sounds.size() > 0:
+#			talk_sfx.stream = talk_sounds.pick_random()
+#			talk_sfx.play()
+		
 		# Force idle animation
 		var anim_suffix := "" if Global.has_needle else "_no_needle"
 		rant.animation = "idle" + anim_suffix
@@ -161,6 +177,10 @@ func _physics_process(delta: float) -> void:
 		is_attacking = true
 		rant.play("attack")
 		attack_collision.disabled = false 
+		
+		if attack_sounds.size() > 0:
+			attack_sfx.stream = attack_sounds.pick_random()
+			attack_sfx.play()
 
 		await get_tree().create_timer(0.5).timeout
 		
@@ -184,6 +204,11 @@ func _physics_process(delta: float) -> void:
 			silk_container.updateSilk(currentSilk)
 		# Play wren animation and effects
 		rant.play("wren")
+		
+		if wren_sounds.size() > 0:
+			wren_sfx.stream = wren_sounds.pick_random()
+			wren_sfx.play()
+		
 		# Flash effect during wren
 		var tw = create_tween()
 		tw.tween_property(rant, "modulate:a", 0.5, 0.1)
@@ -245,6 +270,10 @@ func take_damage(amount: int):
 		return
 
 	currentHealth -= amount
+	
+	if hurt_sounds.size() > 0:
+		hurt_sfx.stream = hurt_sounds.pick_random()
+		hurt_sfx.play()
 
 	# If health reaches zero or below -> trigger game over (load last saved state)
 	if currentHealth <= 0:

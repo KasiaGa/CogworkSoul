@@ -22,6 +22,8 @@ extends CanvasLayer
 
 ## A sound player for voice lines (if they exist).
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
+@onready var rant_voice_player: AudioStreamPlayer = AudioStreamPlayer.new()
+@export var rant_talk_sounds: Array[AudioStream] = []
 
 ## Temporary game states
 var temporary_game_states: Array = []
@@ -78,6 +80,10 @@ func _ready() -> void:
 	dialogue_resource = load("res://dialogue/intro.dialogue")
 	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
+	
+	# --- Setup Text Blips ---
+	add_child(rant_voice_player)
+	rant_voice_player.bus = &"SFX" # Optional: sends blips to your SFX volume bus
 
 	# If the responses menu doesn't have a next action set, use this one
 	if responses_menu.next_action.is_empty():
@@ -151,6 +157,11 @@ func apply_dialogue_line() -> void:
 	will_hide_balloon = false
 
 	dialogue_label.show()
+	
+	if dialogue_line.character == "Rant" and rant_talk_sounds.size() > 0:
+		rant_voice_player.stream = rant_talk_sounds.pick_random()
+		rant_voice_player.play()
+	
 	if not dialogue_line.text.is_empty():
 		dialogue_label.type_out()
 		await dialogue_label.finished_typing
