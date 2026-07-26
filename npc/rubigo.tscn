@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://dq4wt0x4aq1u3"]
+
+[ext_resource type="Script" uid="uid://csxhbv4gjmoly" path="res://npc/rubigo.gd" id="1_e76hf"]
+[ext_resource type="PackedScene" uid="uid://cdnu1k3e8gd2a" path="res://interaction/interaction_area.tscn" id="2_3ki7k"]
+[ext_resource type="Texture2D" uid="uid://ccse65aambdc6" path="res://assets/images/npc/rubigo1.png" id="2_e76hf"]
+[ext_resource type="Texture2D" uid="uid://d33whgmsmefvs" path="res://assets/images/npc/rubigo02.png" id="3_g7lul"]
+[ext_resource type="Texture2D" uid="uid://dxtupyj3lk70b" path="res://assets/images/npc/rubigo03.png" id="4_y7gnp"]
+[ext_resource type="Texture2D" uid="uid://bo2e6g77e12gk" path="res://assets/images/npc/rubigo04.png" id="5_d58us"]
+[ext_resource type="Texture2D" uid="uid://fkfss0c00bmr" path="res://assets/images/npc/rubigo05.png" id="6_c4i21"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mjotr"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": ExtResource("2_e76hf")
+}, {
+"duration": 0.5,
+"texture": ExtResource("3_g7lul")
+}, {
+"duration": 0.5,
+"texture": ExtResource("4_y7gnp")
+}, {
+"duration": 0.5,
+"texture": ExtResource("5_d58us")
+}, {
+"duration": 0.5,
+"texture": ExtResource("6_c4i21")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_da6y2"]
+radius = 71.0
+height = 598.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ae5in"]
+radius = 400.0
+height = 800.0
+
+[node name="Rubigo" type="CharacterBody2D" unique_id=1998102934]
+script = ExtResource("1_e76hf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=315283443]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_mjotr")
+frame = 2
+frame_progress = 0.4869183
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1920307877]
+visible = false
+shape = SubResource("CapsuleShape2D_da6y2")
+
+[node name="InteractionArea" parent="." unique_id=1179285320 instance=ExtResource("2_3ki7k")]
+action_name = "Speak"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1821460109]
+shape = SubResource("CapsuleShape2D_ae5in")

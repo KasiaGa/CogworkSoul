@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://bu0io3q4u8kpg" path="res://interaction/breakable_object.gd" id="1_eh52r"]
 [ext_resource type="Texture2D" uid="uid://hne5r4gwo4wd" path="res://assets/images/world/boxes.png" id="2_3kl68"]
+[ext_resource type="AudioStream" uid="uid://cn068ijq8si25" path="res://assets/sounds/break1.wav" id="2_6kukh"]
+[ext_resource type="AudioStream" uid="uid://eonic303j5vy" path="res://assets/sounds/break2.wav" id="3_3h8ip"]
+[ext_resource type="AudioStream" uid="uid://dbg4h13nyhbu0" path="res://assets/sounds/break3.wav" id="4_hc8py"]
+[ext_resource type="AudioStream" uid="uid://btldh5ew4ixl7" path="res://assets/sounds/break4.wav" id="5_2fo5f"]
+[ext_resource type="AudioStream" uid="uid://prs4oomfqnfr" path="res://assets/sounds/break5.wav" id="6_wbjkb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(345, 236)
@@ -10,6 +15,7 @@ size = Vector2(345, 236)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_eh52r")
+hit_sounds = Array[AudioStream]([ExtResource("2_6kukh"), ExtResource("3_3h8ip"), ExtResource("4_hc8py"), ExtResource("5_2fo5f"), ExtResource("6_wbjkb")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1330327916]
 texture = ExtResource("2_3kl68")
@@ -17,3 +23,5 @@ texture = ExtResource("2_3kl68")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1751319916]
 position = Vector2(14.5, 21)
 shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="HitAudio" type="AudioStreamPlayer" parent="." unique_id=1633353534]

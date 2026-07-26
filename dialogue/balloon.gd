@@ -24,6 +24,8 @@ extends CanvasLayer
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 @onready var rant_voice_player: AudioStreamPlayer = AudioStreamPlayer.new()
 @export var rant_talk_sounds: Array[AudioStream] = []
+@onready var citadel_voice_player: AudioStreamPlayer = AudioStreamPlayer.new()
+@export var citadel_talk_sounds: Array[AudioStream] = []
 
 ## Temporary game states
 var temporary_game_states: Array = []
@@ -81,9 +83,11 @@ func _ready() -> void:
 	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 	
-	# --- Setup Text Blips ---
 	add_child(rant_voice_player)
-	rant_voice_player.bus = &"SFX" # Optional: sends blips to your SFX volume bus
+	rant_voice_player.bus = &"SFX"
+
+	add_child(citadel_voice_player)
+	citadel_voice_player.bus = &"SFX"
 
 	# If the responses menu doesn't have a next action set, use this one
 	if responses_menu.next_action.is_empty():
@@ -161,6 +165,10 @@ func apply_dialogue_line() -> void:
 	if dialogue_line.character == "Rant" and rant_talk_sounds.size() > 0:
 		rant_voice_player.stream = rant_talk_sounds.pick_random()
 		rant_voice_player.play()
+		
+	if dialogue_line.character == "The Citadel" and citadel_talk_sounds.size() > 0:
+		citadel_voice_player.stream = citadel_talk_sounds.pick_random()
+		citadel_voice_player.play()
 	
 	if not dialogue_line.text.is_empty():
 		dialogue_label.type_out()

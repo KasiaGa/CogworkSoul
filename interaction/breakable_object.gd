@@ -1,23 +1,20 @@
 extends Area2D
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var hit_sfx: AudioStreamPlayer = $HitAudio
 
 @export var max_health: int = 3
 var current_health: int = max_health
 
 # Exported variable so you can assign the door directly in the Inspector
 @export var door_to_block: StaticBody2D 
-
-@export var object_texture: Texture2D
+@export var hit_sounds: Array[AudioStream] = []
 
 var is_wiggling: bool = false
 
 func _ready() -> void:
 	# 1. Generate a unique key based on the current scene and this node's name
 	var unique_id = get_unique_id()
-	
-	if object_texture and sprite:
-		sprite.texture = object_texture
 	
 	# 2. If this object is already in the Global broken list, instantly delete it
 	if Global.broken_objects.get(unique_id, false):
@@ -34,12 +31,19 @@ func take_damage(amount: int):
 	if current_health <= 0:
 		return
 		
+	play_hit_sound()
+		
 	current_health -= amount
 	
 	if current_health > 0:
 		wiggle_effect()
 	else:
 		break_object()
+
+func play_hit_sound():
+	if hit_sfx and hit_sounds.size() > 0:
+		hit_sfx.stream = hit_sounds.pick_random()
+		hit_sfx.play()
 
 func wiggle_effect():
 	if is_wiggling:
@@ -72,10 +76,11 @@ func break_object():
 
 	if door_to_block and door_to_block.has_node("InteractionArea2"):
 		door_to_block.get_node("InteractionArea2").monitoring = true
-		
-	# 2. (Optional) Play a breaking sound or spawn particles here!
 	
-	# 3. Destroy this object
+	# Wait for the sound to finish playing before deleting the node
+	if hit_sfx and hit_sfx.playing:
+		await hit_sfx.finished
+		
 	queue_free()
 
 func get_unique_id() -> String:

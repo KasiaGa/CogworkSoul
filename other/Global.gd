@@ -38,6 +38,7 @@ var broken_objects: Dictionary = {} # Format: {"res://levels/room1.tscn:Breakabl
 var discovered_locations: Dictionary = {}
 
 var has_talked_to_bella: bool = false
+var rubigo_dialogue_step: int = 0
 
 # Path to the actual file on the computer
 const SAVE_PATH = "user://savegame.save"
@@ -64,7 +65,8 @@ func save_game():
 			"cocoon_spawned": cocoon_spawned,
 			"broken_objects": broken_objects,
 			"discovered_locations": discovered_locations,
-			"has_talked_to_bella": has_talked_to_bella
+			"has_talked_to_bella": has_talked_to_bella,
+			"rubigo_dialogue_step": rubigo_dialogue_step
 		}
 		
 		# Write it to the file

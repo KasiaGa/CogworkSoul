@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://d3ykyjpp8oo1" path="res://assets/sounds/talk3.wav" id="4_4kiea"]
 [ext_resource type="AudioStream" uid="uid://d3f2yfl5hxch0" path="res://assets/sounds/talk4.wav" id="5_fd6u7"]
 [ext_resource type="AudioStream" uid="uid://52calo85cyl7" path="res://assets/sounds/talk5.wav" id="6_hp0b2"]
+[ext_resource type="AudioStream" uid="uid://b6lbth0vfkvnu" path="res://assets/sounds/hooohaaaa.wav" id="7_w8vuf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qkmqt"]
 bg_color = Color(0, 0, 0, 1)
@@ -75,6 +76,7 @@ _data = {
 layer = 100
 script = ExtResource("1_36de5")
 rant_talk_sounds = Array[AudioStream]([ExtResource("2_5t74j"), ExtResource("3_w8vuf"), ExtResource("4_4kiea"), ExtResource("5_fd6u7"), ExtResource("6_hp0b2")])
+citadel_talk_sounds = Array[AudioStream]([ExtResource("7_w8vuf")])
 
 [node name="Balloon" type="Control" parent="." unique_id=731079321]
 unique_name_in_owner = true

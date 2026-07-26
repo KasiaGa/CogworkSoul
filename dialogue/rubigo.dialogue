@@ -1,0 +1,17 @@
+~ start
+Rubigo: Hello! I don't remember who I am but I can be your friend...
+Rant: The same with me flowery bug. 
+Rubigo: I have no soul. I have nothing to fix. 
+Rant: I… well.
+=> END
+
+~ dialogue2
+Rant: Are all those flowers yours?
+Rubigo: Yes, my instinct tells me to take care of them. I have a lot of flowers. I like to keep them around me. They are my friends.
+Rant: I see. I like your flowers too. They are nice to look at.
+Rubigo: I need more. Can you bring me more?
+=> END
+
+~ dialogue3
+Rubigo: I am Rubigo, the soulless one!
+=> END
