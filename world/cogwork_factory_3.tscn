@@ -31,6 +31,8 @@
 [ext_resource type="Texture2D" uid="uid://b7s5gph64yi1u" path="res://assets/images/world/platform5.png" id="28_mtdmh"]
 [ext_resource type="Script" uid="uid://dxqfoulnqwmx1" path="res://world/moving_platform.gd" id="30_mtdmh"]
 [ext_resource type="Texture2D" uid="uid://buoheuxda21eq" path="res://assets/images/world/platform11.png" id="31_m2550"]
+[ext_resource type="Script" uid="uid://c1mlc47d0v3we" path="res://world/mechanical_arm.gd" id="32_m2550"]
+[ext_resource type="Texture2D" uid="uid://djke4v3ga11v2" path="res://assets/images/world/bricks2_4.png" id="33_kgw6n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(2052.0835, 148.14282)
@@ -121,6 +123,23 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l85j0"]
 size = Vector2(320.5, 38)
+
+[sub_resource type="SkeletonModification2DTwoBoneIK" id="SkeletonModification2DTwoBoneIK_ae5in"]
+target_nodepath = NodePath("../IK_Target")
+target_minimum_distance = 500.0
+flip_bend_direction = true
+joint_one_bone_idx = 0
+joint_one_bone2d_node = NodePath("UpperArm")
+joint_two_bone_idx = 1
+joint_two_bone2d_node = NodePath("UpperArm/LowerArm")
+
+[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_da6y2"]
+enabled = true
+modification_count = 1
+modifications/0 = SubResource("SkeletonModification2DTwoBoneIK_ae5in")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kgw6n"]
+size = Vector2(211, 204)
 
 [node name="CogworkFactory3" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_odu4x")
@@ -262,11 +281,11 @@ scale = Vector2(0.6320755, 0.6320754)
 texture = ExtResource("14_djjmk")
 
 [node name="InteractionArea2" parent="Entrance" unique_id=1179285320 instance=ExtResource("15_f3285")]
-position = Vector2(15, -207)
+position = Vector2(617, -749)
 action_name = "Enter"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance/InteractionArea2" unique_id=1377918606]
-position = Vector2(592, -604)
+position = Vector2(8, -67)
 shape = SubResource("CapsuleShape2D_bw10g")
 
 [node name="Conveyor" type="AnimatableBody2D" parent="." unique_id=1007210652]
@@ -362,3 +381,49 @@ shape = SubResource("RectangleShape2D_l85j0")
 position = Vector2(1391, -952)
 scale = Vector2(0.4, 0.4)
 sprite_visible = false
+
+[node name="MechanicalArm" type="Node2D" parent="." unique_id=1383990300 node_paths=PackedStringArray("move_target")]
+position = Vector2(-789, -113)
+script = ExtResource("32_m2550")
+move_target = NodePath("Target")
+
+[node name="Skeleton2D" type="Skeleton2D" parent="MechanicalArm" unique_id=466749667]
+position = Vector2(35, 8)
+modification_stack = SubResource("SkeletonModificationStack2D_da6y2")
+
+[node name="UpperArm" type="Bone2D" parent="MechanicalArm/Skeleton2D" unique_id=831768054]
+position = Vector2(232, 128.00002)
+rotation = -1.9634339
+scale = Vector2(0.99994636, 0.99994636)
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+metadata/_local_pose_override_enabled_ = true
+
+[node name="UpperArm" type="Sprite2D" parent="MechanicalArm/Skeleton2D/UpperArm" unique_id=745622220]
+position = Vector2(181.49602, 11.302071)
+rotation = -1.3578662
+texture = ExtResource("33_kgw6n")
+
+[node name="LowerArm" type="Bone2D" parent="MechanicalArm/Skeleton2D/UpperArm" unique_id=1518333441]
+position = Vector2(10.26615, -19.561655)
+scale = Vector2(0.9999997, 0.9999997)
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+metadata/_local_pose_override_enabled_ = true
+
+[node name="LowerArm" type="Sprite2D" parent="MechanicalArm/Skeleton2D/UpperArm/LowerArm" unique_id=1539356111]
+position = Vector2(-23.88161, -172.82361)
+texture = ExtResource("33_kgw6n")
+
+[node name="Area2D" type="Area2D" parent="MechanicalArm" unique_id=904109246]
+position = Vector2(183, 388)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MechanicalArm/Area2D" unique_id=1712430283]
+position = Vector2(-226, -122)
+shape = SubResource("RectangleShape2D_kgw6n")
+
+[node name="IK_Target" type="Marker2D" parent="MechanicalArm" unique_id=776516378]
+position = Vector2(159, -207)
+
+[node name="Target" type="Marker2D" parent="MechanicalArm" unique_id=704673100]
+position = Vector2(-234, 6)
