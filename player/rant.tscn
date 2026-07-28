@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://dhqk2se7i0dti" path="res://assets/images/player/rant_wren2.png" id="15_q6fc4"]
 [ext_resource type="AudioStream" uid="uid://dph4eg8fwnjv8" path="res://assets/sounds/tuputupu.wav" id="15_vol7i"]
 [ext_resource type="Texture2D" uid="uid://c7vluky5auo6j" path="res://assets/images/player/rant_wren3.png" id="16_cvklb"]
+[ext_resource type="AudioStream" uid="uid://bpokobnjslgd1" path="res://assets/sounds/bench.wav" id="16_vol7i"]
 [ext_resource type="Texture2D" uid="uid://c7okli6fld3dx" path="res://assets/images/player/rant_wren4.png" id="17_13v2o"]
 [ext_resource type="Texture2D" uid="uid://c27sg0t2rncl4" path="res://assets/images/player/rant_wren5.png" id="18_m7f1f"]
 [ext_resource type="Texture2D" uid="uid://dpf6n3y58uh2c" path="res://assets/images/player/rant_wren6.png" id="19_6aivm"]
@@ -588,6 +589,7 @@ hurt_sounds = Array[AudioStream]([ExtResource("9_aui27")])
 talk_sounds = Array[AudioStream]([ExtResource("10_vol7i"), ExtResource("11_utlov"), ExtResource("12_vnc7o"), ExtResource("13_e2537"), ExtResource("14_o2hxr")])
 surprised_sounds = Array[AudioStream]([ExtResource("15_aui27")])
 walk_sounds = Array[AudioStream]([ExtResource("15_vol7i")])
+sit_sounds = Array[AudioStream]([ExtResource("16_vol7i")])
 
 [node name="rant" type="AnimatedSprite2D" parent="." unique_id=1533657175]
 visibility_layer = 2
@@ -626,6 +628,8 @@ target_position = Vector2(60, 0)
 [node name="SurprisedSfx" type="AudioStreamPlayer" parent="." unique_id=388796420]
 
 [node name="WalkSfx" type="AudioStreamPlayer" parent="." unique_id=548505753]
+
+[node name="SitSfx" type="AudioStreamPlayer" parent="." unique_id=616712921]
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

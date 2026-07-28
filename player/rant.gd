@@ -23,6 +23,7 @@ extends CharacterBody2D
 @onready var talk_sfx: AudioStreamPlayer = $TalkSfx
 @onready var surprised_sfx: AudioStreamPlayer = $SurprisedSfx
 @onready var walk_sfx: AudioStreamPlayer = $WalkSfx
+@onready var sit_sfx: AudioStreamPlayer = $SitSfx
 
 @export var attack_sounds: Array[AudioStream] = []
 @export var wren_sounds: Array[AudioStream] = []
@@ -30,6 +31,7 @@ extends CharacterBody2D
 @export var talk_sounds: Array[AudioStream] = []
 @export var surprised_sounds: Array[AudioStream] = []
 @export var walk_sounds: Array[AudioStream] = []
+@export var sit_sounds: Array[AudioStream] = []
 
 var is_attacking: bool = false
 var is_invincible: bool = false
@@ -343,6 +345,8 @@ func play_arrival_animation() -> void:
 func sit_on_bench() -> void:
 	is_sitting = true
 	velocity = Vector2.ZERO
+	sit_sfx.stream = sit_sounds.pick_random()
+	sit_sfx.play()
 
 # Public helper to set the player's current health from other systems
 func set_current_health(new_health: int) -> void:
