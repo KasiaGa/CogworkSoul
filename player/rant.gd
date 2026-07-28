@@ -22,12 +22,14 @@ extends CharacterBody2D
 @onready var hurt_sfx: AudioStreamPlayer = $HurtSfx
 @onready var talk_sfx: AudioStreamPlayer = $TalkSfx
 @onready var surprised_sfx: AudioStreamPlayer = $SurprisedSfx
+@onready var walk_sfx: AudioStreamPlayer = $WalkSfx
 
 @export var attack_sounds: Array[AudioStream] = []
 @export var wren_sounds: Array[AudioStream] = []
 @export var hurt_sounds: Array[AudioStream] = []
 @export var talk_sounds: Array[AudioStream] = []
 @export var surprised_sounds: Array[AudioStream] = []
+@export var walk_sounds: Array[AudioStream] = []
 
 var is_attacking: bool = false
 var is_invincible: bool = false
@@ -39,6 +41,7 @@ var fade_layer: CanvasLayer = null
 var fade_rect: ColorRect = null
 var is_climbing: bool = false
 var can_climb: bool = true
+var is_currently_running: bool = false
 
 const SPEED = 300.0
 const RUN_SPEED = 600.0
@@ -158,10 +161,17 @@ func _physics_process(delta: float) -> void:
 		
 		if velocity.x > SPEED or velocity.x < -SPEED:
 			rant.animation = "run" + anim_suffix
+			handle_footstep_sfx(true)
 		elif velocity.x > 1 or velocity.x < -1:
 			rant.animation = "walk" + anim_suffix
+			handle_footstep_sfx(false)
 		else:
 			rant.animation = "idle" + anim_suffix
+			if walk_sfx.playing:
+				walk_sfx.stop()
+	else:
+		if walk_sfx.playing:
+			walk_sfx.stop()
 
 	# 2. GATED ATTACK INPUT
 	# Added "and Global.has_needle" so clicking 'X' does nothing without it!
@@ -285,8 +295,8 @@ func take_damage(amount: int):
 		rant.play("death")
 		# Flash the player a few times to indicate death
 		var tw_death = create_tween()
-		tw_death.tween_property(rant, "modulate:a", 0.2, 0.12)
-		tw_death.tween_property(rant, "modulate:a", 1.0, 0.12)
+		tw_death.tween_property(rant, "modulate", Color(50.0, 50.0, 50.0, 1.0), 0.1)
+		tw_death.tween_property(rant, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.1)
 		tw_death.set_loops(6)
 		# Wait for the blinking to finish (and any short death animation)
 		await tw_death.finished
@@ -307,9 +317,9 @@ func take_damage(amount: int):
 	health_container.updateHearts(currentHealth)
 
 	var tw = create_tween()
-	tw.tween_property(rant, "modulate:a", 0.5, 0.1)
-	tw.tween_property(rant, "modulate:a", 1.0, 0.1)
-	tw.set_loops(5) # Flash 5 times
+	tw.tween_property(rant, "modulate", Color(50.0, 50.0, 50.0, 1.0), 0.1)
+	tw.tween_property(rant, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.1)
+	tw.set_loops(3)
 
 	await get_tree().create_timer(1.0).timeout
 	is_invincible = false
@@ -446,3 +456,23 @@ func start_ledge_climb():
 	
 	await tween.finished
 	is_climbing = false
+	
+func handle_footstep_sfx(is_running: bool) -> void:
+	# 1. Detect if player just switched between walk <-> run mid-movement
+	var state_changed: bool = (is_running != is_currently_running)
+	is_currently_running = is_running
+
+	# 2. Only play footstep sounds if moving on the ground
+	if is_on_floor() and abs(velocity.x) > 1.0:
+		# If state changed OR current sound finished, interrupt & start fresh with new pitch/sound
+		if state_changed or not walk_sfx.playing:
+			walk_sfx.stop() # Immediately cut off the walking sound sequence!
+			
+			if walk_sounds.size() > 0:
+				walk_sfx.stream = walk_sounds.pick_random()
+			
+			walk_sfx.pitch_scale = 2.0 if is_running else 1.0
+			walk_sfx.play()
+	else:
+		if walk_sfx.playing:
+			walk_sfx.stop()
