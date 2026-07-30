@@ -245,27 +245,33 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Jump
-	if not was_on_floor and is_on_floor():
-		# Higher fall speed = stronger squash (capped between 0.5 and 0.8 Y-scale)
-		var impact_factor = clamp(remap(velocity.y, 0, 1500, 0.95, 0.8), 0.8, 0.95)
-		var stretch_x = 2.0 - impact_factor # Keeps volume visually consistent
-		apply_squash_and_stretch(Vector2(stretch_x, impact_factor), 0.05, 0.15)
-
+	if not is_on_floor():
+		air_time += delta
+	else:
+		# Only trigger landing squash if airborne for more than 0.1 seconds (ignores tile seams)
+		if air_time > 0.1:
+			var impact_factor = clamp(remap(velocity.y, 0, 1500, 0.95, 0.8), 0.8, 0.95)
+			var stretch_x = 1.0 + (1.0 - impact_factor)
+			apply_squash_and_stretch(Vector2(stretch_x, impact_factor), 0.05, 0.15)
+		
+		# Reset the timer as long as we stay grounded
+		air_time = 0.0
+		
 	was_on_floor = is_on_floor()
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		# Vertical stretch on jump takeoff
-		apply_squash_and_stretch(Vector2(0.7, 1.3), 0.08, 0.15)
+		apply_squash_and_stretch(Vector2(0.8, 1.2), 0.08, 0.15)
 
 	# Movement input
 	var direction := Input.get_axis("left", "right")
 	
 	# Check if the player rapidly changed direction on the ground
-	if is_on_floor() and not is_sitting and abs(velocity.x) > 150.0:
-		# Check if holding the OPPOSITE direction of current high-speed movement
-		if (direction > 0 and velocity.x < -100) or (direction < 0 and velocity.x > 100):
-			apply_squash_and_stretch(Vector2(0.9, 1.1), 0.05, 0.1)
+#	if is_on_floor() and not is_sitting and abs(velocity.x) > 150.0:
+#		# Check if holding the OPPOSITE direction of current high-speed movement
+#		if (direction > 0 and velocity.x < -100) or (direction < 0 and velocity.x > 100):
+#			apply_squash_and_stretch(Vector2(0.8, 1.2), 0.05, 0.1)
 	
 	if direction:
 		velocity.x = direction * current_speed
@@ -306,7 +312,7 @@ func take_damage(amount: int):
 
 	currentHealth -= amount
 	
-	apply_squash_and_stretch(Vector2(1.4, 0.6), 0.04, 0.18)
+	apply_squash_and_stretch(Vector2(0.9, 1), 0.04, 0.18)
 	
 	if hurt_sounds.size() > 0:
 		hurt_sfx.stream = hurt_sounds.pick_random()
