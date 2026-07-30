@@ -33,6 +33,8 @@ extends CharacterBody2D
 @export var walk_sounds: Array[AudioStream] = []
 @export var sit_sounds: Array[AudioStream] = []
 
+var base_scale: Vector2 = Vector2.ONE
+
 var is_attacking: bool = false
 var is_invincible: bool = false
 var is_sitting: bool = false
@@ -44,6 +46,9 @@ var fade_rect: ColorRect = null
 var is_climbing: bool = false
 var can_climb: bool = true
 var is_currently_running: bool = false
+var was_on_floor: bool = true
+var squash_tween: Tween = null
+var air_time: float = 0.0
 
 const SPEED = 300.0
 const RUN_SPEED = 600.0
@@ -52,6 +57,7 @@ const JUMP_VELOCITY = -1400.0
 const DIALOGUE_FILE = preload("res://dialogue/rant_needle.dialogue")
 
 func _ready():
+	base_scale = rant.scale
 	currentHealth = Global.player_current_health
 	maxHealth = Global.player_max_health
 	currentSilk = Global.player_current_silk
@@ -239,11 +245,28 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Jump
+	if not was_on_floor and is_on_floor():
+		# Higher fall speed = stronger squash (capped between 0.5 and 0.8 Y-scale)
+		var impact_factor = clamp(remap(velocity.y, 0, 1500, 0.95, 0.8), 0.8, 0.95)
+		var stretch_x = 2.0 - impact_factor # Keeps volume visually consistent
+		apply_squash_and_stretch(Vector2(stretch_x, impact_factor), 0.05, 0.15)
+
+	was_on_floor = is_on_floor()
+
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		# Vertical stretch on jump takeoff
+		apply_squash_and_stretch(Vector2(0.7, 1.3), 0.08, 0.15)
 
 	# Movement input
 	var direction := Input.get_axis("left", "right")
+	
+	# Check if the player rapidly changed direction on the ground
+	if is_on_floor() and not is_sitting and abs(velocity.x) > 150.0:
+		# Check if holding the OPPOSITE direction of current high-speed movement
+		if (direction > 0 and velocity.x < -100) or (direction < 0 and velocity.x > 100):
+			apply_squash_and_stretch(Vector2(0.9, 1.1), 0.05, 0.1)
+	
 	if direction:
 		velocity.x = direction * current_speed
 	else:
@@ -282,6 +305,8 @@ func take_damage(amount: int):
 		return
 
 	currentHealth -= amount
+	
+	apply_squash_and_stretch(Vector2(1.4, 0.6), 0.04, 0.18)
 	
 	if hurt_sounds.size() > 0:
 		hurt_sfx.stream = hurt_sounds.pick_random()
@@ -480,3 +505,16 @@ func handle_footstep_sfx(is_running: bool) -> void:
 	else:
 		if walk_sfx.playing:
 			walk_sfx.stop()
+
+func apply_squash_and_stretch(target_multiplier: Vector2, duration_in: float = 0.06, duration_out: float = 0.12) -> void:
+	if squash_tween and squash_tween.is_running():
+		squash_tween.kill()
+
+	# Multiply target ratios by your character's actual base scale
+	var target_scale = base_scale * target_multiplier
+
+	squash_tween = create_tween()
+	# Squash / Stretch phase
+	squash_tween.tween_property(rant, "scale", target_scale, duration_in).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# Return back to your base Inspector scale!
+	squash_tween.tween_property(rant, "scale", base_scale, duration_out).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
