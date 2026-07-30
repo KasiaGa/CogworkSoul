@@ -17,6 +17,9 @@ extends CharacterBody2D
 @onready var wall_detector: RayCast2D = $AttackArea/WallDetector
 @onready var ledge_detector: RayCast2D = $AttackArea/LedgeDetector
 
+@onready var weapon_tip: Node2D = $AttackArea/WeaponTip
+@onready var slash_trail: Line2D = $AttackArea/SlashTrail
+
 @onready var attack_sfx: AudioStreamPlayer = $AttackSfx
 @onready var wren_sfx: AudioStreamPlayer = $WrenSfx
 @onready var hurt_sfx: AudioStreamPlayer = $HurtSfx
@@ -49,6 +52,9 @@ var is_currently_running: bool = false
 var was_on_floor: bool = true
 var squash_tween: Tween = null
 var air_time: float = 0.0
+
+var trail_points: Array[Vector2] = []
+var max_trail_points: int = 10
 
 const SPEED = 300.0
 const RUN_SPEED = 600.0
@@ -180,19 +186,44 @@ func _physics_process(delta: float) -> void:
 	else:
 		if walk_sfx.playing:
 			walk_sfx.stop()
+			
+	if is_attacking and weapon_tip and slash_trail:
+		# Capture the current animated position of WeaponTip
+		trail_points.append(slash_trail.to_local(weapon_tip.global_position))
+		
+		# Limit the trail length (adjust max_trail_points as needed)
+		if trail_points.size() > max_trail_points:
+			trail_points.pop_front()
+			
+		slash_trail.points = trail_points
+	else:
+		# Fade out the trail when the attack ends
+		if trail_points.size() > 0:
+			trail_points.pop_front()
+			slash_trail.points = trail_points
 
 	# 2. GATED ATTACK INPUT
 	# Added "and Global.has_needle" so clicking 'X' does nothing without it!
 	if Input.is_action_just_pressed("attack") and not is_attacking and Global.has_needle:
 		if not Global.rant_needle_played:
 			Global.rant_needle_played = true
-			Global.save_game() # Permanently remember they did this
-			
-			# Trigger the dialogue node attached to your level
+			Global.save_game()
 			if dialogue and dialogue.has_method("start"):
 				dialogue.start(DIALOGUE_FILE, "rant_needle")
 		
 		is_attacking = true
+		
+		# 1. FORCE CLEAR the trail points so old points don't confuse the new swing
+		trail_points.clear()
+		if slash_trail:
+			slash_trail.points = []
+
+		# 2. RESTART the AnimationPlayer from 0.0 seconds
+		if $AnimationPlayer.is_playing():
+			$AnimationPlayer.stop()
+		$AnimationPlayer.play("attack_trail")
+
+		# 3. Play sprite attack animation
 		rant.play("attack")
 		attack_collision.disabled = false 
 		
@@ -200,7 +231,7 @@ func _physics_process(delta: float) -> void:
 			attack_sfx.stream = attack_sounds.pick_random()
 			attack_sfx.play()
 
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.3).timeout 
 		
 		attack_collision.disabled = true 
 		is_attacking = false
@@ -250,7 +281,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		# Only trigger landing squash if airborne for more than 0.1 seconds (ignores tile seams)
 		if air_time > 0.1:
-			var impact_factor = clamp(remap(velocity.y, 0, 1500, 0.95, 0.8), 0.8, 0.95)
+			var impact_factor = clamp(remap(velocity.y, 0, 1500, 0.95, 0.9), 0.9, 0.95)
 			var stretch_x = 1.0 + (1.0 - impact_factor)
 			apply_squash_and_stretch(Vector2(stretch_x, impact_factor), 0.05, 0.15)
 		
@@ -262,7 +293,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		# Vertical stretch on jump takeoff
-		apply_squash_and_stretch(Vector2(0.8, 1.2), 0.08, 0.15)
+		apply_squash_and_stretch(Vector2(0.9, 1.1), 0.08, 0.15)
 
 	# Movement input
 	var direction := Input.get_axis("left", "right")

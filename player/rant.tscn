@@ -579,6 +579,49 @@ height = 288.0
 radius = 83.4075
 height = 268.46786
 
+[sub_resource type="Curve" id="Curve_mjotr"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.99718314, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_da6y2"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_vol7i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackArea/WeaponTip:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(115, 36)]
+}
+
+[sub_resource type="Animation" id="Animation_utlov"]
+resource_name = "attack_trail"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackArea/WeaponTip:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 0.1, 0.16666667, 0.23333333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-94, 40), Vector2(-55, 87), Vector2(-9, 98), Vector2(46, 76), Vector2(103, 30)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vnc7o"]
+_data = {
+&"RESET": SubResource("Animation_vol7i"),
+&"attack_trail": SubResource("Animation_utlov")
+}
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1131129936 groups=["player"]]
 z_index = 50
 collision_layer = 2
@@ -595,7 +638,7 @@ sit_sounds = Array[AudioStream]([ExtResource("16_vol7i")])
 visibility_layer = 2
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ae5in")
-animation = &"walk"
+animation = &"attack"
 autoplay = "idle_no_needle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1052474574]
@@ -617,6 +660,18 @@ target_position = Vector2(60, 0)
 position = Vector2(-16, 59)
 target_position = Vector2(60, 0)
 
+[node name="WeaponTip" type="Node2D" parent="AttackArea" unique_id=93816888]
+position = Vector2(115, 36)
+
+[node name="SlashTrail" type="Line2D" parent="AttackArea" unique_id=1003770793]
+position = Vector2(-22, 103)
+points = PackedVector2Array(104, -56, 104, -56)
+width = 5.0
+width_curve = SubResource("Curve_mjotr")
+gradient = SubResource("Gradient_da6y2")
+begin_cap_mode = 2
+end_cap_mode = 2
+
 [node name="AttackSfx" type="AudioStreamPlayer" parent="." unique_id=1561673047]
 
 [node name="WrenSfx" type="AudioStreamPlayer" parent="." unique_id=571822804]
@@ -630,6 +685,9 @@ target_position = Vector2(60, 0)
 [node name="WalkSfx" type="AudioStreamPlayer" parent="." unique_id=548505753]
 
 [node name="SitSfx" type="AudioStreamPlayer" parent="." unique_id=616712921]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1800327982]
+libraries/ = SubResource("AnimationLibrary_vnc7o")
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
