@@ -666,7 +666,7 @@ position = Vector2(115, 36)
 [node name="SlashTrail" type="Line2D" parent="AttackArea" unique_id=1003770793]
 position = Vector2(-22, 103)
 points = PackedVector2Array(104, -56, 104, -56)
-width = 5.0
+width = 7.0
 width_curve = SubResource("Curve_mjotr")
 gradient = SubResource("Gradient_da6y2")
 begin_cap_mode = 2

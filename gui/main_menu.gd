@@ -4,20 +4,8 @@ extends Control
 const STARTING_LEVEL_PATH = "res://world/main.tscn"
 
 func _on_start_button_pressed() -> void:
-	# RESET GLOBAL DATA FOR A FRESH NEW GAME
-	Global.player_max_health = 5
-	Global.player_current_health = 5
-	Global.player_max_silk = 5
-	Global.player_current_silk = 0
-	Global.has_needle = false
-	Global.player_is_sitting = false
-	Global.collected_items.clear()
-	Global.intro_dialogue_played = false
-	Global.should_reposition = false
-	Global.target_position = Vector2.ZERO
-	
-	# Boot into the first room of the game
-	get_tree().change_scene_to_file(STARTING_LEVEL_PATH)
+	# Load the intro cutscene with animated frames
+	get_tree().change_scene_to_file("res://cutscenes/intro_cutscene.tscn")
 
 
 func _on_load_button_pressed() -> void:
