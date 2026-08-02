@@ -141,6 +141,9 @@ func _physics_process(delta: float) -> void:
 		return
 
 	if Global.is_dialogue_active:
+		# Immediately stop footstep SFX when dialogue is active to avoid bleed-through
+		if walk_sfx.playing:
+			walk_sfx.stop()
 		velocity.x = move_toward(velocity.x, 0, SPEED) # Slow down to a stop if running
 		if not is_on_floor():
 			velocity += get_gravity() * delta # Allow gravity so player doesn't float
