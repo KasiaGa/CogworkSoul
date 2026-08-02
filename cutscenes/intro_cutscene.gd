@@ -8,29 +8,27 @@ const FPS = 30
 
 @onready var sprite = $AnimatedSprite2D
 @onready var loading_label = $LoadingLabel
+@onready var loading_icon = $LoadingIcon
 
 func _ready() -> void:
-	loading_label.visible = true
+	loading_label.visible = false
+	loading_icon.visible = false
 	
-	await get_tree().process_frame
+	var textures = Global.cutscene_frames
+	
+	if textures.is_empty():
+		push_error("No cutscene frames loaded! Make sure loading_screen preloaded them.")
+		return
 	
 	var sprite_frames = SpriteFrames.new()
 	sprite_frames.add_animation("intro")
 	sprite_frames.set_animation_speed("intro", FPS)
 	
-	for i in range(TOTAL_FRAMES):
-		var frame_name = FRAMES_FOLDER + FRAME_PREFIX + str(i).pad_zeros(4) + ".jpg"
-		var texture = load(frame_name)
-		if texture:
-			sprite_frames.add_frame("intro", texture)
-		
-		if i % 10 == 0:
-			await get_tree().process_frame
+	for texture in textures:
+		sprite_frames.add_frame("intro", texture)
 	
 	sprite.sprite_frames = sprite_frames
 	sprite_frames.set_animation_loop("intro", false)
-	
-	loading_label.visible = false
 	
 	sprite.animation_finished.connect(_on_animation_finished)
 	
@@ -50,6 +48,8 @@ func _input(event: InputEvent) -> void:
 
 func _start_game() -> void:
 	loading_label.visible = true
+	loading_icon.visible = true
+	loading_icon.play()
 	
 	set_process_input(false)
 	

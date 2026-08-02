@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://ckkpphx30fbm"]
+[gd_scene format=3 uid="uid://dy8byeyfmf1x"]
 
-[ext_resource type="Script" uid="uid://igdh7y2imipq" path="res://cutscenes/intro_cutscene.gd" id="1_scjti"]
+[ext_resource type="Script" path="res://cutscenes/loading_screen.gd" id="1_scjti"]
 [ext_resource type="Texture2D" uid="uid://b1tv3wdw54w6q" path="res://gui/loading_animation1.png" id="2_00cnf"]
 [ext_resource type="Texture2D" uid="uid://bh0bgaxojodcm" path="res://gui/loading_animation2.png" id="3_jgfrn"]
 [ext_resource type="Texture2D" uid="uid://ci3xwtey6wwi0" path="res://gui/loading_animation3.png" id="4_458ng"]
@@ -29,12 +29,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CutscenePlayer" type="Control" unique_id=1880419570]
+[node name="LoadingScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_scjti")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1518669340]
+[node name="ColorRect" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = -39.0
@@ -43,11 +43,7 @@ offset_right = 1623.0
 offset_bottom = 926.0
 color = Color(0, 0, 0, 1)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=963207069]
-position = Vector2(800, 450)
-scale = Vector2(0.56, 0.56)
-
-[node name="LoadingLabel" type="Label" parent="." unique_id=134449193]
+[node name="LoadingLabel" type="Label" parent="."]
 layout_mode = 1
 offset_left = 733.99994
 offset_top = 519.0
@@ -57,9 +53,10 @@ theme_override_fonts/font = SubResource("SystemFont_cx0yq")
 theme_override_font_sizes/font_size = 30
 text = "Loading..."
 
-[node name="LoadingIcon" type="AnimatedSprite2D" parent="." unique_id=1810320295]
+[node name="LoadingIcon" type="AnimatedSprite2D" parent="."]
 position = Vector2(793, 392)
 scale = Vector2(0.17187501, 0.17187503)
 sprite_frames = SubResource("SpriteFrames_mjotr")
 frame = 1
 frame_progress = 0.9369367
+

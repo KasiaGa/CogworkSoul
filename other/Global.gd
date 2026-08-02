@@ -40,6 +40,9 @@ var discovered_locations: Dictionary = {}
 var has_talked_to_bella: bool = false
 var rubigo_dialogue_step: int = 0
 
+# Preloaded cutscene frames
+var cutscene_frames: Array = []
+
 # Path to the actual file on the computer
 const SAVE_PATH = "user://savegame.save"
 

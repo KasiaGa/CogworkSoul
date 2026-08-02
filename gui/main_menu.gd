@@ -4,8 +4,9 @@ extends Control
 const STARTING_LEVEL_PATH = "res://world/main.tscn"
 
 func _on_start_button_pressed() -> void:
-	# Load the intro cutscene with animated frames
-	get_tree().change_scene_to_file("res://cutscenes/intro_cutscene.tscn")
+	# Load the loading screen first, which will preload all cutscene frames
+	# Then it will transition to the cutscene
+	get_tree().change_scene_to_file("res://cutscenes/loading_screen.tscn")
 
 
 func _on_load_button_pressed() -> void:
