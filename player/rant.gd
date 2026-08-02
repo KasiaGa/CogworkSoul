@@ -124,6 +124,21 @@ func _physics_process(delta: float) -> void:
 			
 	# Run our check every frame we are mid-air
 	check_ledge_climb()
+	
+	# Handle intro animations (lie and get_up)
+	if Global.should_play_lie_animation:
+		var anim_suffix := "" if Global.has_needle else "_no_needle"
+		rant.animation = "lie" + anim_suffix
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+	
+	if Global.should_play_get_up_animation:
+		var anim_suffix := "" if Global.has_needle else "_no_needle"
+		rant.animation = "get_up" + anim_suffix
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
 
 	if Global.is_dialogue_active:
 		velocity.x = move_toward(velocity.x, 0, SPEED) # Slow down to a stop if running

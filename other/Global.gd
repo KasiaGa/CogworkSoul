@@ -43,6 +43,10 @@ var rubigo_dialogue_step: int = 0
 # Preloaded cutscene frames
 var cutscene_frames: Array = []
 
+# Intro animation control
+var should_play_lie_animation: bool = false
+var should_play_get_up_animation: bool = false
+
 # Path to the actual file on the computer
 const SAVE_PATH = "user://savegame.save"
 
