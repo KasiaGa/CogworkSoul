@@ -129,3 +129,10 @@ func trigger_lie_sequence() -> void:
 	# Start the main intro dialogue now that lie/get_up sequence finished
 	dialogue.start(DIALOGUE_FILE, "start")
 	Global.intro_dialogue_played = true
+	# Persist this change so the intro won't trigger again after quit/load
+	# Also save a safe checkpoint at the player's current position so loading won't respawn them out of map
+	# Use a small upward offset so the player doesn't spawn stuck in the floor
+	Global.target_position = character_body_2d.global_position + Vector2(0, -20)
+	Global.scene_path = Global.current_scene_path
+	Global.should_reposition = true
+	Global.save_game()  # save checkpoint and other state

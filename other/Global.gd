@@ -50,7 +50,18 @@ var should_play_get_up_animation: bool = false
 # Path to the actual file on the computer
 const SAVE_PATH = "user://savegame.save"
 
-func save_game():
+func save_game(save_checkpoint: bool = true):
+	# If caller doesn't want to overwrite checkpoint coords, try to reuse existing saved values
+	var checkpoint_x = target_position.x
+	var checkpoint_y = target_position.y
+	if not save_checkpoint and FileAccess.file_exists(SAVE_PATH):
+		var f = FileAccess.open(SAVE_PATH, FileAccess.READ)
+		if f:
+			var prev = f.get_var()
+			f.close()
+			checkpoint_x = prev.get("checkpoint_x", target_position.x)
+			checkpoint_y = prev.get("checkpoint_y", target_position.y)
+	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file:
 		# Gather everything we want to remember into a tidy package
@@ -59,8 +70,8 @@ func save_game():
 			"max_silk": player_max_silk,
 			"has_needle": has_needle,
 			"collected_items": collected_items,
-			"checkpoint_x": target_position.x,
-			"checkpoint_y": target_position.y,
+			"checkpoint_x": checkpoint_x,
+			"checkpoint_y": checkpoint_y,
 			"saved_scene": scene_path,
 			"intro_dialogue_played": intro_dialogue_played,
 			"rant_needle_played": rant_needle_played,
