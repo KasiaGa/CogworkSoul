@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://yp7pjyikyd0x"]
+
+[ext_resource type="Script" uid="uid://bmkluv2sdc0l0" path="res://other/interactive_bell.gd" id="1_3t0gx"]
+[ext_resource type="Texture2D" uid="uid://dh8eyr68yreg8" path="res://assets/images/world/bell1.png" id="1_qvo4m"]
+[ext_resource type="Texture2D" uid="uid://dc0h4fbbjsm18" path="res://assets/images/world/bell2.png" id="3_5rwtc"]
+[ext_resource type="Texture2D" uid="uid://bkjib15321hox" path="res://assets/images/world/bell3.png" id="4_m1icb"]
+[ext_resource type="Texture2D" uid="uid://bq2uwitv5mgnx" path="res://assets/images/world/bell4.png" id="5_r8tjn"]
+[ext_resource type="Texture2D" uid="uid://b4klfe5ttpyas" path="res://assets/images/world/bell5.png" id="6_ngfr8"]
+[ext_resource type="Texture2D" uid="uid://cxhpgksuuqyeo" path="res://assets/images/world/bell6.png" id="7_ikyp1"]
+[ext_resource type="Texture2D" uid="uid://bjt4o43vkrfri" path="res://assets/images/world/bell7.png" id="8_q73m8"]
+[ext_resource type="Texture2D" uid="uid://btmslh0au5g1t" path="res://assets/images/world/bell8.png" id="9_4p048"]
+[ext_resource type="Texture2D" uid="uid://ckkalyjwwwhdv" path="res://assets/images/world/bell9.png" id="10_ywk7e"]
+[ext_resource type="Texture2D" uid="uid://c6ee8oahny3xd" path="res://assets/images/world/bell10.png" id="11_7b448"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mjotr"]
+radius = 48.507732
+
+[node name="InteractiveBell" type="RigidBody2D" unique_id=1508287802]
+script = ExtResource("1_3t0gx")
+bell_textures = Array[Texture2D]([ExtResource("1_qvo4m"), ExtResource("3_5rwtc"), ExtResource("4_m1icb"), ExtResource("5_r8tjn"), ExtResource("6_ngfr8"), ExtResource("7_ikyp1"), ExtResource("8_q73m8"), ExtResource("9_4p048"), ExtResource("10_ywk7e"), ExtResource("11_7b448")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2019672022]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_qvo4m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1039733213]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_mjotr")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1193198106]

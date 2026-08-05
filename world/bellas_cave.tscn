@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://koa06g66wusf" path="res://assets/images/world/paralax1.png" id="17_r3keo"]
 [ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="18_26sh8"]
 [ext_resource type="PackedScene" uid="uid://0y4e038w6ioy" path="res://npc/bella.tscn" id="19_abrmv"]
+[ext_resource type="PackedScene" uid="uid://yp7pjyikyd0x" path="res://other/interactive_bell.tscn" id="20_vsdyx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(1918.3335, 148.14282)
@@ -47,6 +48,7 @@ repeat_size = Vector2(1366, 768)
 repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1980547259]
+self_modulate = Color(0.86, 0.52417004, 0.24940002, 1)
 z_index = -2
 position = Vector2(142, 276)
 texture = ExtResource("2_26sh8")
@@ -69,6 +71,7 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_mjotr")
 
 [node name="ground_metal" type="StaticBody2D" parent="." unique_id=1100955614]
+modulate = Color(0.6789437, 0.6789437, 0.6789437, 1)
 position = Vector2(608, 571)
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_metal" unique_id=367862025]
@@ -111,6 +114,7 @@ limit_bottom = 739
 [node name="wall2" type="StaticBody2D" parent="." unique_id=4871535]
 
 [node name="Sprite2D" type="Sprite2D" parent="wall2" unique_id=2072668536]
+modulate = Color(0.8, 0.46400005, 0.24000001, 1)
 position = Vector2(2395, 241)
 rotation = -3.1415927
 texture = ExtResource("7_4cntq")
@@ -128,12 +132,14 @@ rotation = -3.1415927
 texture = ExtResource("7_4cntq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="wall3" unique_id=414618323]
+visible = false
 position = Vector2(2436, 69)
 shape = SubResource("RectangleShape2D_da6y2")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=2068630730]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=936856724]
+modulate = Color(0.7923814, 0.4623468, 0.21701962, 1)
 position = Vector2(2772, 256)
 scale = Vector2(13.447916, 17.4693)
 texture = ExtResource("8_v2qna")
@@ -213,3 +219,51 @@ spawn_location = Vector2(2300, -1400)
 [node name="Bella" parent="." unique_id=1998102934 instance=ExtResource("19_abrmv")]
 position = Vector2(1739, 457)
 scale = Vector2(0.4, 0.4)
+
+[node name="InteractiveBell" parent="." unique_id=1508287802 instance=ExtResource("20_vsdyx")]
+position = Vector2(-221, 535)
+
+[node name="InteractiveBell2" parent="." unique_id=1145497551 instance=ExtResource("20_vsdyx")]
+position = Vector2(691, 538)
+push_force = 100.0
+spin_force = 150.0
+
+[node name="InteractiveBell3" parent="." unique_id=1062958203 instance=ExtResource("20_vsdyx")]
+position = Vector2(493, 554)
+push_force = 90.0
+spin_force = 170.0
+
+[node name="InteractiveBell4" parent="." unique_id=921518132 instance=ExtResource("20_vsdyx")]
+position = Vector2(424, 535)
+push_force = 130.0
+spin_force = 190.0
+
+[node name="InteractiveBell5" parent="." unique_id=604219167 instance=ExtResource("20_vsdyx")]
+position = Vector2(369, 546)
+push_force = 125.0
+spin_force = 182.0
+
+[node name="InteractiveBell6" parent="." unique_id=1373680886 instance=ExtResource("20_vsdyx")]
+position = Vector2(211, 531)
+push_force = 116.0
+spin_force = 172.0
+
+[node name="InteractiveBell7" parent="." unique_id=1765997268 instance=ExtResource("20_vsdyx")]
+position = Vector2(119, 538)
+push_force = 112.0
+spin_force = 173.0
+
+[node name="InteractiveBell8" parent="." unique_id=1876056333 instance=ExtResource("20_vsdyx")]
+position = Vector2(64, 540)
+push_force = 123.0
+spin_force = 185.0
+
+[node name="InteractiveBell9" parent="." unique_id=1403449736 instance=ExtResource("20_vsdyx")]
+position = Vector2(-103, 535)
+push_force = 40.0
+spin_force = 60.0
+
+[node name="InteractiveBell10" parent="." unique_id=659161896 instance=ExtResource("20_vsdyx")]
+position = Vector2(-143, 544)
+push_force = 50.0
+spin_force = 50.0

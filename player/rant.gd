@@ -352,6 +352,8 @@ func handleCollision():
 		if collider.is_in_group("enemies"):
 			take_damage(1)
 			break # Break loop early so we don't process multiple collisions at once
+		if collider.has_method("apply_kick"):
+			collider.apply_kick(velocity.x)
 
 func take_damage(amount: int):
 	is_invincible = true
