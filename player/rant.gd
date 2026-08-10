@@ -46,6 +46,10 @@ var is_dead: bool = false
 var is_wren_active: bool = false
 var fade_layer: CanvasLayer = null
 var fade_rect: ColorRect = null
+var vignette_layer: CanvasLayer = null
+var vignette_rect: ColorRect = null
+var vignette_tween: Tween = null
+var VIGNETTE_INTENSITY: float = 0.75
 var is_climbing: bool = false
 var can_climb: bool = true
 var is_currently_running: bool = false
@@ -69,6 +73,12 @@ func _ready():
 	currentSilk = Global.player_current_silk
 	maxSilk = Global.player_max_silk
 	
+	# Create vignette overlay (used to indicate low health)
+	create_vignette_layer()
+	# Apply initial state based on current health (with animation now)
+	#await get_tree().process_frame
+	set_vignette_enabled(currentHealth <= 1, true)
+
 	# Save the reposition state before clearing it
 	var should_fade_in = Global.should_reposition
 	
@@ -399,6 +409,8 @@ func take_damage(amount: int):
 	# Normal damage flow: update global and HUD, flash invincibility
 	Global.player_current_health = currentHealth
 	health_container.updateHearts(currentHealth)
+	# Show/hide vignette when health is very low
+	set_vignette_enabled(currentHealth <= 1)
 
 	var tw = create_tween()
 	tw.tween_property(rant, "modulate", Color(50.0, 50.0, 50.0, 1.0), 0.1)
@@ -437,6 +449,8 @@ func set_current_health(new_health: int) -> void:
 	# Update HUD immediately
 	if health_container and health_container.has_method("updateHearts"):
 		health_container.updateHearts(currentHealth)
+	# Update vignette for direct health sets
+	set_vignette_enabled(currentHealth <= 1)
 
 # Public helper to set the player's current silk from other systems
 func set_current_silk(new_silk: int) -> void:
@@ -459,6 +473,81 @@ func create_fade_layer() -> void:
 	fade_rect.anchor_right = 1
 	fade_rect.anchor_bottom = 1
 	fade_layer.add_child(fade_rect)
+
+func create_vignette_layer() -> void:
+	if vignette_layer != null:
+		return
+
+	vignette_layer = CanvasLayer.new()
+	vignette_layer.layer = 900
+	add_child(vignette_layer)
+
+	vignette_rect = ColorRect.new()
+	vignette_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	vignette_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE # Przepuszcza kliknięcia myszy
+
+	var shader = Shader.new()
+	shader.code = """
+shader_type canvas_item;
+uniform vec2 center = vec2(0.5, 0.5);
+uniform float radius = 0.6;
+uniform float smoothness = 0.4;
+uniform vec4 tint_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	float d = distance(uv, center);
+	float t = smoothstep(radius - smoothness, radius, d);
+	COLOR = vec4(tint_color.rgb, tint_color.a * t) * COLOR;
+}
+"""
+
+	var mat = ShaderMaterial.new()
+	mat.shader = shader
+	vignette_rect.material = mat
+	vignette_layer.add_child(vignette_rect)
+	
+	vignette_rect.modulate.a = 0.0
+
+func set_vignette_enabled(enabled: bool, animate: bool = true, duration: float = 2.0) -> void:
+	create_vignette_layer()
+	var target_alpha: float = VIGNETTE_INTENSITY if enabled else 0.0
+	
+	if vignette_tween and vignette_tween.is_running():
+		vignette_tween.kill()
+
+	vignette_tween = create_tween()
+	
+	if not enabled:
+		if animate:
+			vignette_tween.tween_property(vignette_rect, "modulate:a", 0.0, duration)
+		else:
+			vignette_rect.modulate.a = 0.0
+		return
+
+	if animate:
+		vignette_tween.tween_property(vignette_rect, "modulate:a", target_alpha, duration)
+		vignette_tween.finished.connect(func():
+			_start_vignette_pulse(target_alpha)
+		, CONNECT_ONE_SHOT)
+	else:
+		vignette_rect.modulate.a = target_alpha
+		_start_vignette_pulse(target_alpha)
+
+func _start_vignette_pulse(base_alpha: float) -> void:
+	if vignette_tween and vignette_tween.is_running():
+		vignette_tween.kill()
+		
+	var pulse_min = base_alpha * 0.5
+	var pulse_max = base_alpha
+	
+	vignette_tween = create_tween()
+	vignette_tween.set_loops()
+	vignette_tween.set_trans(Tween.TRANS_SINE)
+	vignette_tween.set_ease(Tween.EASE_IN_OUT)
+	
+	vignette_tween.tween_property(vignette_rect, "modulate:a", pulse_min, 1.0)
+	vignette_tween.tween_property(vignette_rect, "modulate:a", pulse_max, 1.0)
 
 # Fade to black (used before loading save on death)
 func create_fade_out(duration: float = 0.5) -> void:
