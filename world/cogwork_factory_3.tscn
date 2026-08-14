@@ -2,11 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dylbbysymq282" path="res://world/cogwork_factory_3.gd" id="1_odu4x"]
 [ext_resource type="Texture2D" uid="uid://bgne3pqcsms1r" path="res://assets/images/world/bg1_7.png" id="2_f5rq6"]
-[ext_resource type="Texture2D" uid="uid://dqft755m06alr" path="res://assets/images/world/ground.png" id="3_tspas"]
+[ext_resource type="Texture2D" uid="uid://q8pwmc5yxu6i" path="res://assets/images/world/device1.png" id="3_xwjwr"]
+[ext_resource type="Texture2D" uid="uid://t2xwfdid8qkr" path="res://assets/images/world/device2.png" id="4_dmde0"]
 [ext_resource type="PackedScene" uid="uid://bwqrnt0mdtxeb" path="res://player/rant.tscn" id="4_f5rq6"]
 [ext_resource type="Script" uid="uid://vta6ajsp0sov" path="res://world/canvas_layer.gd" id="5_djjmk"]
+[ext_resource type="Texture2D" uid="uid://lcde56peimrp" path="res://assets/images/world/pipe.png" id="5_v7xp2"]
 [ext_resource type="PackedScene" uid="uid://clwq3figvspdk" path="res://gui/health_container.tscn" id="6_f3285"]
+[ext_resource type="Shader" uid="uid://cchbpo8w7modp" path="res://world/cogwork_factory_3.gdshader" id="6_v7xp2"]
 [ext_resource type="Texture2D" uid="uid://c4362iqxtqasf" path="res://assets/images/gui/health_bar.png" id="7_bw10g"]
+[ext_resource type="Texture2D" uid="uid://bjwjuh6n0t7f7" path="res://assets/images/world/white.png" id="7_m4j8i"]
+[ext_resource type="Texture2D" uid="uid://dh7ethna2yx6t" path="res://assets/images/world/ground_irregular2.png" id="8_kmvik"]
 [ext_resource type="PackedScene" uid="uid://c45nk54o2gxg4" path="res://gui/silk_container.tscn" id="8_tya7r"]
 [ext_resource type="Texture2D" uid="uid://yuhfp7ej1m4l" path="res://assets/images/gui/silkBar.png" id="9_io8ry"]
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="10_m47is"]
@@ -35,6 +40,14 @@
 [ext_resource type="Texture2D" uid="uid://djke4v3ga11v2" path="res://assets/images/world/bricks2_4.png" id="33_kgw6n"]
 [ext_resource type="Texture2D" uid="uid://bi8ag0ax8mh0j" path="res://assets/images/world/bricks1_2.png" id="34_knkcy"]
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="35_540sl"]
+[ext_resource type="Texture2D" uid="uid://ba52ned4dav28" path="res://assets/images/world/cog1.png" id="41_kmvik"]
+[ext_resource type="Texture2D" uid="uid://cg655xks88sbk" path="res://assets/images/world/cog2.png" id="42_htpbp"]
+[ext_resource type="Texture2D" uid="uid://ceh0vu50g1u7t" path="res://assets/images/world/cable.png" id="43_e1l14"]
+[ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="44_htpbp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mjotr"]
+shader = ExtResource("6_v7xp2")
+shader_parameter/lod = 0.4470000212325
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(2052.0835, 148.14282)
@@ -159,20 +172,63 @@ repeat_size = Vector2(2252, 1559)
 repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1335528209]
+modulate = Color(0.76, 0.76, 0.76, 1)
 z_index = -2
 position = Vector2(192, -151)
 scale = Vector2(0.7238889, 0.72388893)
 texture = ExtResource("2_f5rq6")
 
-[node name="ground_irregular" type="StaticBody2D" parent="." unique_id=486012346]
+[node name="bgcolor" type="Sprite2D" parent="Parallax2D" unique_id=453697185]
+material = SubResource("ShaderMaterial_mjotr")
+position = Vector2(100.00006, 69.000046)
+scale = Vector2(294.8, 138.2)
+texture = ExtResource("7_m4j8i")
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=424275710]
+scroll_scale = Vector2(0.9, 0.9)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D2" unique_id=229083008]
+modulate = Color(0.66, 0.66, 0.66, 1)
 z_index = -1
+position = Vector2(932.99994, 558)
+scale = Vector2(0.8423913, 0.8423913)
+texture = ExtResource("5_v7xp2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=2126184179]
+z_index = -1
+position = Vector2(594.129, -6.5290527)
+scale = Vector2(1.4365593, 1.4365594)
+texture = ExtResource("3_xwjwr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1332993562]
+position = Vector2(308.64526, -382.24524)
+scale = Vector2(1.1870971, 1.1870971)
+texture = ExtResource("4_dmde0")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1179604787]
+position = Vector2(308.64526, -504.51642)
+scale = Vector2(1.1870971, 1.1870971)
+texture = ExtResource("4_dmde0")
+
+[node name="Sprite2D5" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1099524667]
+position = Vector2(306.27087, -627.9745)
+scale = Vector2(1.1870971, 1.1870971)
+texture = ExtResource("4_dmde0")
+
+[node name="bgcolor" type="Sprite2D" parent="Parallax2D2" unique_id=2037165755]
+material = SubResource("ShaderMaterial_mjotr")
+position = Vector2(100.00006, 69.000046)
+scale = Vector2(294.8, 138.2)
+texture = ExtResource("7_m4j8i")
+
+[node name="ground_irregular" type="StaticBody2D" parent="." unique_id=486012346]
 position = Vector2(585, 632)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular" unique_id=1547247797]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular" unique_id=1763188917]
 position = Vector2(-6.666687, 46.92871)
@@ -180,29 +236,28 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular2" type="StaticBody2D" parent="." unique_id=96498192]
-z_index = -1
 position = Vector2(-600, 634)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular2" unique_id=744179249]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular2" unique_id=559602545]
+visible = false
 position = Vector2(-15.833374, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular4" type="StaticBody2D" parent="." unique_id=1174258018]
-z_index = -1
 position = Vector2(-2149, 642)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular4" unique_id=2080755955]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular4" unique_id=586861405]
 position = Vector2(-15.833374, 46.92871)
@@ -210,14 +265,13 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular12" type="StaticBody2D" parent="." unique_id=578600673]
-z_index = -1
 position = Vector2(-2169, -1303)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular12" unique_id=306662448]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular12" unique_id=1474346315]
 position = Vector2(-15.833374, 46.92871)
@@ -225,14 +279,13 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular14" type="StaticBody2D" parent="." unique_id=1990351888]
-z_index = -1
 position = Vector2(2463, -1246)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular14" unique_id=949673518]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular14" unique_id=1707254839]
 position = Vector2(-15.833374, 46.92871)
@@ -240,7 +293,6 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular11" type="StaticBody2D" parent="." unique_id=337717506]
-z_index = -1
 position = Vector2(-2189, -48)
 rotation = 3.1415927
 scale = Vector2(0.6, 0.6)
@@ -248,7 +300,7 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular11" unique_id=629185990]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular11" unique_id=993215366]
 position = Vector2(-15.833374, 46.92871)
@@ -256,7 +308,6 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular15" type="StaticBody2D" parent="." unique_id=327085894]
-z_index = -1
 position = Vector2(2475, -268)
 rotation = 3.1415927
 scale = Vector2(0.6, 0.6)
@@ -264,7 +315,7 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular15" unique_id=1254623837]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular15" unique_id=726798699]
 position = Vector2(-15.833374, 46.92871)
@@ -272,7 +323,6 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular13" type="StaticBody2D" parent="." unique_id=1261634481]
-z_index = -1
 position = Vector2(-2155, -2235)
 rotation = 3.1415927
 scale = Vector2(0.6, 0.6)
@@ -280,7 +330,7 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular13" unique_id=351362629]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular13" unique_id=98011288]
 position = Vector2(-15.833374, 46.92871)
@@ -288,7 +338,6 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular5" type="StaticBody2D" parent="." unique_id=879203156]
-z_index = -1
 position = Vector2(-1581.0001, 1204)
 rotation = -4.712389
 scale = Vector2(0.6, 0.6)
@@ -296,14 +345,13 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular5" unique_id=1728728902]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular5" unique_id=32551733]
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="ground_irregular9" type="StaticBody2D" parent="." unique_id=233219838]
-z_index = -1
 position = Vector2(-1581.0001, 2386)
 rotation = -4.712389
 scale = Vector2(0.6, 0.6)
@@ -311,14 +359,13 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular9" unique_id=837208021]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular9" unique_id=679630775]
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="ground_irregular10" type="StaticBody2D" parent="." unique_id=1700066652]
-z_index = -1
 position = Vector2(-1581.0001, 3568)
 rotation = -4.712389
 scale = Vector2(0.6, 0.6)
@@ -326,14 +373,13 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular10" unique_id=127208308]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular10" unique_id=929694743]
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="ground_irregular6" type="StaticBody2D" parent="." unique_id=1330695775]
-z_index = -1
 position = Vector2(-1167.0001, 1203)
 rotation = 4.712389
 scale = Vector2(0.6, 0.6)
@@ -341,14 +387,13 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular6" unique_id=1327590601]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular6" unique_id=1973128673]
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="ground_irregular7" type="StaticBody2D" parent="." unique_id=798286810]
-z_index = -1
 position = Vector2(-1167, 2384)
 rotation = 4.712389
 scale = Vector2(0.6, 0.6)
@@ -356,14 +401,13 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular7" unique_id=1758342241]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular7" unique_id=892880010]
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="ground_irregular8" type="StaticBody2D" parent="." unique_id=1953950767]
-z_index = -1
 position = Vector2(-1167, 3560)
 rotation = 4.712389
 scale = Vector2(0.6, 0.6)
@@ -371,21 +415,20 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular8" unique_id=1652922091]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular8" unique_id=1271775723]
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="ground_irregular3" type="StaticBody2D" parent="." unique_id=546606945]
-z_index = -1
 position = Vector2(1777, 628)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular3" unique_id=1461006395]
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
-texture = ExtResource("3_tspas")
+texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular3" unique_id=1832802466]
 position = Vector2(-15.833374, 46.92871)
@@ -639,6 +682,7 @@ shape = SubResource("RectangleShape2D_mjotr")
 [node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=2035173321]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=1383891527]
+modulate = Color(0.81960785, 0.81960785, 0.81960785, 1)
 position = Vector2(-2193, 2433.5)
 scale = Vector2(22.916668, 60.96491)
 texture = ExtResource("35_540sl")
@@ -646,6 +690,7 @@ texture = ExtResource("35_540sl")
 [node name="StaticBody2D5" type="StaticBody2D" parent="." unique_id=1315411675]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5" unique_id=1311504669]
+modulate = Color(0.81960785, 0.81960785, 0.81960785, 1)
 position = Vector2(-2126.0002, -651.75024)
 scale = Vector2(22.916668, 20.25438)
 texture = ExtResource("35_540sl")
@@ -653,6 +698,7 @@ texture = ExtResource("35_540sl")
 [node name="StaticBody2D6" type="StaticBody2D" parent="." unique_id=1020848665]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6" unique_id=1965200019]
+modulate = Color(0.81960785, 0.81960785, 0.81960785, 1)
 position = Vector2(2423.9998, -758)
 scale = Vector2(22.916668, 15.403508)
 texture = ExtResource("35_540sl")
@@ -660,6 +706,71 @@ texture = ExtResource("35_540sl")
 [node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=26209758]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4" unique_id=823314934]
+modulate = Color(0.82, 0.82, 0.82, 1)
 position = Vector2(639.0001, 2434)
 scale = Vector2(72.54167, 60.96491)
 texture = ExtResource("35_540sl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=819037588]
+position = Vector2(1260, 589)
+scale = Vector2(0.538961, 0.53896105)
+texture = ExtResource("41_kmvik")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=166892246]
+position = Vector2(1634, 602)
+scale = Vector2(0.538961, 0.53896105)
+texture = ExtResource("41_kmvik")
+flip_h = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=832469080]
+position = Vector2(1221, 599.99994)
+scale = Vector2(0.538961, 0.53896105)
+texture = ExtResource("41_kmvik")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1283414944]
+position = Vector2(1586.0001, 609.00006)
+scale = Vector2(0.5519481, 0.5519481)
+texture = ExtResource("42_htpbp")
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=1066848648]
+position = Vector2(1443.0001, 628)
+rotation = -0.06806784
+scale = Vector2(0.44107965, 0.44107965)
+skew = -0.44505897
+texture = ExtResource("43_e1l14")
+
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=1680795050]
+z_index = 100
+scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(100000, 1000000)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D3" unique_id=436771266]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(2219, -137)
+scale = Vector2(1.4531964, 1.4531963)
+texture = ExtResource("31_m2550")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Parallax2D3" unique_id=2120902190]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(1145.0001, 1036.5)
+scale = Vector2(381.20004, 53.100002)
+texture = ExtResource("7_m4j8i")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D3" unique_id=1245547532]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(1086.0001, 714.00006)
+rotation = 3.1415927
+scale = Vector2(1.6242462, 1.6242462)
+texture = ExtResource("31_m2550")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D3" unique_id=1643545878]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(2741.0005, -242.1875)
+scale = Vector2(173.30003, 10.362501)
+texture = ExtResource("7_m4j8i")
+
+[node name="Sprite2D5" type="Sprite2D" parent="Parallax2D3" unique_id=656085055]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(1933.25, -113.21989)
+scale = Vector2(1.1506025, 1.1506023)
+texture = ExtResource("44_htpbp")

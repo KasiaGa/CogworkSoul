@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://b33x564fkhhtt" path="res://world/cogwork_factory.gd" id="1_um1bq"]
 [ext_resource type="PackedScene" uid="uid://16g0x5cxu58u" path="res://other/enemy.tscn" id="2_5at20"]
 [ext_resource type="Texture2D" uid="uid://bgne3pqcsms1r" path="res://assets/images/world/bg1_7.png" id="3_1eua6"]
-[ext_resource type="Texture2D" uid="uid://dqft755m06alr" path="res://assets/images/world/ground.png" id="4_tgyrp"]
+[ext_resource type="Shader" uid="uid://cchbpo8w7modp" path="res://world/cogwork_factory_3.gdshader" id="4_3xctm"]
+[ext_resource type="Texture2D" uid="uid://bjwjuh6n0t7f7" path="res://assets/images/world/white.png" id="5_8d4os"]
 [ext_resource type="Texture2D" uid="uid://dh7ethna2yx6t" path="res://assets/images/world/ground_irregular2.png" id="5_f4482"]
 [ext_resource type="PackedScene" uid="uid://bwqrnt0mdtxeb" path="res://player/rant.tscn" id="5_sg7as"]
 [ext_resource type="Script" uid="uid://rv7yt7k6gh24" path="res://other/entranceCogworkCore.gd" id="6_1wo6k"]
@@ -25,6 +26,14 @@
 [ext_resource type="Texture2D" uid="uid://bgcgcj88e61as" path="res://assets/images/world/platform1.png" id="23_1asw4"]
 [ext_resource type="Texture2D" uid="uid://cx4h1o3a47mx6" path="res://assets/images/world/platform2.png" id="24_gcxy5"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_neemv"]
+shader = ExtResource("4_3xctm")
+shader_parameter/lod = 0.4470000212325
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uuwtc"]
+radius = 86.66
+height = 394.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(2052.0835, 148.14282)
 
@@ -32,13 +41,10 @@ size = Vector2(2052.0835, 148.14282)
 radius = 27.0
 height = 274.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uuwtc"]
-radius = 86.66
-height = 394.0
-
 [sub_resource type="SystemFont" id="SystemFont_5at20"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
+subpixel_positioning = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(54.025017, 151)
@@ -76,19 +82,47 @@ repeat_size = Vector2(2252, 1559)
 repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1860392640]
+modulate = Color(0.7607843, 0.7607843, 0.7607843, 1)
 z_index = -2
 position = Vector2(192, -151)
 scale = Vector2(0.7238889, 0.72388893)
 texture = ExtResource("3_1eua6")
 
+[node name="bgcolor" type="Sprite2D" parent="Parallax2D" unique_id=1771886459]
+material = SubResource("ShaderMaterial_neemv")
+position = Vector2(100.00006, 69.000046)
+scale = Vector2(294.8, 138.2)
+texture = ExtResource("5_8d4os")
+
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=883675953]
+scroll_scale = Vector2(0.9, 0.9)
+
+[node name="Entrance3" type="StaticBody2D" parent="Parallax2D3" unique_id=1069104210]
+position = Vector2(-547, 388)
+collision_mask = 2
+script = ExtResource("6_1wo6k")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D3/Entrance3" unique_id=1123064334]
+z_index = -2
+position = Vector2(1140.9999, 41)
+scale = Vector2(0.6320755, 0.6320754)
+texture = ExtResource("7_h7qu2")
+
+[node name="InteractionArea" parent="Parallax2D3/Entrance3" unique_id=1179285320 instance=ExtResource("8_jjbl6")]
+position = Vector2(1160, -193)
+action_name = "Enter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Parallax2D3/Entrance3/InteractionArea" unique_id=1773717072]
+position = Vector2(-10, 240)
+shape = SubResource("CapsuleShape2D_uuwtc")
+
 [node name="ground_irregular" type="StaticBody2D" parent="." unique_id=486012346]
-z_index = -1
 position = Vector2(585, 632)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular" unique_id=1547247797]
-texture = ExtResource("4_tgyrp")
+texture = ExtResource("5_f4482")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular" unique_id=1763188917]
 z_index = 2
@@ -97,13 +131,12 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular2" type="StaticBody2D" parent="." unique_id=96498192]
-z_index = -1
 position = Vector2(-600, 634)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular2" unique_id=744179249]
-texture = ExtResource("4_tgyrp")
+texture = ExtResource("5_f4482")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular2" unique_id=559602545]
 z_index = 2
@@ -112,13 +145,12 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular3" type="StaticBody2D" parent="." unique_id=546606945]
-z_index = -1
 position = Vector2(1777, 628)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular3" unique_id=1461006395]
-texture = ExtResource("4_tgyrp")
+texture = ExtResource("5_f4482")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular3" unique_id=1832802466]
 z_index = 2
@@ -133,7 +165,7 @@ scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular4" unique_id=616564656]
-texture = ExtResource("4_tgyrp")
+texture = ExtResource("5_f4482")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular4" unique_id=377909425]
 z_index = 2
@@ -190,25 +222,6 @@ limit_left = -1731
 limit_top = -2022
 limit_right = 2521
 limit_bottom = 739
-
-[node name="Entrance3" type="StaticBody2D" parent="." unique_id=1069104210]
-position = Vector2(-547, 370)
-collision_mask = 2
-script = ExtResource("6_1wo6k")
-
-[node name="Sprite2D" type="Sprite2D" parent="Entrance3" unique_id=1123064334]
-z_index = -2
-position = Vector2(1140.9999, 41)
-scale = Vector2(0.6320755, 0.6320754)
-texture = ExtResource("7_h7qu2")
-
-[node name="InteractionArea" parent="Entrance3" unique_id=1179285320 instance=ExtResource("8_jjbl6")]
-position = Vector2(1160, -193)
-action_name = "Enter"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance3/InteractionArea" unique_id=1773717072]
-position = Vector2(-10, 240)
-shape = SubResource("CapsuleShape2D_uuwtc")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1707631933]
 script = ExtResource("9_wnx1b")
@@ -271,14 +284,22 @@ spawn_location = Vector2(-1000, 455)
 z_index = 100
 scroll_scale = Vector2(1.1, 1.1)
 scroll_offset = Vector2(0, -341)
-repeat_size = Vector2(1366, 0)
-repeat_times = 6
+repeat_size = Vector2(1000000, 1000000)
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=1279626696]
+modulate = Color(0, 0, 0, 1)
 z_index = 100
 position = Vector2(-271.25, 844.71875)
 scale = Vector2(0.4862288, 0.4862288)
 texture = ExtResource("18_h7qu2")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2" unique_id=512202142]
+modulate = Color(0, 0, 0, 1)
+z_index = 100
+position = Vector2(1261, 843)
+scale = Vector2(0.4862288, 0.4862288)
+texture = ExtResource("18_h7qu2")
+flip_h = true
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1403947929]
 z_index = 99

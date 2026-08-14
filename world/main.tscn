@@ -35,6 +35,10 @@
 [ext_resource type="PackedScene" uid="uid://dxj4hcxho5pcm" path="res://interaction/breakable_object.tscn" id="33_igmhy"]
 [ext_resource type="Texture2D" uid="uid://koa06g66wusf" path="res://assets/images/world/paralax1.png" id="33_xqpbi"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fa3b3"]
+radius = 42.0
+height = 206.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(1918.3335, 148.14282)
 
@@ -44,10 +48,6 @@ size = Vector2(3439, 83)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ae5in"]
 radius = 27.0
 height = 274.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fa3b3"]
-radius = 42.0
-height = 206.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yaehf"]
 atlas = ExtResource("12_7fj3x")
@@ -140,6 +140,29 @@ z_index = -2
 position = Vector2(142, 276)
 texture = ExtResource("2_w6b5a")
 
+[node name="Entrance" type="StaticBody2D" parent="." unique_id=1710243070]
+position = Vector2(-547, 370)
+collision_mask = 2
+script = ExtResource("8_va3fq")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Entrance" unique_id=1878985687]
+z_index = -2
+position = Vector2(-3.0000153, 6)
+scale = Vector2(0.6320755, 0.6320754)
+texture = ExtResource("9_yo77p")
+
+[node name="InteractionArea2" parent="Entrance" unique_id=1179285320 instance=ExtResource("10_2s3h7")]
+position = Vector2(15, -207)
+action_name = "Enter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance/InteractionArea2" unique_id=48646797]
+position = Vector2(-7, 280)
+shape = SubResource("CapsuleShape2D_fa3b3")
+
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=2061048558]
+visible = false
+scroll_scale = Vector2(0.9, 0.9)
+
 [node name="ground_irregular" type="StaticBody2D" parent="." unique_id=527478190]
 visible = false
 z_index = -1
@@ -196,25 +219,6 @@ limit_left = -1130
 limit_top = -237
 limit_right = 2468
 limit_bottom = 739
-
-[node name="Entrance" type="StaticBody2D" parent="." unique_id=1710243070]
-position = Vector2(-547, 370)
-collision_mask = 2
-script = ExtResource("8_va3fq")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Entrance" unique_id=1878985687]
-z_index = -2
-position = Vector2(-3.0000153, 6)
-scale = Vector2(0.6320755, 0.6320754)
-texture = ExtResource("9_yo77p")
-
-[node name="InteractionArea2" parent="Entrance" unique_id=1179285320 instance=ExtResource("10_2s3h7")]
-position = Vector2(15, -207)
-action_name = "Enter"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance/InteractionArea2" unique_id=48646797]
-position = Vector2(-7, 280)
-shape = SubResource("CapsuleShape2D_fa3b3")
 
 [node name="ItemNeedle" type="StaticBody2D" parent="." unique_id=1988137602]
 position = Vector2(-547, 370)
