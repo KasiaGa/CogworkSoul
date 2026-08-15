@@ -12,9 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://yuhfp7ej1m4l" path="res://assets/images/gui/silkBar.png" id="10_u8re4"]
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="11_o517r"]
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="12_7xspl"]
+[ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="13_mnqlb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
-size = Vector2(2052.0835, 148.14282)
+size = Vector2(2018.5417, 148.14282)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8kwh"]
 radius = 27.0
@@ -23,12 +24,20 @@ height = 274.0
 [sub_resource type="SystemFont" id="SystemFont_5at20"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
+subpixel_positioning = 0
+
+[sub_resource type="Gradient" id="Gradient_itgwo"]
+colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h7ih6"]
+gradient = SubResource("Gradient_itgwo")
+fill_from = Vector2(0, 0.017094018)
 
 [node name="CogworkBoss" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_h7ih6")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=2123797011]
-scroll_scale = Vector2(1.1, 1.1)
+scroll_scale = Vector2(0.9, 0.9)
 repeat_size = Vector2(1366, 768)
 repeat_times = 3
 
@@ -92,15 +101,10 @@ shape = SubResource("CapsuleShape2D_g8kwh")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=76796903]
 offset = Vector2(0, -80)
-limit_left = -1198
+limit_left = -1174
 limit_top = -237
 limit_right = 2375
 limit_bottom = 739
-
-[node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("5_n3g5c")]
-position = Vector2(2282, 493)
-target_scene = "uid://4x3bqyt7y308"
-spawn_location = Vector2(-1500, 300)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1707631933]
 script = ExtResource("6_r1xv7")
@@ -149,3 +153,75 @@ grow_vertical = 0
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_5at20")
 theme_override_font_sizes/font_size = 25
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=737488650]
+z_index = 100
+offset_left = -2628.0
+offset_top = 3914.0
+offset_right = 2410.021
+offset_bottom = 9633.616
+rotation = -1.5707964
+texture = SubResource("GradientTexture2D_h7ih6")
+
+[node name="ground_irregular4" type="StaticBody2D" parent="." unique_id=1700006665]
+z_index = -1
+position = Vector2(580, -120)
+rotation = 3.1415927
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular4" unique_id=1860150147]
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("3_03ac1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular4" unique_id=1353265257]
+position = Vector2(-6.666687, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular5" type="StaticBody2D" parent="." unique_id=422189387]
+z_index = -1
+position = Vector2(-618, -115.00001)
+rotation = 3.1415927
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular5" unique_id=112944813]
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("3_03ac1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular5" unique_id=64849321]
+position = Vector2(-6.666687, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular6" type="StaticBody2D" parent="." unique_id=1250162081]
+z_index = -1
+position = Vector2(1776, -123.00001)
+rotation = 3.1415927
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular6" unique_id=527598598]
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("3_03ac1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular6" unique_id=749311571]
+position = Vector2(-6.666687, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="TransitionZone3" parent="." unique_id=704157100 instance=ExtResource("5_n3g5c")]
+position = Vector2(-1193, 476)
+target_scene = "uid://dy8x5xyss8ie5"
+spawn_location = Vector2(2200, -1400)
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1795760870]
+scroll_scale = Vector2(1.1, 1.1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=1037013376]
+modulate = Color(0, 0, 0, 1)
+z_index = 100
+position = Vector2(-192.99994, -55.000004)
+scale = Vector2(1.7771084, 1.7771084)
+texture = ExtResource("13_mnqlb")

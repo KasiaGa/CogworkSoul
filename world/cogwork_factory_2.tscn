@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://cof12poc1mayv" path="res://interaction/blocking_breakable_object.tscn" id="18_amo0d"]
 [ext_resource type="PackedScene" uid="uid://bmskttqco2fa" path="res://other/enemy_2.tscn" id="19_bi0kt"]
 [ext_resource type="Texture2D" uid="uid://c4mub02jinokl" path="res://assets/images/world/chain.png" id="20_ayw5v"]
-[ext_resource type="Texture2D" uid="uid://bi8ag0ax8mh0j" path="res://assets/images/world/bricks1_2.png" id="21_pamtp"]
+[ext_resource type="Texture2D" uid="uid://b7drihgsr46c" path="res://assets/images/world/bricks1_2_3.png" id="21_pamtp"]
 [ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="22_ew3r1"]
 [ext_resource type="Texture2D" uid="uid://hm2k6qs71p01" path="res://assets/images/world/chain2.png" id="23_ho8eb"]
 [ext_resource type="Texture2D" uid="uid://d2mpsnb6ynwjb" path="res://assets/images/world/chain_parallax.png" id="24_pamtp"]

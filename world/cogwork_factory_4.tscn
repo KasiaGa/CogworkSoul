@@ -18,8 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://d2mpsnb6ynwjb" path="res://assets/images/world/chain_parallax.png" id="14_twr2r"]
 [ext_resource type="PackedScene" uid="uid://cof12poc1mayv" path="res://interaction/blocking_breakable_object.tscn" id="17_dknio"]
 [ext_resource type="PackedScene" uid="uid://16g0x5cxu58u" path="res://other/enemy.tscn" id="18_qemlc"]
+[ext_resource type="Texture2D" uid="uid://b7drihgsr46c" path="res://assets/images/world/bricks1_2_3.png" id="18_sb3cd"]
 [ext_resource type="Texture2D" uid="uid://depjkce83ogjl" path="res://assets/images/world/half_platform.png" id="19_sb3cd"]
-[ext_resource type="Texture2D" uid="uid://bi8ag0ax8mh0j" path="res://assets/images/world/bricks1_2.png" id="19_wy8tv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(746, 88)
@@ -447,7 +447,7 @@ z_index = 2
 position = Vector2(-174.00002, 1358.0001)
 rotation = 1.5707964
 scale = Vector2(0.60229534, 0.6022954)
-texture = ExtResource("19_wy8tv")
+texture = ExtResource("18_sb3cd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6" unique_id=1348436242]
 z_index = 2

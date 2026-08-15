@@ -35,7 +35,7 @@ radius = 86.66
 height = 394.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
-size = Vector2(2052.0835, 148.14282)
+size = Vector2(2018.5417, 148.14282)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8kwh"]
 radius = 27.0
@@ -54,6 +54,13 @@ size = Vector2(342, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ae5in"]
 size = Vector2(489.5, 411)
+
+[sub_resource type="Gradient" id="Gradient_itgwo"]
+colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3xctm"]
+gradient = SubResource("Gradient_itgwo")
+fill_from = Vector2(0, 0.017094018)
 
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_um1bq")
@@ -455,3 +462,12 @@ position = Vector2(2495.1375, -1704.0892)
 rotation = 1.5707964
 scale = Vector2(0.4708914, 1.6988299)
 texture = ExtResource("20_f4482")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=591236758]
+z_index = 100
+offset_left = -2881.9998
+offset_top = 4655.0
+offset_right = 2156.0212
+offset_bottom = 10374.616
+rotation = -1.5707964
+texture = SubResource("GradientTexture2D_3xctm")

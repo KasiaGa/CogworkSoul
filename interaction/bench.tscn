@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dioe1s4xwg1ke"]
 
 [ext_resource type="Script" uid="uid://dcu83jipovblq" path="res://interaction/bench.gd" id="1_idl5t"]
-[ext_resource type="Texture2D" uid="uid://dwuvtl8ty41c7" path="res://assets/images/world/bench.png" id="1_kqms4"]
+[ext_resource type="Texture2D" uid="uid://b24ternl813y2" path="res://assets/images/world/bench_02.png" id="2_idl5t"]
 [ext_resource type="PackedScene" uid="uid://cdnu1k3e8gd2a" path="res://interaction/interaction_area.tscn" id="3_d0nav"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_da6y2"]
@@ -12,7 +12,7 @@ height = 176.0
 script = ExtResource("1_idl5t")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=569668397]
-texture = ExtResource("1_kqms4")
+texture = ExtResource("2_idl5t")
 
 [node name="InteractionArea" parent="." unique_id=1179285320 instance=ExtResource("3_d0nav")]
 action_name = "Sit"

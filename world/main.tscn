@@ -27,11 +27,11 @@
 [ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="22_u2g0j"]
 [ext_resource type="Texture2D" uid="uid://cg655xks88sbk" path="res://assets/images/world/cog2.png" id="23_nt7of"]
 [ext_resource type="Texture2D" uid="uid://ba52ned4dav28" path="res://assets/images/world/cog1.png" id="24_umvl8"]
-[ext_resource type="Texture2D" uid="uid://q8pwmc5yxu6i" path="res://assets/images/world/device1.png" id="25_7qu10"]
-[ext_resource type="Texture2D" uid="uid://t2xwfdid8qkr" path="res://assets/images/world/device2.png" id="26_8ebxj"]
 [ext_resource type="Texture2D" uid="uid://dsou5shg5ht1x" path="res://assets/images/world/cable2.png" id="27_mgog5"]
 [ext_resource type="Texture2D" uid="uid://hne5r4gwo4wd" path="res://assets/images/world/boxes.png" id="28_5jab7"]
+[ext_resource type="Texture2D" uid="uid://dhj5ej22name3" path="res://assets/images/world/device1_2.png" id="28_igmhy"]
 [ext_resource type="Texture2D" uid="uid://r8vvtlcimyu7" path="res://assets/images/world/electricity.png" id="29_3nist"]
+[ext_resource type="Texture2D" uid="uid://ccqfxoob43fht" path="res://assets/images/world/device2_2.png" id="29_igmhy"]
 [ext_resource type="PackedScene" uid="uid://dxj4hcxho5pcm" path="res://interaction/breakable_object.tscn" id="33_igmhy"]
 [ext_resource type="Texture2D" uid="uid://koa06g66wusf" path="res://assets/images/world/paralax1.png" id="33_xqpbi"]
 
@@ -436,7 +436,7 @@ texture = ExtResource("24_umvl8")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D9" unique_id=1329757459]
 position = Vector2(-870.837, 528.5)
 scale = Vector2(0.7028985, 0.70289856)
-texture = ExtResource("25_7qu10")
+texture = ExtResource("28_igmhy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D9" unique_id=147344224]
 position = Vector2(-872.25, 527.5)
@@ -447,7 +447,7 @@ shape = SubResource("RectangleShape2D_fa3b3")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D10" unique_id=2097991226]
 position = Vector2(-871, 441)
 scale = Vector2(0.7028985, 0.70289856)
-texture = ExtResource("25_7qu10")
+texture = ExtResource("28_igmhy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D10" unique_id=2118098217]
 position = Vector2(-870, 445)
@@ -458,7 +458,7 @@ shape = SubResource("RectangleShape2D_fa3b3")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D11" unique_id=1654105983]
 position = Vector2(-754.8232, 544.5)
 scale = Vector2(0.7195122, 0.7195122)
-texture = ExtResource("26_8ebxj")
+texture = ExtResource("29_igmhy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D11" unique_id=421086327]
 position = Vector2(-754.875, 547.875)
@@ -469,7 +469,7 @@ shape = SubResource("RectangleShape2D_l85j0")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D12" unique_id=463536318]
 position = Vector2(-49.99994, 547)
 scale = Vector2(0.7195122, 0.7195122)
-texture = ExtResource("26_8ebxj")
+texture = ExtResource("29_igmhy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D12" unique_id=40454928]
 position = Vector2(-53, 550.0625)
