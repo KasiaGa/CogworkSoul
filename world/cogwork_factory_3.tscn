@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bwqrnt0mdtxeb" path="res://player/rant.tscn" id="4_f5rq6"]
 [ext_resource type="Script" uid="uid://vta6ajsp0sov" path="res://world/canvas_layer.gd" id="5_djjmk"]
 [ext_resource type="Texture2D" uid="uid://lcde56peimrp" path="res://assets/images/world/pipe.png" id="5_v7xp2"]
+[ext_resource type="Texture2D" uid="uid://hne5r4gwo4wd" path="res://assets/images/world/boxes.png" id="6_0wfgq"]
 [ext_resource type="PackedScene" uid="uid://clwq3figvspdk" path="res://gui/health_container.tscn" id="6_f3285"]
 [ext_resource type="Texture2D" uid="uid://dhj5ej22name3" path="res://assets/images/world/device1_2.png" id="6_itgwo"]
 [ext_resource type="Shader" uid="uid://cchbpo8w7modp" path="res://world/cogwork_factory_3.gdshader" id="6_v7xp2"]
@@ -15,11 +16,16 @@
 [ext_resource type="PackedScene" uid="uid://c45nk54o2gxg4" path="res://gui/silk_container.tscn" id="8_tya7r"]
 [ext_resource type="Texture2D" uid="uid://yuhfp7ej1m4l" path="res://assets/images/gui/silkBar.png" id="9_io8ry"]
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="10_m47is"]
+[ext_resource type="Texture2D" uid="uid://cx4h1o3a47mx6" path="res://assets/images/world/platform2.png" id="11_0i3cr"]
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="11_jdjab"]
+[ext_resource type="Texture2D" uid="uid://rmy6fhn0tyyc" path="res://assets/images/world/wheel2.png" id="12_0mqdq"]
 [ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="12_gbl7h"]
 [ext_resource type="Script" uid="uid://c2ri284j4ojjp" path="res://other/entrance.gd" id="13_f5rq6"]
+[ext_resource type="Texture2D" uid="uid://dqfyv0yicv08y" path="res://assets/images/world/wheel3.png" id="13_ium6y"]
 [ext_resource type="PackedScene" uid="uid://xgqimsy5qo7g" path="res://other/spikes.tscn" id="13_odu4x"]
+[ext_resource type="Texture2D" uid="uid://g6xtbupxlh28" path="res://assets/images/world/wheel4.png" id="14_6jlq7"]
 [ext_resource type="Texture2D" uid="uid://o144t0exex1" path="res://assets/images/world/entrance.png" id="14_djjmk"]
+[ext_resource type="Texture2D" uid="uid://caudwcnaxb87l" path="res://assets/images/world/wheel5.png" id="15_ayg4s"]
 [ext_resource type="PackedScene" uid="uid://cdnu1k3e8gd2a" path="res://interaction/interaction_area.tscn" id="15_f3285"]
 [ext_resource type="Script" uid="uid://dxaccq8se0wtp" path="res://world/conveyor.gd" id="16_nselo"]
 [ext_resource type="Texture2D" uid="uid://bkji8hee8rv2v" path="res://assets/images/world/conveyor1.png" id="17_rw8f6"]
@@ -37,6 +43,7 @@
 [ext_resource type="Script" uid="uid://dxqfoulnqwmx1" path="res://world/moving_platform.gd" id="30_mtdmh"]
 [ext_resource type="Texture2D" uid="uid://buoheuxda21eq" path="res://assets/images/world/platform11.png" id="31_m2550"]
 [ext_resource type="Script" uid="uid://c1mlc47d0v3we" path="res://world/mechanical_arm.gd" id="32_m2550"]
+[ext_resource type="Texture2D" uid="uid://bi8ag0ax8mh0j" path="res://assets/images/world/bricks1_2.png" id="34_knkcy"]
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="35_540sl"]
 [ext_resource type="Texture2D" uid="uid://b4we3g8m6iqbb" path="res://assets/images/world/bricks2_4_2.png" id="38_itgwo"]
 [ext_resource type="Texture2D" uid="uid://b7drihgsr46c" path="res://assets/images/world/bricks1_2_3.png" id="39_mq4ho"]
@@ -187,12 +194,12 @@ fill_from = Vector2(0, 0.017094018)
 script = ExtResource("1_odu4x")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=724366235]
-scroll_scale = Vector2(0.8, 0.8)
+scroll_scale = Vector2(0.7, 0.7)
 repeat_size = Vector2(2252, 1559)
 repeat_times = 7
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1335528209]
-modulate = Color(0.76, 0.76, 0.76, 1)
+modulate = Color(0.65, 0.65, 0.65, 1)
 z_index = -2
 position = Vector2(192, -151)
 scale = Vector2(0.7238889, 0.72388893)
@@ -205,7 +212,7 @@ scale = Vector2(294.8, 138.2)
 texture = ExtResource("7_m4j8i")
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=424275710]
-scroll_scale = Vector2(0.9, 0.9)
+scroll_scale = Vector2(0.8, 0.8)
 
 [node name="Sprite2D3" type="Sprite2D" parent="Parallax2D2" unique_id=229083008]
 modulate = Color(0.66, 0.66, 0.66, 0.8352941)
@@ -214,33 +221,156 @@ position = Vector2(932.99994, 558)
 scale = Vector2(0.8423913, 0.8423913)
 texture = ExtResource("5_v7xp2")
 
+[node name="Sprite2D17" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1775279329]
+position = Vector2(307.45813, 36.799988)
+scale = Vector2(1.0000001, 1.0000001)
+texture = ExtResource("5_v7xp2")
+
+[node name="Sprite2D7" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1567553700]
+position = Vector2(449.8226, -258.0016)
+scale = Vector2(0.6143937, 0.6143937)
+texture = ExtResource("6_0wfgq")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=425049104]
+position = Vector2(493.8324, -38.679443)
+scale = Vector2(1.1914839, 1.4164022)
+texture = ExtResource("8_kmvik")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D2/Sprite2D3/Sprite2D3" unique_id=1452470326]
+position = Vector2(-2185.9219, 39.879868)
+scale = Vector2(1.1914839, 1.4164022)
+texture = ExtResource("8_kmvik")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D2/Sprite2D3/Sprite2D3/Sprite2D3" unique_id=1190373019]
+position = Vector2(-2189.1697, 39.644943)
+scale = Vector2(1.1914839, 1.4164022)
+texture = ExtResource("8_kmvik")
+
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=2126184179]
-z_index = -1
-position = Vector2(594.129, -6.5290527)
-scale = Vector2(1.4365593, 1.4365594)
+position = Vector2(503.32907, -175.69034)
+scale = Vector2(0.8903227, 0.8903228)
+texture = ExtResource("6_itgwo")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2/Sprite2D3/Sprite2D" unique_id=1976504665]
+position = Vector2(117.333244, 17.33334)
+scale = Vector2(0.6770453, 0.67704546)
+texture = ExtResource("6_itgwo")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2/Sprite2D3/Sprite2D" unique_id=113443062]
+position = Vector2(224.00002, 2.6666045)
+scale = Vector2(0.8892469, 0.8892471)
 texture = ExtResource("6_itgwo")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1332993562]
-position = Vector2(308.64526, -382.24524)
-scale = Vector2(1.1870971, 1.1870971)
+position = Vector2(316.95496, -141.26451)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("7_itgwo")
 
 [node name="Sprite2D4" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1179604787]
 self_modulate = Color(1, 1, 1, 0.8352941)
-position = Vector2(308.64526, -504.51642)
-scale = Vector2(1.1870971, 1.1870971)
+position = Vector2(313.39365, -199.43227)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("7_itgwo")
 
 [node name="Sprite2D5" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1099524667]
-position = Vector2(306.27087, -627.9745)
-scale = Vector2(1.1870971, 1.1870971)
+position = Vector2(313.3936, -257.60004)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("7_itgwo")
 
+[node name="Sprite2D6" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=414729070]
+position = Vector2(313.3936, -315.76776)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("7_itgwo")
+
+[node name="Sprite2D8" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=493820383]
+position = Vector2(1519.4836, -261.16125)
+scale = Vector2(0.650267, 0.65026706)
+texture = ExtResource("34_knkcy")
+
+[node name="Sprite2D9" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=614160572]
+position = Vector2(1521.8582, -487.8966)
+scale = Vector2(0.650267, 0.65026706)
+texture = ExtResource("34_knkcy")
+
+[node name="Sprite2D10" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=2132432637]
+position = Vector2(1525.4192, -719.3811)
+scale = Vector2(0.650267, 0.65026706)
+texture = ExtResource("34_knkcy")
+
+[node name="Sprite2D11" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1567167787]
+position = Vector2(1526.6064, -954.4263)
+scale = Vector2(0.650267, 0.65026706)
+texture = ExtResource("34_knkcy")
+
+[node name="Sprite2D12" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1782660842]
+position = Vector2(772.80005, -492.64514)
+scale = Vector2(0.3527632, 0.3527632)
+texture = ExtResource("11_0i3cr")
+
+[node name="Sprite2D13" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1245257351]
+position = Vector2(470.09036, -630.3484)
+scale = Vector2(0.3527632, 0.3527632)
+texture = ExtResource("11_0i3cr")
+
+[node name="Sprite2D14" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=666198950]
+position = Vector2(162.6323, -848.7742)
+scale = Vector2(0.3527632, 0.3527632)
+texture = ExtResource("11_0i3cr")
+
+[node name="Sprite2D15" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=154122464]
+position = Vector2(-2655.892, -771.09106)
+scale = Vector2(0.45055974, 0.4505597)
+texture = ExtResource("31_m2550")
+
+[node name="Sprite2D16" type="Sprite2D" parent="Parallax2D2/Sprite2D3" unique_id=1738951828]
+position = Vector2(-2281.545, -1040.5621)
+scale = Vector2(0.47224143, 0.47224137)
+texture = ExtResource("31_m2550")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2/Sprite2D3/Sprite2D16" unique_id=565871109]
+position = Vector2(-1317.3217, 1881.6941)
+scale = Vector2(0.67900115, 0.6790012)
+texture = ExtResource("25_knkcy")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2/Sprite2D3/Sprite2D16" unique_id=560232191]
+position = Vector2(-128.31787, 1886.7212)
+scale = Vector2(0.67900115, 0.6790012)
+texture = ExtResource("25_knkcy")
+
 [node name="bgcolor" type="Sprite2D" parent="Parallax2D2" unique_id=2037165755]
+visible = false
 material = SubResource("ShaderMaterial_mjotr")
 position = Vector2(100.00006, 69.000046)
 scale = Vector2(294.8, 138.2)
 texture = ExtResource("7_m4j8i")
+
+[node name="Parallax2D5" type="Parallax2D" parent="." unique_id=1080778816]
+visible = false
+scroll_scale = Vector2(0.9, 0.9)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D5" unique_id=1619571005]
+modulate = Color(1, 1, 1, 0.84313726)
+position = Vector2(2003.0001, 252)
+scale = Vector2(1.3846154, 1.3846154)
+texture = ExtResource("12_0mqdq")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D5" unique_id=1320201079]
+modulate = Color(1, 1, 1, 0.84313726)
+position = Vector2(1858, 383)
+scale = Vector2(2.049043, 2.049043)
+texture = ExtResource("13_ium6y")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D5" unique_id=1186188748]
+modulate = Color(1, 1, 1, 0.8)
+position = Vector2(2082, 517)
+scale = Vector2(1.7571429, 1.7571429)
+texture = ExtResource("14_6jlq7")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Parallax2D5" unique_id=1540440129]
+modulate = Color(1, 1, 1, 0.78431374)
+position = Vector2(1810, 148)
+scale = Vector2(1.161017, 1.161017)
+texture = ExtResource("15_ayg4s")
 
 [node name="ground_irregular" type="StaticBody2D" parent="." unique_id=486012346]
 position = Vector2(585, 632)
@@ -463,11 +593,12 @@ position = Vector2(-14, 17)
 shape = SubResource("CapsuleShape2D_g8kwh")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=76796903]
+position = Vector2(0, -80)
 offset = Vector2(0, -80)
 limit_left = -2706
 limit_top = -2383
 limit_right = 2375
-limit_bottom = 4747
+limit_bottom = 5693
 
 [node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("12_gbl7h")]
 position = Vector2(2282, 493)
@@ -764,41 +895,77 @@ scale = Vector2(0.44107965, 0.44107965)
 skew = -0.44505897
 texture = ExtResource("43_e1l14")
 
-[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=1680795050]
+[node name="Parallax2D4" type="Parallax2D" parent="." unique_id=1154603651]
 z_index = 100
 scroll_scale = Vector2(1.1, 1.1)
 repeat_size = Vector2(100000, 1000000)
 
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D4" unique_id=1372604403]
+z_index = -1
+position = Vector2(1125, 684.99994)
+scale = Vector2(1.4365593, 1.4365594)
+texture = ExtResource("6_itgwo")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D4" unique_id=823443504]
+position = Vector2(1984, 605)
+texture = ExtResource("5_v7xp2")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D4" unique_id=1953384285]
+position = Vector2(1984, 768)
+rotation = -3.1415927
+texture = ExtResource("5_v7xp2")
+flip_h = true
+
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=1680795050]
+z_index = 100
+scroll_scale = Vector2(1.2, 1.2)
+scroll_offset = Vector2(528, 198)
+repeat_size = Vector2(100000, 1000000)
+
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D3" unique_id=436771266]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(2219, -137)
+position = Vector2(1777, -434)
 scale = Vector2(1.4531964, 1.4531963)
 texture = ExtResource("31_m2550")
 
 [node name="Sprite2D4" type="Sprite2D" parent="Parallax2D3" unique_id=2120902190]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(1145.0001, 1036.5)
+position = Vector2(1145, 795.5)
 scale = Vector2(381.20004, 53.100002)
 texture = ExtResource("7_m4j8i")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Parallax2D3" unique_id=1245547532]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(1086.0001, 714.00006)
+position = Vector2(1086, 473)
 rotation = 3.1415927
 scale = Vector2(1.6242462, 1.6242462)
 texture = ExtResource("31_m2550")
 
+[node name="Sprite2D6" type="Sprite2D" parent="Parallax2D3" unique_id=2124652400]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(2027, -640)
+rotation = 3.1415927
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("31_m2550")
+
 [node name="Sprite2D3" type="Sprite2D" parent="Parallax2D3" unique_id=1643545878]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(2741.0005, -242.1875)
+position = Vector2(2299, -539.1875)
 scale = Vector2(173.30003, 10.362501)
 texture = ExtResource("7_m4j8i")
 
 [node name="Sprite2D5" type="Sprite2D" parent="Parallax2D3" unique_id=656085055]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(1933.25, -113.21989)
+position = Vector2(1491.25, -410.21875)
 scale = Vector2(1.1506025, 1.1506023)
 texture = ExtResource("44_htpbp")
+
+[node name="Sprite2D6" type="Sprite2D" parent="Parallax2D3/Sprite2D5" unique_id=1107821778]
+visible = false
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-300.9297, 1047.9375)
+scale = Vector2(331.30472, 46.149742)
+texture = ExtResource("7_m4j8i")
 
 [node name="StaticBody2D7" type="StaticBody2D" parent="." unique_id=1474956977]
 position = Vector2(-91, 0)
