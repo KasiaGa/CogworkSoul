@@ -46,6 +46,8 @@
 [ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="44_htpbp"]
 [ext_resource type="Texture2D" uid="uid://bowkwim5h2uq1" path="res://assets/images/world/ground2.png" id="45_itgwo"]
 [ext_resource type="Texture2D" uid="uid://cqevss3c4fokf" path="res://assets/images/world/half_platform2.png" id="46_dqe3w"]
+[ext_resource type="PackedScene" uid="uid://dioe1s4xwg1ke" path="res://interaction/bench.tscn" id="47_dqe3w"]
+[ext_resource type="Texture2D" uid="uid://e3cnub60vc11" path="res://assets/images/world/bench3_transparent.png" id="48_lh44e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mjotr"]
 shader = ExtResource("6_v7xp2")
@@ -187,7 +189,7 @@ script = ExtResource("1_odu4x")
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=724366235]
 scroll_scale = Vector2(0.8, 0.8)
 repeat_size = Vector2(2252, 1559)
-repeat_times = 5
+repeat_times = 7
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1335528209]
 modulate = Color(0.76, 0.76, 0.76, 1)
@@ -706,8 +708,8 @@ disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=1383891527]
 modulate = Color(0.81960785, 0.81960785, 0.81960785, 1)
-position = Vector2(-2193, 2433.5)
-scale = Vector2(22.916668, 60.96491)
+position = Vector2(-2193, 2917)
+scale = Vector2(22.916668, 77.929825)
 texture = ExtResource("35_540sl")
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="." unique_id=1315411675]
@@ -730,8 +732,8 @@ texture = ExtResource("35_540sl")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4" unique_id=823314934]
 modulate = Color(0.82, 0.82, 0.82, 1)
-position = Vector2(639.0001, 2434)
-scale = Vector2(72.54167, 60.96491)
+position = Vector2(639.0001, 2923.25)
+scale = Vector2(72.54167, 78.13158)
 texture = ExtResource("35_540sl")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=819037588]
@@ -848,7 +850,7 @@ position = Vector2(10, -269)
 shape = SubResource("RectangleShape2D_0m06o")
 
 [node name="ground_irregular16" type="StaticBody2D" parent="." unique_id=1294699023]
-position = Vector2(-2146, 4135.9995)
+position = Vector2(-2146, 5172)
 rotation = -3.1415927
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
@@ -862,7 +864,7 @@ position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="ground_irregular17" type="StaticBody2D" parent="." unique_id=1744558855]
-position = Vector2(-600, 4118)
+position = Vector2(-600, 5154)
 rotation = -3.1415927
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
@@ -884,8 +886,18 @@ offset_bottom = 10374.616
 rotation = -1.5707964
 texture = SubResource("GradientTexture2D_mjotr")
 
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=2006205310]
+z_index = 100
+offset_left = -2886.0
+offset_top = 5702.174
+offset_right = -1838.8052
+offset_bottom = 11421.789
+rotation = -1.5707964
+texture = SubResource("GradientTexture2D_mjotr")
+flip_h = true
+
 [node name="ground_irregular18" type="StaticBody2D" parent="." unique_id=2096960679]
-position = Vector2(-2130, 4608)
+position = Vector2(-2130, 5644)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
@@ -900,7 +912,7 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular19" type="StaticBody2D" parent="." unique_id=125919313]
-position = Vector2(-932, 4605)
+position = Vector2(-932, 5641)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
@@ -915,7 +927,7 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular20" type="StaticBody2D" parent="." unique_id=1155259121]
-position = Vector2(266, 4602)
+position = Vector2(266, 5638)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
@@ -933,3 +945,36 @@ shape = SubResource("RectangleShape2D_53s0n")
 position = Vector2(2240, -1430)
 target_scene = "uid://bfvw4uxirep7o"
 spawn_location = Vector2(-1000, 500)
+
+[node name="Bench" parent="." unique_id=1253106123 instance=ExtResource("47_dqe3w")]
+position = Vector2(-2459.0002, 5517.0005)
+scale = Vector2(0.42, 0.42)
+object_texture = ExtResource("48_lh44e")
+
+[node name="ground_irregular21" type="StaticBody2D" parent="." unique_id=1524754765]
+position = Vector2(-1173, 4589)
+rotation = 4.712389
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular21" unique_id=1871377095]
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("8_kmvik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular21" unique_id=225114819]
+position = Vector2(0.83374023, 29.999756)
+shape = SubResource("RectangleShape2D_2t5p2")
+
+[node name="ground_irregular22" type="StaticBody2D" parent="." unique_id=158304277]
+position = Vector2(-1581.0001, 4585)
+rotation = -4.712389
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular22" unique_id=1965947029]
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("8_kmvik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular22" unique_id=444164487]
+position = Vector2(0.83374023, 29.999756)
+shape = SubResource("RectangleShape2D_2t5p2")

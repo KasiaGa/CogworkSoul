@@ -1,8 +1,12 @@
 extends StaticBody2D
 
+@onready var sprite: Sprite2D = $Sprite2D
 @onready var interaction_area: InteractionArea = $InteractionArea
+@export var object_texture: Texture2D
 
 func _ready() -> void:
+	if object_texture and sprite:
+		sprite.texture = object_texture
 	# Set up the interaction wrapper matching your item system
 	interaction_area.interact = Callable(self, "_on_interact")
 
