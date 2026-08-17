@@ -55,6 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://cqevss3c4fokf" path="res://assets/images/world/half_platform2.png" id="46_dqe3w"]
 [ext_resource type="PackedScene" uid="uid://dioe1s4xwg1ke" path="res://interaction/bench.tscn" id="47_dqe3w"]
 [ext_resource type="Texture2D" uid="uid://e3cnub60vc11" path="res://assets/images/world/bench3_transparent.png" id="48_lh44e"]
+[ext_resource type="PackedScene" uid="uid://cof12poc1mayv" path="res://interaction/blocking_breakable_object.tscn" id="56_0i3cr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mjotr"]
 shader = ExtResource("6_v7xp2")
@@ -602,8 +603,8 @@ limit_bottom = 5693
 
 [node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("12_gbl7h")]
 position = Vector2(2282, 493)
-target_scene = "uid://4x3bqyt7y308"
-spawn_location = Vector2(-1500, 300)
+target_scene = "uid://unqnjfbb58do"
+spawn_location = Vector2(-1500, 500)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1707631933]
 script = ExtResource("5_djjmk")
@@ -920,7 +921,7 @@ flip_h = true
 z_index = 100
 scroll_scale = Vector2(1.2, 1.2)
 scroll_offset = Vector2(528, 198)
-repeat_size = Vector2(100000, 1000000)
+repeat_size = Vector2(100000, 100000)
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D3" unique_id=436771266]
 modulate = Color(0, 0, 0, 1)
@@ -1145,3 +1146,18 @@ texture = ExtResource("8_kmvik")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular22" unique_id=444164487]
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
+
+[node name="TransitionZone3" parent="." unique_id=1104852366 instance=ExtResource("12_gbl7h")]
+position = Vector2(-2574, 404)
+
+[node name="BlockingBreakableObject" parent="." unique_id=1048927086 instance=ExtResource("56_0i3cr")]
+position = Vector2(-2358, 378)
+
+[node name="BlockingBreakableObject2" parent="." unique_id=361250558 instance=ExtResource("56_0i3cr")]
+position = Vector2(-2224, 376)
+
+[node name="BlockingBreakableObject3" parent="." unique_id=323646376 instance=ExtResource("56_0i3cr")]
+position = Vector2(-1915, 370)
+
+[node name="TransitionZone4" parent="." unique_id=28706623 instance=ExtResource("12_gbl7h")]
+position = Vector2(-2557, -1560)
