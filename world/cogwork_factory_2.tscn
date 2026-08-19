@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="22_ew3r1"]
 [ext_resource type="Texture2D" uid="uid://hm2k6qs71p01" path="res://assets/images/world/chain2.png" id="23_ho8eb"]
 [ext_resource type="Texture2D" uid="uid://d2mpsnb6ynwjb" path="res://assets/images/world/chain_parallax.png" id="24_pamtp"]
+[ext_resource type="Texture2D" uid="uid://e7rmhrcfdfot" path="res://assets/images/world/rocks3.png" id="25_ew3r1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(2052.0835, 148.14282)
@@ -408,3 +409,249 @@ texture = ExtResource("24_pamtp")
 position = Vector2(2298, 472)
 target_scene = "uid://d1idh6loi6m1t"
 spawn_location = Vector2(-1000, 455)
+
+[node name="Parallax2D5" type="Parallax2D" parent="." unique_id=131251420]
+z_index = 52
+scroll_scale = Vector2(1.1, 1.1)
+
+[node name="Sprite2D6" type="Sprite2D" parent="Parallax2D5" unique_id=1149319445]
+z_index = 50
+position = Vector2(-1276, 604)
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D7" type="Sprite2D" parent="Parallax2D5" unique_id=1233951704]
+z_index = 50
+position = Vector2(-1157, 571)
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D5" unique_id=953214078]
+z_index = 50
+position = Vector2(-1082, 600)
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D8" type="Sprite2D" parent="Parallax2D5" unique_id=1548318192]
+z_index = 50
+position = Vector2(-1051, 655.00006)
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D10" type="Sprite2D" parent="Parallax2D5" unique_id=520412306]
+z_index = 50
+position = Vector2(-1261, 653.00006)
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D11" type="Sprite2D" parent="Parallax2D5" unique_id=1234965669]
+z_index = 50
+position = Vector2(-1341, 583.00006)
+rotation = -0.3298672
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D12" type="Sprite2D" parent="Parallax2D5" unique_id=1319049602]
+z_index = 50
+position = Vector2(-1427, 661)
+rotation = -0.3298672
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D13" type="Sprite2D" parent="Parallax2D5" unique_id=995228091]
+z_index = 50
+position = Vector2(-1427, 560)
+rotation = -0.3298672
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D15" type="Sprite2D" parent="Parallax2D5" unique_id=1548199137]
+z_index = 50
+position = Vector2(-1516, 640)
+rotation = -0.3298672
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D16" type="Sprite2D" parent="Parallax2D5" unique_id=997526134]
+z_index = 50
+position = Vector2(-1552.9998, 589)
+rotation = -0.3298672
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D17" type="Sprite2D" parent="Parallax2D5" unique_id=1678241841]
+z_index = 50
+position = Vector2(-1606.0002, 663)
+rotation = 0.26529005
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D18" type="Sprite2D" parent="Parallax2D5" unique_id=1201785528]
+z_index = 50
+position = Vector2(-1563, 536)
+rotation = 0.26529005
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D20" type="Sprite2D" parent="Parallax2D5" unique_id=1670630111]
+z_index = 50
+position = Vector2(-1608, 579)
+rotation = 0.26529005
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D27" type="Sprite2D" parent="Parallax2D5" unique_id=2048868104]
+z_index = 50
+position = Vector2(-1725, 606)
+rotation = 0.26529005
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D21" type="Sprite2D" parent="Parallax2D5" unique_id=1538881077]
+z_index = 50
+position = Vector2(-1497, 510.00006)
+rotation = -0.1308997
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D30" type="Sprite2D" parent="Parallax2D5" unique_id=1363889705]
+z_index = 50
+position = Vector2(-1704, 512)
+rotation = -0.1308997
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D31" type="Sprite2D" parent="Parallax2D5" unique_id=1182509865]
+z_index = 50
+position = Vector2(-2160, 338.00003)
+rotation = -0.1308997
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D41" type="Sprite2D" parent="Parallax2D5" unique_id=480376585]
+z_index = 50
+position = Vector2(-2200, 387)
+rotation = -0.3351032
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D42" type="Sprite2D" parent="Parallax2D5" unique_id=1263382523]
+z_index = 50
+position = Vector2(-2200, 448.99994)
+rotation = -0.3351032
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D43" type="Sprite2D" parent="Parallax2D5" unique_id=485243710]
+z_index = 50
+position = Vector2(-2155, 482.99988)
+rotation = -0.3351032
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D44" type="Sprite2D" parent="Parallax2D5" unique_id=1467943792]
+z_index = 50
+position = Vector2(-2192, 277.99994)
+rotation = 0.3926991
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D45" type="Sprite2D" parent="Parallax2D5" unique_id=456042788]
+z_index = 50
+position = Vector2(-2213, 325.00006)
+rotation = 0.3926991
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D46" type="Sprite2D" parent="Parallax2D5" unique_id=1618531448]
+z_index = 50
+position = Vector2(-2213, 325.00006)
+rotation = 0.3926991
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D34" type="Sprite2D" parent="Parallax2D5" unique_id=1701894362]
+z_index = 50
+position = Vector2(-1958, 365.00003)
+rotation = -0.1308997
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D35" type="Sprite2D" parent="Parallax2D5" unique_id=621899493]
+z_index = 50
+position = Vector2(-1816.9998, 402)
+rotation = 0.21293017
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D37" type="Sprite2D" parent="Parallax2D5" unique_id=188965955]
+z_index = 50
+position = Vector2(-1828.9998, 451)
+rotation = 0.21293017
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true
+
+[node name="Sprite2D33" type="Sprite2D" parent="Parallax2D5" unique_id=646684648]
+z_index = 50
+position = Vector2(-1850, 504.00006)
+rotation = 0.061086524
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D39" type="Sprite2D" parent="Parallax2D5" unique_id=411798272]
+z_index = 50
+position = Vector2(-2006, 475)
+rotation = 0.061086524
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D48" type="Sprite2D" parent="Parallax2D5" unique_id=1417885949]
+z_index = 50
+position = Vector2(-1982, 540)
+rotation = 0.061086524
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D49" type="Sprite2D" parent="Parallax2D5" unique_id=2079791952]
+z_index = 50
+position = Vector2(-2086, 534)
+rotation = 0.061086524
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D40" type="Sprite2D" parent="Parallax2D5" unique_id=810349406]
+z_index = 50
+position = Vector2(-2067, 294)
+rotation = 0.061086524
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D47" type="Sprite2D" parent="Parallax2D5" unique_id=1196570715]
+z_index = 50
+position = Vector2(-2073, 399)
+rotation = 0.061086524
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D9" type="Sprite2D" parent="Parallax2D5" unique_id=1179464206]
+z_index = 50
+position = Vector2(-705, 632)
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D5" unique_id=97576736]
+z_index = 50
+position = Vector2(-775, 635)
+scale = Vector2(0.46993685, 0.46993685)
+texture = ExtResource("25_ew3r1")
+flip_h = true

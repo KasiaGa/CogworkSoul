@@ -56,6 +56,8 @@
 [ext_resource type="PackedScene" uid="uid://dioe1s4xwg1ke" path="res://interaction/bench.tscn" id="47_dqe3w"]
 [ext_resource type="Texture2D" uid="uid://e3cnub60vc11" path="res://assets/images/world/bench3_transparent.png" id="48_lh44e"]
 [ext_resource type="PackedScene" uid="uid://cof12poc1mayv" path="res://interaction/blocking_breakable_object.tscn" id="56_0i3cr"]
+[ext_resource type="Texture2D" uid="uid://e7rmhrcfdfot" path="res://assets/images/world/rocks3.png" id="57_ium6y"]
+[ext_resource type="Texture2D" uid="uid://0k53xdvvlwkb" path="res://assets/images/world/rocks1.png" id="58_6jlq7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mjotr"]
 shader = ExtResource("6_v7xp2")
@@ -1149,6 +1151,8 @@ shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="TransitionZone3" parent="." unique_id=1104852366 instance=ExtResource("12_gbl7h")]
 position = Vector2(-2574, 404)
+target_scene = "uid://dkl66fu3i64he"
+spawn_location = Vector2(3000, 500)
 
 [node name="BlockingBreakableObject" parent="." unique_id=1048927086 instance=ExtResource("56_0i3cr")]
 position = Vector2(-2358, 378)
@@ -1161,3 +1165,30 @@ position = Vector2(-1915, 370)
 
 [node name="TransitionZone4" parent="." unique_id=28706623 instance=ExtResource("12_gbl7h")]
 position = Vector2(-2557, -1560)
+
+[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=426201027]
+position = Vector2(872.00006, 604.00006)
+scale = Vector2(0.39556947, 0.39556947)
+texture = ExtResource("57_ium6y")
+
+[node name="Sprite2D10" type="Sprite2D" parent="." unique_id=1937649650]
+position = Vector2(-667.07477, 589.71606)
+rotation = 3.1415927
+scale = Vector2(0.36965778, 0.36965778)
+texture = ExtResource("58_6jlq7")
+
+[node name="Sprite2D7" type="Sprite2D" parent="." unique_id=1123165030]
+position = Vector2(1818, 586)
+scale = Vector2(0.3085445, 0.30854446)
+texture = ExtResource("57_ium6y")
+
+[node name="Sprite2D8" type="Sprite2D" parent="." unique_id=60202636]
+position = Vector2(1960, 589)
+scale = Vector2(0.3085445, 0.30854446)
+texture = ExtResource("57_ium6y")
+
+[node name="Sprite2D9" type="Sprite2D" parent="." unique_id=1717951526]
+visible = false
+position = Vector2(1960, 589)
+scale = Vector2(0.3085445, 0.30854446)
+texture = ExtResource("57_ium6y")
