@@ -16,3 +16,5 @@ Cogwork Factory along with others!
 
 
 **New bosses and NPCs** (along with the ones from Silksong!)
+
+Game Progress -> [Tumblr Blog](https://www.tumblr.com/there-is-purpose-after-all/tagged/hollow%20knight%20cogwork%20soul)
