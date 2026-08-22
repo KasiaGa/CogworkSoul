@@ -294,6 +294,7 @@ func _physics_process(delta: float) -> void:
 		# Wait for animation and flash to finish
 		await get_tree().create_timer(0.8).timeout
 		is_wren_active = false
+		set_vignette_enabled(false, true)
 
 	# Run modifier
 	if Input.is_action_pressed("run"):

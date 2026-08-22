@@ -186,11 +186,11 @@ size = Vector2(655, 56)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0m06o"]
 size = Vector2(97.5, 39)
 
-[sub_resource type="Gradient" id="Gradient_itgwo"]
+[sub_resource type="Gradient" id="Gradient_ium6y"]
 colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_mjotr"]
-gradient = SubResource("Gradient_itgwo")
+gradient = SubResource("Gradient_ium6y")
 fill_from = Vector2(0, 0.017094018)
 
 [node name="CogworkFactory3" type="Node2D" unique_id=2045856377]
@@ -933,13 +933,13 @@ texture = ExtResource("31_m2550")
 
 [node name="Sprite2D4" type="Sprite2D" parent="Parallax2D3" unique_id=2120902190]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(1145, 795.5)
+position = Vector2(1145, 758.5)
 scale = Vector2(381.20004, 53.100002)
 texture = ExtResource("7_m4j8i")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Parallax2D3" unique_id=1245547532]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(1086, 473)
+position = Vector2(1086, 436)
 rotation = 3.1415927
 scale = Vector2(1.6242462, 1.6242462)
 texture = ExtResource("31_m2550")
