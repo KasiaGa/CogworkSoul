@@ -44,6 +44,13 @@
 [ext_resource type="Texture2D" uid="uid://cxhpgksuuqyeo" path="res://assets/images/world/bell6.png" id="42_kngtf"]
 [ext_resource type="PackedScene" uid="uid://yp7pjyikyd0x" path="res://other/interactive_bell.tscn" id="43_0sai6"]
 [ext_resource type="Texture2D" uid="uid://rfiass3p14gw" path="res://assets/images/world/thing3_transparent.png" id="44_fskhe"]
+[ext_resource type="Texture2D" uid="uid://c44gepl61t2fg" path="res://assets/images/world/wheel01.png" id="45_4aji2"]
+[ext_resource type="Texture2D" uid="uid://qn0mi5hpqu6q" path="res://assets/images/world/wheel02.png" id="46_rlcsu"]
+[ext_resource type="Texture2D" uid="uid://bts8edommyhst" path="res://assets/images/world/wheel03.png" id="47_0qai3"]
+[ext_resource type="Texture2D" uid="uid://cfwbet2b5y4fw" path="res://assets/images/world/wheel04.png" id="48_prmnf"]
+[ext_resource type="Texture2D" uid="uid://dlik4nrlq10hb" path="res://assets/images/world/wheel05.png" id="49_mnpj6"]
+[ext_resource type="Texture2D" uid="uid://bh0efo8io60nk" path="res://assets/images/world/wheel06.png" id="50_fqfkl"]
+[ext_resource type="Texture2D" uid="uid://thw4sxd5ia3e" path="res://assets/images/world/wheel07.png" id="51_ue8kj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neemv"]
 shader = ExtResource("4_3xctm")
@@ -56,6 +63,35 @@ shader_parameter/lod = 0.4470000212325
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uuwtc"]
 radius = 86.66
 height = 394.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tvctu"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("45_4aji2")
+}, {
+"duration": 0.2,
+"texture": ExtResource("46_rlcsu")
+}, {
+"duration": 0.2,
+"texture": ExtResource("47_0qai3")
+}, {
+"duration": 0.2,
+"texture": ExtResource("48_prmnf")
+}, {
+"duration": 0.2,
+"texture": ExtResource("49_mnpj6")
+}, {
+"duration": 0.2,
+"texture": ExtResource("50_fqfkl")
+}, {
+"duration": 0.2,
+"texture": ExtResource("51_ue8kj")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(2018.5417, 148.14282)
@@ -319,6 +355,12 @@ action_name = "Enter"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Parallax2D3/Entrance3/InteractionArea" unique_id=1773717072]
 position = Vector2(-10, 240)
 shape = SubResource("CapsuleShape2D_uuwtc")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Parallax2D3/Entrance3" unique_id=2133259554]
+position = Vector2(1324, -213)
+scale = Vector2(0.52222246, 0.52222246)
+sprite_frames = SubResource("SpriteFrames_tvctu")
+autoplay = "default"
 
 [node name="ground_irregular" type="StaticBody2D" parent="." unique_id=486012346]
 position = Vector2(585, 632)

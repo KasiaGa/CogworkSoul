@@ -26,6 +26,20 @@
 [ext_resource type="Texture2D" uid="uid://w0t0v4mwiewt" path="res://assets/images/world/line.png" id="24_5kbg2"]
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="25_af02o"]
 [ext_resource type="PackedScene" uid="uid://cof12poc1mayv" path="res://interaction/blocking_breakable_object.tscn" id="26_q3js4"]
+[ext_resource type="Texture2D" uid="uid://dsty4ujohvl2w" path="res://assets/images/world/wheel001.png" id="27_hvv6y"]
+[ext_resource type="Texture2D" uid="uid://bn35q44xi43yx" path="res://assets/images/world/wheel002.png" id="28_s85n1"]
+[ext_resource type="Texture2D" uid="uid://covn888w70tgc" path="res://assets/images/world/wheel003.png" id="29_bgvco"]
+[ext_resource type="Texture2D" uid="uid://dva8he3uy12h1" path="res://assets/images/world/wheel004.png" id="30_6kqeo"]
+[ext_resource type="Texture2D" uid="uid://bpvtc7b12q0vv" path="res://assets/images/world/wheel005.png" id="31_ht56q"]
+[ext_resource type="Texture2D" uid="uid://d2rb2n10rkjhw" path="res://assets/images/world/wheel007.png" id="32_ocmyl"]
+[ext_resource type="Texture2D" uid="uid://sywwupw5cjl" path="res://assets/images/world/wheel008.png" id="33_khwkq"]
+[ext_resource type="Texture2D" uid="uid://c44gepl61t2fg" path="res://assets/images/world/wheel01.png" id="34_c03oq"]
+[ext_resource type="Texture2D" uid="uid://qn0mi5hpqu6q" path="res://assets/images/world/wheel02.png" id="35_5kbg2"]
+[ext_resource type="Texture2D" uid="uid://bts8edommyhst" path="res://assets/images/world/wheel03.png" id="36_af02o"]
+[ext_resource type="Texture2D" uid="uid://cfwbet2b5y4fw" path="res://assets/images/world/wheel04.png" id="37_n35he"]
+[ext_resource type="Texture2D" uid="uid://dlik4nrlq10hb" path="res://assets/images/world/wheel05.png" id="38_8bjiq"]
+[ext_resource type="Texture2D" uid="uid://bh0efo8io60nk" path="res://assets/images/world/wheel06.png" id="39_at4op"]
+[ext_resource type="Texture2D" uid="uid://thw4sxd5ia3e" path="res://assets/images/world/wheel07.png" id="40_ngqyd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neemv"]
 shader = ExtResource("4_yj780")
@@ -56,6 +70,64 @@ fill_from = Vector2(0, 0.017094018)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osjqd"]
 size = Vector2(2018.5417, 148.14282)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m8d4o"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("27_hvv6y")
+}, {
+"duration": 0.2,
+"texture": ExtResource("28_s85n1")
+}, {
+"duration": 0.2,
+"texture": ExtResource("29_bgvco")
+}, {
+"duration": 0.2,
+"texture": ExtResource("30_6kqeo")
+}, {
+"duration": 0.2,
+"texture": ExtResource("31_ht56q")
+}, {
+"duration": 0.2,
+"texture": ExtResource("32_ocmyl")
+}, {
+"duration": 0.2,
+"texture": ExtResource("33_khwkq")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kscms"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("34_c03oq")
+}, {
+"duration": 0.2,
+"texture": ExtResource("35_5kbg2")
+}, {
+"duration": 0.2,
+"texture": ExtResource("36_af02o")
+}, {
+"duration": 0.2,
+"texture": ExtResource("37_n35he")
+}, {
+"duration": 0.2,
+"texture": ExtResource("38_8bjiq")
+}, {
+"duration": 0.2,
+"texture": ExtResource("39_at4op")
+}, {
+"duration": 0.2,
+"texture": ExtResource("40_ngqyd")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_afo5t")
@@ -388,8 +460,8 @@ z_index = 100
 
 [node name="TransitionZone2" parent="." unique_id=883711749 instance=ExtResource("22_khwkq")]
 position = Vector2(-1730, 474)
-target_scene = "uid://dy8x5xyss8ie5"
-spawn_location = Vector2(2200, 455)
+target_scene = "uid://cyhi5cw3dhbko"
+spawn_location = Vector2(3400, 455)
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=651259107]
 
@@ -405,6 +477,7 @@ scale = Vector2(0.4708914, 1.6988299)
 texture = ExtResource("24_5kbg2")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=591236758]
+visible = false
 z_index = 100
 offset_left = -2881.9998
 offset_top = 4339.0
@@ -511,3 +584,15 @@ position = Vector2(2313, 484)
 [node name="BlockingBreakableObject" parent="." unique_id=1484054162 instance=ExtResource("26_q3js4")]
 z_index = 7
 position = Vector2(3075, 353)
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=1692243791]
+position = Vector2(2465.0002, -38.00001)
+scale = Vector2(0.56666666, 0.56666666)
+sprite_frames = SubResource("SpriteFrames_m8d4o")
+autoplay = "default"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1714785068]
+position = Vector2(2553, -75)
+scale = Vector2(0.52222246, 0.52222246)
+sprite_frames = SubResource("SpriteFrames_kscms")
+autoplay = "default"

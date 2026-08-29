@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://unqnjfbb58do"]
 
 [ext_resource type="Script" uid="uid://b33x564fkhhtt" path="res://world/cogwork_factory.gd" id="1_hk6vc"]
-[ext_resource type="Texture2D" uid="uid://bgne3pqcsms1r" path="res://assets/images/world/bg1_7.png" id="3_blxe0"]
+[ext_resource type="Texture2D" uid="uid://d5tw1lalo5u3" path="res://assets/images/world/bg1_10.png" id="2_77tdp"]
 [ext_resource type="Shader" uid="uid://cchbpo8w7modp" path="res://world/cogwork_factory_3.gdshader" id="4_cmd2w"]
 [ext_resource type="Texture2D" uid="uid://bjwjuh6n0t7f7" path="res://assets/images/world/white.png" id="5_77tdp"]
 [ext_resource type="Texture2D" uid="uid://lcde56peimrp" path="res://assets/images/world/pipe.png" id="6_8bcw4"]
@@ -23,12 +23,24 @@
 [ext_resource type="PackedScene" uid="uid://sjdaxel47p1f" path="res://other/enemy_3.tscn" id="25_osjqd"]
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="26_ttf3g"]
 [ext_resource type="Texture2D" uid="uid://b2kjcxfbulkkn" path="res://assets/images/world/thing2_2.png" id="26_w421x"]
+[ext_resource type="Texture2D" uid="uid://ffpy0yxmhr87" path="res://assets/images/world/thing2_9.png" id="27_5amw4"]
 [ext_resource type="Texture2D" uid="uid://e7rmhrcfdfot" path="res://assets/images/world/rocks3.png" id="27_5hlu0"]
 [ext_resource type="Texture2D" uid="uid://d24wqk6diqbs3" path="res://assets/images/world/pipe2_2.png" id="28_8up8s"]
 [ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="28_hhrgy"]
+[ext_resource type="Texture2D" uid="uid://brbpd4l2sidhy" path="res://assets/images/world/thing2_6.png" id="28_kjo8w"]
+[ext_resource type="Texture2D" uid="uid://cqwvydjvxxy5q" path="res://assets/images/world/thing2_8.png" id="29_2exnd"]
 [ext_resource type="Texture2D" uid="uid://bikmpy1pq7nsv" path="res://assets/images/world/paralax3_3.png" id="29_4rqkm"]
 [ext_resource type="Texture2D" uid="uid://c3soqsf1n066o" path="res://assets/images/world/decor1.png" id="29_5hlu0"]
+[ext_resource type="Texture2D" uid="uid://dsty4ujohvl2w" path="res://assets/images/world/wheel001.png" id="30_77tdp"]
+[ext_resource type="Texture2D" uid="uid://bhroe5nwnwjnr" path="res://assets/images/world/thing2_7.png" id="30_qnpw8"]
 [ext_resource type="Texture2D" uid="uid://w0t0v4mwiewt" path="res://assets/images/world/line.png" id="30_s6kc8"]
+[ext_resource type="Texture2D" uid="uid://bn35q44xi43yx" path="res://assets/images/world/wheel002.png" id="31_8bcw4"]
+[ext_resource type="Texture2D" uid="uid://dc4jmicqbm1sv" path="res://assets/images/world/thing2_3.png" id="31_nmo73"]
+[ext_resource type="Texture2D" uid="uid://covn888w70tgc" path="res://assets/images/world/wheel003.png" id="32_qu1gy"]
+[ext_resource type="Texture2D" uid="uid://dva8he3uy12h1" path="res://assets/images/world/wheel004.png" id="33_j5tmk"]
+[ext_resource type="Texture2D" uid="uid://bpvtc7b12q0vv" path="res://assets/images/world/wheel005.png" id="34_0p8at"]
+[ext_resource type="Texture2D" uid="uid://d2rb2n10rkjhw" path="res://assets/images/world/wheel007.png" id="35_5amw4"]
+[ext_resource type="Texture2D" uid="uid://sywwupw5cjl" path="res://assets/images/world/wheel008.png" id="36_kjo8w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neemv"]
 shader = ExtResource("4_cmd2w")
@@ -60,20 +72,90 @@ fill_from = Vector2(0, 0.017094018)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osjqd"]
 size = Vector2(2018.5417, 148.14282)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_mjotr"]
+animations = [{
+"frames": [{
+"duration": 0.8,
+"texture": ExtResource("26_w421x")
+}, {
+"duration": 0.7,
+"texture": ExtResource("27_5amw4")
+}, {
+"duration": 0.8,
+"texture": ExtResource("28_kjo8w")
+}, {
+"duration": 0.8,
+"texture": ExtResource("28_kjo8w")
+}, {
+"duration": 1.1,
+"texture": ExtResource("26_w421x")
+}, {
+"duration": 0.7,
+"texture": ExtResource("29_2exnd")
+}, {
+"duration": 0.8,
+"texture": ExtResource("28_kjo8w")
+}, {
+"duration": 0.7,
+"texture": ExtResource("27_5amw4")
+}, {
+"duration": 0.7,
+"texture": ExtResource("26_w421x")
+}, {
+"duration": 0.8,
+"texture": ExtResource("30_qnpw8")
+}, {
+"duration": 0.6,
+"texture": ExtResource("31_nmo73")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2exnd"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("30_77tdp")
+}, {
+"duration": 0.2,
+"texture": ExtResource("31_8bcw4")
+}, {
+"duration": 0.2,
+"texture": ExtResource("32_qu1gy")
+}, {
+"duration": 0.2,
+"texture": ExtResource("33_j5tmk")
+}, {
+"duration": 0.2,
+"texture": ExtResource("34_0p8at")
+}, {
+"duration": 0.2,
+"texture": ExtResource("35_5amw4")
+}, {
+"duration": 0.2,
+"texture": ExtResource("36_kjo8w")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_hk6vc")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=2123797011]
 scroll_scale = Vector2(0.7, 0.7)
-repeat_size = Vector2(2252, 1559)
+repeat_size = Vector2(2750, 1559)
 repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1860392640]
 modulate = Color(0.6509804, 0.6509804, 0.6509804, 1)
 z_index = -2
-position = Vector2(192, -151)
+position = Vector2(191.99998, -86)
 scale = Vector2(0.7238889, 0.72388893)
-texture = ExtResource("3_blxe0")
+texture = ExtResource("2_77tdp")
 
 [node name="bgcolor" type="Sprite2D" parent="Parallax2D" unique_id=1771886459]
 material = SubResource("ShaderMaterial_neemv")
@@ -480,10 +562,12 @@ max_health = 5
 [node name="Marker2D" type="Marker2D" parent="enemy4" unique_id=889279208]
 position = Vector2(455.99988, 414)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1056010536]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=953336200]
 position = Vector2(1785, 64)
 scale = Vector2(0.42806485, 0.42806482)
-texture = ExtResource("26_w421x")
+sprite_frames = SubResource("SpriteFrames_mjotr")
+autoplay = "default"
+frame_progress = 0.5680724
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1463598539]
 position = Vector2(1587.0001, 578)
@@ -783,3 +867,9 @@ rotation = -3.2410765
 scale = Vector2(0.46993685, 0.46993685)
 texture = ExtResource("27_5hlu0")
 flip_h = true
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=149130161]
+position = Vector2(-716, -268.99988)
+scale = Vector2(0.56666666, 0.56666666)
+sprite_frames = SubResource("SpriteFrames_2exnd")
+autoplay = "default"

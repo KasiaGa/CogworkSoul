@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="21_iugxo"]
 [ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="22_i6s1t"]
 [ext_resource type="Texture2D" uid="uid://w0t0v4mwiewt" path="res://assets/images/world/line.png" id="24_0wbpn"]
+[ext_resource type="Texture2D" uid="uid://q8nlvq3sdigl" path="res://assets/images/world/elevator2.png" id="24_iljr6"]
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="25_2js7q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neemv"]
@@ -53,6 +54,9 @@ fill_from = Vector2(0, 0.017094018)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osjqd"]
 size = Vector2(2018.5417, 148.14282)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
+size = Vector2(575.6687, 20)
 
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_6flc2")
@@ -374,6 +378,7 @@ scale = Vector2(0.4708914, 1.6988299)
 texture = ExtResource("24_0wbpn")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=591236758]
+visible = false
 z_index = 100
 offset_left = -2881.9998
 offset_top = 4339.0
@@ -434,3 +439,13 @@ modulate = Color(0.81960785, 0.81960785, 0.81960785, 1)
 position = Vector2(-1815.9999, -147.99982)
 scale = Vector2(23.999994, 43.859657)
 texture = ExtResource("25_2js7q")
+
+[node name="Elevator2" type="Sprite2D" parent="." unique_id=1109551812]
+position = Vector2(88.75, 239.85794)
+scale = Vector2(0.9561151, 0.95611507)
+texture = ExtResource("24_iljr6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Elevator2" unique_id=439775732]
+position = Vector2(7.370682, 385.0395)
+scale = Vector2(1, 0.9999999)
+shape = SubResource("RectangleShape2D_mjotr")

@@ -51,6 +51,7 @@
 [ext_resource type="Texture2D" uid="uid://cg655xks88sbk" path="res://assets/images/world/cog2.png" id="42_htpbp"]
 [ext_resource type="Texture2D" uid="uid://ceh0vu50g1u7t" path="res://assets/images/world/cable.png" id="43_e1l14"]
 [ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="44_htpbp"]
+[ext_resource type="Texture2D" uid="uid://bablasgxbar6w" path="res://assets/images/world/platform11_2.png" id="44_rqf5m"]
 [ext_resource type="Texture2D" uid="uid://bowkwim5h2uq1" path="res://assets/images/world/ground2.png" id="45_itgwo"]
 [ext_resource type="Texture2D" uid="uid://cqevss3c4fokf" path="res://assets/images/world/half_platform2.png" id="46_dqe3w"]
 [ext_resource type="PackedScene" uid="uid://dioe1s4xwg1ke" path="res://interaction/bench.tscn" id="47_dqe3w"]
@@ -58,6 +59,20 @@
 [ext_resource type="PackedScene" uid="uid://cof12poc1mayv" path="res://interaction/blocking_breakable_object.tscn" id="56_0i3cr"]
 [ext_resource type="Texture2D" uid="uid://e7rmhrcfdfot" path="res://assets/images/world/rocks3.png" id="57_ium6y"]
 [ext_resource type="Texture2D" uid="uid://0k53xdvvlwkb" path="res://assets/images/world/rocks1.png" id="58_6jlq7"]
+[ext_resource type="Texture2D" uid="uid://c44gepl61t2fg" path="res://assets/images/world/wheel01.png" id="59_8ef8c"]
+[ext_resource type="Texture2D" uid="uid://qn0mi5hpqu6q" path="res://assets/images/world/wheel02.png" id="60_rqf5m"]
+[ext_resource type="Texture2D" uid="uid://bts8edommyhst" path="res://assets/images/world/wheel03.png" id="61_bfbwb"]
+[ext_resource type="Texture2D" uid="uid://cfwbet2b5y4fw" path="res://assets/images/world/wheel04.png" id="62_ojqx4"]
+[ext_resource type="Texture2D" uid="uid://dlik4nrlq10hb" path="res://assets/images/world/wheel05.png" id="63_qwsk7"]
+[ext_resource type="Texture2D" uid="uid://bh0efo8io60nk" path="res://assets/images/world/wheel06.png" id="64_d1mam"]
+[ext_resource type="Texture2D" uid="uid://thw4sxd5ia3e" path="res://assets/images/world/wheel07.png" id="65_f87y8"]
+[ext_resource type="Texture2D" uid="uid://dsty4ujohvl2w" path="res://assets/images/world/wheel001.png" id="66_8b2rw"]
+[ext_resource type="Texture2D" uid="uid://bn35q44xi43yx" path="res://assets/images/world/wheel002.png" id="67_8ulqe"]
+[ext_resource type="Texture2D" uid="uid://covn888w70tgc" path="res://assets/images/world/wheel003.png" id="68_xybtb"]
+[ext_resource type="Texture2D" uid="uid://dva8he3uy12h1" path="res://assets/images/world/wheel004.png" id="69_yqvbk"]
+[ext_resource type="Texture2D" uid="uid://bpvtc7b12q0vv" path="res://assets/images/world/wheel005.png" id="70_pnd27"]
+[ext_resource type="Texture2D" uid="uid://d2rb2n10rkjhw" path="res://assets/images/world/wheel007.png" id="71_gtllm"]
+[ext_resource type="Texture2D" uid="uid://sywwupw5cjl" path="res://assets/images/world/wheel008.png" id="72_vbrlj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mjotr"]
 shader = ExtResource("6_v7xp2")
@@ -146,8 +161,11 @@ size = Vector2(394.5, 40.121777)
 [sub_resource type="SpriteFrames" id="SpriteFrames_ae5in"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 0.4,
 "texture": ExtResource("31_m2550")
+}, {
+"duration": 0.4,
+"texture": ExtResource("44_rqf5m")
 }],
 "loop": 1,
 "name": &"default",
@@ -192,6 +210,64 @@ colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_mjotr"]
 gradient = SubResource("Gradient_ium6y")
 fill_from = Vector2(0, 0.017094018)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fa3b3"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("59_8ef8c")
+}, {
+"duration": 0.2,
+"texture": ExtResource("60_rqf5m")
+}, {
+"duration": 0.2,
+"texture": ExtResource("61_bfbwb")
+}, {
+"duration": 0.2,
+"texture": ExtResource("62_ojqx4")
+}, {
+"duration": 0.2,
+"texture": ExtResource("63_qwsk7")
+}, {
+"duration": 0.2,
+"texture": ExtResource("64_d1mam")
+}, {
+"duration": 0.2,
+"texture": ExtResource("65_f87y8")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l85j0"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("66_8b2rw")
+}, {
+"duration": 0.2,
+"texture": ExtResource("67_8ulqe")
+}, {
+"duration": 0.2,
+"texture": ExtResource("68_xybtb")
+}, {
+"duration": 0.2,
+"texture": ExtResource("69_yqvbk")
+}, {
+"duration": 0.2,
+"texture": ExtResource("70_pnd27")
+}, {
+"duration": 0.2,
+"texture": ExtResource("71_gtllm")
+}, {
+"duration": 0.2,
+"texture": ExtResource("72_vbrlj")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="CogworkFactory3" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_odu4x")
@@ -742,6 +818,8 @@ script = ExtResource("30_mtdmh")
 position = Vector2(899, -296)
 scale = Vector2(0.6826484, 0.6826484)
 sprite_frames = SubResource("SpriteFrames_ae5in")
+autoplay = "default"
+frame_progress = 0.506333
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MovingPlatform" unique_id=613556806]
 position = Vector2(903.75, -339)
@@ -1152,7 +1230,7 @@ shape = SubResource("RectangleShape2D_2t5p2")
 [node name="TransitionZone3" parent="." unique_id=1104852366 instance=ExtResource("12_gbl7h")]
 position = Vector2(-2574, 404)
 target_scene = "uid://dkl66fu3i64he"
-spawn_location = Vector2(3000, 500)
+spawn_location = Vector2(3400, 500)
 
 [node name="BlockingBreakableObject" parent="." unique_id=1048927086 instance=ExtResource("56_0i3cr")]
 position = Vector2(-2358, 378)
@@ -1192,3 +1270,27 @@ visible = false
 position = Vector2(1960, 589)
 scale = Vector2(0.3085445, 0.30854446)
 texture = ExtResource("57_ium6y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2087999457]
+position = Vector2(-693.00006, 347)
+scale = Vector2(0.52222246, 0.52222246)
+sprite_frames = SubResource("SpriteFrames_fa3b3")
+autoplay = "default"
+frame = 1
+frame_progress = 0.016334692
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1028597640]
+position = Vector2(-1602, -21)
+scale = Vector2(0.52222246, 0.52222246)
+sprite_frames = SubResource("SpriteFrames_fa3b3")
+autoplay = "default"
+frame = 1
+frame_progress = 0.016334692
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=2046755562]
+position = Vector2(-1193, 606)
+scale = Vector2(0.45000032, 0.45000032)
+sprite_frames = SubResource("SpriteFrames_l85j0")
+autoplay = "default"
+frame = 5
+frame_progress = 0.23641412
