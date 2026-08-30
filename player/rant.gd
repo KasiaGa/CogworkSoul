@@ -67,6 +67,7 @@ const JUMP_VELOCITY = -1400.0
 const DIALOGUE_FILE = preload("res://dialogue/rant_needle.dialogue")
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_PAUSABLE
 	base_scale = rant.scale
 	currentHealth = Global.player_current_health
 	maxHealth = Global.player_max_health

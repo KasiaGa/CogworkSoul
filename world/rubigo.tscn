@@ -167,29 +167,6 @@ theme_override_font_sizes/font_size = 25
 [node name="Dialogue" parent="CanvasLayer" unique_id=1192278521 instance=ExtResource("12_ipr8a")]
 visible = false
 
-[node name="Entrance" type="StaticBody2D" parent="." unique_id=262284444]
-z_index = 1
-position = Vector2(-547, 396)
-collision_mask = 2
-script = ExtResource("13_1bpl5")
-target_scene_path = "uid://dy8x5xyss8ie5"
-spawn_x = -950.0
-spawn_y = -600.0
-
-[node name="Sprite2D2" type="Sprite2D" parent="Entrance" unique_id=922673493]
-z_index = -2
-position = Vector2(-3.0000153, 6)
-scale = Vector2(0.6320755, 0.6320754)
-texture = ExtResource("14_4j6ir")
-
-[node name="InteractionArea2" parent="Entrance" unique_id=1179285320 instance=ExtResource("15_tgpmr")]
-position = Vector2(15, -207)
-action_name = "Enter"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance/InteractionArea2" unique_id=1377918606]
-position = Vector2(-7, 280)
-shape = SubResource("CapsuleShape2D_bw10g")
-
 [node name="Rubigo" parent="." unique_id=1998102934 instance=ExtResource("15_g2vjv")]
 z_index = 1
 position = Vector2(1693, 541.99994)
@@ -280,7 +257,32 @@ position = Vector2(4541.666, 810.0001)
 scale = Vector2(1.2800925, 1.2800922)
 texture = ExtResource("18_xv7to")
 
+[node name="Entrance" type="StaticBody2D" parent="Parallax2D2" unique_id=262284444]
+modulate = Color(0.57680154, 0.36815003, 0.25159523, 1)
+position = Vector2(503.33313, 1130.0002)
+scale = Vector2(1.6666666, 1.6666669)
+collision_mask = 2
+script = ExtResource("13_1bpl5")
+target_scene_path = "uid://dy8x5xyss8ie5"
+spawn_x = -950.0
+spawn_y = -600.0
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2/Entrance" unique_id=922673493]
+z_index = -2
+position = Vector2(106.000244, 20.999908)
+scale = Vector2(0.6320755, 0.6320754)
+texture = ExtResource("14_4j6ir")
+
+[node name="InteractionArea2" parent="Parallax2D2/Entrance" unique_id=1179285320 instance=ExtResource("15_tgpmr")]
+position = Vector2(15, -207)
+action_name = "Enter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Parallax2D2/Entrance/InteractionArea2" unique_id=1377918606]
+position = Vector2(102.000244, 256.9999)
+shape = SubResource("CapsuleShape2D_bw10g")
+
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1771816504]
+visible = false
 z_index = 100
 offset_left = -2628.0
 offset_top = 3914.0

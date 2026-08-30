@@ -75,7 +75,7 @@ size = Vector2(2018.5417, 148.14282)
 [sub_resource type="SpriteFrames" id="SpriteFrames_mjotr"]
 animations = [{
 "frames": [{
-"duration": 0.8,
+"duration": 2.1,
 "texture": ExtResource("26_w421x")
 }, {
 "duration": 0.7,
@@ -567,7 +567,7 @@ position = Vector2(1785, 64)
 scale = Vector2(0.42806485, 0.42806482)
 sprite_frames = SubResource("SpriteFrames_mjotr")
 autoplay = "default"
-frame_progress = 0.5680724
+frame_progress = 0.24643677
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1463598539]
 position = Vector2(1587.0001, 578)

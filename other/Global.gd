@@ -1,10 +1,8 @@
 extends Node
 
-# Przechowuje pozycję docelową (X, Y)
 var target_position: Vector2 = Vector2.ZERO
 var current_target_position: Vector2 = Vector2.ZERO
 
-# Zmienna informująca, czy gracz ma zmienić pozycję
 var should_reposition: bool = false
 var should_go_back_to_checkpoint: bool = false
 
@@ -40,18 +38,16 @@ var discovered_locations: Dictionary = {}
 var has_talked_to_bella: bool = false
 var rubigo_dialogue_step: int = 0
 
-# Preloaded cutscene frames
+var accepted_wishes: Array = []
+
 var cutscene_frames: Array = []
 
-# Intro animation control
 var should_play_lie_animation: bool = false
 var should_play_get_up_animation: bool = false
 
-# Path to the actual file on the computer
 const SAVE_PATH = "user://savegame.save"
 
 func save_game(save_checkpoint: bool = true):
-	# If caller doesn't want to overwrite checkpoint coords, try to reuse existing saved values
 	var checkpoint_x = target_position.x
 	var checkpoint_y = target_position.y
 	if not save_checkpoint and FileAccess.file_exists(SAVE_PATH):
@@ -64,7 +60,6 @@ func save_game(save_checkpoint: bool = true):
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file:
-		# Gather everything we want to remember into a tidy package
 		var save_data = {
 			"max_health": player_max_health,
 			"max_silk": player_max_silk,
@@ -84,10 +79,10 @@ func save_game(save_checkpoint: bool = true):
 			"broken_objects": broken_objects,
 			"discovered_locations": discovered_locations,
 			"has_talked_to_bella": has_talked_to_bella,
-			"rubigo_dialogue_step": rubigo_dialogue_step
-		}
+			"rubigo_dialogue_step": rubigo_dialogue_step,
+			"accepted_wishes": accepted_wishes
+			}
 		
-		# Write it to the file
 		file.store_var(save_data)
 		file.close()
 		print("Game successfully saved to: ", OS.get_user_data_dir())
@@ -113,6 +108,7 @@ func load_game():
 		shards_collected = save_data.get("shards_collected", 0)
 		
 		collected_items = Array(save_data.get("collected_items", []), TYPE_STRING, &"", null)
+		accepted_wishes = save_data.get("accepted_wishes", [])
 		
 		# 2. ENFORCE YOUR RULE: Always reset to max health and zero silk on load (respawn from checkpoint)
 		player_current_health = player_max_health
@@ -141,6 +137,8 @@ func load_game():
 		
 		has_talked_to_bella = save_data.get("has_talked_to_bella", false)
 
+		rubigo_dialogue_step = save_data.get("rubigo_dialogue_step", 0)
+
 		# 4. Load the level
 		var level_to_load = save_data.get("saved_scene", scene_path)
 		get_tree().change_scene_to_file(level_to_load)
@@ -153,3 +151,11 @@ func change_scene_to_position(scene_path: String, new_x: float, new_y: float):
 	current_target_position = Vector2(new_x, new_y)
 	should_reposition = true
 	get_tree().change_scene_to_file(scene_path)
+
+func add_accepted_wish(wish_id: String) -> void:
+	if not accepted_wishes.has(wish_id):
+		accepted_wishes.append(wish_id)
+		save_game()
+
+func has_accepted_wish(wish_id: String) -> bool:
+	return accepted_wishes.has(wish_id)
