@@ -34,6 +34,10 @@ func _on_interact():
 			Global.has_needle = true 
 			if canvas_layer:
 				canvas_layer.show_notification("Acquired: Needle")
+		Global.ItemType.COGWORK_BATTERY:
+			print("Picked up a battery!")
+			if canvas_layer:
+				canvas_layer.show_notification("Acquired: Battery")
 		Global.ItemType.KEY_TO_LAB_21:
 			print("Picked up a key!")
 			if canvas_layer:

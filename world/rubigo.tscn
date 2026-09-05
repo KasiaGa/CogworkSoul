@@ -19,6 +19,9 @@
 [ext_resource type="Texture2D" uid="uid://crs6k525dbjls" path="res://assets/images/world/bg_rubigo_2.png" id="17_ipr8a"]
 [ext_resource type="Texture2D" uid="uid://bmd20sf0qsh6d" path="res://assets/images/world/bgbg2.png" id="18_xv7to"]
 [ext_resource type="Texture2D" uid="uid://c4mub02jinokl" path="res://assets/images/world/chain.png" id="19_gkrld"]
+[ext_resource type="Script" uid="uid://ceyd3m218pqgq" path="res://other/item.gd" id="20_pn07o"]
+[ext_resource type="Texture2D" uid="uid://3raudyvff210" path="res://assets/images/item/item_spritesheet2.png" id="21_3xacy"]
+[ext_resource type="Texture2D" uid="uid://bfr7qm06uk370" path="res://assets/images/item/item_frame.png" id="22_h1kr3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(2018.5417, 148.14282)
@@ -42,6 +45,67 @@ colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xv7to"]
 gradient = SubResource("Gradient_itgwo")
 fill_from = Vector2(0, 0.017094018)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yaehf"]
+atlas = ExtResource("21_3xacy")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_074og"]
+atlas = ExtResource("21_3xacy")
+region = Rect2(600, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cegan"]
+atlas = ExtResource("21_3xacy")
+region = Rect2(800, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82xsv"]
+atlas = ExtResource("21_3xacy")
+region = Rect2(1000, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_getpj"]
+atlas = ExtResource("21_3xacy")
+region = Rect2(1200, 0, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jxede"]
+animations = [{
+"frames": [{
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_yaehf")
+}, {
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_074og")
+}, {
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_cegan")
+}, {
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_82xsv")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_getpj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_h1kr3")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_getpj")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_82xsv")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_cegan")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_074og")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wns0p"]
+radius = 29.15476
 
 [node name="Rubigo" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_les4a")
@@ -269,7 +333,7 @@ spawn_y = -600.0
 
 [node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2/Entrance" unique_id=922673493]
 z_index = -2
-position = Vector2(106.000244, 20.999908)
+position = Vector2(107.000275, 20.999908)
 scale = Vector2(0.6320755, 0.6320754)
 texture = ExtResource("14_4j6ir")
 
@@ -333,3 +397,25 @@ position = Vector2(3336.6665, 888.3334)
 rotation = -0.20420352
 scale = Vector2(6.4222226, 6.4222226)
 texture = ExtResource("19_gkrld")
+
+[node name="ItemCogworkBattery" type="StaticBody2D" parent="." unique_id=1480002040]
+position = Vector2(-54, 554)
+collision_mask = 2
+script = ExtResource("20_pn07o")
+item_id = "cogwork_battery"
+item_type = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ItemCogworkBattery" unique_id=813698460]
+position = Vector2(4, 26)
+scale = Vector2(0.6749999, 0.6749999)
+sprite_frames = SubResource("SpriteFrames_jxede")
+autoplay = "default"
+
+[node name="InteractionArea" parent="ItemCogworkBattery" unique_id=497624934 instance=ExtResource("15_tgpmr")]
+z_index = 60
+position = Vector2(11, -159)
+action_name = "Take"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemCogworkBattery/InteractionArea" unique_id=665990439]
+position = Vector2(-8, 187)
+shape = SubResource("CircleShape2D_wns0p")

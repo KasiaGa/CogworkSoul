@@ -24,6 +24,11 @@
 [ext_resource type="Texture2D" uid="uid://w0t0v4mwiewt" path="res://assets/images/world/line.png" id="24_0wbpn"]
 [ext_resource type="Texture2D" uid="uid://q8nlvq3sdigl" path="res://assets/images/world/elevator2.png" id="24_iljr6"]
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="25_2js7q"]
+[ext_resource type="Script" uid="uid://b7rufj2q5kb82" path="res://world/lift.gd" id="25_6flc2"]
+[ext_resource type="PackedScene" uid="uid://cdnu1k3e8gd2a" path="res://interaction/interaction_area.tscn" id="26_mua22"]
+[ext_resource type="Texture2D" uid="uid://c8t0hkxslnxld" path="res://assets/images/world/rocks_colored.png" id="27_n2fm7"]
+[ext_resource type="Texture2D" uid="uid://dy185k7vgo2j1" path="res://assets/images/world/cogs_colored.png" id="28_p0v5h"]
+[ext_resource type="Texture2D" uid="uid://b8rju6fe3xf04" path="res://assets/images/world/tangled_cables_colored.png" id="29_cm724"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neemv"]
 shader = ExtResource("4_7l68x")
@@ -55,8 +60,11 @@ fill_from = Vector2(0, 0.017094018)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osjqd"]
 size = Vector2(2018.5417, 148.14282)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_n5qf8"]
+radius = 388.0793
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
-size = Vector2(575.6687, 20)
+size = Vector2(575.6687, 25.688477)
 
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_6flc2")
@@ -444,8 +452,49 @@ texture = ExtResource("25_2js7q")
 position = Vector2(88.75, 239.85794)
 scale = Vector2(0.9561151, 0.95611507)
 texture = ExtResource("24_iljr6")
+script = ExtResource("25_6flc2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Elevator2" unique_id=439775732]
-position = Vector2(7.370682, 385.0395)
-scale = Vector2(1, 0.9999999)
+[node name="InteractionArea" parent="Elevator2" unique_id=1179285320 instance=ExtResource("26_mua22")]
+z_index = 60
+position = Vector2(13.858185, -66.788956)
+action_name = "Inspect"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Elevator2/InteractionArea" unique_id=1038581740]
+position = Vector2(-8.3671875, 89.94732)
+shape = SubResource("CircleShape2D_n5qf8")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=330645326]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=439775732]
+position = Vector2(95.79722, 605.2806)
+scale = Vector2(0.9561151, 0.95611495)
 shape = SubResource("RectangleShape2D_mjotr")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=694831376]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4" unique_id=1554761023]
+z_index = 100
+position = Vector2(-604, 433)
+texture = ExtResource("27_n2fm7")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="." unique_id=735215664]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5" unique_id=510229083]
+position = Vector2(523, 595)
+scale = Vector2(0.7598425, 0.7598425)
+texture = ExtResource("28_p0v5h")
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="." unique_id=302599890]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D7" unique_id=1186549951]
+position = Vector2(-378, 603)
+scale = Vector2(0.7598425, 0.7598425)
+texture = ExtResource("28_p0v5h")
+flip_v = true
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="." unique_id=1082603502]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D8" unique_id=270405415]
+z_index = 100
+position = Vector2(810, 585)
+texture = ExtResource("29_cm724")

@@ -3,25 +3,33 @@
 [ext_resource type="Texture2D" uid="uid://bc1iyf761gbl6" path="res://assets/images/gui/map.png" id="1_4wr3o"]
 [ext_resource type="Script" uid="uid://d4mldrc2hjgfq" path="res://gui/inventory_map_menu.gd" id="1_n3od0"]
 [ext_resource type="Texture2D" uid="uid://bt0wsyphlugcj" path="res://assets/images/item/needle.png" id="2_okbrl"]
+[ext_resource type="Texture2D" uid="uid://cncaq75ufuuww" path="res://assets/images/world/battery_colored.png" id="3_oexcg"]
+[ext_resource type="Texture2D" uid="uid://ba52ned4dav28" path="res://assets/images/world/cog1.png" id="4_qblpg"]
+[ext_resource type="Texture2D" uid="uid://cxhpgksuuqyeo" path="res://assets/images/world/bell6.png" id="5_0x6eu"]
 
 [sub_resource type="SystemFont" id="SystemFont_vg86a"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_oexcg"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_qblpg"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_okbrl"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_jtgip"]
 font_names = PackedStringArray("Palatino Linotype")
+subpixel_positioning = 0
 
 [node name="InventoryMapMenu" type="CanvasLayer" unique_id=1439938911]
 process_mode = 3
@@ -105,49 +113,42 @@ expand_mode = 4
 [node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/needle" unique_id=1712112236]
 z_index = -1
 layout_mode = 0
-offset_left = -2.0
-offset_top = -3.0
-offset_right = 148.0
-offset_bottom = 147.0
+offset_right = 150.0
+offset_bottom = 150.0
 
 [node name="cogwork_battery" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=672894153]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
+texture = ExtResource("3_oexcg")
+expand_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/cogwork_battery" unique_id=966168266]
-visible = false
 z_index = -1
 layout_mode = 0
-offset_left = 19.0
-offset_top = -3.0
-offset_right = 104.0
-offset_bottom = 83.049385
+offset_right = 150.0
+offset_bottom = 150.0
 
 [node name="key_to_lab_21" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=611539053]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
+texture = ExtResource("4_qblpg")
 
 [node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/key_to_lab_21" unique_id=1007492812]
-visible = false
 z_index = -1
 layout_mode = 0
-offset_left = 119.0
-offset_top = -4.0
-offset_right = 204.0
-offset_bottom = 82.049385
+offset_right = 150.0
+offset_bottom = 150.0
 
 [node name="health_upgrade" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=357184808]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
+texture = ExtResource("5_0x6eu")
 
 [node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/health_upgrade" unique_id=1903540252]
-visible = false
 z_index = -1
 layout_mode = 0
-offset_left = 219.0
-offset_top = -3.0
-offset_right = 304.0
-offset_bottom = 83.049385
+offset_right = 150.0
+offset_bottom = 150.0
 
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/InventoryView" unique_id=431507155]
 self_modulate = Color(1, 0.76036006, 0.71446484, 1)

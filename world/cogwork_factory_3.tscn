@@ -42,7 +42,6 @@
 [ext_resource type="Texture2D" uid="uid://b7s5gph64yi1u" path="res://assets/images/world/platform5.png" id="28_mtdmh"]
 [ext_resource type="Script" uid="uid://dxqfoulnqwmx1" path="res://world/moving_platform.gd" id="30_mtdmh"]
 [ext_resource type="Texture2D" uid="uid://buoheuxda21eq" path="res://assets/images/world/platform11.png" id="31_m2550"]
-[ext_resource type="Script" uid="uid://c1mlc47d0v3we" path="res://world/mechanical_arm.gd" id="32_m2550"]
 [ext_resource type="Texture2D" uid="uid://bi8ag0ax8mh0j" path="res://assets/images/world/bricks1_2.png" id="34_knkcy"]
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="35_540sl"]
 [ext_resource type="Texture2D" uid="uid://b4we3g8m6iqbb" path="res://assets/images/world/bricks2_4_2.png" id="38_itgwo"]
@@ -850,9 +849,8 @@ scale = Vector2(0.4, 0.4)
 sprite_visible = false
 
 [node name="MechanicalArm" type="Node2D" parent="." unique_id=1383990300]
+visible = false
 position = Vector2(-1177, -185)
-script = ExtResource("32_m2550")
-start_area = NodePath("StartArea")
 
 [node name="Skeleton2D" type="Skeleton2D" parent="MechanicalArm" unique_id=466749667]
 position = Vector2(35, 8)
@@ -860,8 +858,8 @@ modification_stack = SubResource("SkeletonModificationStack2D_da6y2")
 
 [node name="UpperArm" type="Bone2D" parent="MechanicalArm/Skeleton2D" unique_id=831768054]
 position = Vector2(232, 128.00002)
-rotation = -1.9634339
-scale = Vector2(0.99994636, 0.99994636)
+rotation = -0.78834057
+scale = Vector2(0.9999462, 0.9999462)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 metadata/_local_pose_override_enabled_ = true
 
@@ -872,6 +870,7 @@ texture = ExtResource("38_itgwo")
 
 [node name="LowerArm" type="Bone2D" parent="MechanicalArm/Skeleton2D/UpperArm" unique_id=1518333441]
 position = Vector2(10.26615, -19.561655)
+rotation = -1.0874972
 scale = Vector2(0.9999997, 0.9999997)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 metadata/_local_pose_override_enabled_ = true
@@ -905,6 +904,7 @@ shape = SubResource("RectangleShape2D_mwa8a")
 [node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=224057618]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=2076615890]
+visible = false
 position = Vector2(-1373.7275, 618.4641)
 rotation = 1.5707964
 scale = Vector2(0.9629339, 0.9629339)
@@ -1126,6 +1126,7 @@ position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=560918818]
+visible = false
 z_index = 100
 offset_left = -2881.9998
 offset_top = 4655.0
