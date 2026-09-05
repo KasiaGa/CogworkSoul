@@ -124,6 +124,27 @@ colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
 gradient = SubResource("Gradient_itgwo")
 fill_from = Vector2(0, 0.017094018)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_floating_core"]
+emission_shape = 1
+emission_sphere_radius = 800.0
+lifetime_randomness = 0.4
+gravity = Vector3(0, -5, 0)
+initial_velocity_min = -150.0
+initial_velocity_max = 150.0
+angular_velocity_min = -2.0
+angular_velocity_max = 2.0
+damping_min = 0.2
+damping_max = 0.8
+scale_min = 1.0
+scale_max = 2.5
+color = Color(0.8, 0.8, 0.8, 0.5)
+turbulence_enabled = true
+turbulence_noise_strength = 0.5
+turbulence_noise_scale = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_particle_core"]
+radius = 8.0
+
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_um1bq")
 
@@ -1313,3 +1334,12 @@ position = Vector2(2347, -1388)
 position = Vector2(1009, 326)
 scale = Vector2(0.2941919, 0.29419187)
 texture = ExtResource("44_fskhe")
+
+[node name="FloatingParticles" type="GPUParticles2D" parent="." unique_id=2000000002]
+z_index = 5
+position = Vector2(800, 400)
+amount = 150
+lifetime = 12.0
+process_material = SubResource("ParticleProcessMaterial_floating_core")
+texture = SubResource("CircleShape2D_particle_core")
+local_coords = true
