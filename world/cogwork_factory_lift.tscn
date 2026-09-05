@@ -66,6 +66,42 @@ radius = 388.0793
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(575.6687, 25.688477)
 
+[sub_resource type="Shader" id="Shader_particle_circle_core"]
+code = "shader_type canvas_item;
+
+void fragment() {
+    vec2 center = UV - vec2(0.5);
+    float dist = length(center);
+    if (dist > 0.5) discard;
+    COLOR.a *= smoothstep(0.5, 0.3, dist);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n2fm7"]
+shader = SubResource("Shader_particle_circle_core")
+
+[sub_resource type="Gradient" id="Gradient_particle_circle_core"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p0v5h"]
+gradient = SubResource("Gradient_particle_circle_core")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cm724"]
+lifetime_randomness = 0.2
+emission_shape = 1
+emission_sphere_radius = 1000.0
+initial_velocity_min = -150.0
+initial_velocity_max = 150.0
+angular_velocity_min = -1.0
+angular_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 2.0
+color = Color(0.8, 0.8, 0.8, 0.5)
+
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_6flc2")
 
@@ -498,3 +534,14 @@ flip_v = true
 z_index = 100
 position = Vector2(810, 585)
 texture = ExtResource("29_cm724")
+
+[node name="FloatingParticles" type="GPUParticles2D" parent="." unique_id=1787445116]
+modulate = Color(0.66, 0.594, 0.6006, 1)
+z_index = 5
+material = SubResource("ShaderMaterial_n2fm7")
+position = Vector2(800, 58)
+amount = 20
+texture = SubResource("GradientTexture2D_p0v5h")
+lifetime = 30.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_cm724")

@@ -153,19 +153,12 @@ emission_shape = 1
 emission_sphere_radius = 1000.0
 initial_velocity_min = -150.0
 initial_velocity_max = 150.0
-initial_angle_min = 0.0
-initial_angle_max = 360.0
 angular_velocity_min = -1.0
 angular_velocity_max = 1.0
 gravity = Vector3(0, 0, 0)
-damping_min = 0.0
-damping_max = 0.0
-acceleration_min = Vector3(0, 0, 0)
-acceleration_max = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 2.0
 color = Color(0.8, 0.8, 0.8, 0.5)
-turbulence_enabled = false
 
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_um1bq")
@@ -1358,6 +1351,7 @@ scale = Vector2(0.2941919, 0.29419187)
 texture = ExtResource("44_fskhe")
 
 [node name="FloatingParticles" type="GPUParticles2D" parent="." unique_id=2000000002]
+modulate = Color(0.66, 0.594, 0.6006, 1)
 z_index = 5
 material = SubResource("ShaderMaterial_particle_circle_core")
 position = Vector2(800, 58)
