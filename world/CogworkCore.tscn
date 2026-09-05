@@ -124,37 +124,6 @@ colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
 gradient = SubResource("Gradient_itgwo")
 fill_from = Vector2(0, 0.017094018)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_floating_core"]
-emission_shape = 1
-emission_sphere_radius = 1000.0
-lifetime_randomness = 0.8
-gravity = Vector3(0, -5, 0)
-initial_velocity_min = -150.0
-initial_velocity_max = 150.0
-angular_velocity_min = -10.0
-angular_velocity_max = 10.0
-damping_min = 0.2
-damping_max = 0.8
-scale_min = 1.0
-scale_max = 2.5
-color = Color(0.8, 0.8, 0.8, 0.5)
-turbulence_enabled = true
-turbulence_noise_strength = 0.5
-turbulence_noise_scale = 2.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_particle_core"]
-radius = 8.0
-
-[sub_resource type="Gradient" id="Gradient_particle_circle_core"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_particle_circle_core"]
-gradient = SubResource("Gradient_particle_circle_core")
-width = 8
-height = 8
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
 [sub_resource type="Shader" id="Shader_particle_circle_core"]
 code = "shader_type canvas_item;
 
@@ -167,6 +136,33 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_particle_circle_core"]
 shader = SubResource("Shader_particle_circle_core")
+
+[sub_resource type="Gradient" id="Gradient_particle_circle_core"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_particle_circle_core"]
+gradient = SubResource("Gradient_particle_circle_core")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_floating_core"]
+lifetime_randomness = 0.8
+emission_shape = 1
+emission_sphere_radius = 1000.0
+initial_velocity_min = -150.0
+initial_velocity_max = 150.0
+angular_velocity_min = -10.0
+angular_velocity_max = 10.0
+gravity = Vector3(0, -5, 0)
+damping_min = 0.0
+damping_max = 0.0
+scale_max = 2.5
+color = Color(0.8, 0.8, 0.8, 0.5)
+turbulence_enabled = true
+turbulence_noise_strength = 0.5
+turbulence_noise_scale = 2.0
 
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_um1bq")
@@ -1360,10 +1356,10 @@ texture = ExtResource("44_fskhe")
 
 [node name="FloatingParticles" type="GPUParticles2D" parent="." unique_id=2000000002]
 z_index = 5
-position = Vector2(800, 400)
-amount = 50
-lifetime = 12.0
-process_material = SubResource("ParticleProcessMaterial_floating_core")
-texture = SubResource("GradientTexture2D_particle_circle_core")
 material = SubResource("ShaderMaterial_particle_circle_core")
+position = Vector2(800, 58)
+amount = 50
+texture = SubResource("GradientTexture2D_particle_circle_core")
+lifetime = 5.0
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_floating_core")
