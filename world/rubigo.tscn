@@ -12,8 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="11_jxede"]
 [ext_resource type="PackedScene" uid="uid://tpmienvgt00o" path="res://dialogue/balloon.tscn" id="12_ipr8a"]
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="12_wns0p"]
-[ext_resource type="Script" uid="uid://c2ri284j4ojjp" path="res://other/entrance.gd" id="13_1bpl5"]
-[ext_resource type="Texture2D" uid="uid://o144t0exex1" path="res://assets/images/world/entrance.png" id="14_4j6ir"]
 [ext_resource type="PackedScene" uid="uid://dq4wt0x4aq1u3" path="res://npc/rubigo.tscn" id="15_g2vjv"]
 [ext_resource type="PackedScene" uid="uid://cdnu1k3e8gd2a" path="res://interaction/interaction_area.tscn" id="15_tgpmr"]
 [ext_resource type="Texture2D" uid="uid://crs6k525dbjls" path="res://assets/images/world/bg_rubigo_2.png" id="17_ipr8a"]
@@ -21,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://c4mub02jinokl" path="res://assets/images/world/chain.png" id="19_gkrld"]
 [ext_resource type="Script" uid="uid://ceyd3m218pqgq" path="res://other/item.gd" id="20_pn07o"]
 [ext_resource type="Texture2D" uid="uid://3raudyvff210" path="res://assets/images/item/item_spritesheet2.png" id="21_3xacy"]
+[ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="21_lbx2j"]
 [ext_resource type="Texture2D" uid="uid://bfr7qm06uk370" path="res://assets/images/item/item_frame.png" id="22_h1kr3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
@@ -34,10 +33,6 @@ height = 274.0
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
 subpixel_positioning = 0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bw10g"]
-radius = 42.0
-height = 206.0
 
 [sub_resource type="Gradient" id="Gradient_itgwo"]
 colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
@@ -321,30 +316,6 @@ position = Vector2(4541.666, 810.0001)
 scale = Vector2(1.2800925, 1.2800922)
 texture = ExtResource("18_xv7to")
 
-[node name="Entrance" type="StaticBody2D" parent="Parallax2D2" unique_id=262284444]
-modulate = Color(0.57680154, 0.36815003, 0.25159523, 1)
-position = Vector2(503.33313, 1130.0002)
-scale = Vector2(1.6666666, 1.6666669)
-collision_mask = 2
-script = ExtResource("13_1bpl5")
-target_scene_path = "uid://dy8x5xyss8ie5"
-spawn_x = -950.0
-spawn_y = -600.0
-
-[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2/Entrance" unique_id=922673493]
-z_index = -2
-position = Vector2(107.000275, 20.999908)
-scale = Vector2(0.6320755, 0.6320754)
-texture = ExtResource("14_4j6ir")
-
-[node name="InteractionArea2" parent="Parallax2D2/Entrance" unique_id=1179285320 instance=ExtResource("15_tgpmr")]
-position = Vector2(15, -207)
-action_name = "Enter"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Parallax2D2/Entrance/InteractionArea2" unique_id=1377918606]
-position = Vector2(102.000244, 256.9999)
-shape = SubResource("CapsuleShape2D_bw10g")
-
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1771816504]
 visible = false
 z_index = 100
@@ -419,3 +390,8 @@ action_name = "Take"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemCogworkBattery/InteractionArea" unique_id=665990439]
 position = Vector2(-8, 187)
 shape = SubResource("CircleShape2D_wns0p")
+
+[node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("21_lbx2j")]
+position = Vector2(-1051, 442)
+target_scene = "uid://dy8x5xyss8ie5"
+spawn_location = Vector2(-765, -500)

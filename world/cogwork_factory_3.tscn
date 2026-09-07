@@ -30,6 +30,7 @@
 [ext_resource type="Script" uid="uid://dxaccq8se0wtp" path="res://world/conveyor.gd" id="16_nselo"]
 [ext_resource type="Texture2D" uid="uid://bkji8hee8rv2v" path="res://assets/images/world/conveyor1.png" id="17_rw8f6"]
 [ext_resource type="Texture2D" uid="uid://dkedklah78x4n" path="res://assets/images/world/conveyor2.png" id="18_dnmjm"]
+[ext_resource type="Texture2D" uid="uid://dwnx4ek4bxs5s" path="res://assets/images/world/rubigoshouse.png" id="18_rqf5m"]
 [ext_resource type="Texture2D" uid="uid://c6q8yql4g5n8x" path="res://assets/images/world/conveyor3.png" id="19_wy0yb"]
 [ext_resource type="Texture2D" uid="uid://dvbpasv8gmvul" path="res://assets/images/world/conveyor4.png" id="20_g0j5y"]
 [ext_resource type="Texture2D" uid="uid://b7jd6damg6vhy" path="res://assets/images/world/conveyor5.png" id="21_e76o4"]
@@ -51,10 +52,10 @@
 [ext_resource type="Texture2D" uid="uid://ceh0vu50g1u7t" path="res://assets/images/world/cable.png" id="43_e1l14"]
 [ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="44_htpbp"]
 [ext_resource type="Texture2D" uid="uid://bablasgxbar6w" path="res://assets/images/world/platform11_2.png" id="44_rqf5m"]
-[ext_resource type="Texture2D" uid="uid://bowkwim5h2uq1" path="res://assets/images/world/ground2.png" id="45_itgwo"]
 [ext_resource type="Texture2D" uid="uid://cqevss3c4fokf" path="res://assets/images/world/half_platform2.png" id="46_dqe3w"]
 [ext_resource type="PackedScene" uid="uid://dioe1s4xwg1ke" path="res://interaction/bench.tscn" id="47_dqe3w"]
 [ext_resource type="Texture2D" uid="uid://e3cnub60vc11" path="res://assets/images/world/bench3_transparent.png" id="48_lh44e"]
+[ext_resource type="Texture2D" uid="uid://she4t6p56yt8" path="res://assets/images/world/rubigosplatform.png" id="53_bfbwb"]
 [ext_resource type="PackedScene" uid="uid://cof12poc1mayv" path="res://interaction/blocking_breakable_object.tscn" id="56_0i3cr"]
 [ext_resource type="Texture2D" uid="uid://e7rmhrcfdfot" path="res://assets/images/world/rocks3.png" id="57_ium6y"]
 [ext_resource type="Texture2D" uid="uid://0k53xdvvlwkb" path="res://assets/images/world/rocks1.png" id="58_6jlq7"]
@@ -197,8 +198,11 @@ size = Vector2(118, 106)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(330, 14)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swo6p"]
+size = Vector2(396, 1216.5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tb1pk"]
-size = Vector2(655, 56)
+size = Vector2(809, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0m06o"]
 size = Vector2(97.5, 39)
@@ -621,6 +625,11 @@ texture = ExtResource("8_kmvik")
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
+[node name="Sprite2D11" type="Sprite2D" parent="." unique_id=895113067]
+position = Vector2(-755.64703, -778.49994)
+scale = Vector2(0.4404145, 0.4404145)
+texture = ExtResource("18_rqf5m")
+
 [node name="ground_irregular7" type="StaticBody2D" parent="." unique_id=798286810]
 position = Vector2(-1167, 2384)
 rotation = 4.712389
@@ -736,20 +745,22 @@ position = Vector2(-813, 396)
 collision_mask = 2
 script = ExtResource("13_f5rq6")
 target_scene_path = "uid://csikdvvlp56o0"
-spawn_x = -600.0
+spawn_x = -800.0
+spawn_y = 500.0
 
 [node name="Sprite2D2" type="Sprite2D" parent="Entrance" unique_id=922673493]
+visible = false
 z_index = -2
 position = Vector2(-108.99994, -1081)
 scale = Vector2(0.6320755, 0.6320754)
 texture = ExtResource("14_djjmk")
 
 [node name="InteractionArea2" parent="Entrance" unique_id=1179285320 instance=ExtResource("15_f3285")]
-position = Vector2(-113, -1045)
+position = Vector2(60, -1148)
 action_name = "Enter"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance/InteractionArea2" unique_id=1377918606]
-position = Vector2(14, -45)
+position = Vector2(3, 78)
 shape = SubResource("CapsuleShape2D_bw10g")
 
 [node name="Conveyor" type="AnimatableBody2D" parent="." unique_id=1007210652]
@@ -932,6 +943,10 @@ position = Vector2(-2126.0002, -651.75024)
 scale = Vector2(22.916668, 20.25438)
 texture = ExtResource("35_540sl")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5" unique_id=1569190475]
+position = Vector2(-1774, -675.25)
+shape = SubResource("RectangleShape2D_swo6p")
+
 [node name="StaticBody2D6" type="StaticBody2D" parent="." unique_id=1020848665]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6" unique_id=1965200019]
@@ -1053,12 +1068,12 @@ position = Vector2(-91, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D7" unique_id=1156925685]
 modulate = Color(0.6, 0.6, 0.6, 1)
-position = Vector2(-663, -480)
-scale = Vector2(0.3284519, 0.32845187)
-texture = ExtResource("45_itgwo")
+position = Vector2(-658.0488, -473.62814)
+scale = Vector2(0.40994728, 0.36544618)
+texture = ExtResource("53_bfbwb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7" unique_id=945819591]
-position = Vector2(-659.5, -467)
+position = Vector2(-657.5, -477.5)
 shape = SubResource("RectangleShape2D_tb1pk")
 
 [node name="StaticBody2D10" type="StaticBody2D" parent="." unique_id=998973673]
