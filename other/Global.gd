@@ -46,7 +46,7 @@ var cutscene_frames: Array = []
 var wishes_database: Dictionary = {
 	"nature_reviver": {
 		"name": "Nature Reviver",
-		"description": "Rubigo needs flowers to revive the nature. Help bring back life to the world.",
+		"description": "Rubigo wans me to bring him more flowers. He seems to still have instincts to care for nature despite of his memory loss.",
 		"image_path": "res://assets/images/wish/rubigos_wish.png",
 		"type": "collect_items",  # Types: collect_items, reach_place, talk_to_npc
 		"required_items": {"Flower": 5},

@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://bchkwrt5m7vm"]
+
+[ext_resource type="Script" uid="uid://cso8h12quodu2" path="res://interaction/prompt.gd" id="1_o8ta5"]
+[ext_resource type="Texture2D" uid="uid://cncaq75ufuuww" path="res://assets/images/world/battery_colored.png" id="2_o8ta5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pn07o"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="SystemFont" id="SystemFont_mjotr"]
+font_names = PackedStringArray("Palatino Linotype")
+
+[sub_resource type="SystemFont" id="SystemFont_da6y2"]
+font_names = PackedStringArray("Palatino Linotype")
+
+[sub_resource type="SystemFont" id="SystemFont_ae5in"]
+font_names = PackedStringArray("Palatino Linotype")
+
+[sub_resource type="SystemFont" id="SystemFont_fa3b3"]
+font_names = PackedStringArray("Palatino Linotype")
+
+[node name="Prompt" type="Control" unique_id=2058047793]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o8ta5")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=252433874]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.5
+offset_top = -126.5
+offset_right = 270.5
+offset_bottom = 126.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pn07o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=2012213960]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer" unique_id=36765135]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="PanelContainer/VBoxContainer" unique_id=1798319252]
+position = Vector2(267.49997, 61.499985)
+scale = Vector2(0.4657389, 0.4657388)
+texture = ExtResource("2_o8ta5")
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1063063643]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_mjotr")
+theme_override_font_sizes/font_size = 24
+text = "An old lift"
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/VBoxContainer" unique_id=157060823]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="BodyLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1791315868]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_da6y2")
+text = "Use battery?"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer" unique_id=1887239824]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=567522271]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1366769589]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="YesButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1138345236]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_ae5in")
+theme_override_font_sizes/font_size = 20
+text = "Yes"
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1053993471]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="NoButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1343677250]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_fa3b3")
+theme_override_font_sizes/font_size = 20
+text = "No"

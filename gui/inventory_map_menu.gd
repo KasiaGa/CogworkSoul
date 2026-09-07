@@ -141,14 +141,22 @@ func update_wishs_display() -> void:
 		wish_container.add_theme_constant_override("separation", 15)
 		wish_container.name = wish_id
 		
-		# Wish image (placeholder for now)
+		# Wish image with styled background
+		var wish_image_bg = PanelContainer.new()
+		wish_image_bg.custom_minimum_size = Vector2(110, 110)
+		wish_image_bg.self_modulate = Color(0.8, 0.8, 0.8, 1.0)
+		
 		var wish_image = TextureRect.new()
 		wish_image.custom_minimum_size = Vector2(100, 100)
 		wish_image.expand_mode = 2  # EXPAND_FIT_WIDTH_IGNORING_ASPECT_RATIO
 		if ResourceLoader.exists(wish_data.image_path):
 			wish_image.texture = load(wish_data.image_path)
+		else:
+			# Placeholder if image doesn't exist
+			wish_image.modulate = Color(0.5, 0.5, 0.5, 1.0)
 		
-		wish_container.add_child(wish_image)
+		wish_image_bg.add_child(wish_image)
+		wish_container.add_child(wish_image_bg)
 		
 		# Content: Name and Progress (for multi-item wishes)
 		var content = VBoxContainer.new()
@@ -204,14 +212,16 @@ func setup_navigation_paths() -> void:
 	# Get a clean array containing ONLY the slots that are currently visible
 	var visible_items = item_grid.get_children().filter(func(node): return node.visible)
 	
-	# Clear fallback links on tabs if no items are held
-	inventory_button.focus_neighbor_right = map_button.get_path()
-	map_button.focus_neighbor_left = inventory_button.get_path()
+	# Set up tab navigation: Inventory -> Wishes -> Map -> Inventory
+	inventory_button.focus_neighbor_right = wishs_button.get_path()
+	wishs_button.focus_neighbor_left = inventory_button.get_path()
+	wishs_button.focus_neighbor_right = map_button.get_path()
+	map_button.focus_neighbor_left = wishs_button.get_path()
+	map_button.focus_neighbor_right = inventory_button.get_path()
+	inventory_button.focus_neighbor_left = map_button.get_path()
 	
 	if visible_items.size() == 0:
-		# If the inventory is completely empty, tabs just cycle between each other
-		inventory_button.focus_neighbor_left = map_button.get_path()
-		map_button.focus_neighbor_right = inventory_button.get_path()
+		# If the inventory is completely empty, tabs cycle but items aren't involved
 		return
 		
 	var first_item = visible_items[0] as Control
@@ -224,21 +234,19 @@ func setup_navigation_paths() -> void:
 		item.focus_neighbor_top = NodePath("")
 		item.focus_neighbor_bottom = NodePath("")
 	
-	# 1. Last item -> Map button
-	last_item.focus_neighbor_right = map_button.get_path()
+	# 1. Last item -> Wishes button (first tab after items)
+	last_item.focus_neighbor_right = wishs_button.get_path()
 	
-	# 2. Map button -> Inventory button
-	map_button.focus_neighbor_right = inventory_button.get_path()
-	
-	# 3. Inventory button -> First item
+	# 2. Inventory button -> First item
 	inventory_button.focus_neighbor_right = first_item.get_path()
 	
-	# 4. Reverse cycling directions (Left Arrow Support)
+	# 3. Reverse cycling directions (Left Arrow Support)
 	first_item.focus_neighbor_left = inventory_button.get_path()
 	inventory_button.focus_neighbor_left = map_button.get_path()
-	map_button.focus_neighbor_left = last_item.get_path()
+	wishs_button.focus_neighbor_left = inventory_button.get_path()
+	map_button.focus_neighbor_left = wishs_button.get_path()
 	
-	# 5. Prevent UP Arrow on items from breaking UI. It will now jump cleanly back up to the tabs
+	# 4. Prevent UP Arrow on items from breaking UI. It will now jump cleanly back up to the tabs
 	for item in visible_items:
 		item.focus_neighbor_top = inventory_button.get_path()
 
