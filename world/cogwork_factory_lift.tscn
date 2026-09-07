@@ -29,6 +29,9 @@
 [ext_resource type="Texture2D" uid="uid://c8t0hkxslnxld" path="res://assets/images/world/rocks_colored.png" id="27_n2fm7"]
 [ext_resource type="Texture2D" uid="uid://dy185k7vgo2j1" path="res://assets/images/world/cogs_colored.png" id="28_p0v5h"]
 [ext_resource type="Texture2D" uid="uid://b8rju6fe3xf04" path="res://assets/images/world/tangled_cables_colored.png" id="29_cm724"]
+[ext_resource type="Texture2D" uid="uid://bgl2i237iene4" path="res://assets/images/world/table.png" id="30_p0v5h"]
+[ext_resource type="Script" uid="uid://bpc3po102np8w" path="res://world/table.gd" id="31_table"]
+[ext_resource type="PackedScene" uid="uid://dioe1s4xwg1ke" path="res://interaction/bench.tscn" id="32_gn7uu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neemv"]
 shader = ExtResource("4_7l68x")
@@ -101,6 +104,9 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 2.0
 color = Color(0.8, 0.8, 0.8, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_table"]
+radius = 120.0
 
 [node name="CogworkFactory" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_6flc2")
@@ -318,7 +324,6 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular4" type="StaticBody2D" parent="." unique_id=1056505588]
-z_index = 99
 position = Vector2(2941, 624)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
@@ -545,3 +550,25 @@ texture = SubResource("GradientTexture2D_p0v5h")
 lifetime = 30.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_cm724")
+
+[node name="Table" type="StaticBody2D" parent="." unique_id=1418000849]
+script = ExtResource("31_table")
+prompt_title = ""
+prompt_text = "something something"
+
+[node name="Sprite2D" type="Sprite2D" parent="Table" unique_id=1343040394]
+position = Vector2(2095, 463.00003)
+scale = Vector2(0.37082067, 0.37082067)
+texture = ExtResource("30_p0v5h")
+
+[node name="InteractionArea" parent="Table" unique_id=1179285321 instance=ExtResource("26_mua22")]
+position = Vector2(2095, 231)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Table/InteractionArea" unique_id=1343040395]
+position = Vector2(0, 187)
+shape = SubResource("CircleShape2D_table")
+
+[node name="Bench" parent="." unique_id=1253106123 instance=ExtResource("32_gn7uu")]
+z_index = 1
+position = Vector2(2733, 492)
+scale = Vector2(0.42, 0.42)
