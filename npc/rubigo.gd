@@ -94,6 +94,8 @@ func _show_nature_reviver_popup() -> void:
 func _on_wish_response(accepted: bool, wish_id: String) -> void:
 	if accepted:
 		Global.add_accepted_wish(wish_id)
+		# Example: Update wish progress when items are collected
+		Global.update_wish_progress(wish_id, "Flower", 5)
 		
 	# Advance to step 2 so Rubigo now permanently says ~dialogue3
 	Global.rubigo_dialogue_step = 2

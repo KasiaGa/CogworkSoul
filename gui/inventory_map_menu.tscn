@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cncaq75ufuuww" path="res://assets/images/world/battery_colored.png" id="3_oexcg"]
 [ext_resource type="Texture2D" uid="uid://ba52ned4dav28" path="res://assets/images/world/cog1.png" id="4_qblpg"]
 [ext_resource type="Texture2D" uid="uid://cxhpgksuuqyeo" path="res://assets/images/world/bell6.png" id="5_0x6eu"]
+[ext_resource type="Texture2D" uid="uid://tiridibhl6tk" path="res://assets/images/item/item.png" id="6_qblpg"]
 
 [sub_resource type="SystemFont" id="SystemFont_vg86a"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -73,6 +74,12 @@ theme_override_fonts/font = SubResource("SystemFont_vg86a")
 theme_override_font_sizes/font_size = 25
 text = "Inventory"
 
+[node name="WishsButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=2145786523]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_oexcg")
+theme_override_font_sizes/font_size = 25
+text = "Wishes"
+
 [node name="MapButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=431280213]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
@@ -102,7 +109,7 @@ offset_bottom = 346.0
 offset_transform_enabled = true
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
-columns = 4
+columns = 7
 
 [node name="needle" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=1039175191]
 custom_minimum_size = Vector2(150, 0)
@@ -145,6 +152,18 @@ layout_mode = 2
 texture = ExtResource("5_0x6eu")
 
 [node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/health_upgrade" unique_id=1903540252]
+z_index = -1
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 150.0
+
+[node name="flower" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=1607755856]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture = ExtResource("6_qblpg")
+expand_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/flower" unique_id=270462907]
 z_index = -1
 layout_mode = 0
 offset_right = 150.0
@@ -196,6 +215,52 @@ offset_bottom = 705.0
 texture = ExtResource("1_4wr3o")
 expand_mode = 1
 
+[node name="WishsView" type="Control" parent="Background/MenuContainer" unique_id=2051436921]
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+
+[node name="WishGrid" type="VBoxContainer" parent="Background/MenuContainer/WishsView" unique_id=1867253961]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 700.0
+offset_bottom = 350.0
+theme_override_constants/separation = 15
+
+[node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/WishsView" unique_id=1584563210]
+self_modulate = Color(1, 0.76036006, 0.71446484, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -241.0
+offset_top = 42.0
+offset_right = -6.0
+offset_bottom = 314.0
+grow_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/WishsView/DescriptionPanel" unique_id=2019835197]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer" unique_id=1742436961]
+layout_mode = 2
+
+[node name="WishTitle" type="Label" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2095898245]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_okbrl")
+theme_override_font_sizes/font_size = 22
+clip_text = true
+
+[node name="WishDesc" type="Label" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2130693702]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_jtgip")
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
 [node name="ReferenceRect" type="ReferenceRect" parent="Background" unique_id=1270295291]
 visible = false
 layout_mode = 1
@@ -209,4 +274,5 @@ border_width = 2.2
 editor_only = false
 
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/InventoryButton" to="." method="show_inventory_tab"]
+[connection signal="focus_entered" from="Background/MenuContainer/Tabs/WishsButton" to="." method="show_wishs_tab"]
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/MapButton" to="." method="show_map_tab"]

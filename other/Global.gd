@@ -20,7 +20,7 @@ var cocoon_spawned: bool = false
 
 var player_facing_right: bool = true
 
-enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE }
+enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE, FLOWER }
 var collected_items: Array[String] = []
 
 var shards_collected: int = 0
@@ -39,8 +39,20 @@ var has_talked_to_bella: bool = false
 var rubigo_dialogue_step: int = 0
 
 var accepted_wishes: Array = []
+var wish_progress: Dictionary = {} # Format: {"wish_id": {"item_name": collected_count, ...}}
 
 var cutscene_frames: Array = []
+
+var wishes_database: Dictionary = {
+	"nature_reviver": {
+		"name": "Nature Reviver",
+		"description": "Rubigo needs flowers to revive the nature. Help bring back life to the world.",
+		"image_path": "res://assets/images/wish/rubigos_wish.png",
+		"type": "collect_items",  # Types: collect_items, reach_place, talk_to_npc
+		"required_items": {"Flower": 5},
+		"npc": "Rubigo"
+	}
+}
 
 var should_play_lie_animation: bool = false
 var should_play_get_up_animation: bool = false
@@ -80,7 +92,8 @@ func save_game(save_checkpoint: bool = true):
 			"discovered_locations": discovered_locations,
 			"has_talked_to_bella": has_talked_to_bella,
 			"rubigo_dialogue_step": rubigo_dialogue_step,
-			"accepted_wishes": accepted_wishes
+			"accepted_wishes": accepted_wishes,
+			"wish_progress": wish_progress
 			}
 		
 		file.store_var(save_data)
@@ -109,6 +122,7 @@ func load_game():
 		
 		collected_items = Array(save_data.get("collected_items", []), TYPE_STRING, &"", null)
 		accepted_wishes = save_data.get("accepted_wishes", [])
+		wish_progress = save_data.get("wish_progress", {})
 		
 		# 2. ENFORCE YOUR RULE: Always reset to max health and zero silk on load (respawn from checkpoint)
 		player_current_health = player_max_health
@@ -155,7 +169,43 @@ func change_scene_to_position(scene_path: String, new_x: float, new_y: float):
 func add_accepted_wish(wish_id: String) -> void:
 	if not accepted_wishes.has(wish_id):
 		accepted_wishes.append(wish_id)
+		if wish_id in wishes_database:
+			var wish = wishes_database[wish_id]
+			if wish.type == "collect_items":
+				wish_progress[wish_id] = {}
+				for item_name in wish.required_items:
+					wish_progress[wish_id][item_name] = 0
 		save_game()
 
 func has_accepted_wish(wish_id: String) -> bool:
 	return accepted_wishes.has(wish_id)
+
+func get_wish(wish_id: String) -> Dictionary:
+	return wishes_database.get(wish_id, {})
+
+func get_all_accepted_wishes() -> Array:
+	return accepted_wishes
+
+func update_wish_progress(wish_id: String, item_name: String, amount: int) -> void:
+	if wish_id not in wish_progress:
+		wish_progress[wish_id] = {}
+	wish_progress[wish_id][item_name] = amount
+	save_game()
+
+func get_wish_progress(wish_id: String) -> Dictionary:
+	return wish_progress.get(wish_id, {})
+
+func is_wish_completed(wish_id: String) -> bool:
+	if wish_id not in wishes_database:
+		return false
+	
+	var wish = wishes_database[wish_id]
+	
+	if wish.type == "collect_items":
+		var progress = wish_progress.get(wish_id, {})
+		for item_name in wish.required_items:
+			if progress.get(item_name, 0) < wish.required_items[item_name]:
+				return false
+		return true
+	
+	return false

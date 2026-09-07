@@ -2,14 +2,20 @@ extends CanvasLayer
 
 @onready var inventory_view: Control = $Background/MenuContainer/InventoryView
 @onready var map_view: Control = $Background/MenuContainer/MapView
+@onready var wishs_view: Control = $Background/MenuContainer/WishsView
 
 @onready var inventory_button: Button = $Background/MenuContainer/Tabs/InventoryButton
 @onready var map_button: Button = $Background/MenuContainer/Tabs/MapButton
+@onready var wishs_button: Button = $Background/MenuContainer/Tabs/WishsButton
 
 @onready var item_grid: GridContainer = $Background/MenuContainer/InventoryView/ItemGrid
 @onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitle
 @onready var item_desc: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemDesc
 @onready var shards_label: Label = $Background/MenuContainer/InventoryView/ShardsLabel
+
+@onready var wish_grid: VBoxContainer = $Background/MenuContainer/WishsView/WishGrid
+@onready var wish_title: Label = $Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitle
+@onready var wish_desc: Label = $Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishDesc
 
 # Simple local item database matching your exact naming style for descriptions
 var item_info: Dictionary = {
@@ -26,6 +32,7 @@ func _ready() -> void:
 	# Connect your top navigation buttons
 	inventory_button.pressed.connect(show_inventory_tab)
 	map_button.pressed.connect(show_map_tab)
+	wishs_button.pressed.connect(show_wishs_tab)
 	
 	# Connect focus events directly to the nodes themselves
 	for slot in item_grid.get_children():
@@ -50,7 +57,10 @@ func open_menu() -> void:
 	# 1. Hide/Show items first
 	update_inventory_display()
 	
-	# 2. Build navigation map ONLY using the visible items!
+	# 2. Update wishes display
+	update_wishs_display()
+	
+	# 3. Build navigation map ONLY using the visible items!
 	setup_navigation_paths()
 	show_inventory_tab()
 	
@@ -69,10 +79,17 @@ func close_menu() -> void:
 func show_inventory_tab() -> void:
 	inventory_view.show()
 	map_view.hide()
+	wishs_view.hide()
 
 func show_map_tab() -> void:
 	inventory_view.hide()
 	map_view.show()
+	wishs_view.hide()
+
+func show_wishs_tab() -> void:
+	inventory_view.hide()
+	map_view.hide()
+	wishs_view.show()
 
 func update_inventory_display() -> void:
 	shards_label.text = "Shards: " + str(Global.shards_collected)
@@ -95,6 +112,93 @@ func update_inventory_display() -> void:
 		slot.visible = player_owns_it
 		# Reset tint to normal full color when hidden or drawn
 		slot.modulate = Color(1, 1, 1, 1)
+
+func update_wishs_display() -> void:
+	# Clear the wish grid
+	for child in wish_grid.get_children():
+		child.queue_free()
+	
+	# Clear description boxes
+	wish_title.text = "???"
+	wish_desc.text = "Select a wish to inspect."
+	
+	# Get all accepted wishes
+	var accepted_wishes = Global.get_all_accepted_wishes()
+	
+	if accepted_wishes.is_empty():
+		wish_title.text = "No Wishes"
+		wish_desc.text = "Complete quests to unlock wishes."
+		return
+	
+	# Create wish items for each accepted wish
+	for wish_id in accepted_wishes:
+		var wish_data = Global.get_wish(wish_id)
+		if wish_data.is_empty():
+			continue
+		
+		var wish_container = HBoxContainer.new()
+		wish_container.custom_minimum_size = Vector2(650, 100)
+		wish_container.add_theme_constant_override("separation", 15)
+		wish_container.name = wish_id
+		
+		# Wish image (placeholder for now)
+		var wish_image = TextureRect.new()
+		wish_image.custom_minimum_size = Vector2(100, 100)
+		wish_image.expand_mode = 2  # EXPAND_FIT_WIDTH_IGNORING_ASPECT_RATIO
+		if ResourceLoader.exists(wish_data.image_path):
+			wish_image.texture = load(wish_data.image_path)
+		
+		wish_container.add_child(wish_image)
+		
+		# Content: Name and Progress (for multi-item wishes)
+		var content = VBoxContainer.new()
+		content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		
+		# Wish name
+		var name_label = Label.new()
+		name_label.text = wish_data.name
+		name_label.add_theme_font_size_override("font_size", 20)
+		content.add_child(name_label)
+		
+		# Progress bar (only for collect_items wishes with multiple items)
+		if wish_data.type == "collect_items" and wish_data.required_items.size() > 0:
+			var total_items = 0
+			var collected_items = 0
+			
+			# Calculate total and collected
+			for item_name in wish_data.required_items:
+				var required = wish_data.required_items[item_name]
+				total_items += required
+				var progress = Global.get_wish_progress(wish_id)
+				collected_items += progress.get(item_name, 0)
+			
+			# Show progress bar only if more than one item type or quantity > 1
+			if total_items > 1:
+				var progress_label = Label.new()
+				progress_label.text = "%d / %d collected" % [collected_items, total_items]
+				progress_label.add_theme_font_size_override("font_size", 14)
+				content.add_child(progress_label)
+				
+				var progress_bar = ProgressBar.new()
+				progress_bar.min_value = 0
+				progress_bar.max_value = total_items
+				progress_bar.value = collected_items
+				progress_bar.custom_minimum_size = Vector2(200, 20)
+				content.add_child(progress_bar)
+		
+		wish_container.add_child(content)
+		
+		# Make it focusable
+		wish_container.focus_mode = Control.FOCUS_ALL
+		wish_container.focus_entered.connect(_on_wish_focused.bind(wish_container, wish_id))
+		wish_container.focus_exited.connect(_on_wish_unfocused)
+		wish_container.mouse_entered.connect(func(): wish_container.grab_focus())
+		
+		wish_grid.add_child(wish_container)
+	
+	# Focus on first wish if available
+	if wish_grid.get_child_count() > 0:
+		wish_grid.get_child(0).grab_focus()
 
 func setup_navigation_paths() -> void:
 	# Get a clean array containing ONLY the slots that are currently visible
@@ -171,3 +275,36 @@ func _on_item_slot_input(event: InputEvent, item_id: String) -> void:
 		if player_owns_it and item_info.has(item_id):
 			item_title.text = item_info[item_id]["name"]
 			item_desc.text = item_info[item_id]["desc"]
+
+func _on_wish_focused(wish_container: HBoxContainer, wish_id: String) -> void:
+	if not wishs_view.visible:
+		show_wishs_tab()
+	
+	var wish_data = Global.get_wish(wish_id)
+	if wish_data.is_empty():
+		return
+	
+	# Update title and description
+	wish_title.text = wish_data.name
+	wish_desc.text = wish_data.description
+	
+	# Add progress info for collect_items wishes
+	if wish_data.type == "collect_items":
+		var progress_info = "\n\nRequired Items:\n"
+		for item_name in wish_data.required_items:
+			var required = wish_data.required_items[item_name]
+			var progress = Global.get_wish_progress(wish_id)
+			var collected = progress.get(item_name, 0)
+			progress_info += "%s %s: %d / %d\n" % [item_name, "(collected)" if collected >= required else "", collected, required]
+		wish_desc.text += progress_info
+	
+	# Highlight the container
+	wish_container.modulate = Color(1.6, 1.6, 1.6, 1.0)
+
+func _on_wish_unfocused() -> void:
+	# Reset all wish containers' modulate and clear description
+	for child in wish_grid.get_children():
+		if child is HBoxContainer:
+			child.modulate = Color(1, 1, 1, 1)
+	wish_title.text = ""
+	wish_desc.text = ""
