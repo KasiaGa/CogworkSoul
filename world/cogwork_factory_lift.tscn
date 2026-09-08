@@ -401,8 +401,8 @@ theme_override_font_sizes/font_size = 25
 
 [node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("22_i6s1t")]
 position = Vector2(3444, 456)
-target_scene = "uid://dy8x5xyss8ie5"
-spawn_location = Vector2(-2400, -1500)
+target_scene = "uid://dkl66fu3i64he"
+spawn_location = Vector2(-1500, 500)
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1669351059]
 z_index = 100
