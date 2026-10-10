@@ -9,18 +9,23 @@ subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_xo4nk"]
 font_names = PackedStringArray("Palatino Linotype")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_3mqus"]
 font_names = PackedStringArray("Palatino Linotype")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_ybsbv"]
 font_names = PackedStringArray("Palatino Linotype")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_15pda"]
 font_names = PackedStringArray("Palatino Linotype")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_18aca"]
 font_names = PackedStringArray("Palatino Linotype")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_2"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -76,35 +81,82 @@ grow_vertical = 2
 
 [node name="Slot1" type="PanelContainer" parent="SlotContainer" unique_id=1000001]
 layout_mode = 2
+mouse_filter = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SlotContainer/Slot1" unique_id=1000002]
+[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot1" unique_id=1000003]
 custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot1/VBoxContainer" unique_id=1000003]
-layout_mode = 2
-size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="SlotContainer/Slot1/VBoxContainer" unique_id=1000004]
+[node name="NewGameLabel" type="Label" parent="SlotContainer/Slot1" unique_id=1000008]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_xo4nk")
-text = "Slot 1"
+theme_override_font_sizes/font_size = 24
+text = "New Game"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ButtonContainer" type="HBoxContainer" parent="SlotContainer/Slot1/VBoxContainer" unique_id=1000006]
+[node name="SlotInfo" type="Control" parent="SlotContainer/Slot1" unique_id=1000009]
+custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
 
-[node name="SelectButton" type="Button" parent="SlotContainer/Slot1/VBoxContainer/ButtonContainer" unique_id=1000005]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Select"
+[node name="SlotNumber" type="Label" parent="SlotContainer/Slot1/SlotInfo" unique_id=1000010]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 30
+text = "1"
 
-[node name="DeleteButton" type="Button" parent="SlotContainer/Slot1/VBoxContainer/ButtonContainer" unique_id=1000007]
+[node name="LocationName" type="Label" parent="SlotContainer/Slot1/SlotInfo" unique_id=1000011]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 12
+text = "Location"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot1/SlotInfo" unique_id=1000012]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -25.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+text = "00:00:00"
+horizontal_alignment = 2
+
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot1" unique_id=1000013]
+visible = false
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 12
 text = "Delete"
+horizontal_alignment = 1
 
 [node name="MarginContainer4" type="MarginContainer" parent="SlotContainer" unique_id=1815400012]
 custom_minimum_size = Vector2(50, 0)
@@ -112,35 +164,82 @@ layout_mode = 2
 
 [node name="Slot2" type="PanelContainer" parent="SlotContainer" unique_id=2000001]
 layout_mode = 2
+mouse_filter = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SlotContainer/Slot2" unique_id=2000002]
+[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot2" unique_id=2000003]
 custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot2/VBoxContainer" unique_id=2000003]
-layout_mode = 2
-size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="SlotContainer/Slot2/VBoxContainer" unique_id=2000004]
+[node name="NewGameLabel" type="Label" parent="SlotContainer/Slot2" unique_id=2000008]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_3mqus")
-text = "Slot 2"
+theme_override_font_sizes/font_size = 24
+text = "New Game"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ButtonContainer" type="HBoxContainer" parent="SlotContainer/Slot2/VBoxContainer" unique_id=2000006]
+[node name="SlotInfo" type="Control" parent="SlotContainer/Slot2" unique_id=2000009]
+custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
 
-[node name="SelectButton" type="Button" parent="SlotContainer/Slot2/VBoxContainer/ButtonContainer" unique_id=2000005]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Select"
+[node name="SlotNumber" type="Label" parent="SlotContainer/Slot2/SlotInfo" unique_id=2000010]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_3mqus")
+theme_override_font_sizes/font_size = 30
+text = "2"
 
-[node name="DeleteButton" type="Button" parent="SlotContainer/Slot2/VBoxContainer/ButtonContainer" unique_id=2000007]
+[node name="LocationName" type="Label" parent="SlotContainer/Slot2/SlotInfo" unique_id=2000011]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 12
+text = "Location"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot2/SlotInfo" unique_id=2000012]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -25.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_3mqus")
+text = "00:00:00"
+horizontal_alignment = 2
+
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot2" unique_id=2000013]
+visible = false
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_3mqus")
+theme_override_font_sizes/font_size = 12
 text = "Delete"
+horizontal_alignment = 1
 
 [node name="MarginContainer3" type="MarginContainer" parent="SlotContainer" unique_id=665108674]
 custom_minimum_size = Vector2(50, 0)
@@ -148,35 +247,82 @@ layout_mode = 2
 
 [node name="Slot3" type="PanelContainer" parent="SlotContainer" unique_id=3000001]
 layout_mode = 2
+mouse_filter = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SlotContainer/Slot3" unique_id=3000002]
+[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot3" unique_id=3000003]
 custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot3/VBoxContainer" unique_id=3000003]
-layout_mode = 2
-size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="SlotContainer/Slot3/VBoxContainer" unique_id=3000004]
+[node name="NewGameLabel" type="Label" parent="SlotContainer/Slot3" unique_id=3000008]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_ybsbv")
-text = "Slot 3"
+theme_override_font_sizes/font_size = 24
+text = "New Game"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ButtonContainer" type="HBoxContainer" parent="SlotContainer/Slot3/VBoxContainer" unique_id=3000006]
+[node name="SlotInfo" type="Control" parent="SlotContainer/Slot3" unique_id=3000009]
+custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
 
-[node name="SelectButton" type="Button" parent="SlotContainer/Slot3/VBoxContainer/ButtonContainer" unique_id=3000005]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Select"
+[node name="SlotNumber" type="Label" parent="SlotContainer/Slot3/SlotInfo" unique_id=3000010]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_ybsbv")
+theme_override_font_sizes/font_size = 30
+text = "3"
 
-[node name="DeleteButton" type="Button" parent="SlotContainer/Slot3/VBoxContainer/ButtonContainer" unique_id=3000007]
+[node name="LocationName" type="Label" parent="SlotContainer/Slot3/SlotInfo" unique_id=3000011]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 12
+text = "Location"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot3/SlotInfo" unique_id=3000012]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -25.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_ybsbv")
+text = "00:00:00"
+horizontal_alignment = 2
+
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot3" unique_id=3000013]
+visible = false
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_ybsbv")
+theme_override_font_sizes/font_size = 12
 text = "Delete"
+horizontal_alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="SlotContainer" unique_id=1078670091]
 custom_minimum_size = Vector2(50, 0)
@@ -184,35 +330,82 @@ layout_mode = 2
 
 [node name="Slot4" type="PanelContainer" parent="SlotContainer" unique_id=4000001]
 layout_mode = 2
+mouse_filter = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SlotContainer/Slot4" unique_id=4000002]
+[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot4" unique_id=4000003]
 custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot4/VBoxContainer" unique_id=4000003]
-layout_mode = 2
-size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="SlotContainer/Slot4/VBoxContainer" unique_id=4000004]
+[node name="NewGameLabel" type="Label" parent="SlotContainer/Slot4" unique_id=4000008]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_15pda")
-text = "Slot 4"
+theme_override_font_sizes/font_size = 24
+text = "New Game"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ButtonContainer" type="HBoxContainer" parent="SlotContainer/Slot4/VBoxContainer" unique_id=4000006]
+[node name="SlotInfo" type="Control" parent="SlotContainer/Slot4" unique_id=4000009]
+custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
 
-[node name="SelectButton" type="Button" parent="SlotContainer/Slot4/VBoxContainer/ButtonContainer" unique_id=4000005]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Select"
+[node name="SlotNumber" type="Label" parent="SlotContainer/Slot4/SlotInfo" unique_id=4000010]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_15pda")
+theme_override_font_sizes/font_size = 30
+text = "4"
 
-[node name="DeleteButton" type="Button" parent="SlotContainer/Slot4/VBoxContainer/ButtonContainer" unique_id=4000007]
+[node name="LocationName" type="Label" parent="SlotContainer/Slot4/SlotInfo" unique_id=4000011]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 12
+text = "Location"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot4/SlotInfo" unique_id=4000012]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -25.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_15pda")
+text = "00:00:00"
+horizontal_alignment = 2
+
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot4" unique_id=4000013]
+visible = false
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_15pda")
+theme_override_font_sizes/font_size = 12
 text = "Delete"
+horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="SlotContainer" unique_id=1003800652]
 custom_minimum_size = Vector2(50, 0)
@@ -220,35 +413,82 @@ layout_mode = 2
 
 [node name="Slot5" type="PanelContainer" parent="SlotContainer" unique_id=5000001]
 layout_mode = 2
+mouse_filter = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SlotContainer/Slot5" unique_id=5000002]
+[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot5" unique_id=5000003]
 custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="TextureRect" type="TextureRect" parent="SlotContainer/Slot5/VBoxContainer" unique_id=5000003]
-layout_mode = 2
-size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="SlotContainer/Slot5/VBoxContainer" unique_id=5000004]
+[node name="NewGameLabel" type="Label" parent="SlotContainer/Slot5" unique_id=5000008]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_18aca")
-text = "Slot 5"
+theme_override_font_sizes/font_size = 24
+text = "New Game"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ButtonContainer" type="HBoxContainer" parent="SlotContainer/Slot5/VBoxContainer" unique_id=5000006]
+[node name="SlotInfo" type="Control" parent="SlotContainer/Slot5" unique_id=5000009]
+custom_minimum_size = Vector2(220, 350)
 layout_mode = 2
 
-[node name="SelectButton" type="Button" parent="SlotContainer/Slot5/VBoxContainer/ButtonContainer" unique_id=5000005]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Select"
+[node name="SlotNumber" type="Label" parent="SlotContainer/Slot5/SlotInfo" unique_id=5000010]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_18aca")
+theme_override_font_sizes/font_size = 30
+text = "5"
 
-[node name="DeleteButton" type="Button" parent="SlotContainer/Slot5/VBoxContainer/ButtonContainer" unique_id=5000007]
+[node name="LocationName" type="Label" parent="SlotContainer/Slot5/SlotInfo" unique_id=5000011]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 12
+text = "Location"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot5/SlotInfo" unique_id=5000012]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -25.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_18aca")
+text = "00:00:00"
+horizontal_alignment = 2
+
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot5" unique_id=5000013]
+visible = false
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_18aca")
+theme_override_font_sizes/font_size = 12
 text = "Delete"
+horizontal_alignment = 1
 
 [node name="BackButton" type="Button" parent="." unique_id=633717549]
 layout_mode = 1
@@ -269,14 +509,4 @@ theme_override_font_sizes/font_size = 20
 text = "< Back"
 alignment = 0
 
-[connection signal="pressed" from="SlotContainer/Slot1/VBoxContainer/ButtonContainer/SelectButton" to="." method="_on_slot_selected" binds= [1]]
-[connection signal="pressed" from="SlotContainer/Slot1/VBoxContainer/ButtonContainer/DeleteButton" to="." method="_on_slot_deleted" binds= [1]]
-[connection signal="pressed" from="SlotContainer/Slot2/VBoxContainer/ButtonContainer/SelectButton" to="." method="_on_slot_selected" binds= [2]]
-[connection signal="pressed" from="SlotContainer/Slot2/VBoxContainer/ButtonContainer/DeleteButton" to="." method="_on_slot_deleted" binds= [2]]
-[connection signal="pressed" from="SlotContainer/Slot3/VBoxContainer/ButtonContainer/SelectButton" to="." method="_on_slot_selected" binds= [3]]
-[connection signal="pressed" from="SlotContainer/Slot3/VBoxContainer/ButtonContainer/DeleteButton" to="." method="_on_slot_deleted" binds= [3]]
-[connection signal="pressed" from="SlotContainer/Slot4/VBoxContainer/ButtonContainer/SelectButton" to="." method="_on_slot_selected" binds= [4]]
-[connection signal="pressed" from="SlotContainer/Slot4/VBoxContainer/ButtonContainer/DeleteButton" to="." method="_on_slot_deleted" binds= [4]]
-[connection signal="pressed" from="SlotContainer/Slot5/VBoxContainer/ButtonContainer/SelectButton" to="." method="_on_slot_selected" binds= [5]]
-[connection signal="pressed" from="SlotContainer/Slot5/VBoxContainer/ButtonContainer/DeleteButton" to="." method="_on_slot_deleted" binds= [5]]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_pressed"]
