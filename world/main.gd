@@ -34,6 +34,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	# Track playtime
+	Global.total_playtime += delta
+	
 	# Track player movement for intro progression
 	if intro_stage == 0 and not Global.intro_dialogue_played:
 		# Player moved, trigger first dialogue

@@ -14,9 +14,21 @@ func _on_interact():
 	# 1. Set this bench's location as the checkpoint respawn point
 	# We offset the Y slightly so the player doesn't spawn stuck inside the bench
 	Global.target_position = global_position + Vector2(0, -20)
+	Global.current_target_position = Vector2.ZERO
 	Global.scene_path = Global.current_scene_path
 	# 2. Tell the game it needs to move the player when this level loads
 	Global.should_reposition = true
+	
+	print("Bench saved at: ", Global.target_position)
+	
+	# 2.5 Record this bench's texture path so it can be used as a thumbnail in the save slot UI
+	if object_texture:
+		var tex_path = ""
+		if "resource_path" in object_texture:
+			tex_path = object_texture.resource_path
+		elif object_texture.has_method("get_path"):
+			tex_path = object_texture.get_path()
+		Global.last_bench_texture_path = tex_path
 	
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
