@@ -34,6 +34,8 @@ font_names = PackedStringArray("Palatino Linotype")
 font_weight = 900
 subpixel_positioning = 0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
+
 [node name="SaveSelection" type="Control" unique_id=1234567890]
 layout_mode = 3
 anchors_preset = 15
@@ -157,13 +159,23 @@ text = "00:00:00"
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot1" unique_id=1000013]
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot1/SlotInfo" unique_id=1000013]
 visible = false
-layout_mode = 2
+layout_mode = 0
+offset_left = 2.0
+offset_top = 409.0
+offset_right = 222.0
+offset_bottom = 422.0
 theme_override_fonts/font = SubResource("SystemFont_xo4nk")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 16
 text = "Delete"
 horizontal_alignment = 1
+
+[node name="HoverOverlay" type="ColorRect" parent="SlotContainer/Slot1" unique_id=1000014]
+visible = false
+custom_minimum_size = Vector2(220, 350)
+layout_mode = 2
+color = Color(1, 1, 1, 0.3)
 
 [node name="MarginContainer4" type="MarginContainer" parent="SlotContainer" unique_id=1815400012]
 custom_minimum_size = Vector2(50, 0)
@@ -240,13 +252,23 @@ text = "00:00:00"
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot2" unique_id=2000013]
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot2/SlotInfo" unique_id=2000013]
 visible = false
-layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_3mqus")
-theme_override_font_sizes/font_size = 12
+layout_mode = 0
+offset_left = 2.0
+offset_top = 409.0
+offset_right = 222.0
+offset_bottom = 422.0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 16
 text = "Delete"
 horizontal_alignment = 1
+
+[node name="HoverOverlay" type="ColorRect" parent="SlotContainer/Slot2" unique_id=2000014]
+visible = false
+custom_minimum_size = Vector2(220, 350)
+layout_mode = 2
+color = Color(1, 1, 1, 0.3)
 
 [node name="MarginContainer3" type="MarginContainer" parent="SlotContainer" unique_id=665108674]
 custom_minimum_size = Vector2(50, 0)
@@ -323,13 +345,23 @@ text = "00:00:00"
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot3" unique_id=3000013]
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot3/SlotInfo" unique_id=3000013]
 visible = false
-layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_ybsbv")
-theme_override_font_sizes/font_size = 12
+layout_mode = 0
+offset_left = 2.0
+offset_top = 409.0
+offset_right = 222.0
+offset_bottom = 422.0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 16
 text = "Delete"
 horizontal_alignment = 1
+
+[node name="HoverOverlay" type="ColorRect" parent="SlotContainer/Slot3" unique_id=3000014]
+visible = false
+custom_minimum_size = Vector2(220, 350)
+layout_mode = 2
+color = Color(1, 1, 1, 0.3)
 
 [node name="MarginContainer2" type="MarginContainer" parent="SlotContainer" unique_id=1078670091]
 custom_minimum_size = Vector2(50, 0)
@@ -406,13 +438,23 @@ text = "00:00:00"
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot4" unique_id=4000013]
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot4/SlotInfo" unique_id=4000013]
 visible = false
-layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_15pda")
-theme_override_font_sizes/font_size = 12
+layout_mode = 0
+offset_left = 2.0
+offset_top = 409.0
+offset_right = 222.0
+offset_bottom = 422.0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 16
 text = "Delete"
 horizontal_alignment = 1
+
+[node name="HoverOverlay" type="ColorRect" parent="SlotContainer/Slot4" unique_id=4000014]
+visible = false
+custom_minimum_size = Vector2(220, 350)
+layout_mode = 2
+color = Color(1, 1, 1, 0.3)
 
 [node name="MarginContainer" type="MarginContainer" parent="SlotContainer" unique_id=1003800652]
 custom_minimum_size = Vector2(50, 0)
@@ -489,13 +531,23 @@ text = "00:00:00"
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot5" unique_id=5000013]
+[node name="DeleteLabel" type="Label" parent="SlotContainer/Slot5/SlotInfo" unique_id=5000013]
 visible = false
-layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_18aca")
-theme_override_font_sizes/font_size = 12
+layout_mode = 0
+offset_left = 2.0
+offset_top = 409.0
+offset_right = 222.0
+offset_bottom = 422.0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 16
 text = "Delete"
 horizontal_alignment = 1
+
+[node name="HoverOverlay" type="ColorRect" parent="SlotContainer/Slot5" unique_id=5000014]
+visible = false
+custom_minimum_size = Vector2(220, 350)
+layout_mode = 2
+color = Color(1, 1, 1, 0.3)
 
 [node name="BackButton" type="Button" parent="." unique_id=633717549]
 layout_mode = 1
@@ -512,8 +564,13 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = SubResource("SystemFont_2")
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1")
 text = "Back"
 alignment = 0
 

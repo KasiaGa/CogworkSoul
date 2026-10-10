@@ -54,6 +54,39 @@ var wishes_database: Dictionary = {
 	}
 }
 
+var location_metadata: Dictionary = {
+	"res://world/main.tscn": {
+		"name": "Cogwork Nest",
+		"image": "res://assets/images/locations/cogwork_factory.png"
+	},
+	"res://world/CogworkCore.tscn": {
+		"name": "Cogwork Factory",
+		"image": "res://assets/images/locations/factory_2.png"
+	},
+	"res://world/cogwork_factory_2.tscn": {
+		"name": "Cogwork Factory",
+		"image": "res://assets/images/locations/factory_2.png"
+	},
+	"res://world/cogwork_factory_3.tscn": {
+		"name": "Cogwork Factory",
+		"image": "res://assets/images/locations/factory_3.png"
+	},
+	"res://world/bellas_cave.tscn": {
+		"name": "Bella's Cave",
+		"image": "res://assets/images/locations/bellas_cave.png"
+	}
+}
+
+func get_location_name(scene_path: String) -> String:
+	if scene_path in location_metadata:
+		return location_metadata[scene_path]["name"]
+	return scene_path
+
+func get_location_image(scene_path: String) -> String:
+	if scene_path in location_metadata:
+		return location_metadata[scene_path]["image"]
+	return ""
+
 var should_play_lie_animation: bool = false
 var should_play_get_up_animation: bool = false
 
