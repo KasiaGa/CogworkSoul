@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cku0bettunt6j" path="res://gui/main_menu.gd" id="1_reecx"]
 [ext_resource type="Texture2D" uid="uid://cnbuj6hxs4rfx" path="res://assets/images/gui/hkcs10.png" id="2_rhnsr"]
 [ext_resource type="Texture2D" uid="uid://beorae06hiyi1" path="res://assets/images/gui/cog_soul_text.png" id="2_xkvi0"]
+[ext_resource type="Script" uid="uid://bgm0fu3kj0uf2" path="res://gui/light_effect.gd" id="4_laybc"]
 
 [sub_resource type="SystemFont" id="SystemFont_fa3b3"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -69,6 +70,15 @@ offset_bottom = 400.0
 theme_override_fonts/font = SubResource("SystemFont_l85j0")
 theme_override_font_sizes/font_size = 22
 text = "by Kasia G / @grace4drowning / @there-is-purpose-after-all"
+
+[node name="LightEffect" type="Control" parent="." unique_id=1155451481]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_laybc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1363059040]
 layout_mode = 1

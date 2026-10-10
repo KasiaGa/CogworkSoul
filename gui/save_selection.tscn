@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d0h0i5jiwrgch" path="res://gui/save_selection.gd" id="1_0xz1d"]
 [ext_resource type="Texture2D" uid="uid://csnbmcgl6wxrx" path="res://assets/images/gui/decor.png" id="2_3mqus"]
 [ext_resource type="Texture2D" uid="uid://dpgmth268lebb" path="res://assets/images/gui/save_bg.png" id="2_15pda"]
+[ext_resource type="Script" uid="uid://bgm0fu3kj0uf2" path="res://gui/light_effect.gd" id="3_ofgyd"]
 
 [sub_resource type="SystemFont" id="SystemFont_1"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -48,6 +49,15 @@ script = ExtResource("1_0xz1d")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=215935965]
 position = Vector2(776, 384)
 texture = ExtResource("2_15pda")
+
+[node name="LightEffect" type="Control" parent="." unique_id=1830832759]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ofgyd")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2131033337]
 visible = false
