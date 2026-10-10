@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://d3y4nxh14w3il"]
 
 [ext_resource type="Script" uid="uid://d0h0i5jiwrgch" path="res://gui/save_selection.gd" id="1_0xz1d"]
+[ext_resource type="Texture2D" uid="uid://csnbmcgl6wxrx" path="res://assets/images/gui/decor.png" id="2_3mqus"]
+[ext_resource type="Texture2D" uid="uid://dpgmth268lebb" path="res://assets/images/gui/save_bg.png" id="2_15pda"]
 
 [sub_resource type="SystemFont" id="SystemFont_1"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -41,7 +43,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0xz1d")
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=215935965]
+position = Vector2(776, 384)
+texture = ExtResource("2_15pda")
+
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2131033337]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,13 +63,13 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -200.0
-offset_top = 20.0
+offset_top = 82.0
 offset_right = 200.0
-offset_bottom = 60.0
+offset_bottom = 130.0
 grow_horizontal = 2
 theme_override_fonts/font = SubResource("SystemFont_1")
-theme_override_font_sizes/font_size = 40
-text = "Select Save Slot"
+theme_override_font_sizes/font_size = 46
+text = "Select Profile"
 horizontal_alignment = 1
 
 [node name="SlotContainer" type="HBoxContainer" parent="." unique_id=1659076491]
@@ -119,22 +126,6 @@ text = "1"
 
 [node name="LocationName" type="Label" parent="SlotContainer/Slot1/SlotInfo" unique_id=1000011]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_top = 353.0
-offset_right = -5.0
-offset_bottom = 372.0
-grow_horizontal = 0
-theme_override_fonts/font = SubResource("SystemFont_xo4nk")
-theme_override_font_sizes/font_size = 12
-text = "Location"
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot1/SlotInfo" unique_id=1000012]
-layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -147,8 +138,24 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+text = "Location"
+horizontal_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot1/SlotInfo" unique_id=1000012]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_xo4nk")
+theme_override_font_sizes/font_size = 12
 text = "00:00:00"
 horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="DeleteLabel" type="Label" parent="SlotContainer/Slot1" unique_id=1000013]
 visible = false
@@ -202,22 +209,6 @@ text = "2"
 
 [node name="LocationName" type="Label" parent="SlotContainer/Slot2/SlotInfo" unique_id=2000011]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_top = 353.0
-offset_right = -5.0
-offset_bottom = 372.0
-grow_horizontal = 0
-theme_override_fonts/font = SubResource("SystemFont_xo4nk")
-theme_override_font_sizes/font_size = 12
-text = "Location"
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot2/SlotInfo" unique_id=2000012]
-layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -230,8 +221,24 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = SubResource("SystemFont_3mqus")
+text = "Location"
+horizontal_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot2/SlotInfo" unique_id=2000012]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_3mqus")
+theme_override_font_sizes/font_size = 12
 text = "00:00:00"
 horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="DeleteLabel" type="Label" parent="SlotContainer/Slot2" unique_id=2000013]
 visible = false
@@ -285,22 +292,6 @@ text = "3"
 
 [node name="LocationName" type="Label" parent="SlotContainer/Slot3/SlotInfo" unique_id=3000011]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_top = 353.0
-offset_right = -5.0
-offset_bottom = 372.0
-grow_horizontal = 0
-theme_override_fonts/font = SubResource("SystemFont_xo4nk")
-theme_override_font_sizes/font_size = 12
-text = "Location"
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot3/SlotInfo" unique_id=3000012]
-layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -313,8 +304,24 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = SubResource("SystemFont_ybsbv")
+text = "Location"
+horizontal_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot3/SlotInfo" unique_id=3000012]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_ybsbv")
+theme_override_font_sizes/font_size = 12
 text = "00:00:00"
 horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="DeleteLabel" type="Label" parent="SlotContainer/Slot3" unique_id=3000013]
 visible = false
@@ -368,22 +375,6 @@ text = "4"
 
 [node name="LocationName" type="Label" parent="SlotContainer/Slot4/SlotInfo" unique_id=4000011]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_top = 353.0
-offset_right = -5.0
-offset_bottom = 372.0
-grow_horizontal = 0
-theme_override_fonts/font = SubResource("SystemFont_xo4nk")
-theme_override_font_sizes/font_size = 12
-text = "Location"
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot4/SlotInfo" unique_id=4000012]
-layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -396,8 +387,24 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = SubResource("SystemFont_15pda")
+text = "Location"
+horizontal_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot4/SlotInfo" unique_id=4000012]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_15pda")
+theme_override_font_sizes/font_size = 12
 text = "00:00:00"
 horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="DeleteLabel" type="Label" parent="SlotContainer/Slot4" unique_id=4000013]
 visible = false
@@ -451,22 +458,6 @@ text = "5"
 
 [node name="LocationName" type="Label" parent="SlotContainer/Slot5/SlotInfo" unique_id=5000011]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_top = 353.0
-offset_right = -5.0
-offset_bottom = 372.0
-grow_horizontal = 0
-theme_override_fonts/font = SubResource("SystemFont_xo4nk")
-theme_override_font_sizes/font_size = 12
-text = "Location"
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot5/SlotInfo" unique_id=5000012]
-layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -479,8 +470,24 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = SubResource("SystemFont_18aca")
+text = "Location"
+horizontal_alignment = 2
+
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot5/SlotInfo" unique_id=5000012]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 353.0
+offset_right = -5.0
+offset_bottom = 372.0
+grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_18aca")
+theme_override_font_sizes/font_size = 12
 text = "00:00:00"
 horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="DeleteLabel" type="Label" parent="SlotContainer/Slot5" unique_id=5000013]
 visible = false
@@ -492,21 +499,27 @@ horizontal_alignment = 1
 
 [node name="BackButton" type="Button" parent="." unique_id=633717549]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = -39.0
+offset_top = -90.0
+offset_right = 35.0
+offset_bottom = -51.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_fonts/font = SubResource("SystemFont_2")
-theme_override_font_sizes/font_size = 20
-text = "< Back"
+theme_override_font_sizes/font_size = 30
+text = "Back"
 alignment = 0
+
+[node name="Decor" type="Sprite2D" parent="." unique_id=869404886]
+position = Vector2(791.99994, 148)
+scale = Vector2(0.59411764, 0.59411764)
+texture = ExtResource("2_3mqus")
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_pressed"]
