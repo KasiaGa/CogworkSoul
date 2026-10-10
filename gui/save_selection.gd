@@ -4,15 +4,33 @@ var is_loading: bool = false
 var starting_level_path: String = "res://world/main.tscn"
 var loading_screen_path: String = "res://cutscenes/loading_screen.tscn"
 var overlay_tweens: Dictionary = {}
+var text_tweens: Dictionary = {}
 
 func _ready() -> void:
 	refresh_slots()
+	
 	# Connect click and hover signals for all slots
 	for i in range(1, 6):
-		var slot_rect = $SlotContainer.get_node("Slot%d" % i)
-		slot_rect.gui_input.connect(_on_slot_clicked.bindv([i]))
-		slot_rect.mouse_entered.connect(_on_slot_hover_enter.bindv([i]))
-		slot_rect.mouse_exited.connect(_on_slot_hover_exit.bindv([i]))
+		var slot_panel = $SlotContainer.get_node("Slot%d" % i)
+		slot_panel.gui_input.connect(_on_slot_clicked.bindv([i]))
+		slot_panel.mouse_entered.connect(_on_slot_hover_enter.bindv([i]))
+		slot_panel.mouse_exited.connect(_on_slot_hover_exit.bindv([i]))
+		
+		# Allow mouse events to pass through SlotInfo to the panel, 
+		# but keep DeleteLabel interactive and add hover effects
+		var slot_info = slot_panel.get_node("SlotInfo")
+		slot_info.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+		var delete_label = slot_info.get_node("DeleteLabel")
+		delete_label.mouse_filter = Control.MOUSE_FILTER_STOP
+		delete_label.gui_input.connect(_on_delete_clicked.bindv([i]))
+		delete_label.mouse_entered.connect(_on_delete_hover_enter.bindv([i]))
+		delete_label.mouse_exited.connect(_on_delete_hover_exit.bindv([i]))
+
+	# Connect hover signals for the Back button and ensure center alignment
+	$BackButton.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	$BackButton.mouse_entered.connect(_on_back_hover_enter)
+	$BackButton.mouse_exited.connect(_on_back_hover_exit)
 
 func format_playtime(seconds: float) -> String:
 	var total_seconds = int(seconds)
@@ -78,31 +96,90 @@ func _on_slot_hover_enter(slot: int) -> void:
 	var slot_panel = $SlotContainer.get_node("Slot%d" % slot)
 	var overlay = slot_panel.get_node("HoverOverlay")
 	
-	# Kill any ongoing tween for this slot to avoid conflicts
 	if overlay_tweens.has(slot) and overlay_tweens[slot] and overlay_tweens[slot].is_valid():
 		overlay_tweens[slot].kill()
 		
 	overlay.visible = true
 	var tween = create_tween()
 	overlay_tweens[slot] = tween
-	tween.tween_property(overlay, "modulate:a", 1.0, 0.2) # Fades in over 0.2 seconds
+	tween.tween_property(overlay, "modulate:a", 1.0, 0.2)
 
 func _on_slot_hover_exit(slot: int) -> void:
 	var slot_panel = $SlotContainer.get_node("Slot%d" % slot)
 	var overlay = slot_panel.get_node("HoverOverlay")
 	
-	# Kill any ongoing tween for this slot
 	if overlay_tweens.has(slot) and overlay_tweens[slot] and overlay_tweens[slot].is_valid():
 		overlay_tweens[slot].kill()
 		
 	var tween = create_tween()
 	overlay_tweens[slot] = tween
-	tween.tween_property(overlay, "modulate:a", 0.0, 0.2) # Fades out over 0.2 seconds
-	tween.tween_callback(func(): overlay.visible = false) # Hide completely after fade-out
+	tween.tween_property(overlay, "modulate:a", 0.0, 0.2)
+	tween.tween_callback(func(): overlay.visible = false)
+
+# --- Smooth Delete Hover Effects ---
+func _on_delete_hover_enter(slot: int) -> void:
+	var slot_panel = $SlotContainer.get_node("Slot%d" % slot)
+	var delete_label = slot_panel.get_node("SlotInfo/DeleteLabel")
+	
+	delete_label.text = "> Delete <"
+	delete_label.pivot_offset = delete_label.size / 2
+	
+	var tween_key = "delete_%d" % slot
+	if text_tweens.has(tween_key) and text_tweens[tween_key] and text_tweens[tween_key].is_valid():
+		text_tweens[tween_key].kill()
+		
+	var tween = create_tween()
+	text_tweens[tween_key] = tween
+	tween.tween_property(delete_label, "scale", Vector2(1.15, 1.15), 0.2)
+
+func _on_delete_hover_exit(slot: int) -> void:
+	var slot_panel = $SlotContainer.get_node("Slot%d" % slot)
+	var delete_label = slot_panel.get_node("SlotInfo/DeleteLabel")
+	
+	delete_label.text = "Delete"
+	delete_label.pivot_offset = delete_label.size / 2
+	
+	var tween_key = "delete_%d" % slot
+	if text_tweens.has(tween_key) and text_tweens[tween_key] and text_tweens[tween_key].is_valid():
+		text_tweens[tween_key].kill()
+		
+	var tween = create_tween()
+	text_tweens[tween_key] = tween
+	tween.tween_property(delete_label, "scale", Vector2(1.0, 1.0), 0.2)
+
+# --- Smooth Back Button Hover Effects ---
+func _on_back_hover_enter() -> void:
+	var back_btn = $BackButton
+	back_btn.text = "> Back <"
+	back_btn.pivot_offset = back_btn.size / 2
+	
+	if text_tweens.has("back") and text_tweens["back"] and text_tweens["back"].is_valid():
+		text_tweens["back"].kill()
+		
+	var tween = create_tween()
+	text_tweens["back"] = tween
+	tween.tween_property(back_btn, "scale", Vector2(1.15, 1.15), 0.2)
+
+func _on_back_hover_exit() -> void:
+	var back_btn = $BackButton
+	back_btn.text = "Back"
+	back_btn.pivot_offset = back_btn.size / 2
+	
+	if text_tweens.has("back") and text_tweens["back"] and text_tweens["back"].is_valid():
+		text_tweens["back"].kill()
+		
+	var tween = create_tween()
+	text_tweens["back"] = tween
+	tween.tween_property(back_btn, "scale", Vector2(1.0, 1.0), 0.2)
 
 func _on_slot_clicked(event: InputEvent, slot: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		_on_slot_selected(slot)
+
+func _on_delete_clicked(event: InputEvent, slot: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		get_viewport().set_input_as_handled()
+		_on_delete_pressed(slot)
 
 func _on_slot_selected(slot: int) -> void:
 	Global.set_current_slot(slot)
@@ -111,10 +188,8 @@ func _on_slot_selected(slot: int) -> void:
 	var slot_meta = slots[slot - 1]
 	
 	if slot_meta["exists"]:
-		# Load existing save
 		Global.load_game(slot)
 	else:
-		# Start new game in this slot - go through loading screen for cutscene
 		get_tree().change_scene_to_file(loading_screen_path)
 
 func _on_delete_pressed(slot: int) -> void:
@@ -122,5 +197,4 @@ func _on_delete_pressed(slot: int) -> void:
 	refresh_slots()
 
 func _on_back_pressed() -> void:
-	# Return to main menu
 	get_tree().change_scene_to_file("res://gui/main_menu.tscn")

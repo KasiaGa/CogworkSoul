@@ -61,7 +61,7 @@ var location_metadata: Dictionary = {
 	},
 	"res://world/CogworkCore.tscn": {
 		"name": "Cogwork Factory",
-		"image": "res://assets/images/locations/factory_2.png"
+		"image": "res://assets/images/gui/cogwork_factory_save_slot3.PNG"
 	},
 	"res://world/cogwork_factory_2.tscn": {
 		"name": "Cogwork Factory",
