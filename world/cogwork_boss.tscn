@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="11_o517r"]
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="12_7xspl"]
 [ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="13_mnqlb"]
+[ext_resource type="PackedScene" path="res://other/tangled_guardian.tscn" id="14_guardian"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(2018.5417, 148.14282)
@@ -139,6 +140,32 @@ visible = false
 [node name="InventoryMapMenu" parent="CanvasLayer" unique_id=1439938911 instance=ExtResource("12_7xspl")]
 visible = false
 
+[node name="BossTitle" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 12.0
+offset_right = 220.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 22
+text = "TANGLED GUARDIAN"
+horizontal_alignment = 1
+
+[node name="BossHealthBar" type="ProgressBar" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 43.0
+offset_right = 260.0
+offset_bottom = 69.0
+grow_horizontal = 2
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
 [node name="NotificationBox" type="PanelContainer" parent="CanvasLayer" unique_id=216334181]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 2
@@ -225,3 +252,7 @@ z_index = 100
 position = Vector2(-192.99994, -55.000004)
 scale = Vector2(1.7771084, 1.7771084)
 texture = ExtResource("13_mnqlb")
+
+[node name="TangledGuardian" parent="." instance=ExtResource("14_guardian")]
+position = Vector2(1180, 465)
+z_index = 50
