@@ -63,6 +63,7 @@ func _start_game() -> void:
 	Global.has_needle = false
 	Global.player_is_sitting = false
 	Global.collected_items.clear()
+	Global.reset_modules()
 	Global.intro_dialogue_played = false
 	Global.should_reposition = false
 	Global.target_position = Vector2.ZERO

@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://ccqfxoob43fht" path="res://assets/images/world/device2_2.png" id="29_igmhy"]
 [ext_resource type="PackedScene" uid="uid://dxj4hcxho5pcm" path="res://interaction/breakable_object.tscn" id="33_igmhy"]
 [ext_resource type="Texture2D" uid="uid://koa06g66wusf" path="res://assets/images/world/paralax1.png" id="33_xqpbi"]
+[ext_resource type="Texture2D" uid="uid://b6kbt5du6ldrm" path="res://assets/images/item/shard.png" id="34_shardmodule"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fa3b3"]
 radius = 42.0
@@ -48,6 +49,9 @@ size = Vector2(3439, 83)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ae5in"]
 radius = 27.0
 height = 274.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_shard_module"]
+radius = 80.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yaehf"]
 atlas = ExtResource("12_7fj3x")
@@ -242,6 +246,24 @@ action_name = "Take"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemNeedle/InteractionArea" unique_id=1554637182]
 position = Vector2(-2, 163)
 shape = SubResource("CircleShape2D_da6y2")
+
+[node name="ShardCollectorModule" type="StaticBody2D" parent="."]
+position = Vector2(760, 560)
+collision_mask = 2
+script = ExtResource("11_37le6")
+item_id = "shard_collector"
+item_type = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="ShardCollectorModule"]
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("34_shardmodule")
+
+[node name="InteractionArea" parent="ShardCollectorModule" instance=ExtResource("10_2s3h7")]
+position = Vector2(0, -30)
+action_name = "Take"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShardCollectorModule/InteractionArea"]
+shape = SubResource("CircleShape2D_shard_module")
 
 [node name="wall" type="StaticBody2D" parent="." unique_id=457805125]
 

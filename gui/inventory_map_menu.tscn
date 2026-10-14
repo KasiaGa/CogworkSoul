@@ -80,6 +80,12 @@ theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
 text = "Wishes"
 
+[node name="ModulesButton" type="Button" parent="Background/MenuContainer/Tabs"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_oexcg")
+theme_override_font_sizes/font_size = 25
+text = "Modules"
+
 [node name="MapButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=431280213]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
@@ -261,6 +267,121 @@ theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
 
+[node name="ModulesView" type="Control" parent="Background/MenuContainer"]
+visible = false
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+
+[node name="LoadoutTitle" type="Label" parent="Background/MenuContainer/ModulesView"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 8.0
+offset_right = 700.0
+offset_bottom = 38.0
+theme_override_fonts/font = SubResource("SystemFont_qblpg")
+theme_override_font_sizes/font_size = 24
+text = "Equipped Modules"
+
+[node name="ModuleSlots" type="HBoxContainer" parent="Background/MenuContainer/ModulesView"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 44.0
+offset_right = 710.0
+offset_bottom = 150.0
+theme_override_constants/separation = 12
+
+[node name="Slot1Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots"]
+custom_minimum_size = Vector2(215, 100)
+layout_mode = 2
+toggle_mode = true
+text = "Slot 1\nEmpty"
+
+[node name="Slot2Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots"]
+custom_minimum_size = Vector2(215, 100)
+layout_mode = 2
+toggle_mode = true
+text = "Slot 2\nEmpty"
+
+[node name="Slot3Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots"]
+custom_minimum_size = Vector2(215, 100)
+layout_mode = 2
+toggle_mode = true
+text = "Slot 3\nEmpty"
+
+[node name="ModuleListTitle" type="Label" parent="Background/MenuContainer/ModulesView"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 168.0
+offset_right = 700.0
+offset_bottom = 198.0
+theme_override_fonts/font = SubResource("SystemFont_qblpg")
+theme_override_font_sizes/font_size = 22
+text = "Collected Modules"
+
+[node name="ModuleScroll" type="ScrollContainer" parent="Background/MenuContainer/ModulesView"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 202.0
+offset_right = 700.0
+offset_bottom = 710.0
+
+[node name="ModuleList" type="VBoxContainer" parent="Background/MenuContainer/ModulesView/ModuleScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="EmptyModulesLabel" type="Label" parent="Background/MenuContainer/ModulesView/ModuleScroll/ModuleList"]
+custom_minimum_size = Vector2(650, 60)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_jtgip")
+theme_override_font_sizes/font_size = 20
+text = "No modules collected yet."
+
+[node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/ModulesView"]
+self_modulate = Color(1, 0.76036006, 0.71446484, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -241.0
+offset_top = 202.0
+offset_right = -6.0
+offset_bottom = 500.0
+grow_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="ModuleTitle" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_okbrl")
+theme_override_font_sizes/font_size = 22
+clip_text = true
+
+[node name="ModuleDesc" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_jtgip")
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="ModuleInstructions" type="Label" parent="Background/MenuContainer/ModulesView"]
+layout_mode = 0
+offset_left = 1212.0
+offset_top = 518.0
+offset_right = 1440.0
+offset_bottom = 690.0
+theme_override_fonts/font = SubResource("SystemFont_jtgip")
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3
+text = "Choose a slot above, then select a module to equip it. Select its slot and activate it again to unequip."
+
 [node name="ReferenceRect" type="ReferenceRect" parent="Background" unique_id=1270295291]
 visible = false
 layout_mode = 1
@@ -275,4 +396,5 @@ editor_only = false
 
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/InventoryButton" to="." method="show_inventory_tab"]
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/WishsButton" to="." method="show_wishs_tab"]
+[connection signal="focus_entered" from="Background/MenuContainer/Tabs/ModulesButton" to="." method="show_modules_tab"]
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/MapButton" to="." method="show_map_tab"]

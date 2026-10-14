@@ -31,6 +31,8 @@ func _ready():
 		animated_sprite_2d.flip_h = true
 	
 func take_damage(amount: int):
+	if current_health <= 0:
+		return
 	current_health -= amount
 	if (Global.player_current_silk < Global.player_max_silk):
 		Global.player_current_silk += 1
@@ -48,7 +50,7 @@ func take_damage(amount: int):
 		
 func die_and_drop_shards():
 	# Determine a random amount of shards to scatter
-	var drop_count = randi_range(min_shards_dropped, max_shards_dropped)
+	var drop_count = Global.get_enemy_shard_drop_count(min_shards_dropped, max_shards_dropped)
 	
 	for i in range(drop_count):
 		var shard_instance = SHARD_SCENE.instantiate() as RigidBody2D

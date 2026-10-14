@@ -20,8 +20,66 @@ var cocoon_spawned: bool = false
 
 var player_facing_right: bool = true
 
-enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE, FLOWER }
+enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE, FLOWER, MODULE }
 var collected_items: Array[String] = []
+
+const MODULE_SLOT_COUNT: int = 3
+var collected_modules: Array[String] = []
+var equipped_modules: Array[String] = ["", "", ""]
+var module_database: Dictionary = {
+	"shard_collector": {
+		"name": "Shard Collector",
+		"description": "Enemies drop twice as many shards while this module is equipped.",
+		"image_path": "res://assets/images/item/shard.png",
+		"shard_drop_multiplier": 2.0
+	}
+}
+
+func get_module_data(module_id: String) -> Dictionary:
+	var display_name = module_id.replace("_", " ").capitalize()
+	return module_database.get(module_id, {
+		"name": display_name,
+		"description": "An unusual module. Its properties are not yet understood.",
+		"image_path": "res://assets/images/item/item.png"
+	})
+
+func collect_module(module_id: String) -> bool:
+	if module_id.is_empty() or collected_modules.has(module_id):
+		return false
+	collected_modules.append(module_id)
+	return true
+
+func equip_module(module_id: String, slot_index: int) -> bool:
+	if not collected_modules.has(module_id) or slot_index < 0 or slot_index >= MODULE_SLOT_COUNT:
+		return false
+	for index in range(equipped_modules.size()):
+		if equipped_modules[index] == module_id:
+			if index == slot_index:
+				return true
+			equipped_modules[index] = ""
+	equipped_modules[slot_index] = module_id
+	return true
+
+func unequip_module(slot_index: int) -> void:
+	if slot_index >= 0 and slot_index < equipped_modules.size():
+		equipped_modules[slot_index] = ""
+
+func is_module_equipped(module_id: String) -> bool:
+	return equipped_modules.has(module_id)
+
+func get_enemy_shard_drop_count(minimum: int, maximum: int) -> int:
+	var drop_count = randi_range(minimum, maximum)
+	for module_id in equipped_modules:
+		var module_data: Dictionary = module_database.get(module_id, {})
+		var multiplier: float = module_data.get("shard_drop_multiplier", 1.0)
+		drop_count = int(round(drop_count * multiplier))
+	return drop_count
+
+func reset_modules() -> void:
+	collected_modules.clear()
+	equipped_modules.clear()
+	for _slot_index in range(MODULE_SLOT_COUNT):
+		equipped_modules.append("")
 
 var shards_collected: int = 0
 
@@ -119,6 +177,8 @@ func save_game(save_checkpoint: bool = true, slot: int = -1):
 		"max_silk": player_max_silk,
 		"has_needle": has_needle,
 		"collected_items": collected_items,
+		"collected_modules": collected_modules,
+		"equipped_modules": equipped_modules,
 		"checkpoint_x": checkpoint_x,
 		"checkpoint_y": checkpoint_y,
 		"saved_scene": scene_path,
@@ -167,6 +227,12 @@ func load_game(slot:int = -1):
 		shards_collected = save_data.get("shards_collected", 0)
 		
 		collected_items = Array(save_data.get("collected_items", []), TYPE_STRING, &"", null)
+		collected_modules = Array(save_data.get("collected_modules", []), TYPE_STRING, &"", null)
+		var saved_modules: Array = save_data.get("equipped_modules", [])
+		equipped_modules.clear()
+		for slot_index in range(MODULE_SLOT_COUNT):
+			var module_id = saved_modules[slot_index] if slot_index < saved_modules.size() else ""
+			equipped_modules.append(module_id if collected_modules.has(module_id) else "")
 		accepted_wishes = save_data.get("accepted_wishes", [])
 		wish_progress = save_data.get("wish_progress", {})
 		

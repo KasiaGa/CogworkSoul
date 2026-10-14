@@ -8,7 +8,7 @@ extends StaticBody2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# 1. Check if this specific item has already been picked up in the past
-	if Global.collected_items.has(item_id):
+	if (item_type == Global.ItemType.MODULE and Global.collected_modules.has(item_id)) or (item_type != Global.ItemType.MODULE and Global.collected_items.has(item_id)):
 		queue_free() # Delete it instantly before the player even sees it
 		return       # Exit early so we don't bind the interaction
 		
@@ -22,7 +22,10 @@ func _process(delta: float) -> void:
 
 func _on_interact():
 	# 2. Add this item's ID to our global "don't respawn" list
-	Global.collected_items.append(item_id)
+	if item_type == Global.ItemType.MODULE:
+		Global.collect_module(item_id)
+	elif not Global.collected_items.has(item_id):
+		Global.collected_items.append(item_id)
 	
 	var canvas_layer = get_node_or_null("../CanvasLayer")
 	var player = get_tree().get_first_node_in_group("player")
@@ -60,6 +63,10 @@ func _on_interact():
 				Global.player_current_silk = Global.player_max_silk
 			if canvas_layer:
 				canvas_layer.show_notification("Acquired: Silk Upgrade")
+		Global.ItemType.MODULE:
+			var module_data = Global.get_module_data(item_id)
+			if canvas_layer:
+				canvas_layer.show_notification("Acquired: " + module_data.name)
 	
 	Global.save_game()
 	
