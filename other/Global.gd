@@ -32,6 +32,13 @@ var module_database: Dictionary = {
 		"description": "Enemies drop twice as many shards while this module is equipped.",
 		"image_path": "res://assets/images/item/shard.png",
 		"shard_drop_multiplier": 2.0
+	},
+	"resonance_coil": {
+		"name": "Resonance Coil",
+		"description": "Every third hit against the same enemy deals double damage.",
+		"image_path": "res://assets/images/item/item.png",
+		"bonus_damage_every": 3,
+		"bonus_damage_multiplier": 2.0
 	}
 }
 
@@ -74,6 +81,16 @@ func get_enemy_shard_drop_count(minimum: int, maximum: int) -> int:
 		var multiplier: float = module_data.get("shard_drop_multiplier", 1.0)
 		drop_count = int(round(drop_count * multiplier))
 	return drop_count
+
+func get_enemy_hit_damage(hit_number: int, base_damage: int) -> int:
+	var damage = base_damage
+	for module_id in equipped_modules:
+		var module_data: Dictionary = module_database.get(module_id, {})
+		var hit_interval: int = int(module_data.get("bonus_damage_every", 0))
+		if hit_interval > 0 and hit_number % hit_interval == 0:
+			var multiplier: float = module_data.get("bonus_damage_multiplier", 1.0)
+			damage = int(round(damage * multiplier))
+	return damage
 
 func reset_modules() -> void:
 	collected_modules.clear()

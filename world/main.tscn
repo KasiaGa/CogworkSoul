@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://dxj4hcxho5pcm" path="res://interaction/breakable_object.tscn" id="33_igmhy"]
 [ext_resource type="Texture2D" uid="uid://koa06g66wusf" path="res://assets/images/world/paralax1.png" id="33_xqpbi"]
 [ext_resource type="Texture2D" uid="uid://b6kbt5du6ldrm" path="res://assets/images/item/shard.png" id="34_shardmodule"]
+[ext_resource type="Texture2D" uid="uid://tiridibhl6tk" path="res://assets/images/item/item.png" id="35_coilmodule"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fa3b3"]
 radius = 42.0
@@ -263,6 +264,25 @@ position = Vector2(0, -30)
 action_name = "Take"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShardCollectorModule/InteractionArea"]
+shape = SubResource("CircleShape2D_shard_module")
+
+[node name="ResonanceCoilModule" type="StaticBody2D" parent="."]
+position = Vector2(980, 560)
+collision_mask = 2
+script = ExtResource("11_37le6")
+item_id = "resonance_coil"
+item_type = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="ResonanceCoilModule"]
+modulate = Color(0.7, 0.9, 1.25, 1)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("35_coilmodule")
+
+[node name="InteractionArea" parent="ResonanceCoilModule" instance=ExtResource("10_2s3h7")]
+position = Vector2(0, -30)
+action_name = "Take"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResonanceCoilModule/InteractionArea"]
 shape = SubResource("CircleShape2D_shard_module")
 
 [node name="wall" type="StaticBody2D" parent="." unique_id=457805125]

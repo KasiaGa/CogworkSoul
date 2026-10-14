@@ -19,6 +19,7 @@ var time_passed: float = 0.0
 
 @export var max_health: int = 3
 var current_health: int = max_health
+var hit_count: int = 0
 
 @export var min_shards_dropped: int = 4
 @export var max_shards_dropped: int = 5
@@ -31,6 +32,8 @@ func _ready():
 func take_damage(amount: int):
 	if current_health <= 0:
 		return
+	hit_count += 1
+	amount = Global.get_enemy_hit_damage(hit_count, amount)
 	current_health -= amount
 	if (Global.player_current_silk < Global.player_max_silk):
 		Global.player_current_silk += 1
