@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal defeated
 
 enum AttackState { COOLDOWN, TELEGRAPH, ACTIVE }
-enum AttackKind { SHORT_STRIKE, LONG_SPAN, CABLE_SPIN }
+enum AttackKind { SHORT_STRIKE, LONG_SPAN, JUMP_LEFT, JUMP_RIGHT, JUMP_SPIN }
 
 @onready var cable_visual: Line2D = $CableVisual
 @onready var guardian_sprite: Sprite2D = $Sprite2D
@@ -19,11 +19,8 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, CABLE_SPIN }
 @export var short_reach: float = 400.0
 @export var long_reach: float = 1500.0
 @export var spin_radius: float = 360.0
-@export var movement_speed: float = 180.0
+@export var jump_horizontal_speed: float = 180.0
 @export var jump_velocity: float = -1400.0
-@export var jump_interval_min: float = 2.0
-@export var jump_interval_max: float = 3.5
-@export var preferred_player_distance: float = 285.0
 @export var arena_left_limit: float = -1080.0
 @export var arena_right_limit: float = 2240.0
 
@@ -38,9 +35,6 @@ var facing_direction: float = 1.0
 var last_attack_kind: int = -1
 var hit_player_this_attack: bool = false
 var base_sprite_color: Color
-var movement_direction: float = 0.0
-var movement_choice_timer: float = 0.0
-var jump_timer: float = 0.0
 var hit_flash_tween: Tween
 var intro_started: bool = false
 var intro_in_progress: bool = false
@@ -48,7 +42,6 @@ var intro_in_progress: bool = false
 func _ready() -> void:
 	current_health = max_health
 	base_sprite_color = guardian_sprite.modulate
-	jump_timer = randf_range(jump_interval_min, jump_interval_max)
 	cable_visual.visible = false
 	if health_bar:
 		health_bar.max_value = max_health
@@ -121,7 +114,7 @@ func _physics_process(delta: float) -> void:
 	if not intro_started:
 		_wait_for_player_to_approach(delta)
 		return
-	_update_movement(delta)
+	_update_attack_movement(delta)
 	attack_timer -= delta
 	match attack_state:
 		AttackState.COOLDOWN:
@@ -131,10 +124,10 @@ func _physics_process(delta: float) -> void:
 			if attack_timer <= 0.0:
 				_activate_attack()
 		AttackState.ACTIVE:
-			if attack_kind == AttackKind.CABLE_SPIN:
+			if attack_kind == AttackKind.JUMP_SPIN:
 				cable_visual.rotation += delta * 8.0
 			_check_player_hit()
-			if attack_timer <= 0.0:
+			if attack_timer <= 0.0 and (not _is_jump_attack() or is_on_floor()):
 				_finish_attack()
 
 func _wait_for_player_to_approach(delta: float) -> void:
@@ -150,43 +143,27 @@ func _wait_for_player_to_approach(delta: float) -> void:
 	if is_on_floor() and absf(screen_center_x - global_position.x) <= INTRO_CENTER_TOLERANCE:
 		_start_boss_intro()
 
-func _update_movement(delta: float) -> void:
-	var player := _get_player()
-	if player:
-		var player_offset_x := player.global_position.x - global_position.x
-		if abs(player_offset_x) > preferred_player_distance:
-			movement_direction = sign(player_offset_x)
-		else:
-			movement_choice_timer -= delta
-			if movement_choice_timer <= 0.0:
-				movement_direction = float(randi_range(-1, 1))
-				movement_choice_timer = randf_range(0.8, 1.6)
-
-		if attack_state == AttackState.COOLDOWN and not is_zero_approx(player_offset_x):
-			guardian_sprite.flip_h = player_offset_x > 0.0
-	else:
-		movement_choice_timer -= delta
-		if movement_choice_timer <= 0.0:
-			movement_direction = float(randi_range(-1, 1))
-			movement_choice_timer = randf_range(0.8, 1.6)
-
-	if global_position.x <= arena_left_limit:
-		movement_direction = maxf(movement_direction, 0.0)
-	elif global_position.x >= arena_right_limit:
-		movement_direction = minf(movement_direction, 0.0)
-	velocity.x = movement_direction * movement_speed
-
-	if is_on_floor():
+func _update_attack_movement(delta: float) -> void:
+	var horizontal_jump_direction := 0.0
+	if attack_state == AttackState.ACTIVE:
+		if attack_kind == AttackKind.JUMP_LEFT:
+			horizontal_jump_direction = -1.0
+		elif attack_kind == AttackKind.JUMP_RIGHT:
+			horizontal_jump_direction = 1.0
+	velocity.x = horizontal_jump_direction * jump_horizontal_speed
+	if is_on_floor() and velocity.y >= 0.0:
 		velocity.y = 0.0
-		jump_timer -= delta
-		if jump_timer <= 0.0:
-			velocity.y = jump_velocity
-			jump_timer = randf_range(jump_interval_min, jump_interval_max)
 	else:
 		velocity += get_gravity() * delta
-
 	move_and_slide()
 	_clamp_to_arena()
+	if global_position.x <= arena_left_limit and velocity.x < 0.0:
+		velocity.x = 0.0
+	elif global_position.x >= arena_right_limit and velocity.x > 0.0:
+		velocity.x = 0.0
+
+func _is_jump_attack() -> bool:
+	return attack_kind == AttackKind.JUMP_LEFT or attack_kind == AttackKind.JUMP_RIGHT or attack_kind == AttackKind.JUMP_SPIN
 
 func _clamp_to_arena() -> void:
 	if arena_left_limit <= arena_right_limit:
@@ -196,16 +173,20 @@ func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D
 
 func _begin_attack() -> void:
-	var player := _get_player()
-	if player:
-		facing_direction = sign(player.global_position.x - global_position.x)
-		if facing_direction == 0.0:
-			facing_direction = 1.0
-
-	attack_kind = randi_range(0, 2)
+	attack_kind = randi_range(0, AttackKind.JUMP_SPIN)
 	if attack_kind == last_attack_kind:
-		attack_kind = (attack_kind + 1) % 3
+		attack_kind = (attack_kind + 1) % (AttackKind.JUMP_SPIN + 1)
 	last_attack_kind = attack_kind
+	if attack_kind == AttackKind.JUMP_LEFT:
+		facing_direction = -1.0
+	elif attack_kind == AttackKind.JUMP_RIGHT:
+		facing_direction = 1.0
+	else:
+		var player := _get_player()
+		if player:
+			facing_direction = sign(player.global_position.x - global_position.x)
+			if facing_direction == 0.0:
+				facing_direction = 1.0
 	guardian_sprite.flip_h = facing_direction > 0.0
 	hit_player_this_attack = false
 	attack_state = AttackState.TELEGRAPH
@@ -218,12 +199,22 @@ func _begin_attack() -> void:
 
 func _activate_attack() -> void:
 	attack_state = AttackState.ACTIVE
-	attack_timer = 0.9 if attack_kind == AttackKind.CABLE_SPIN else 0.3
+	if _is_jump_attack():
+		velocity.y = jump_velocity
+	if attack_kind == AttackKind.JUMP_LEFT or attack_kind == AttackKind.JUMP_RIGHT:
+		cable_visual.visible = false
+	if attack_kind == AttackKind.JUMP_SPIN:
+		attack_timer = 0.9
+	elif attack_kind == AttackKind.JUMP_LEFT or attack_kind == AttackKind.JUMP_RIGHT:
+		attack_timer = 0.45
+	else:
+		attack_timer = 0.3
 	cable_visual.default_color = Color(1.0, 0.16, 0.08, 1.0)
 	cable_visual.width = 26.0
 
 func _finish_attack() -> void:
 	cable_visual.visible = false
+	velocity.x = 0.0
 	attack_state = AttackState.COOLDOWN
 	attack_timer = attack_cooldown
 
@@ -242,7 +233,19 @@ func _get_attack_line_points() -> PackedVector2Array:
 				Vector2(facing_direction * 520, 5),
 				Vector2(facing_direction * long_reach, 0)
 			])
-		AttackKind.CABLE_SPIN:
+		AttackKind.JUMP_LEFT:
+			return PackedVector2Array([
+				Vector2(0, -15),
+				Vector2(-110, -80),
+				Vector2(-230, -190)
+			])
+		AttackKind.JUMP_RIGHT:
+			return PackedVector2Array([
+				Vector2(0, -15),
+				Vector2(110, -80),
+				Vector2(230, -190)
+			])
+		AttackKind.JUMP_SPIN:
 			return PackedVector2Array([
 				Vector2(0, 0),
 				Vector2(90, -50),
@@ -275,7 +278,9 @@ func _check_player_hit() -> void:
 				and player_offset.x * facing_direction <= long_reach
 				and abs(player_offset.y) <= 65.0
 			)
-		AttackKind.CABLE_SPIN:
+		AttackKind.JUMP_LEFT, AttackKind.JUMP_RIGHT:
+			hits_player = abs(player_offset.x) <= 160.0 and abs(player_offset.y) <= 150.0
+		AttackKind.JUMP_SPIN:
 			hits_player = abs(player_offset.length() - spin_radius) <= 90.0
 
 	if hits_player:
