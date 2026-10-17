@@ -46,6 +46,7 @@ var needle_hits_since_retaliation: int = 0
 var retaliation_ready: bool = false
 var retaliation_attack_in_progress: bool = false
 var base_sprite_color: Color
+var base_cable_visual_position: Vector2
 var hit_flash_tween: Tween
 var intro_started: bool = false
 var intro_in_progress: bool = false
@@ -53,6 +54,7 @@ var intro_in_progress: bool = false
 func _ready() -> void:
 	current_health = max_health
 	base_sprite_color = guardian_sprite.modulate
+	base_cable_visual_position = cable_visual.position
 	cable_visual.visible = false
 	if health_bar:
 		health_bar.max_value = max_health
@@ -213,6 +215,9 @@ func _begin_attack() -> void:
 			if facing_direction == 0.0:
 				facing_direction = 1.0
 	guardian_sprite.flip_h = facing_direction > 0.0
+	cable_visual.position = base_cable_visual_position
+	if guardian_sprite.flip_h:
+		cable_visual.position.x = guardian_sprite.position.x * 2.0 - base_cable_visual_position.x
 	hit_player_this_attack = false
 	attack_state = AttackState.TELEGRAPH
 	attack_timer = telegraph_time
