@@ -20,8 +20,8 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, JUMP_LEFT, JUMP_RIGHT, JUMP_SPIN }
 @export var long_reach: float = 2800.0
 @export var spin_radius: float = 500.0
 @export var jump_horizontal_speed: float = 220.0
-@export_range(0.0, 1.0) var far_jump_chance: float = 0.3
-@export var far_jump_multiplier: float = 10.0
+@export_range(0.0, 1.0) var far_jump_chance: float = 0.5
+@export var far_jump_multiplier: float = 5.0
 @export var jump_velocity: float = -1400.0
 @export var arena_left_limit: float = -1080.0
 @export var arena_right_limit: float = 2240.0
