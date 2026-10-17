@@ -1,27 +1,27 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://c4jbp731ge27p"]
 
-[ext_resource type="Script" path="res://other/tangled_guardian.gd" id="1_guardian"]
-[ext_resource type="Texture2D" uid="uid://cwkjvpyg0nj85" path="res://assets/images/enemy/enemy2223.png" id="2_placeholder"]
+[ext_resource type="Script" uid="uid://uout8j5uqpnw" path="res://other/tangled_guardian.gd" id="1_guardian"]
+[ext_resource type="Texture2D" uid="uid://ctoca3esyf3nk" path="res://assets/images/npc/tangled_guardian_resized.png" id="2_1mdr0"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_guardian"]
-radius = 95.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bqgm4"]
+radius = 138.0
+height = 1168.0
 
-[node name="TangledGuardian" type="CharacterBody2D" groups=["enemies"]]
-collision_layer = 1
-collision_mask = 1
+[node name="TangledGuardian" type="CharacterBody2D" unique_id=54626507 groups=["enemies"]]
 script = ExtResource("1_guardian")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -18)
-scale = Vector2(1.15, 1.15)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=528300887]
 modulate = Color(0.68, 0.5, 0.38, 1)
-texture = ExtResource("2_placeholder")
+position = Vector2(6.9999695, 9.999878)
+scale = Vector2(0.63697475, 0.6369747)
+texture = ExtResource("2_1mdr0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_guardian")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=527531940]
+position = Vector2(-7, -3)
+shape = SubResource("CapsuleShape2D_bqgm4")
 
-[node name="CableVisual" type="Line2D" parent="."]
+[node name="CableVisual" type="Line2D" parent="." unique_id=395260899]
+visible = false
 z_index = 5
 width = 12.0
 default_color = Color(1, 0.72, 0.18, 0.9)
-visible = false
