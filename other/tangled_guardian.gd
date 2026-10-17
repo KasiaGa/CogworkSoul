@@ -16,10 +16,10 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, JUMP_LEFT, JUMP_RIGHT, JUMP_SPIN }
 @export var attack_damage: int = 1
 @export var attack_cooldown: float = 1.2
 @export var telegraph_time: float = 0.75
-@export var short_reach: float = 400.0
-@export var long_reach: float = 1500.0
-@export var spin_radius: float = 360.0
-@export var jump_horizontal_speed: float = 180.0
+@export var short_reach: float = 650.0
+@export var long_reach: float = 2800.0
+@export var spin_radius: float = 500.0
+@export var jump_horizontal_speed: float = 220.0
 @export var jump_velocity: float = -1400.0
 @export var arena_left_limit: float = -1080.0
 @export var arena_right_limit: float = 2240.0
@@ -261,37 +261,68 @@ func _get_attack_line_points() -> PackedVector2Array:
 	return PackedVector2Array()
 
 func _check_player_hit() -> void:
-	if hit_player_this_attack:
+	if hit_player_this_attack or not cable_visual.visible:
 		return
 	var player := _get_player()
 	if player == null or not player.has_method("take_damage"):
 		return
 	if bool(player.get("is_invincible")):
 		return
-
-	var player_offset: Vector2 = to_local(player.global_position)
-	var hits_player := false
-	match attack_kind:
-		AttackKind.SHORT_STRIKE:
-			hits_player = (
-				player_offset.x * facing_direction >= -35.0
-				and player_offset.x * facing_direction <= short_reach
-				and abs(player_offset.y) <= 125.0
-			)
-		AttackKind.LONG_SPAN:
-			hits_player = (
-				player_offset.x * facing_direction >= 0.0
-				and player_offset.x * facing_direction <= long_reach
-				and abs(player_offset.y) <= 65.0
-			)
-		AttackKind.JUMP_LEFT, AttackKind.JUMP_RIGHT:
-			hits_player = abs(player_offset.x) <= 160.0 and abs(player_offset.y) <= 150.0
-		AttackKind.JUMP_SPIN:
-			hits_player = abs(player_offset.length() - spin_radius) <= 90.0
-
-	if hits_player:
+	if _cable_touches_player(player):
 		player.call("take_damage", attack_damage)
 		hit_player_this_attack = true
+
+func _cable_touches_player(player: Node2D) -> bool:
+	var player_collision := player.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	var player_axis_start := player.global_position
+	var player_axis_end := player.global_position
+	var player_radius := 24.0
+	if player_collision and player_collision.shape is CapsuleShape2D:
+		var player_capsule := player_collision.shape as CapsuleShape2D
+		var capsule_axis_offset := player_collision.global_transform.y * maxf(0.0, player_capsule.height * 0.5 - player_capsule.radius)
+		player_axis_start = player_collision.global_position - capsule_axis_offset
+		player_axis_end = player_collision.global_position + capsule_axis_offset
+		var player_scale := player_collision.global_scale
+		player_radius = player_capsule.radius * maxf(absf(player_scale.x), absf(player_scale.y))
+
+	var cable_scale := cable_visual.global_scale
+	var cable_radius := cable_visual.width * 0.5 * maxf(absf(cable_scale.x), absf(cable_scale.y))
+	var contact_distance := player_radius + cable_radius
+	for point_index in range(cable_visual.points.size() - 1):
+		var cable_start := cable_visual.to_global(cable_visual.points[point_index])
+		var cable_end := cable_visual.to_global(cable_visual.points[point_index + 1])
+		if _segments_within_distance(cable_start, cable_end, player_axis_start, player_axis_end, contact_distance):
+			return true
+	return false
+
+func _segments_within_distance(a_start: Vector2, a_end: Vector2, b_start: Vector2, b_end: Vector2, distance: float) -> bool:
+	if _segments_intersect(a_start, a_end, b_start, b_end):
+		return true
+	var minimum_distance_squared := minf(
+		minf(_point_to_segment_distance_squared(a_start, b_start, b_end), _point_to_segment_distance_squared(a_end, b_start, b_end)),
+		minf(_point_to_segment_distance_squared(b_start, a_start, a_end), _point_to_segment_distance_squared(b_end, a_start, a_end))
+	)
+	return minimum_distance_squared <= distance * distance
+
+func _segments_intersect(a_start: Vector2, a_end: Vector2, b_start: Vector2, b_end: Vector2) -> bool:
+	var a_direction := a_end - a_start
+	var b_direction := b_end - b_start
+	var denominator := a_direction.cross(b_direction)
+	if is_zero_approx(denominator):
+		return false
+	var start_offset := b_start - a_start
+	var a_ratio := start_offset.cross(b_direction) / denominator
+	var b_ratio := start_offset.cross(a_direction) / denominator
+	return a_ratio >= 0.0 and a_ratio <= 1.0 and b_ratio >= 0.0 and b_ratio <= 1.0
+
+func _point_to_segment_distance_squared(point: Vector2, segment_start: Vector2, segment_end: Vector2) -> float:
+	var segment := segment_end - segment_start
+	var segment_length_squared := segment.length_squared()
+	if is_zero_approx(segment_length_squared):
+		return point.distance_squared_to(segment_start)
+	var closest_ratio := clampf((point - segment_start).dot(segment) / segment_length_squared, 0.0, 1.0)
+	var closest_point := segment_start + segment * closest_ratio
+	return point.distance_squared_to(closest_point)
 
 func take_damage(amount: int) -> void:
 	if current_health <= 0:
