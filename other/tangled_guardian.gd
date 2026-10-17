@@ -24,7 +24,7 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, JUMP_LEFT, JUMP_RIGHT, JUMP_SPIN }
 @export var arena_left_limit: float = -1080.0
 @export var arena_right_limit: float = 2240.0
 
-const INTRO_CENTER_TOLERANCE: float = 40.0
+const INTRO_SCREEN_X_FRACTION: float = 0.75
 const INTRO_FREEZE_DURATION: float = 1.2
 
 var current_health: int = 100
@@ -131,8 +131,14 @@ func _physics_process(delta: float) -> void:
 				_finish_attack()
 
 func _wait_for_player_to_approach(delta: float) -> void:
-	var camera := get_viewport().get_camera_2d()
-	var screen_center_x := camera.get_screen_center_position().x if camera else global_position.x
+	var viewport := get_viewport()
+	var camera := viewport.get_camera_2d()
+	var intro_position_reached := camera == null
+	if camera:
+		var screen_world_width := viewport.get_visible_rect().size.x / camera.zoom.x
+		var screen_left_world_x := camera.get_screen_center_position().x - screen_world_width * 0.5
+		var intro_trigger_world_x := screen_left_world_x + screen_world_width * INTRO_SCREEN_X_FRACTION
+		intro_position_reached = global_position.x >= screen_left_world_x and global_position.x <= intro_trigger_world_x
 	velocity.x = 0.0
 	if is_on_floor():
 		velocity.y = 0.0
@@ -140,7 +146,7 @@ func _wait_for_player_to_approach(delta: float) -> void:
 		velocity += get_gravity() * delta
 	move_and_slide()
 	_clamp_to_arena()
-	if is_on_floor() and absf(screen_center_x - global_position.x) <= INTRO_CENTER_TOLERANCE:
+	if is_on_floor() and intro_position_reached:
 		_start_boss_intro()
 
 func _update_attack_movement(delta: float) -> void:
