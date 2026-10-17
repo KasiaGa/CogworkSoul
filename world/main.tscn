@@ -120,7 +120,7 @@ animations = [{
 radius = 29.15476
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_da6y2"]
-size = Vector2(79, 1404)
+size = Vector2(98.5, 1401)
 
 [sub_resource type="SystemFont" id="SystemFont_r8g5k"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -264,7 +264,6 @@ autoplay = "default"
 frame = 2
 frame_progress = 0.90295535
 
-
 [node name="InteractionArea" parent="ItemNeedle" unique_id=1531639577 instance=ExtResource("10_2s3h7")]
 z_index = 60
 position = Vector2(2519, 37)
@@ -292,10 +291,6 @@ visible = false
 position = Vector2(-991, -735)
 texture = ExtResource("14_uf2or")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="wall4" unique_id=856614529]
-position = Vector2(-1118, -403)
-shape = SubResource("RectangleShape2D_da6y2")
-
 [node name="wall2" type="StaticBody2D" parent="." unique_id=4871535]
 
 [node name="Sprite2D" type="Sprite2D" parent="wall2" unique_id=2072668536]
@@ -305,7 +300,7 @@ rotation = -3.1415927
 texture = ExtResource("14_uf2or")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="wall2" unique_id=1052735118]
-position = Vector2(2397, 240)
+position = Vector2(2406, 77)
 shape = SubResource("RectangleShape2D_da6y2")
 
 [node name="wall3" type="StaticBody2D" parent="." unique_id=767395086]
@@ -533,7 +528,6 @@ scale = Vector2(0.44029847, 0.4402985)
 texture = ExtResource("27_mgog5")
 
 [node name="StaticBody2D19" type="StaticBody2D" parent="." unique_id=1872292358]
-visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D19" unique_id=1616839025]
 position = Vector2(-531, 469)
