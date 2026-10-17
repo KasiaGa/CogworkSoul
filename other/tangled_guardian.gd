@@ -20,12 +20,15 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, JUMP_LEFT, JUMP_RIGHT, JUMP_SPIN }
 @export var long_reach: float = 2800.0
 @export var spin_radius: float = 500.0
 @export var jump_horizontal_speed: float = 220.0
+@export_range(0.0, 1.0) var far_jump_chance: float = 0.2
+@export var far_jump_multiplier: float = 5.0
 @export var jump_velocity: float = -1400.0
 @export var arena_left_limit: float = -1080.0
 @export var arena_right_limit: float = 2240.0
 
 const INTRO_SCREEN_X_FRACTION: float = 0.75
 const INTRO_FREEZE_DURATION: float = 1.2
+const NEEDLE_HITS_FOR_RETALIATION: int = 5
 
 var current_health: int = 100
 var attack_state: int = AttackState.COOLDOWN
@@ -34,6 +37,9 @@ var attack_timer: float = 1.0
 var facing_direction: float = 1.0
 var last_attack_kind: int = -1
 var hit_player_this_attack: bool = false
+var active_jump_horizontal_speed: float = 0.0
+var needle_hits_since_retaliation: int = 0
+var retaliation_ready: bool = false
 var base_sprite_color: Color
 var hit_flash_tween: Tween
 var intro_started: bool = false
@@ -156,7 +162,7 @@ func _update_attack_movement(delta: float) -> void:
 			horizontal_jump_direction = -1.0
 		elif attack_kind == AttackKind.JUMP_RIGHT:
 			horizontal_jump_direction = 1.0
-	velocity.x = horizontal_jump_direction * jump_horizontal_speed
+	velocity.x = horizontal_jump_direction * active_jump_horizontal_speed
 	if is_on_floor() and velocity.y >= 0.0:
 		velocity.y = 0.0
 	else:
@@ -179,9 +185,13 @@ func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D
 
 func _begin_attack() -> void:
-	attack_kind = randi_range(0, AttackKind.JUMP_SPIN)
-	if attack_kind == last_attack_kind:
-		attack_kind = (attack_kind + 1) % (AttackKind.JUMP_SPIN + 1)
+	if retaliation_ready:
+		attack_kind = AttackKind.LONG_SPAN
+		retaliation_ready = false
+	else:
+		attack_kind = randi_range(0, AttackKind.JUMP_SPIN)
+		if attack_kind == last_attack_kind:
+			attack_kind = (attack_kind + 1) % (AttackKind.JUMP_SPIN + 1)
 	last_attack_kind = attack_kind
 	if attack_kind == AttackKind.JUMP_LEFT:
 		facing_direction = -1.0
@@ -208,6 +218,10 @@ func _activate_attack() -> void:
 	if _is_jump_attack():
 		velocity.y = jump_velocity
 	if attack_kind == AttackKind.JUMP_LEFT or attack_kind == AttackKind.JUMP_RIGHT:
+		active_jump_horizontal_speed = jump_horizontal_speed
+		if randf() < far_jump_chance:
+			active_jump_horizontal_speed *= far_jump_multiplier
+	if attack_kind == AttackKind.JUMP_LEFT or attack_kind == AttackKind.JUMP_RIGHT:
 		cable_visual.visible = false
 	if attack_kind == AttackKind.JUMP_SPIN:
 		attack_timer = 0.9
@@ -221,8 +235,9 @@ func _activate_attack() -> void:
 func _finish_attack() -> void:
 	cable_visual.visible = false
 	velocity.x = 0.0
+	active_jump_horizontal_speed = 0.0
 	attack_state = AttackState.COOLDOWN
-	attack_timer = attack_cooldown
+	attack_timer = 0.0 if retaliation_ready else attack_cooldown
 
 func _get_attack_line_points() -> PackedVector2Array:
 	match attack_kind:
@@ -335,6 +350,17 @@ func take_damage(amount: int) -> void:
 	_flash_white()
 	if current_health == 0:
 		_die()
+		return
+	_register_needle_hit()
+
+func _register_needle_hit() -> void:
+	needle_hits_since_retaliation += 1
+	if needle_hits_since_retaliation < NEEDLE_HITS_FOR_RETALIATION:
+		return
+	needle_hits_since_retaliation = 0
+	retaliation_ready = true
+	if intro_started and not intro_in_progress and attack_state == AttackState.COOLDOWN:
+		_begin_attack()
 
 func _award_silk_for_hit() -> void:
 	if Global.player_current_silk >= Global.player_max_silk:
