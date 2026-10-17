@@ -22,6 +22,9 @@ size = Vector2(2018.5417, 148.14282)
 radius = 27.0
 height = 274.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_BossRoomBoundary"]
+size = Vector2(40, 1200)
+
 [sub_resource type="SystemFont" id="SystemFont_5at20"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
@@ -260,6 +263,22 @@ shape = SubResource("RectangleShape2D_53s0n")
 position = Vector2(-1193, 476)
 target_scene = "uid://dy8x5xyss8ie5"
 spawn_location = Vector2(2200, -1400)
+
+[node name="BossExitBlocker" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 2
+position = Vector2(-1174, 251)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossExitBlocker"]
+shape = SubResource("RectangleShape2D_BossRoomBoundary")
+
+[node name="RoomRightBoundary" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 2
+position = Vector2(2375, 251)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomRightBoundary"]
+shape = SubResource("RectangleShape2D_BossRoomBoundary")
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1795760870]
 scroll_scale = Vector2(1.1, 1.1)

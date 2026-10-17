@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjotr"]
 size = Vector2(102, 108)
 
-[node name="TransitionZone" type="Area2D" unique_id=704157100]
+[node name="TransitionZone" type="Area2D" unique_id=704157100 groups=["room_transitions"]]
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_yk1gm")

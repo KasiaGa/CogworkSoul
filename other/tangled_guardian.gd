@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal defeated
+
 enum AttackState { COOLDOWN, TELEGRAPH, ACTIVE }
 enum AttackKind { SHORT_STRIKE, LONG_SPAN, CABLE_SPIN }
 
@@ -8,7 +10,6 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, CABLE_SPIN }
 @onready var health_bar = get_node_or_null("../CanvasLayer/BossHealthBar")
 @onready var boss_title = get_node_or_null("../CanvasLayer/BossTitle")
 @onready var silk_container = get_node_or_null("../CanvasLayer/SilkContainer")
-@onready var intro_notifier: VisibleOnScreenNotifier2D = $IntroVisibilityNotifier
 @onready var intro_label = get_node_or_null("../CanvasLayer/BossIntroTitle")
 
 @export var max_health: int = 100
@@ -26,6 +27,9 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, CABLE_SPIN }
 @export var arena_left_limit: float = -1080.0
 @export var arena_right_limit: float = 2240.0
 
+const INTRO_CENTER_TOLERANCE: float = 40.0
+const INTRO_FREEZE_DURATION: float = 1.2
+
 var current_health: int = 100
 var attack_state: int = AttackState.COOLDOWN
 var attack_kind: int = AttackKind.SHORT_STRIKE
@@ -39,6 +43,7 @@ var movement_choice_timer: float = 0.0
 var jump_timer: float = 0.0
 var hit_flash_tween: Tween
 var intro_started: bool = false
+var intro_in_progress: bool = false
 
 func _ready() -> void:
 	current_health = max_health
@@ -50,23 +55,38 @@ func _ready() -> void:
 		health_bar.value = current_health
 	if boss_title:
 		boss_title.text = "TANGLED GUARDIAN"
-	intro_notifier.screen_entered.connect(_start_boss_intro)
 
 func _start_boss_intro() -> void:
 	if intro_started:
 		return
 	intro_started = true
+	intro_in_progress = true
+	var player := _get_player()
+	var player_was_transitioning := false
+	if player:
+		player_was_transitioning = bool(player.get("is_transitioning"))
+		player.set("is_transitioning", true)
+		player.set("velocity", Vector2.ZERO)
+	var was_paused := get_tree().paused
+	get_tree().paused = true
+
 	if intro_label:
 		intro_label.visible = true
 		intro_label.modulate = Color(1.0, 1.0, 1.0, 0.0)
 		var title_tween := create_tween()
+		title_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		title_tween.tween_property(intro_label, "modulate:a", 1.0, 0.35)
 		title_tween.tween_interval(2.4)
 		title_tween.tween_property(intro_label, "modulate:a", 0.0, 0.6)
 		title_tween.tween_callback(func(): intro_label.visible = false)
 
 	for pulse_index in range(3):
-		get_tree().create_timer(float(pulse_index) * 0.24).timeout.connect(_create_radiance_pulse)
+		get_tree().create_timer(float(pulse_index) * 0.24, true).timeout.connect(_create_radiance_pulse)
+	await get_tree().create_timer(INTRO_FREEZE_DURATION, true).timeout
+	if is_instance_valid(player):
+		player.set("is_transitioning", player_was_transitioning)
+	intro_in_progress = false
+	get_tree().paused = was_paused
 
 func _create_radiance_pulse() -> void:
 	var ring := Line2D.new()
@@ -86,13 +106,20 @@ func _create_radiance_pulse() -> void:
 	add_child(ring)
 
 	var pulse_tween := create_tween()
+	pulse_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	pulse_tween.set_parallel(true)
 	pulse_tween.tween_property(ring, "scale", Vector2(2.2, 2.2), 0.72)
 	pulse_tween.tween_property(ring, "modulate:a", 0.0, 0.72)
-	get_tree().create_timer(0.75).timeout.connect(ring.queue_free)
+	get_tree().create_timer(0.75, true).timeout.connect(ring.queue_free)
 
 func _physics_process(delta: float) -> void:
 	if current_health <= 0:
+		return
+	if intro_in_progress:
+		velocity = Vector2.ZERO
+		return
+	if not intro_started:
+		_move_toward_screen_center(delta)
 		return
 	_update_movement(delta)
 	attack_timer -= delta
@@ -109,6 +136,22 @@ func _physics_process(delta: float) -> void:
 			_check_player_hit()
 			if attack_timer <= 0.0:
 				_finish_attack()
+
+func _move_toward_screen_center(delta: float) -> void:
+	var camera := get_viewport().get_camera_2d()
+	var screen_center_x := camera.get_screen_center_position().x if camera else global_position.x
+	var distance_to_center := screen_center_x - global_position.x
+	velocity.x = 0.0 if absf(distance_to_center) <= INTRO_CENTER_TOLERANCE else signf(distance_to_center) * movement_speed
+	if not is_zero_approx(velocity.x):
+		guardian_sprite.flip_h = velocity.x > 0.0
+	if is_on_floor():
+		velocity.y = 0.0
+	else:
+		velocity += get_gravity() * delta
+	move_and_slide()
+	_clamp_to_arena()
+	if is_on_floor() and absf(screen_center_x - global_position.x) <= INTRO_CENTER_TOLERANCE:
+		_start_boss_intro()
 
 func _update_movement(delta: float) -> void:
 	var player := _get_player()
@@ -146,6 +189,11 @@ func _update_movement(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	move_and_slide()
+	_clamp_to_arena()
+
+func _clamp_to_arena() -> void:
+	if arena_left_limit <= arena_right_limit:
+		global_position.x = clampf(global_position.x, arena_left_limit, arena_right_limit)
 
 func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D
@@ -275,4 +323,7 @@ func _die() -> void:
 	if boss_title:
 		boss_title.text = "TANGLED GUARDIAN DEFEATED"
 		boss_title.visible = true
+	if intro_label:
+		intro_label.visible = false
+	defeated.emit()
 	queue_free()
