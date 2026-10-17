@@ -167,6 +167,23 @@ grow_horizontal = 2
 value = 100.0
 show_percentage = false
 
+[node name="BossIntroTitle" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 2
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 34.0
+offset_top = -96.0
+offset_right = 470.0
+offset_bottom = -40.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 32
+text = "Tangled Guardian"
+
 [node name="NotificationBox" type="PanelContainer" parent="CanvasLayer" unique_id=216334181]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 2
