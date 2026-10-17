@@ -869,7 +869,7 @@ modification_stack = SubResource("SkeletonModificationStack2D_da6y2")
 
 [node name="UpperArm" type="Bone2D" parent="MechanicalArm/Skeleton2D" unique_id=831768054]
 position = Vector2(232, 128.00002)
-rotation = -0.78834057
+rotation = -0.7883382
 scale = Vector2(0.9999462, 0.9999462)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 metadata/_local_pose_override_enabled_ = true
@@ -881,7 +881,6 @@ texture = ExtResource("38_itgwo")
 
 [node name="LowerArm" type="Bone2D" parent="MechanicalArm/Skeleton2D/UpperArm" unique_id=1518333441]
 position = Vector2(10.26615, -19.561655)
-rotation = -1.0874972
 scale = Vector2(0.9999997, 0.9999997)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 metadata/_local_pose_override_enabled_ = true
@@ -1310,3 +1309,8 @@ sprite_frames = SubResource("SpriteFrames_l85j0")
 autoplay = "default"
 frame = 5
 frame_progress = 0.23641412
+
+[node name="Bench2" parent="." unique_id=1398936995 instance=ExtResource("47_dqe3w")]
+position = Vector2(2005, -1387)
+scale = Vector2(0.42, 0.42)
+object_texture = ExtResource("48_lh44e")
