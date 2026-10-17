@@ -335,13 +335,13 @@ func setup_navigation_paths() -> void:
 	# Get a clean array containing ONLY the slots that are currently visible
 	var visible_items = item_grid.get_children().filter(func(node): return node.visible)
 	
-	# Set up tab navigation: Inventory -> Modules -> Wishes -> Map -> Inventory
-	inventory_button.focus_neighbor_right = modules_button.get_path()
-	modules_button.focus_neighbor_left = inventory_button.get_path()
-	modules_button.focus_neighbor_right = wishs_button.get_path()
-	wishs_button.focus_neighbor_left = modules_button.get_path()
-	wishs_button.focus_neighbor_right = map_button.get_path()
-	map_button.focus_neighbor_left = wishs_button.get_path()
+	# Set up tab navigation: Items -> Wishes -> Modules -> Map -> Items
+	inventory_button.focus_neighbor_right = wishs_button.get_path()
+	wishs_button.focus_neighbor_left = inventory_button.get_path()
+	wishs_button.focus_neighbor_right = modules_button.get_path()
+	modules_button.focus_neighbor_left = wishs_button.get_path()
+	modules_button.focus_neighbor_right = map_button.get_path()
+	map_button.focus_neighbor_left = modules_button.get_path()
 	map_button.focus_neighbor_right = inventory_button.get_path()
 	inventory_button.focus_neighbor_left = map_button.get_path()
 	
@@ -359,17 +359,14 @@ func setup_navigation_paths() -> void:
 		item.focus_neighbor_top = NodePath("")
 		item.focus_neighbor_bottom = NodePath("")
 	
-	# 1. Last item -> Modules button (first tab after items)
-	last_item.focus_neighbor_right = modules_button.get_path()
+	# 1. Last item -> Wishes button (next tab after the items)
+	last_item.focus_neighbor_right = wishs_button.get_path()
 	
 	# 2. Inventory button -> First item
 	inventory_button.focus_neighbor_right = first_item.get_path()
 	
-	# 3. Reverse cycling directions (Left Arrow Support)
+	# 3. Connect the items to the tab cycle in both directions
 	first_item.focus_neighbor_left = inventory_button.get_path()
-	inventory_button.focus_neighbor_left = map_button.get_path()
-	wishs_button.focus_neighbor_left = modules_button.get_path()
-	map_button.focus_neighbor_left = wishs_button.get_path()
 	
 	# 4. Prevent UP Arrow on items from breaking UI. It will now jump cleanly back up to the tabs
 	for item in visible_items:
