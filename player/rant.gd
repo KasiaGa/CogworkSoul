@@ -15,6 +15,7 @@ extends CharacterBody2D
 
 @onready var wall_detector: RayCast2D = $AttackArea/WallDetector
 @onready var ledge_detector: RayCast2D = $AttackArea/LedgeDetector
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 @onready var wren_sfx: AudioStreamPlayer = $WrenSfx
 @onready var hurt_sfx: AudioStreamPlayer = $HurtSfx
@@ -51,6 +52,8 @@ var is_currently_running: bool = false
 var was_on_floor: bool = true
 var squash_tween: Tween = null
 var air_time: float = 0.0
+var fall_peak_y: float = 0.0
+var landing_animation_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 var coyote_timer: float = 0.0
 
@@ -60,6 +63,7 @@ const JUMP_VELOCITY = -1400.0
 const JUMP_BUFFER_TIME: float = 0.15
 const COYOTE_TIME: float = 0.12
 const JUMP_RELEASE_MULTIPLIER: float = 0.45
+const LANDING_ANIMATION_DURATION: float = 0.22
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -128,6 +132,8 @@ func _physics_process(delta: float) -> void:
 			
 	# Run our check every frame we are mid-air
 	check_ledge_climb()
+	if is_climbing:
+		return
 	
 	# Handle intro animations (lie and get_up)
 	if Global.should_play_lie_animation:
@@ -191,7 +197,9 @@ func _physics_process(delta: float) -> void:
 	var current_speed = SPEED
 	
 	# 1. DYNAMIC ANIMATION HANDLING
-	if not is_attacking:
+	if landing_animation_timer > 0.0:
+		landing_animation_timer = maxf(landing_animation_timer - delta, 0.0)
+	if not is_attacking and landing_animation_timer <= 0.0:
 		# If we have the needle, suffix is "". If not, suffix is "_no_needle"
 		var anim_suffix := "" if Global.has_needle else "_no_needle"
 		
@@ -262,8 +270,13 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Jump
-	if not is_on_floor():
+	# Landing and fall distance
+	var on_floor := is_on_floor()
+	if not on_floor:
+		if was_on_floor:
+			fall_peak_y = global_position.y
+		else:
+			fall_peak_y = minf(fall_peak_y, global_position.y)
 		air_time += delta
 	else:
 		# Only trigger landing squash if airborne for more than 0.1 seconds (ignores tile seams)
@@ -271,11 +284,16 @@ func _physics_process(delta: float) -> void:
 			var impact_factor = clamp(remap(velocity.y, 0, 1500, 0.95, 0.9), 0.9, 0.95)
 			var stretch_x = 1.0 + (1.0 - impact_factor)
 			apply_squash_and_stretch(Vector2(stretch_x, impact_factor), 0.05, 0.15)
+			var fall_distance := global_position.y - fall_peak_y
+			if fall_distance >= _get_rant_height():
+				rant.play("fall")
+				landing_animation_timer = LANDING_ANIMATION_DURATION
+				_spawn_landing_impact_effect()
 		
 		# Reset the timer as long as we stay grounded
 		air_time = 0.0
 		
-	was_on_floor = is_on_floor()
+	was_on_floor = on_floor
 
 	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
 		velocity.y = JUMP_VELOCITY
@@ -313,6 +331,43 @@ func _physics_process(delta: float) -> void:
 		$AttackArea.scale.x = -1
 
 	handleCollision()
+
+func _get_rant_height() -> float:
+	var idle_frame: Texture2D = rant.sprite_frames.get_frame_texture("idle", 0)
+	if idle_frame:
+		return idle_frame.get_height() * absf(rant.global_scale.y)
+	var capsule_shape := collision_shape.shape as CapsuleShape2D
+	if capsule_shape:
+		return capsule_shape.height * absf(collision_shape.global_scale.y)
+	return 288.0 * absf(global_scale.y)
+
+func _spawn_landing_impact_effect() -> void:
+	var impact_ring := Line2D.new()
+	impact_ring.name = "LandingImpactRing"
+	impact_ring.width = 4.0
+	impact_ring.default_color = Color(1.0, 1.0, 1.0, 0.95)
+	impact_ring.closed = true
+	impact_ring.antialiased = true
+	var impact_points := PackedVector2Array()
+	for point_index in range(32):
+		var angle := TAU * float(point_index) / 32.0
+		impact_points.append(Vector2(cos(angle) * 32.0, sin(angle) * 8.0))
+	impact_ring.points = impact_points
+	impact_ring.z_index = -1
+	var feet_y := collision_shape.position.y
+	var capsule_shape := collision_shape.shape as CapsuleShape2D
+	if capsule_shape:
+		feet_y += capsule_shape.height * collision_shape.scale.y * 0.5
+	impact_ring.position = Vector2(collision_shape.position.x, feet_y - 4.0)
+	impact_ring.scale = Vector2(0.65, 0.6)
+	add_child(impact_ring)
+
+	var impact_tween := create_tween()
+	impact_tween.set_parallel(true)
+	impact_tween.tween_property(impact_ring, "scale", Vector2(1.8, 1.6), 0.28)
+	impact_tween.tween_property(impact_ring, "modulate:a", 0.0, 0.28)
+	impact_tween.set_parallel(false)
+	impact_tween.tween_callback(impact_ring.queue_free)
 
 func handleCollision():
 	# If player recently took damage, don't check for more yet
@@ -560,9 +615,8 @@ func check_ledge_climb():
 func start_ledge_climb():
 	is_climbing = true
 	velocity = Vector2.ZERO # Halt physics movement
-	
-	# Play your climb animation here if you have one
-	# rant.play("climb") 
+	if rant.sprite_frames.has_animation("climb"):
+		rant.play("climb")
 	
 	# Determine which direction we are facing to calculate the step forward
 	var direction_modifier = 1.0 if Global.player_facing_right else -1.0
