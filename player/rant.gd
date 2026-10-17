@@ -51,10 +51,15 @@ var is_currently_running: bool = false
 var was_on_floor: bool = true
 var squash_tween: Tween = null
 var air_time: float = 0.0
+var jump_buffer_timer: float = 0.0
+var coyote_timer: float = 0.0
 
 const SPEED = 300.0
 const RUN_SPEED = 600.0
 const JUMP_VELOCITY = -1400.0
+const JUMP_BUFFER_TIME: float = 0.15
+const COYOTE_TIME: float = 0.12
+const JUMP_RELEASE_MULTIPLIER: float = 0.45
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -242,6 +247,17 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("run"):
 		current_speed = RUN_SPEED     
 
+	# Buffer jump input and refresh coyote time before applying gravity.
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = JUMP_BUFFER_TIME
+	else:
+		jump_buffer_timer = maxf(jump_buffer_timer - delta, 0.0)
+
+	if is_on_floor():
+		coyote_timer = COYOTE_TIME
+	else:
+		coyote_timer = maxf(coyote_timer - delta, 0.0)
+
 	# Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -261,10 +277,16 @@ func _physics_process(delta: float) -> void:
 		
 	was_on_floor = is_on_floor()
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
 		velocity.y = JUMP_VELOCITY
+		jump_buffer_timer = 0.0
+		coyote_timer = 0.0
 		# Vertical stretch on jump takeoff
 		apply_squash_and_stretch(Vector2(0.9, 1.1), 0.08, 0.15)
+
+	# Releasing jump early cuts the upward speed for a shorter hop.
+	if not Input.is_action_pressed("jump") and velocity.y < JUMP_VELOCITY * JUMP_RELEASE_MULTIPLIER:
+		velocity.y = JUMP_VELOCITY * JUMP_RELEASE_MULTIPLIER
 
 	# Movement input
 	var direction := Input.get_axis("left", "right")
