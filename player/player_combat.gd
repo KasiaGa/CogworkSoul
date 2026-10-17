@@ -1,7 +1,7 @@
 extends Node
 
 const NEEDLE_DIALOGUE_FILE = preload("res://dialogue/rant_needle.dialogue")
-const DEFAULT_ATTACK_DURATION: float = 0.3
+const DEFAULT_ATTACK_DURATION: float = 0.15
 const MAX_TRAIL_POINTS: int = 10
 
 @onready var player = get_parent()

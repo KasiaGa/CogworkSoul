@@ -623,6 +623,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_utlov"]
 resource_name = "attack_trail"
+length = 0.15
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -630,7 +631,7 @@ tracks/0/path = NodePath("AttackArea/AttackRig/WeaponTip:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.033333335, 0.1, 0.16666667, 0.23333333, 0.3),
+"times": PackedFloat32Array(0.016666668, 0.05, 0.083333336, 0.11666667, 0.15),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-94, 40), Vector2(-55, 87), Vector2(-9, 98), Vector2(46, 76), Vector2(103, 30)]
