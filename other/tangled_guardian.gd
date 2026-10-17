@@ -20,8 +20,8 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, JUMP_LEFT, JUMP_RIGHT, JUMP_SPIN }
 @export var long_reach: float = 2800.0
 @export var spin_radius: float = 500.0
 @export var jump_horizontal_speed: float = 220.0
-@export_range(0.0, 1.0) var far_jump_chance: float = 0.2
-@export var far_jump_multiplier: float = 5.0
+@export_range(0.0, 1.0) var far_jump_chance: float = 0.3
+@export var far_jump_multiplier: float = 10.0
 @export var jump_velocity: float = -1400.0
 @export var arena_left_limit: float = -1080.0
 @export var arena_right_limit: float = 2240.0
@@ -29,6 +29,8 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, JUMP_LEFT, JUMP_RIGHT, JUMP_SPIN }
 const INTRO_SCREEN_X_FRACTION: float = 0.75
 const INTRO_FREEZE_DURATION: float = 1.2
 const NEEDLE_HITS_FOR_RETALIATION: int = 5
+const SPIN_ROTATION_SPEED: float = 20.0
+const SPIN_ATTACK_DURATION: float = 1.25
 
 var current_health: int = 100
 var attack_state: int = AttackState.COOLDOWN
@@ -131,7 +133,7 @@ func _physics_process(delta: float) -> void:
 				_activate_attack()
 		AttackState.ACTIVE:
 			if attack_kind == AttackKind.JUMP_SPIN:
-				cable_visual.rotation += delta * 8.0
+				cable_visual.rotation += delta * SPIN_ROTATION_SPEED
 			_check_player_hit()
 			if attack_timer <= 0.0 and (not _is_jump_attack() or is_on_floor()):
 				_finish_attack()
@@ -224,7 +226,7 @@ func _activate_attack() -> void:
 	if attack_kind == AttackKind.JUMP_LEFT or attack_kind == AttackKind.JUMP_RIGHT:
 		cable_visual.visible = false
 	if attack_kind == AttackKind.JUMP_SPIN:
-		attack_timer = 0.9
+		attack_timer = SPIN_ATTACK_DURATION
 	elif attack_kind == AttackKind.JUMP_LEFT or attack_kind == AttackKind.JUMP_RIGHT:
 		attack_timer = 0.45
 	else:
