@@ -7,14 +7,22 @@ enum AttackKind { SHORT_STRIKE, LONG_SPAN, CABLE_SPIN }
 @onready var guardian_sprite: Sprite2D = $Sprite2D
 @onready var health_bar = get_node_or_null("../CanvasLayer/BossHealthBar")
 @onready var boss_title = get_node_or_null("../CanvasLayer/BossTitle")
+@onready var silk_container = get_node_or_null("../CanvasLayer/SilkContainer")
 
 @export var max_health: int = 100
 @export var attack_damage: int = 1
 @export var attack_cooldown: float = 1.2
 @export var telegraph_time: float = 0.75
-@export var short_reach: float = 260.0
-@export var long_reach: float = 1050.0
-@export var spin_radius: float = 245.0
+@export var short_reach: float = 400.0
+@export var long_reach: float = 1500.0
+@export var spin_radius: float = 360.0
+@export var movement_speed: float = 180.0
+@export var jump_velocity: float = -1400.0
+@export var jump_interval_min: float = 2.0
+@export var jump_interval_max: float = 3.5
+@export var preferred_player_distance: float = 285.0
+@export var arena_left_limit: float = -1080.0
+@export var arena_right_limit: float = 2240.0
 
 var current_health: int = 100
 var attack_state: int = AttackState.COOLDOWN
@@ -24,10 +32,15 @@ var facing_direction: float = 1.0
 var last_attack_kind: int = -1
 var hit_player_this_attack: bool = false
 var base_sprite_color: Color
+var movement_direction: float = 0.0
+var movement_choice_timer: float = 0.0
+var jump_timer: float = 0.0
+var hit_flash_tween: Tween
 
 func _ready() -> void:
 	current_health = max_health
 	base_sprite_color = guardian_sprite.modulate
+	jump_timer = randf_range(jump_interval_min, jump_interval_max)
 	cable_visual.visible = false
 	if health_bar:
 		health_bar.max_value = max_health
@@ -38,6 +51,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if current_health <= 0:
 		return
+	_update_movement(delta)
 	attack_timer -= delta
 	match attack_state:
 		AttackState.COOLDOWN:
@@ -52,6 +66,43 @@ func _physics_process(delta: float) -> void:
 			_check_player_hit()
 			if attack_timer <= 0.0:
 				_finish_attack()
+
+func _update_movement(delta: float) -> void:
+	var player := _get_player()
+	if player:
+		var player_offset_x := player.global_position.x - global_position.x
+		if abs(player_offset_x) > preferred_player_distance:
+			movement_direction = sign(player_offset_x)
+		else:
+			movement_choice_timer -= delta
+			if movement_choice_timer <= 0.0:
+				movement_direction = float(randi_range(-1, 1))
+				movement_choice_timer = randf_range(0.8, 1.6)
+
+		if attack_state == AttackState.COOLDOWN and not is_zero_approx(player_offset_x):
+			guardian_sprite.flip_h = player_offset_x > 0.0
+	else:
+		movement_choice_timer -= delta
+		if movement_choice_timer <= 0.0:
+			movement_direction = float(randi_range(-1, 1))
+			movement_choice_timer = randf_range(0.8, 1.6)
+
+	if global_position.x <= arena_left_limit:
+		movement_direction = maxf(movement_direction, 0.0)
+	elif global_position.x >= arena_right_limit:
+		movement_direction = minf(movement_direction, 0.0)
+	velocity.x = movement_direction * movement_speed
+
+	if is_on_floor():
+		velocity.y = 0.0
+		jump_timer -= delta
+		if jump_timer <= 0.0:
+			velocity.y = jump_velocity
+			jump_timer = randf_range(jump_interval_min, jump_interval_max)
+	else:
+		velocity += get_gravity() * delta
+
+	move_and_slide()
 
 func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D
@@ -74,14 +125,14 @@ func _begin_attack() -> void:
 	cable_visual.rotation = 0.0
 	cable_visual.points = _get_attack_line_points()
 	cable_visual.default_color = Color(1.0, 0.72, 0.18, 0.9)
-	cable_visual.width = 12.0
+	cable_visual.width = 16.0
 	cable_visual.visible = true
 
 func _activate_attack() -> void:
 	attack_state = AttackState.ACTIVE
 	attack_timer = 0.9 if attack_kind == AttackKind.CABLE_SPIN else 0.3
 	cable_visual.default_color = Color(1.0, 0.16, 0.08, 1.0)
-	cable_visual.width = 20.0
+	cable_visual.width = 26.0
 
 func _finish_attack() -> void:
 	cable_visual.visible = false
@@ -147,14 +198,32 @@ func take_damage(amount: int) -> void:
 	if current_health <= 0:
 		return
 	current_health = max(0, current_health - amount)
+	_award_silk_for_hit()
 	if health_bar:
 		health_bar.value = current_health
 
-	var tween := create_tween()
-	tween.tween_property(guardian_sprite, "modulate", Color(1.5, 0.35, 0.25, 1), 0.08)
-	tween.tween_property(guardian_sprite, "modulate", base_sprite_color, 0.14)
+	_flash_white()
 	if current_health == 0:
 		_die()
+
+func _award_silk_for_hit() -> void:
+	if Global.player_current_silk >= Global.player_max_silk:
+		return
+	var player := _get_player()
+	if player == null or not player.has_method("set_current_silk"):
+		return
+	var updated_silk := Global.player_current_silk + 1
+	player.call("set_current_silk", updated_silk)
+	if silk_container and silk_container.has_method("updateSilk"):
+		silk_container.call("updateSilk", updated_silk)
+
+func _flash_white() -> void:
+	if hit_flash_tween and hit_flash_tween.is_running():
+		hit_flash_tween.kill()
+	guardian_sprite.modulate = base_sprite_color
+	hit_flash_tween = create_tween()
+	hit_flash_tween.tween_property(guardian_sprite, "modulate", Color(100.0, 100.0, 100.0, 1.0), 0.05)
+	hit_flash_tween.tween_property(guardian_sprite, "modulate", base_sprite_color, 0.12)
 
 func _die() -> void:
 	cable_visual.visible = false
