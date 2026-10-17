@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dkhavqrbtwemu" path="res://assets/images/player/rant_idle_sprite.png" id="1_jmujq"]
 [ext_resource type="AudioStream" uid="uid://883a3uh2pa8u" path="res://assets/sounds/wren1.wav" id="2_13v2o"]
 [ext_resource type="Texture2D" uid="uid://du001uu5plfy5" path="res://assets/images/player/rant_idle_no_needle_sprite.png" id="2_d0hce"]
+[ext_resource type="Script" path="res://player/player_combat.gd" id="player_combat"]
 [ext_resource type="AudioStream" uid="uid://6srsco7uv23w" path="res://assets/sounds/ha2.wav" id="2_vytcd"]
 [ext_resource type="AudioStream" uid="uid://ccldhrpjbp1au" path="res://assets/sounds/ha3.wav" id="3_8bg10"]
 [ext_resource type="Texture2D" uid="uid://djm4yqcmcskxj" path="res://assets/images/player/rant_jumping_scaled.png" id="3_8ib8x"]
@@ -602,12 +603,15 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_da6y2"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
+[sub_resource type="Gradient" id="Gradient_brass_slash"]
+colors = PackedColorArray(0.62, 0.25, 0.06, 0, 1, 0.62, 0.12, 0.95)
+
 [sub_resource type="Animation" id="Animation_vol7i"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AttackArea/WeaponTip:position")
+tracks/0/path = NodePath("AttackArea/AttackRig/WeaponTip:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -622,7 +626,7 @@ resource_name = "attack_trail"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AttackArea/WeaponTip:position")
+tracks/0/path = NodePath("AttackArea/AttackRig/WeaponTip:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -663,6 +667,8 @@ shape = SubResource("CapsuleShape2D_mjotr")
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=2077513038]
 
+[node name="AttackRig" type="Node2D" parent="AttackArea"]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1854880106]
 position = Vector2(-26.999998, 16)
 rotation = -0.20420352
@@ -676,10 +682,19 @@ target_position = Vector2(60, 0)
 position = Vector2(-16, 59)
 target_position = Vector2(60, 0)
 
-[node name="WeaponTip" type="Node2D" parent="AttackArea" unique_id=93816888]
+[node name="WeaponTip" type="Node2D" parent="AttackArea/AttackRig" unique_id=93816888]
 position = Vector2(115, 36)
 
-[node name="SlashTrail" type="Line2D" parent="AttackArea" unique_id=1003770793]
+[node name="BrassSlashTrail" type="Line2D" parent="AttackArea/AttackRig"]
+position = Vector2(-22, 103)
+visible = false
+points = PackedVector2Array(104, -56, 104, -56)
+width = 15.0
+gradient = SubResource("Gradient_brass_slash")
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="SlashTrail" type="Line2D" parent="AttackArea/AttackRig" unique_id=1003770793]
 position = Vector2(-22, 103)
 points = PackedVector2Array(104, -56, 104, -56)
 width = 7.0
@@ -705,5 +720,8 @@ end_cap_mode = 2
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1800327982]
 libraries/ = SubResource("AnimationLibrary_vnc7o")
 
-[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
-[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
+[node name="CombatController" type="Node" parent="."]
+script = ExtResource("player_combat")
+
+[connection signal="area_entered" from="AttackArea" to="CombatController" method="_on_attack_area_area_entered"]
+[connection signal="body_entered" from="AttackArea" to="CombatController" method="_on_attack_area_body_entered"]

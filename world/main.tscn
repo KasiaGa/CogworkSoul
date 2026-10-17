@@ -285,6 +285,25 @@ action_name = "Take"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResonanceCoilModule/InteractionArea"]
 shape = SubResource("CircleShape2D_shard_module")
 
+[node name="BrassSlashModule" type="StaticBody2D" parent="."]
+position = Vector2(1200, 560)
+collision_mask = 2
+script = ExtResource("11_37le6")
+item_id = "brass_slash"
+item_type = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="BrassSlashModule"]
+modulate = Color(1.25, 0.72, 0.32, 1)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("35_coilmodule")
+
+[node name="InteractionArea" parent="BrassSlashModule" instance=ExtResource("10_2s3h7")]
+position = Vector2(0, -30)
+action_name = "Take"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BrassSlashModule/InteractionArea"]
+shape = SubResource("CircleShape2D_shard_module")
+
 [node name="wall" type="StaticBody2D" parent="." unique_id=457805125]
 
 [node name="Sprite2D" type="Sprite2D" parent="wall" unique_id=167718611]

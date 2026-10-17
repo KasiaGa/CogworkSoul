@@ -39,6 +39,12 @@ var module_database: Dictionary = {
 		"image_path": "res://assets/images/item/item.png",
 		"bonus_damage_every": 3,
 		"bonus_damage_multiplier": 2.0
+	},
+	"brass_slash": {
+		"name": "Brass Slash",
+		"description": "Extends the needle's reach by 25% and leaves a brass-gold slash trail.",
+		"image_path": "res://assets/images/item/item.png",
+		"attack_reach_multiplier": 1.25
 	}
 }
 

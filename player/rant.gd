@@ -1,9 +1,8 @@
 extends CharacterBody2D
 @onready var rant: AnimatedSprite2D = $rant
-@onready var dialogue: CanvasLayer = $"../CanvasLayer/Dialogue"
 @onready var health_container: HBoxContainer = $"../CanvasLayer/HealthContainer"
 @onready var silk_container: HBoxContainer = $"../CanvasLayer/SilkContainer"
-@onready var attack_collision: CollisionShape2D = $AttackArea/CollisionShape2D
+@onready var combat_controller = $CombatController
 
 @onready var startHealth: int = 5
 @onready var startSilk: int = 0
@@ -17,10 +16,6 @@ extends CharacterBody2D
 @onready var wall_detector: RayCast2D = $AttackArea/WallDetector
 @onready var ledge_detector: RayCast2D = $AttackArea/LedgeDetector
 
-@onready var weapon_tip: Node2D = $AttackArea/WeaponTip
-@onready var slash_trail: Line2D = $AttackArea/SlashTrail
-
-@onready var attack_sfx: AudioStreamPlayer = $AttackSfx
 @onready var wren_sfx: AudioStreamPlayer = $WrenSfx
 @onready var hurt_sfx: AudioStreamPlayer = $HurtSfx
 @onready var talk_sfx: AudioStreamPlayer = $TalkSfx
@@ -57,14 +52,9 @@ var was_on_floor: bool = true
 var squash_tween: Tween = null
 var air_time: float = 0.0
 
-var trail_points: Array[Vector2] = []
-var max_trail_points: int = 10
-
 const SPEED = 300.0
 const RUN_SPEED = 600.0
 const JUMP_VELOCITY = -1400.0
-
-const DIALOGUE_FILE = preload("res://dialogue/rant_needle.dialogue")
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -111,8 +101,6 @@ func _ready():
 			await get_tree().create_timer(0.1).timeout
 			is_transitioning = false
 		
-	attack_collision.disabled = true
-	
 	# If we just respawned via checkpoint (and screen was faded to black), fade back in
 	if should_fade_in:
 		velocity.x = SPEED * (1.0 if Global.player_facing_right else -1.0)
@@ -216,54 +204,7 @@ func _physics_process(delta: float) -> void:
 		if walk_sfx.playing:
 			walk_sfx.stop()
 			
-	if is_attacking and weapon_tip and slash_trail:
-		# Capture the current animated position of WeaponTip
-		trail_points.append(slash_trail.to_local(weapon_tip.global_position))
-		
-		# Limit the trail length (adjust max_trail_points as needed)
-		if trail_points.size() > max_trail_points:
-			trail_points.pop_front()
-			
-		slash_trail.points = trail_points
-	else:
-		# Fade out the trail when the attack ends
-		if trail_points.size() > 0:
-			trail_points.pop_front()
-			slash_trail.points = trail_points
-
-	# 2. GATED ATTACK INPUT
-	# Added "and Global.has_needle" so clicking 'X' does nothing without it!
-	if Input.is_action_just_pressed("attack") and not is_attacking and Global.has_needle:
-		if not Global.rant_needle_played:
-			Global.rant_needle_played = true
-			Global.save_game()
-			if dialogue and dialogue.has_method("start"):
-				dialogue.start(DIALOGUE_FILE, "rant_needle")
-		
-		is_attacking = true
-		
-		# 1. FORCE CLEAR the trail points so old points don't confuse the new swing
-		trail_points.clear()
-		if slash_trail:
-			slash_trail.points = []
-
-		# 2. RESTART the AnimationPlayer from 0.0 seconds
-		if $AnimationPlayer.is_playing():
-			$AnimationPlayer.stop()
-		$AnimationPlayer.play("attack_trail")
-
-		# 3. Play sprite attack animation
-		rant.play("attack")
-		attack_collision.disabled = false 
-		
-		if attack_sounds.size() > 0:
-			attack_sfx.stream = attack_sounds.pick_random()
-			attack_sfx.play()
-
-		await get_tree().create_timer(0.3).timeout 
-		
-		attack_collision.disabled = true 
-		is_attacking = false
+	combat_controller.try_start_attack()
 
 	# 3. WREN ABILITY - Convert 5 silk to 5 health
 	if Input.is_action_just_pressed("wren") and not is_wren_active and not is_attacking and currentSilk >= 5:
@@ -385,9 +326,8 @@ func take_damage(amount: int):
 	if currentHealth <= 0:
 		is_dead = true
 		is_invincible = true
-		# Stop any ongoing attack and disable hitbox
-		is_attacking = false
-		attack_collision.disabled = true
+		# Stop any ongoing attack and disable its hitbox
+		combat_controller.cancel_attack()
 		rant.play("death")
 		# Flash the player a few times to indicate death
 		var tw_death = create_tween()
@@ -580,22 +520,6 @@ func break_cocoon() -> void:
 	set_current_silk(maxSilk)  # Grant max silk for breaking free
 	silk_container.updateSilk(currentSilk)
 
-func _on_attack_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemies") and body.has_method("take_damage"):
-		body.take_damage(1)
-	elif body.is_in_group("cocoon") and body.has_method("take_cocoon_damage"):
-		body.take_cocoon_damage(1)
-	elif body.is_in_group("breakable") and body.has_method("take_damage"):
-		body.take_damage(1)
-		
-func _on_attack_area_area_entered(area: Area2D) -> void:
-	# Check if the player's attack hit the Cocoon Area2D
-	if area.is_in_group("cocoon") and area.has_method("take_cocoon_damage"):
-		area.take_cocoon_damage(1)
-	if area.is_in_group("breakable") and area.has_method("take_damage"):
-		area.take_damage(1)
-		
-		
 func check_ledge_climb():
 	# If the player is back on the ground, reset their ability to climb again
 	if is_on_floor():
