@@ -119,7 +119,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		return
 	if not intro_started:
-		_move_toward_screen_center(delta)
+		_wait_for_player_to_approach(delta)
 		return
 	_update_movement(delta)
 	attack_timer -= delta
@@ -137,13 +137,10 @@ func _physics_process(delta: float) -> void:
 			if attack_timer <= 0.0:
 				_finish_attack()
 
-func _move_toward_screen_center(delta: float) -> void:
+func _wait_for_player_to_approach(delta: float) -> void:
 	var camera := get_viewport().get_camera_2d()
 	var screen_center_x := camera.get_screen_center_position().x if camera else global_position.x
-	var distance_to_center := screen_center_x - global_position.x
-	velocity.x = 0.0 if absf(distance_to_center) <= INTRO_CENTER_TOLERANCE else signf(distance_to_center) * movement_speed
-	if not is_zero_approx(velocity.x):
-		guardian_sprite.flip_h = velocity.x > 0.0
+	velocity.x = 0.0
 	if is_on_floor():
 		velocity.y = 0.0
 	else:

@@ -1,4 +1,7 @@
 extends Node2D
+
+const GUARDIAN_EDGE_GAP: float = 200.0
+
 @onready var dialogue = $Dialogue
 @onready var health_container: HBoxContainer = $CanvasLayer/HealthContainer
 @onready var silk_container: HBoxContainer = $CanvasLayer/SilkContainer
@@ -35,8 +38,9 @@ func _set_guardian_arena_bounds() -> void:
 	if guardian_collision and guardian_collision.shape is CapsuleShape2D:
 		var guardian_capsule := guardian_collision.shape as CapsuleShape2D
 		horizontal_margin = guardian_capsule.radius * absf(tangled_guardian.global_scale.x * guardian_collision.scale.x)
-	tangled_guardian.set("arena_left_limit", room_camera.limit_left + horizontal_margin)
-	tangled_guardian.set("arena_right_limit", room_camera.limit_right - horizontal_margin)
+	var edge_margin := horizontal_margin + GUARDIAN_EDGE_GAP
+	tangled_guardian.set("arena_left_limit", room_camera.limit_left + edge_margin)
+	tangled_guardian.set("arena_right_limit", room_camera.limit_right - edge_margin)
 
 func _on_tangled_guardian_defeated() -> void:
 	for transition_zone in get_tree().get_nodes_in_group("room_transitions"):
