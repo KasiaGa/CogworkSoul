@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://dkhavqrbtwemu" path="res://assets/images/player/rant_idle_sprite.png" id="1_jmujq"]
 [ext_resource type="AudioStream" uid="uid://883a3uh2pa8u" path="res://assets/sounds/wren1.wav" id="2_13v2o"]
 [ext_resource type="Texture2D" uid="uid://du001uu5plfy5" path="res://assets/images/player/rant_idle_no_needle_sprite.png" id="2_d0hce"]
-[ext_resource type="Script" path="res://player/player_combat.gd" id="player_combat"]
 [ext_resource type="AudioStream" uid="uid://6srsco7uv23w" path="res://assets/sounds/ha2.wav" id="2_vytcd"]
 [ext_resource type="AudioStream" uid="uid://ccldhrpjbp1au" path="res://assets/sounds/ha3.wav" id="3_8bg10"]
 [ext_resource type="Texture2D" uid="uid://djm4yqcmcskxj" path="res://assets/images/player/rant_jumping_scaled.png" id="3_8ib8x"]
@@ -35,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://c7okli6fld3dx" path="res://assets/images/player/rant_wren4.png" id="17_13v2o"]
 [ext_resource type="Texture2D" uid="uid://c27sg0t2rncl4" path="res://assets/images/player/rant_wren5.png" id="18_m7f1f"]
 [ext_resource type="Texture2D" uid="uid://dpf6n3y58uh2c" path="res://assets/images/player/rant_wren6.png" id="19_6aivm"]
+[ext_resource type="Texture2D" uid="uid://d1kerxrxxtthd" path="res://assets/images/player/rant_climb.png" id="19_vnc7o"]
 [ext_resource type="Texture2D" uid="uid://ceoxwasad443m" path="res://assets/images/player/rant_wren7.png" id="20_vytcd"]
 [ext_resource type="Texture2D" uid="uid://bj5qxl8ebgmmw" path="res://assets/images/player/rant_wren8.png" id="21_8bg10"]
 [ext_resource type="Texture2D" uid="uid://dyh40eoeceqpe" path="res://assets/images/player/rant_wren9.png" id="22_oxl1s"]
@@ -48,10 +48,15 @@
 [ext_resource type="Texture2D" uid="uid://dfr0x70jcrnvp" path="res://assets/images/player/rant_wren17.png" id="30_utlov"]
 [ext_resource type="Texture2D" uid="uid://wgmox0w0qydy" path="res://assets/images/player/rant_wren18.png" id="31_vnc7o"]
 [ext_resource type="Texture2D" uid="uid://cnckscqr7w7gb" path="res://assets/images/player/rant_wren22.png" id="32_e2537"]
+[ext_resource type="Script" uid="uid://cgqlnrx5pxrc4" path="res://player/player_combat.gd" id="player_combat"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1mopy"]
 atlas = ExtResource("1_8ib8x")
 region = Rect2(0, 0, 415, 595)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwtyp"]
+atlas = ExtResource("3_8ib8x")
+region = Rect2(0, 0, 324, 606)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0h2wa"]
 atlas = ExtResource("1_jmujq")
@@ -92,10 +97,6 @@ region = Rect2(726, 0, 242, 627)
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8ung"]
 atlas = ExtResource("2_d0hce")
 region = Rect2(968, 0, 242, 627)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lwtyp"]
-atlas = ExtResource("3_8ib8x")
-region = Rect2(0, 0, 324, 606)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qq0fm"]
 atlas = ExtResource("4_1mopy")
@@ -281,10 +282,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("19_vnc7o")
+}],
+"loop": 1,
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_ujdd3")
 }],
 "loop": 1,
 "name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwtyp")
+}],
+"loop": 1,
+"name": &"fall",
 "speed": 5.0
 }, {
 "frames": [{
@@ -349,14 +366,6 @@ animations = [{
 }],
 "loop": 1,
 "name": &"idle_no_needle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lwtyp")
-}],
-"loop": 1,
-"name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -592,9 +601,8 @@ animations = [{
 radius = 29.0
 height = 288.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_da6y2"]
-radius = 83.4075
-height = 268.46786
+[sub_resource type="Gradient" id="Gradient_brass_slash"]
+colors = PackedColorArray(0.62, 0.25, 0.06, 0, 1, 0.62, 0.12, 0.95)
 
 [sub_resource type="Curve" id="Curve_mjotr"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.99718314, 1), 0.0, 0.0, 0, 0]
@@ -603,8 +611,9 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_da6y2"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
-[sub_resource type="Gradient" id="Gradient_brass_slash"]
-colors = PackedColorArray(0.62, 0.25, 0.06, 0, 1, 0.62, 0.12, 0.95)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_da6y2"]
+radius = 83.4075
+height = 268.46786
 
 [sub_resource type="Animation" id="Animation_vol7i"]
 length = 0.001
@@ -659,7 +668,7 @@ sit_sounds = Array[AudioStream]([ExtResource("16_vol7i")])
 visibility_layer = 2
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ae5in")
-animation = &"lie"
+animation = &"climb"
 autoplay = "idle_no_needle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1052474574]
@@ -668,27 +677,14 @@ shape = SubResource("CapsuleShape2D_mjotr")
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=2077513038]
 
-[node name="AttackRig" type="Node2D" parent="AttackArea"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1854880106]
-position = Vector2(-26.999998, 16)
-rotation = -0.20420352
-shape = SubResource("CapsuleShape2D_da6y2")
-
-[node name="WallDetector" type="RayCast2D" parent="AttackArea" unique_id=755355487]
-position = Vector2(-14, 107)
-target_position = Vector2(60, 0)
-
-[node name="LedgeDetector" type="RayCast2D" parent="AttackArea" unique_id=1132133233]
-position = Vector2(-16, 59)
-target_position = Vector2(60, 0)
+[node name="AttackRig" type="Node2D" parent="AttackArea" unique_id=240071982]
 
 [node name="WeaponTip" type="Node2D" parent="AttackArea/AttackRig" unique_id=93816888]
 position = Vector2(115, 36)
 
-[node name="BrassSlashTrail" type="Line2D" parent="AttackArea/AttackRig"]
-position = Vector2(-22, 103)
+[node name="BrassSlashTrail" type="Line2D" parent="AttackArea/AttackRig" unique_id=656564050]
 visible = false
+position = Vector2(-22, 103)
 points = PackedVector2Array(104, -56, 104, -56)
 width = 15.0
 gradient = SubResource("Gradient_brass_slash")
@@ -703,6 +699,19 @@ width_curve = SubResource("Curve_mjotr")
 gradient = SubResource("Gradient_da6y2")
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1854880106]
+position = Vector2(-26.999998, 16)
+rotation = -0.20420352
+shape = SubResource("CapsuleShape2D_da6y2")
+
+[node name="WallDetector" type="RayCast2D" parent="AttackArea" unique_id=755355487]
+position = Vector2(-14, 107)
+target_position = Vector2(60, 0)
+
+[node name="LedgeDetector" type="RayCast2D" parent="AttackArea" unique_id=1132133233]
+position = Vector2(-16, 59)
+target_position = Vector2(60, 0)
 
 [node name="AttackSfx" type="AudioStreamPlayer" parent="." unique_id=1561673047]
 
@@ -721,7 +730,7 @@ end_cap_mode = 2
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1800327982]
 libraries/ = SubResource("AnimationLibrary_vnc7o")
 
-[node name="CombatController" type="Node" parent="."]
+[node name="CombatController" type="Node" parent="." unique_id=1275331798]
 script = ExtResource("player_combat")
 
 [connection signal="area_entered" from="AttackArea" to="CombatController" method="_on_attack_area_area_entered"]
