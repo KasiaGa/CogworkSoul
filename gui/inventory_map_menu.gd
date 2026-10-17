@@ -56,6 +56,7 @@ func _ready() -> void:
 			slot.focus_mode = Control.FOCUS_ALL
 			slot.focus_entered.connect(_on_item_focused.bind(slot))
 			slot.focus_exited.connect(_on_item_unfocused.bind(slot))
+			slot.gui_input.connect(_on_item_slot_input.bind(slot.name))
 			slot.mouse_entered.connect(func(): if slot.visible: slot.grab_focus())
 
 func _process(_delta: float) -> void:
