@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dylbbysymq282" path="res://world/cogwork_factory_3.gd" id="1_h7ih6"]
 [ext_resource type="Texture2D" uid="uid://cd4f4fowkp344" path="res://assets/images/world/background_test4.png" id="2_mnqlb"]
 [ext_resource type="Texture2D" uid="uid://dqft755m06alr" path="res://assets/images/world/ground.png" id="3_03ac1"]
+[ext_resource type="Texture2D" uid="uid://iiupaoacemj7" path="res://assets/images/world/background_test222.png" id="3_u8re4"]
 [ext_resource type="PackedScene" uid="uid://bwqrnt0mdtxeb" path="res://player/rant.tscn" id="4_m42m4"]
 [ext_resource type="PackedScene" uid="uid://bgserly7ccnr7" path="res://other/transition_zone.tscn" id="5_n3g5c"]
 [ext_resource type="Script" uid="uid://vta6ajsp0sov" path="res://world/canvas_layer.gd" id="6_r1xv7"]
@@ -12,8 +13,14 @@
 [ext_resource type="Texture2D" uid="uid://yuhfp7ej1m4l" path="res://assets/images/gui/silkBar.png" id="10_u8re4"]
 [ext_resource type="PackedScene" uid="uid://dukuyortfhs52" path="res://gui/pause_menu.tscn" id="11_o517r"]
 [ext_resource type="PackedScene" uid="uid://cxb1rivw2jidl" path="res://gui/inventory_map_menu.tscn" id="12_7xspl"]
-[ext_resource type="Texture2D" uid="uid://dahwl4hsi6bkq" path="res://assets/images/world/cog3.png" id="13_mnqlb"]
+[ext_resource type="Texture2D" uid="uid://b8rju6fe3xf04" path="res://assets/images/world/tangled_cables_colored.png" id="12_dtpv1"]
+[ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="12_m42m4"]
+[ext_resource type="Texture2D" uid="uid://d388o7vo6d8tl" path="res://assets/images/world/kable.png" id="12_wjim5"]
 [ext_resource type="PackedScene" uid="uid://c4jbp731ge27p" path="res://other/tangled_guardian.tscn" id="14_guardian"]
+[ext_resource type="Texture2D" uid="uid://db8l64p0hchsk" path="res://assets/images/world/wiszace_2.png" id="15_dtpv1"]
+[ext_resource type="Texture2D" uid="uid://bxlh5eyauk2ff" path="res://assets/images/world/zebatka_wiszaca_2.png" id="16_u8re4"]
+[ext_resource type="Texture2D" uid="uid://dcna6nf1lpqoy" path="res://assets/images/world/wiszace2_2.png" id="17_o517r"]
+[ext_resource type="Texture2D" uid="uid://b8ux433yii20c" path="res://assets/images/world/shadow.png" id="18_7xspl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53s0n"]
 size = Vector2(2018.5417, 148.14282)
@@ -22,8 +29,10 @@ size = Vector2(2018.5417, 148.14282)
 radius = 27.0
 height = 274.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_BossRoomBoundary"]
-size = Vector2(40, 1200)
+[sub_resource type="SystemFont" id="SystemFont_o2hxr"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 999
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_5at20"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -37,6 +46,9 @@ colors = PackedColorArray(0, 0, 0, 0.6431373, 0, 0, 0, 0)
 gradient = SubResource("Gradient_itgwo")
 fill_from = Vector2(0, 0.017094018)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_BossRoomBoundary"]
+size = Vector2(40, 1200)
+
 [node name="CogworkBoss" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_h7ih6")
 
@@ -46,12 +58,26 @@ repeat_size = Vector2(1366, 768)
 repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1860392640]
+modulate = Color(0.66834664, 0.71, 0.5964, 1)
 self_modulate = Color(1.2742168, 1.2742168, 1.2742168, 1)
 z_index = -2
 position = Vector2(142, 276)
 texture = ExtResource("2_mnqlb")
 
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=324342575]
+scroll_scale = Vector2(0.9, 0.9)
+repeat_size = Vector2(3259, 768)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D3" unique_id=1546549000]
+modulate = Color(0.66834664, 0.71, 0.5964, 0.3254902)
+self_modulate = Color(1.2742168, 1.2742168, 1.2742168, 1)
+z_index = -2
+position = Vector2(142, 276)
+texture = ExtResource("3_u8re4")
+
 [node name="ground_irregular" type="StaticBody2D" parent="." unique_id=486012346]
+modulate = Color(0.72156864, 0.72156864, 0.72156864, 1)
 z_index = -1
 position = Vector2(585, 632)
 scale = Vector2(0.6, 0.6)
@@ -73,6 +99,7 @@ scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular2" unique_id=744179249]
+modulate = Color(0.72, 0.72, 0.72, 1)
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
 texture = ExtResource("3_03ac1")
 
@@ -82,6 +109,7 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular3" type="StaticBody2D" parent="." unique_id=546606945]
+modulate = Color(0.72156864, 0.72156864, 0.72156864, 1)
 z_index = -1
 position = Vector2(1777, 628)
 scale = Vector2(0.6, 0.6)
@@ -170,12 +198,10 @@ grow_horizontal = 2
 value = 100.0
 show_percentage = false
 
-[node name="BossIntroTitle" type="Label" parent="CanvasLayer"]
+[node name="BossIntroTitle" type="Label" parent="CanvasLayer" unique_id=277845882]
 visible = false
 anchors_preset = 2
-anchor_left = 0.0
 anchor_top = 1.0
-anchor_right = 0.0
 anchor_bottom = 1.0
 offset_left = 34.0
 offset_top = -96.0
@@ -184,6 +210,7 @@ offset_bottom = -40.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
+theme_override_fonts/font = SubResource("SystemFont_o2hxr")
 theme_override_font_sizes/font_size = 32
 text = "Tangled Guardian"
 
@@ -204,14 +231,98 @@ theme_override_font_sizes/font_size = 25
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=737488650]
 z_index = 100
-offset_left = -2628.0
-offset_top = 3914.0
-offset_right = 2410.021
-offset_bottom = 9633.616
+offset_left = -2356.0
+offset_top = 3720.0
+offset_right = 2682.021
+offset_bottom = 9439.616
 rotation = -1.5707964
 texture = SubResource("GradientTexture2D_h7ih6")
 
+[node name="Sprite2D11" type="Sprite2D" parent="." unique_id=172671920]
+position = Vector2(1665.6782, 613.405)
+texture = ExtResource("12_dtpv1")
+
+[node name="Sprite2D12" type="Sprite2D" parent="." unique_id=1297014433]
+position = Vector2(2166.6782, 619.40515)
+rotation = 0.20245819
+texture = ExtResource("12_dtpv1")
+flip_h = true
+
+[node name="Sprite2D13" type="Sprite2D" parent="." unique_id=195462683]
+position = Vector2(1315.1782, 598)
+rotation = -0.04363323
+texture = ExtResource("12_wjim5")
+
+[node name="Sprite2D14" type="Sprite2D" parent="." unique_id=1740151009]
+position = Vector2(1988.6782, 641.405)
+rotation = 0.23911011
+scale = Vector2(1.0991931, 1.0991931)
+texture = ExtResource("12_wjim5")
+flip_h = true
+
+[node name="Sprite2D15" type="Sprite2D" parent="." unique_id=656509272]
+position = Vector2(1423.6782, 638.405)
+rotation = -0.32637656
+scale = Vector2(1.0991931, 1.0991931)
+texture = ExtResource("12_wjim5")
+
+[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=1630666561]
+position = Vector2(597.5, 630.405)
+texture = ExtResource("12_dtpv1")
+
+[node name="Sprite2D7" type="Sprite2D" parent="." unique_id=204605407]
+position = Vector2(1098.5, 636.40515)
+rotation = 0.20245819
+texture = ExtResource("12_dtpv1")
+flip_h = true
+
+[node name="Sprite2D8" type="Sprite2D" parent="." unique_id=1896591693]
+position = Vector2(247, 615)
+rotation = -0.04363323
+texture = ExtResource("12_wjim5")
+
+[node name="Sprite2D9" type="Sprite2D" parent="." unique_id=1501106636]
+position = Vector2(920.5, 658.405)
+rotation = 0.23911011
+scale = Vector2(1.0991931, 1.0991931)
+texture = ExtResource("12_wjim5")
+flip_h = true
+
+[node name="Sprite2D10" type="Sprite2D" parent="." unique_id=1830740203]
+position = Vector2(355.5, 655.4051)
+rotation = -0.32637656
+scale = Vector2(1.0991931, 1.0991931)
+texture = ExtResource("12_wjim5")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1008835309]
+position = Vector2(-575, 624)
+texture = ExtResource("12_dtpv1")
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=659121408]
+position = Vector2(-74.000015, 630.00006)
+rotation = 0.20245819
+texture = ExtResource("12_dtpv1")
+flip_h = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1783240804]
+position = Vector2(-941, 602)
+texture = ExtResource("12_wjim5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=987980726]
+position = Vector2(-252, 652)
+rotation = 0.23911011
+scale = Vector2(1.0991931, 1.0991931)
+texture = ExtResource("12_wjim5")
+flip_h = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=713945207]
+position = Vector2(-817, 649)
+rotation = -0.32637656
+scale = Vector2(1.0991931, 1.0991931)
+texture = ExtResource("12_wjim5")
+
 [node name="ground_irregular4" type="StaticBody2D" parent="." unique_id=1700006665]
+modulate = Color(0.65, 0.65, 0.65, 1)
 z_index = -1
 position = Vector2(580, -120)
 rotation = 3.1415927
@@ -219,7 +330,7 @@ scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular4" unique_id=1860150147]
-self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+self_modulate = Color(0.64, 0.64, 0.64, 1)
 texture = ExtResource("3_03ac1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular4" unique_id=1353265257]
@@ -228,6 +339,7 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular5" type="StaticBody2D" parent="." unique_id=422189387]
+modulate = Color(0.6509804, 0.6509804, 0.6509804, 1)
 z_index = -1
 position = Vector2(-618, -115.00001)
 rotation = 3.1415927
@@ -235,7 +347,7 @@ scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular5" unique_id=112944813]
-self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+self_modulate = Color(0.6392157, 0.6392157, 0.6392157, 1)
 texture = ExtResource("3_03ac1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular5" unique_id=64849321]
@@ -251,6 +363,7 @@ scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground_irregular6" unique_id=527598598]
+modulate = Color(0.54, 0.54, 0.54, 1)
 self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
 texture = ExtResource("3_03ac1")
 
@@ -259,36 +372,62 @@ position = Vector2(-6.666687, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
+[node name="Sprite2D2" type="Sprite2D" parent="ground_irregular6" unique_id=1669765338]
+modulate = Color(0.36, 0.36, 0.36, 1)
+position = Vector2(2006.8098, 314.7907)
+scale = Vector2(124.46093, 7.7177987)
+texture = ExtResource("12_m42m4")
+
 [node name="TransitionZone3" parent="." unique_id=704157100 instance=ExtResource("5_n3g5c")]
 position = Vector2(-1193, 476)
 target_scene = "uid://dy8x5xyss8ie5"
 spawn_location = Vector2(2200, -1400)
 
-[node name="BossExitBlocker" type="StaticBody2D" parent="."]
-collision_layer = 1
-collision_mask = 2
+[node name="BossExitBlocker" type="StaticBody2D" parent="." unique_id=1030986241]
 position = Vector2(-1174, 251)
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossExitBlocker"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossExitBlocker" unique_id=1980042369]
 shape = SubResource("RectangleShape2D_BossRoomBoundary")
 
-[node name="RoomRightBoundary" type="StaticBody2D" parent="."]
-collision_layer = 1
-collision_mask = 2
+[node name="RoomRightBoundary" type="StaticBody2D" parent="." unique_id=917171019]
 position = Vector2(2375, 251)
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomRightBoundary"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomRightBoundary" unique_id=582817518]
 shape = SubResource("RectangleShape2D_BossRoomBoundary")
 
 [node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1795760870]
+z_index = 300
 scroll_scale = Vector2(1.1, 1.1)
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=1037013376]
 modulate = Color(0, 0, 0, 1)
 z_index = 100
-position = Vector2(-192.99994, -55.000004)
-scale = Vector2(1.7771084, 1.7771084)
-texture = ExtResource("13_mnqlb")
+position = Vector2(-344.2967, -180.03482)
+scale = Vector2(1.034673, 1.034673)
+texture = ExtResource("15_dtpv1")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2" unique_id=18266390]
+position = Vector2(594, -153)
+texture = ExtResource("16_u8re4")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D2" unique_id=795520867]
+position = Vector2(1600, -82)
+texture = ExtResource("17_o517r")
+flip_h = true
+
+[node name="Sprite2D4" type="Sprite2D" parent="Parallax2D2" unique_id=1837926406]
+position = Vector2(558.4999, 213)
+scale = Vector2(1.1904907, 1.703125)
+texture = ExtResource("18_7xspl")
+
+[node name="Sprite2D5" type="Sprite2D" parent="Parallax2D2" unique_id=103178010]
+modulate = Color(1, 1, 1, 0.57254905)
+position = Vector2(558.4999, 213)
+rotation = -3.1415927
+scale = Vector2(1.1904907, 1.703125)
+texture = ExtResource("18_7xspl")
 
 [node name="TangledGuardian" parent="." unique_id=23504884 instance=ExtResource("14_guardian")]
 z_index = 50
