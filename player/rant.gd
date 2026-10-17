@@ -285,7 +285,7 @@ func _physics_process(delta: float) -> void:
 			var stretch_x = 1.0 + (1.0 - impact_factor)
 			apply_squash_and_stretch(Vector2(stretch_x, impact_factor), 0.05, 0.15)
 			var fall_distance := global_position.y - fall_peak_y
-			if fall_distance >= _get_rant_height():
+			if fall_distance >= _get_rant_height() + 100:
 				rant.play("fall")
 				landing_animation_timer = LANDING_ANIMATION_DURATION
 				_spawn_landing_impact_effect()
