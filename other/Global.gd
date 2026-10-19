@@ -1,5 +1,10 @@
 extends Node
 
+const DEBUG_STATE_PANEL_SCRIPT = preload("res://other/debug_state_panel.gd")
+
+var debug_state_panel: Node
+var debug_was_paused: bool = false
+
 var target_position: Vector2 = Vector2.ZERO
 var current_target_position: Vector2 = Vector2.ZERO
 
@@ -179,10 +184,35 @@ const SLOT_COUNT = 5
 var current_slot: int = 1
 var last_bench_texture_path: String = ""
 
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_P or event.physical_keycode == KEY_P):
+		_toggle_debug_state_panel()
+		get_viewport().set_input_as_handled()
+
+func _toggle_debug_state_panel() -> void:
+	if debug_state_panel == null:
+		debug_state_panel = DEBUG_STATE_PANEL_SCRIPT.new()
+		add_child(debug_state_panel)
+	if bool(debug_state_panel.call("is_open")):
+		close_debug_state_panel()
+	else:
+		debug_was_paused = get_tree().paused
+		get_tree().paused = true
+		debug_state_panel.call("open_panel")
+
+func close_debug_state_panel() -> void:
+	if debug_state_panel == null or not bool(debug_state_panel.call("is_open")):
+		return
+	debug_state_panel.call("close_panel")
+	get_tree().paused = debug_was_paused
+
 func get_save_path_for_slot(slot:int) -> String:
 	return SAVE_PATH_FORMAT % slot
 
-func save_game(save_checkpoint: bool = true, slot: int = -1):
+func save_game(save_checkpoint: bool = true, slot: int = -1) -> bool:
 	var slot_to_use = slot if slot != -1 else current_slot
 	var checkpoint_x = target_position.x
 	var checkpoint_y = target_position.y
@@ -196,7 +226,15 @@ func save_game(save_checkpoint: bool = true, slot: int = -1):
 	
 	var file = FileAccess.open(get_save_path_for_slot(slot_to_use), FileAccess.WRITE)
 	if file:
-		var save_data = {
+		var save_data := _build_save_data(checkpoint_x, checkpoint_y)
+		file.store_var(save_data)
+		file.close()
+		print("Game successfully saved to: ", get_save_path_for_slot(slot_to_use))
+		return true
+	return false
+
+func _build_save_data(checkpoint_x: float, checkpoint_y: float) -> Dictionary:
+	return {
 		"max_health": player_max_health,
 		"max_silk": player_max_silk,
 		"has_needle": has_needle,
@@ -224,11 +262,114 @@ func save_game(save_checkpoint: bool = true, slot: int = -1):
 		"thumbnail": last_bench_texture_path,
 		"saved_at": Time.get_unix_time_from_system(),
 		"playtime": total_playtime
-		}
-		
-		file.store_var(save_data)
-		file.close()
-		print("Game successfully saved to: ", get_save_path_for_slot(slot_to_use))
+	}
+
+func get_debug_save_state() -> Dictionary:
+	var state := _build_save_data(target_position.x, target_position.y)
+	state.erase("saved_at")
+	return state
+
+func apply_debug_save_state(state: Dictionary) -> String:
+	var type_by_key := {
+		"has_needle": TYPE_BOOL,
+		"collected_items": TYPE_ARRAY,
+		"collected_modules": TYPE_ARRAY,
+		"equipped_modules": TYPE_ARRAY,
+		"saved_scene": TYPE_STRING,
+		"intro_dialogue_played": TYPE_BOOL,
+		"rant_needle_played": TYPE_BOOL,
+		"player_is_sitting": TYPE_BOOL,
+		"cocoon_saved_scene": TYPE_STRING,
+		"cocoon_spawned": TYPE_BOOL,
+		"broken_objects": TYPE_DICTIONARY,
+		"defeated_bosses": TYPE_DICTIONARY,
+		"discovered_locations": TYPE_DICTIONARY,
+		"has_talked_to_bella": TYPE_BOOL,
+		"accepted_wishes": TYPE_ARRAY,
+		"wish_progress": TYPE_DICTIONARY,
+		"thumbnail": TYPE_STRING
+	}
+	for key in type_by_key:
+		if state.has(key) and typeof(state[key]) != type_by_key[key]:
+			return "Invalid value type for '%s'." % key
+
+	var numeric_keys := ["max_health", "max_silk", "checkpoint_x", "checkpoint_y", "shards_collected", "cocoon_position_x", "cocoon_position_y", "rubigo_dialogue_step", "playtime"]
+	for key in numeric_keys:
+		if state.has(key) and typeof(state[key]) != TYPE_INT and typeof(state[key]) != TYPE_FLOAT:
+			return "Expected a number for '%s'." % key
+	if int(state.get("max_health", player_max_health)) < 1:
+		return "max_health must be at least 1."
+	if int(state.get("max_silk", player_max_silk)) < 0:
+		return "max_silk cannot be negative."
+	var next_scene_path := str(state.get("saved_scene", scene_path))
+	if not ResourceLoader.exists(next_scene_path, "PackedScene"):
+		return "saved_scene must point to an existing scene."
+	var next_cocoon_scene_path := str(state.get("cocoon_saved_scene", cocoon_scene_path))
+	if not next_cocoon_scene_path.is_empty() and not ResourceLoader.exists(next_cocoon_scene_path, "PackedScene"):
+		return "cocoon_saved_scene must be empty or point to an existing scene."
+
+	player_max_health = int(state.get("max_health", player_max_health))
+	player_max_silk = int(state.get("max_silk", player_max_silk))
+	has_needle = bool(state.get("has_needle", has_needle))
+	collected_items = Array(state.get("collected_items", collected_items), TYPE_STRING, &"", null)
+	collected_modules = Array(state.get("collected_modules", collected_modules), TYPE_STRING, &"", null)
+	equipped_modules = Array(state.get("equipped_modules", equipped_modules), TYPE_STRING, &"", null)
+	target_position = Vector2(float(state.get("checkpoint_x", target_position.x)), float(state.get("checkpoint_y", target_position.y)))
+	scene_path = str(state.get("saved_scene", scene_path))
+	intro_dialogue_played = bool(state.get("intro_dialogue_played", intro_dialogue_played))
+	rant_needle_played = bool(state.get("rant_needle_played", rant_needle_played))
+	shards_collected = int(state.get("shards_collected", shards_collected))
+	player_is_sitting = bool(state.get("player_is_sitting", player_is_sitting))
+	cocoon_scene_path = str(state.get("cocoon_saved_scene", cocoon_scene_path))
+	cocoon_position = Vector2(float(state.get("cocoon_position_x", cocoon_position.x)), float(state.get("cocoon_position_y", cocoon_position.y)))
+	cocoon_spawned = bool(state.get("cocoon_spawned", cocoon_spawned))
+	broken_objects = state.get("broken_objects", broken_objects)
+	defeated_bosses = state.get("defeated_bosses", defeated_bosses)
+	discovered_locations = state.get("discovered_locations", discovered_locations)
+	has_talked_to_bella = bool(state.get("has_talked_to_bella", has_talked_to_bella))
+	rubigo_dialogue_step = int(state.get("rubigo_dialogue_step", rubigo_dialogue_step))
+	accepted_wishes = state.get("accepted_wishes", accepted_wishes)
+	wish_progress = state.get("wish_progress", wish_progress)
+	last_bench_texture_path = str(state.get("thumbnail", last_bench_texture_path))
+	total_playtime = float(state.get("playtime", total_playtime))
+
+	_refresh_debug_player_state()
+	if not save_game():
+		return "Values applied, but the save file could not be written."
+	return ""
+
+func _refresh_debug_player_state() -> void:
+	player_current_health = clampi(player_current_health, 0, player_max_health)
+	player_current_silk = clampi(player_current_silk, 0, player_max_silk)
+	var player := get_tree().get_first_node_in_group("player")
+	if player == null:
+		return
+	player.set("maxHealth", player_max_health)
+	player.set("maxSilk", player_max_silk)
+	var current_health := clampi(int(player.get("currentHealth")), 0, player_max_health)
+	var current_silk := clampi(int(player.get("currentSilk")), 0, player_max_silk)
+	if player.has_method("set_current_health"):
+		player.call("set_current_health", current_health)
+	if player.has_method("set_current_silk"):
+		player.call("set_current_silk", current_silk)
+	var health_container := player.get("health_container") as Node
+	if health_container:
+		for child in health_container.get_children():
+			health_container.remove_child(child)
+			child.queue_free()
+		if health_container.has_method("setMaxHearts"):
+			health_container.call("setMaxHearts", player_max_health)
+		if health_container.has_method("updateHearts"):
+			health_container.call("updateHearts", current_health)
+	var silk_container := player.get("silk_container") as Node
+	if silk_container:
+		for child in silk_container.get_children():
+			silk_container.remove_child(child)
+			child.queue_free()
+		if silk_container.has_method("setMaxSilk"):
+			silk_container.call("setMaxSilk", player_max_silk)
+		if silk_container.has_method("updateSilk"):
+			silk_container.call("updateSilk", current_silk)
 
 
 # --- LOAD FUNCTION ---
