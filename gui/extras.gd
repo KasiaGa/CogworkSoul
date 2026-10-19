@@ -1,43 +1,112 @@
 extends Control
 
-func _ready() -> void:
-	load_drawings()
+const GALLERY_IMAGES = [
+	preload("res://gui/loading_animation1.png"),
+	preload("res://gui/loading_animation2.png"),
+	preload("res://gui/loading_animation3.png")
+]
+const GALLERY_DESCRIPTIONS = [
+	"Opening cutscene — first still.",
+	"Opening cutscene — second still.",
+	"Opening cutscene — final still."
+]
 
-func load_drawings() -> void:
-	var container = $DrawingsContainer/VBoxContainer
-	
-	# Clear any existing drawings
-	for child in container.get_children():
-		child.queue_free()
-	
-	# Load drawings from res://assets/extras/ directory
-	# You can add your drawing images there
-	var extras_path = "res://assets/extras/"
-	if DirAccess.dir_exists_absolute(extras_path):
-		var dir = DirAccess.open(extras_path)
-		if dir:
-			dir.list_dir_begin()
-			var file_name = dir.get_next()
-			while file_name != "":
-				if not file_name.starts_with("."):
-					# Check if it's an image file
-					if file_name.ends_with(".png") or file_name.ends_with(".jpg") or file_name.ends_with(".jpeg"):
-						var full_path = extras_path + file_name
-						if ResourceLoader.exists(full_path):
-							var texture = load(full_path)
-							if texture:
-								var img_rect = TextureRect.new()
-								img_rect.texture = texture
-								img_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH
-								img_rect.custom_minimum_size = Vector2(800, 0)
-								container.add_child(img_rect)
-				file_name = dir.get_next()
-	else:
-		# Show placeholder if no extras folder exists
-		var label = Label.new()
-		label.text = "No drawings yet!\n\nAdd images to res://assets/extras/"
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		container.add_child(label)
+var current_image_index: int = 0
+var artwork: TextureRect
+var description_label: Label
+var image_counter: Label
+
+func _ready() -> void:
+	_build_gallery()
+	_show_current_image()
+
+func _build_gallery() -> void:
+	var background := ColorRect.new()
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	background.color = Color.BLACK
+	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(background)
+
+	artwork = TextureRect.new()
+	artwork.anchor_right = 1.0
+	artwork.anchor_bottom = 0.78
+	artwork.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	artwork.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	artwork.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(artwork)
+
+	var footer_background := ColorRect.new()
+	footer_background.anchor_top = 0.78
+	footer_background.anchor_right = 1.0
+	footer_background.anchor_bottom = 1.0
+	footer_background.color = Color(0.035, 0.035, 0.045, 1.0)
+	footer_background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(footer_background)
+
+	var footer := VBoxContainer.new()
+	footer.anchor_top = 0.78
+	footer.anchor_right = 1.0
+	footer.anchor_bottom = 1.0
+	footer.offset_left = 40.0
+	footer.offset_top = 12.0
+	footer.offset_right = -40.0
+	footer.offset_bottom = -12.0
+	footer.add_theme_constant_override("separation", 8)
+	add_child(footer)
+
+	var heading_row := HBoxContainer.new()
+	footer.add_child(heading_row)
+	var heading := Label.new()
+	heading.text = "EXTRAS"
+	heading.add_theme_font_size_override("font_size", 26)
+	heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	heading_row.add_child(heading)
+	image_counter = Label.new()
+	image_counter.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	image_counter.add_theme_font_size_override("font_size", 20)
+	heading_row.add_child(image_counter)
+
+	description_label = Label.new()
+	description_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	description_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	description_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	description_label.add_theme_font_size_override("font_size", 18)
+	footer.add_child(description_label)
+
+	var navigation_row := HBoxContainer.new()
+	footer.add_child(navigation_row)
+	var back_button := Button.new()
+	back_button.text = "Back to menu"
+	back_button.custom_minimum_size = Vector2(150.0, 42.0)
+	back_button.pressed.connect(_on_back_pressed)
+	navigation_row.add_child(back_button)
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	navigation_row.add_child(spacer)
+	var previous_button := Button.new()
+	previous_button.text = "Previous"
+	previous_button.custom_minimum_size = Vector2(130.0, 42.0)
+	previous_button.pressed.connect(_on_previous_pressed)
+	navigation_row.add_child(previous_button)
+	var next_button := Button.new()
+	next_button.text = "Next"
+	next_button.custom_minimum_size = Vector2(130.0, 42.0)
+	next_button.pressed.connect(_on_next_pressed)
+	navigation_row.add_child(next_button)
+
+func _show_current_image() -> void:
+	artwork.texture = GALLERY_IMAGES[current_image_index]
+	description_label.text = GALLERY_DESCRIPTIONS[current_image_index]
+	image_counter.text = "%d / %d" % [current_image_index + 1, GALLERY_IMAGES.size()]
+
+func _on_previous_pressed() -> void:
+	current_image_index = (current_image_index - 1 + GALLERY_IMAGES.size()) % GALLERY_IMAGES.size()
+	_show_current_image()
+
+func _on_next_pressed() -> void:
+	current_image_index = (current_image_index + 1) % GALLERY_IMAGES.size()
+	_show_current_image()
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://gui/main_menu.tscn")
