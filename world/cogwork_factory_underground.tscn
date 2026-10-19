@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://bikmpy1pq7nsv" path="res://assets/images/world/paralax3_3.png" id="23_8wwhe"]
 [ext_resource type="Texture2D" uid="uid://w0t0v4mwiewt" path="res://assets/images/world/line.png" id="24_8vvnr"]
 [ext_resource type="Texture2D" uid="uid://bjg1yep3wqxln" path="res://assets/images/world/grey.png" id="25_embs5"]
+[ext_resource type="PackedScene" path="res://world/room_vignette.tscn" id="26_vignette"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neemv"]
 shader = ExtResource("4_p5q4y")
@@ -465,3 +466,8 @@ modulate = Color(0.81960785, 0.81960785, 0.81960785, 1)
 position = Vector2(-1815.9999, -642)
 scale = Vector2(23.999994, 15.403508)
 texture = ExtResource("25_embs5")
+
+[node name="RoomVignette" parent="." instance=ExtResource("26_vignette")]
+strength = 0.82
+radius = 0.3
+softness = 0.5
