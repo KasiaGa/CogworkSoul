@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dukuyortfhs52"]
 
 [ext_resource type="Script" uid="uid://b5whtfrd4jpm" path="res://gui/pause_menu.gd" id="1_r7i8h"]
+[ext_resource type="PackedScene" path="res://gui/options_screen.tscn" id="2_options"]
 
 [sub_resource type="SystemFont" id="SystemFont_r7i8h"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -51,8 +52,17 @@ theme_override_fonts/font = SubResource("SystemFont_7uvn2")
 theme_override_font_sizes/font_size = 23
 text = "Resume"
 
+[node name="Options" type="Button" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_7uvn2")
+theme_override_font_sizes/font_size = 23
+text = "Options"
+
 [node name="Quit to Main Menu" type="Button" parent="ColorRect/CenterContainer/VBoxContainer" unique_id=1001393954]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_qdbs5")
 theme_override_font_sizes/font_size = 23
 text = "Quit to Main Menu"
+
+[node name="OptionsScreen" parent="." instance=ExtResource("2_options")]
+visible = false

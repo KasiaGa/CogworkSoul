@@ -1,0 +1,162 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://gui/options_screen.gd" id="1_options"]
+
+[sub_resource type="SystemFont" id="SystemFont_options"]
+font_names = PackedStringArray("Palatino Linotype")
+font_weight = 900
+
+[node name="OptionsScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_options")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.92)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(650, 610)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 38
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 38
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_options")
+theme_override_font_sizes/font_size = 38
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "CONTROLS"
+horizontal_alignment = 1
+
+[node name="ControlsGrid" type="GridContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 14
+
+[node name="MoveLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Move"
+
+[node name="MoveKeys" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "←  /  →"
+horizontal_alignment = 2
+
+[node name="JumpLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Jump"
+
+[node name="JumpKey" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Z"
+horizontal_alignment = 2
+
+[node name="AttackLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Attack"
+
+[node name="AttackKey" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "X"
+horizontal_alignment = 2
+
+[node name="RunLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Run faster"
+
+[node name="RunKey" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "C"
+horizontal_alignment = 2
+
+[node name="InteractLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Interact"
+
+[node name="InteractKeys" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "↑  /  ↓"
+horizontal_alignment = 2
+
+[node name="InventoryLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Inventory"
+
+[node name="InventoryKey" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Q"
+horizontal_alignment = 2
+
+[node name="WrenLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Use Wren"
+
+[node name="WrenKey" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "A"
+horizontal_alignment = 2
+
+[node name="PauseLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Pause / resume"
+
+[node name="PauseKey" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Esc"
+horizontal_alignment = 2
+
+[node name="BackButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(180, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "Back"

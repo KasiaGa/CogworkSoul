@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cnbuj6hxs4rfx" path="res://assets/images/gui/hkcs10.png" id="2_rhnsr"]
 [ext_resource type="Texture2D" uid="uid://beorae06hiyi1" path="res://assets/images/gui/cog_soul_text.png" id="2_xkvi0"]
 [ext_resource type="Script" uid="uid://bgm0fu3kj0uf2" path="res://gui/light_effect.gd" id="4_laybc"]
+[ext_resource type="PackedScene" path="res://gui/options_screen.tscn" id="5_options"]
 
 [sub_resource type="SystemFont" id="SystemFont_fa3b3"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -111,6 +112,17 @@ theme_override_fonts/font = SubResource("SystemFont_da6y2")
 theme_override_font_sizes/font_size = 30
 text = "Extras"
 
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(50, 20)
+custom_maximum_size = Vector2(50, -1)
+layout_mode = 2
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_da6y2")
+theme_override_font_sizes/font_size = 30
+text = "Options"
+
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer" unique_id=1386648312]
 custom_minimum_size = Vector2(50, 20)
 custom_maximum_size = Vector2(50, -1)
@@ -122,6 +134,10 @@ theme_override_fonts/font = SubResource("SystemFont_ae5in")
 theme_override_font_sizes/font_size = 30
 text = "Exit"
 
+[node name="OptionsScreen" parent="." instance=ExtResource("5_options")]
+visible = false
+
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExtrasButton" to="." method="_on_extras_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

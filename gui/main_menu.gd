@@ -1,9 +1,11 @@
 extends Control
 
 var text_tweens: Dictionary = {}
+@onready var options_screen: Control = $OptionsScreen
 
 func _ready() -> void:
-	var buttons = [$VBoxContainer/StartButton, $VBoxContainer/ExtrasButton, $VBoxContainer/ExitButton]
+	options_screen.connect("back_requested", _on_options_back)
+	var buttons = [$VBoxContainer/StartButton, $VBoxContainer/ExtrasButton, $VBoxContainer/OptionsButton, $VBoxContainer/ExitButton]
 	
 	for btn in buttons:
 		# Remove the semi-transparent background by using empty styleboxes
@@ -56,6 +58,13 @@ func _on_start_button_pressed() -> void:
 func _on_extras_button_pressed() -> void:
 	# Go to extras view
 	get_tree().change_scene_to_file("res://gui/extras.tscn")
+
+func _on_options_button_pressed() -> void:
+	options_screen.call("set_back_label", "Back to menu")
+	options_screen.show()
+
+func _on_options_back() -> void:
+	options_screen.hide()
 
 func _on_exit_button_pressed() -> void:
 	get_tree().quit()
