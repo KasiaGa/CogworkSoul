@@ -115,6 +115,7 @@ var is_dialogue_active: bool = false
 
 var broken_objects: Dictionary = {} # Format: {"res://levels/room1.tscn:BreakableObject3": true}
 var discovered_locations: Dictionary = {}
+var defeated_bosses: Dictionary = {}
 
 var has_talked_to_bella: bool = false
 var rubigo_dialogue_step: int = 0
@@ -214,6 +215,7 @@ func save_game(save_checkpoint: bool = true, slot: int = -1):
 		"cocoon_position_y": cocoon_position.y,
 		"cocoon_spawned": cocoon_spawned,
 		"broken_objects": broken_objects,
+		"defeated_bosses": defeated_bosses,
 		"discovered_locations": discovered_locations,
 		"has_talked_to_bella": has_talked_to_bella,
 		"rubigo_dialogue_step": rubigo_dialogue_step,
@@ -283,6 +285,7 @@ func load_game(slot:int = -1):
 		cocoon_spawned = save_data.get("cocoon_spawned", false)
 		
 		broken_objects = save_data.get("broken_objects", {})
+		defeated_bosses = save_data.get("defeated_bosses", {})
 		discovered_locations = save_data.get("discovered_locations", {})
 		
 		has_talked_to_bella = save_data.get("has_talked_to_bella", false)
@@ -295,6 +298,15 @@ func load_game(slot:int = -1):
 		
 		print("Game loaded from slot ", slot_to_use, "! Player restored to full health.")
 		return true
+
+func is_boss_defeated(boss_id: String) -> bool:
+	return bool(defeated_bosses.get(boss_id, false))
+
+func mark_boss_defeated(boss_id: String) -> void:
+	if boss_id.is_empty() or is_boss_defeated(boss_id):
+		return
+	defeated_bosses[boss_id] = true
+	save_game(false)
 
 # Funkcja do zmieniania sceny z ustawieniem pozycji
 func change_scene_to_position(scene_path: String, new_x: float, new_y: float):

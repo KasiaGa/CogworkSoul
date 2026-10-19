@@ -8,6 +8,8 @@ const GUARDIAN_EDGE_GAP: float = 200.0
 @onready var character_body_2d: CharacterBody2D = $CharacterBody2D
 @onready var tangled_guardian: CharacterBody2D = get_node_or_null("TangledGuardian")
 @onready var boss_exit_blocker: CollisionShape2D = get_node_or_null("BossExitBlocker/CollisionShape2D")
+@onready var boss_title: Label = get_node_or_null("CanvasLayer/BossTitle") as Label
+@onready var boss_health_bar: ProgressBar = get_node_or_null("CanvasLayer/BossHealthBar") as ProgressBar
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,7 +18,15 @@ func _ready() -> void:
 	silk_container.setMaxSilk(character_body_2d.maxSilk)
 	health_container.updateHearts(character_body_2d.currentHealth)
 	silk_container.updateSilk(character_body_2d.currentSilk)
-	if tangled_guardian:
+	if Global.is_boss_defeated("tangled_guardian"):
+		if tangled_guardian:
+			tangled_guardian.queue_free()
+		if boss_title:
+			boss_title.hide()
+		if boss_health_bar:
+			boss_health_bar.hide()
+		_on_tangled_guardian_defeated()
+	elif tangled_guardian:
 		_lock_boss_room_exits()
 		_set_guardian_arena_bounds()
 		if tangled_guardian.has_signal("defeated"):
@@ -43,6 +53,7 @@ func _set_guardian_arena_bounds() -> void:
 	tangled_guardian.set("arena_right_limit", room_camera.limit_right - edge_margin)
 
 func _on_tangled_guardian_defeated() -> void:
+	Global.mark_boss_defeated("tangled_guardian")
 	for transition_zone in get_tree().get_nodes_in_group("room_transitions"):
 		transition_zone.call("set_transition_enabled", true)
 	if boss_exit_blocker:
