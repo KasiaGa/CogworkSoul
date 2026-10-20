@@ -7,6 +7,7 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.current_scene_path = scene_file_path
+	Global.enter_region("bellas_cave", "Bella's Cave", false)
 	health_container.setMaxHearts(character_body_2d.maxHealth)
 	silk_container.setMaxSilk(character_body_2d.maxSilk)
 	health_container.updateHearts(character_body_2d.currentHealth)

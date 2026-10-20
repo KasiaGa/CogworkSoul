@@ -1,6 +1,8 @@
 extends Node
 
 const DEBUG_STATE_PANEL_SCRIPT = preload("res://other/debug_state_panel.gd")
+const LOCATION_BANNER = preload("res://gui/location_banner.tscn")
+const REGION_RETURN_BANNER = preload("res://gui/region_return_banner.tscn")
 
 var debug_state_panel: Node
 var debug_was_paused: bool = false
@@ -113,6 +115,9 @@ var shards_collected: int = 0
 
 var current_scene_path: String = "res://world/main.tscn" 
 var scene_path: String = "res://world/main.tscn" 
+var current_region_id: String = ""
+var transition_origin_region_id: String = ""
+var region_transition_pending: bool = false
 
 var intro_dialogue_played: bool = false
 var rant_needle_played: bool = false
@@ -449,8 +454,40 @@ func mark_boss_defeated(boss_id: String) -> void:
 	defeated_bosses[boss_id] = true
 	save_game(false)
 
+func enter_region(region_id: String, region_display_name: String, show_first_visit_banner: bool = true, subregion_display_name: String = "") -> void:
+	# Give every room in one region the same ID; different regions use different IDs.
+	if region_id.is_empty():
+		return
+
+	var region_was_discovered: bool = bool(discovered_locations.get(region_id, false))
+	if not region_was_discovered:
+		discovered_locations[region_id] = true
+		if show_first_visit_banner:
+			save_game()
+			_show_region_banner(LOCATION_BANNER, region_display_name)
+	elif subregion_display_name.is_empty() and region_transition_pending and transition_origin_region_id != region_id:
+		_show_region_banner(REGION_RETURN_BANNER, region_display_name)
+
+	if not subregion_display_name.is_empty():
+		_show_region_banner(REGION_RETURN_BANNER, subregion_display_name)
+
+	current_region_id = region_id
+	transition_origin_region_id = ""
+	region_transition_pending = false
+
+func _show_region_banner(banner_scene: PackedScene, region_display_name: String) -> void:
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return
+
+	var banner = banner_scene.instantiate()
+	current_scene.add_child(banner)
+	banner.display_title(region_display_name)
+
 # Funkcja do zmieniania sceny z ustawieniem pozycji
 func change_scene_to_position(scene_path: String, new_x: float, new_y: float):
+	transition_origin_region_id = current_region_id
+	region_transition_pending = true
 	current_target_position = Vector2(new_x, new_y)
 	should_reposition = true
 	get_tree().change_scene_to_file(scene_path)

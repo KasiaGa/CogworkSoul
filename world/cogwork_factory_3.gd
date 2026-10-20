@@ -2,6 +2,10 @@ extends Node2D
 
 const GUARDIAN_EDGE_GAP: float = 200.0
 
+@export var location_id: String = "cogwork_factory"
+@export var location_display_name: String = "Cogwork Factory"
+@export var subregion_display_name: String = ""
+
 @onready var dialogue = $Dialogue
 @onready var health_container: HBoxContainer = $CanvasLayer/HealthContainer
 @onready var silk_container: HBoxContainer = $CanvasLayer/SilkContainer
@@ -14,6 +18,7 @@ const GUARDIAN_EDGE_GAP: float = 200.0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.current_scene_path = scene_file_path
+	Global.enter_region(location_id, location_display_name, true, subregion_display_name)
 	health_container.setMaxHearts(character_body_2d.maxHealth)
 	silk_container.setMaxSilk(character_body_2d.maxSilk)
 	health_container.updateHearts(character_body_2d.currentHealth)

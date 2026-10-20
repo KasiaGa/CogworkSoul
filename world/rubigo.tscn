@@ -104,6 +104,7 @@ radius = 29.15476
 
 [node name="Rubigo" type="Node2D" unique_id=2045856377]
 script = ExtResource("1_les4a")
+subregion_display_name = "Rubigo's Asylum"
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=2123797011]
 scroll_scale = Vector2(0.7, 0.7)
