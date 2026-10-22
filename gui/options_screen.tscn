@@ -6,6 +6,9 @@
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 900
 
+[sub_resource type="Theme" id="Theme_options"]
+default_font = SubResource("SystemFont_options")
+
 [node name="OptionsScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -15,6 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 script = ExtResource("1_options")
+theme = SubResource("Theme_options")
 
 [node name="Backdrop" type="ColorRect" parent="."]
 anchors_preset = 15
