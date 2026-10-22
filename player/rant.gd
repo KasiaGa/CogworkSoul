@@ -40,6 +40,7 @@ var is_sitting: bool = false
 var is_transitioning: bool = false
 var is_dead: bool = false
 var is_wren_active: bool = false
+var wren_was_interrupted: bool = false
 var fade_layer: CanvasLayer = null
 var fade_rect: ColorRect = null
 var vignette_layer: CanvasLayer = null
@@ -222,14 +223,10 @@ func _physics_process(delta: float) -> void:
 	# 3. WREN ABILITY - Convert 5 silk to 5 health
 	if Input.is_action_just_pressed("wren") and not is_wren_active and not is_attacking and currentSilk >= 5:
 		is_wren_active = true
-		# Consume silk and restore health
+		wren_was_interrupted = false
+		# Consume silk when the ability starts; heal only if the animation completes uninterrupted.
 		currentSilk -= 5
-		currentHealth = min(currentHealth + 5, maxHealth) # Cap health at max
 		Global.player_current_silk = currentSilk
-		Global.player_current_health = currentHealth
-		# Update HUD
-		if health_container and health_container.has_method("updateHearts"):
-			health_container.updateHearts(currentHealth)
 		# Update silk HUD if available
 		var silk_container = get_node_or_null("../CanvasLayer/SilkContainer")
 		if silk_container and silk_container.has_method("updateSilk"):
@@ -246,10 +243,17 @@ func _physics_process(delta: float) -> void:
 		tw.tween_property(rant, "modulate:a", 0.5, 0.1)
 		tw.tween_property(rant, "modulate:a", 1.0, 0.1)
 		tw.set_loops(3) # Flash 3 times
-		# Wait for animation and flash to finish
-		await get_tree().create_timer(0.8).timeout
+		# Keep Wren active for one second before healing.
+		await get_tree().create_timer(1.0).timeout
 		is_wren_active = false
-		set_vignette_enabled(false, true)
+		if not wren_was_interrupted and not is_dead:
+			currentHealth = min(currentHealth + 5, maxHealth) # Cap health at max
+			Global.player_current_health = currentHealth
+			if health_container and health_container.has_method("updateHearts"):
+				health_container.updateHearts(currentHealth)
+			_spawn_wren_completion_radiance()
+		wren_was_interrupted = false
+		set_vignette_enabled(currentHealth <= 1, true)
 
 	# Run modifier
 	if Input.is_action_pressed("run"):
@@ -369,6 +373,38 @@ func _spawn_landing_impact_effect() -> void:
 	impact_tween.set_parallel(false)
 	impact_tween.tween_callback(impact_ring.queue_free)
 
+func _spawn_wren_completion_radiance() -> void:
+	var radiance_ring := Line2D.new()
+	radiance_ring.name = "WrenCompletionRadiance"
+	radiance_ring.width = 5.0
+	radiance_ring.default_color = Color(1.0, 1.0, 1.0, 0.95)
+	radiance_ring.closed = true
+	radiance_ring.antialiased = true
+	radiance_ring.z_index = 1
+	radiance_ring.position = collision_shape.position
+
+	var horizontal_radius := 70.0
+	var vertical_radius := 150.0
+	var capsule_shape := collision_shape.shape as CapsuleShape2D
+	if capsule_shape:
+		horizontal_radius = capsule_shape.radius * 2.4
+		vertical_radius = capsule_shape.height * 0.55
+
+	var radiance_points := PackedVector2Array()
+	for point_index in range(48):
+		var angle := TAU * float(point_index) / 48.0
+		radiance_points.append(Vector2(cos(angle) * horizontal_radius, sin(angle) * vertical_radius))
+	radiance_ring.points = radiance_points
+	radiance_ring.scale = Vector2(0.8, 0.8)
+	add_child(radiance_ring)
+
+	var radiance_tween := create_tween()
+	radiance_tween.set_parallel(true)
+	radiance_tween.tween_property(radiance_ring, "scale", Vector2(1.35, 1.35), 0.45).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	radiance_tween.tween_property(radiance_ring, "modulate:a", 0.0, 0.45)
+	radiance_tween.set_parallel(false)
+	radiance_tween.tween_callback(radiance_ring.queue_free)
+
 func handleCollision():
 	# If player recently took damage, don't check for more yet
 	if is_invincible:
@@ -390,6 +426,8 @@ func take_damage(amount: int):
 	# Prevent further damage triggers once dead
 	if is_dead:
 		return
+	if is_wren_active:
+		wren_was_interrupted = true
 
 	currentHealth -= amount
 	
