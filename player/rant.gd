@@ -416,7 +416,9 @@ func take_damage(amount: int):
 		# Smooth fade to black before loading save
 		await create_fade_out(0.6)
 		# Load the last saved state (Global.load_game will change scene to the saved checkpoint)
-		# Mark that player should respawn in cocoon (they'll break free to get max silk)
+		# Store carried shards in the cocoon so they can be reclaimed after respawning.
+		Global.cocoon_shards += Global.shards_collected
+		Global.shards_collected = 0
 		Global.cocoon_spawned = true
 		Global.cocoon_scene_path = get_tree().current_scene.scene_file_path
 		Global.cocoon_position = global_position
@@ -592,10 +594,18 @@ func cleanup_fade() -> void:
 		fade_layer = null
 		fade_rect = null
 
-# Called when cocoon breaks - restore player and grant max silk
+# Called when cocoon breaks - restore silk and reclaim dropped shards
 func break_cocoon() -> void:
 	set_current_silk(maxSilk)  # Grant max silk for breaking free
 	silk_container.updateSilk(currentSilk)
+	Global.shards_collected += Global.cocoon_shards
+	Global.cocoon_shards = 0
+
+	var current_scene := get_tree().current_scene
+	if current_scene:
+		var canvas_layer = current_scene.get_node_or_null("CanvasLayer")
+		if canvas_layer and canvas_layer.has_method("show_notification"):
+			canvas_layer.show_notification("Shards: " + str(Global.shards_collected))
 
 func check_ledge_climb():
 	# If the player is back on the ground, reset their ability to climb again

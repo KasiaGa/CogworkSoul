@@ -24,6 +24,7 @@ var player_is_sitting: bool = false
 var cocoon_scene_path: String = ""
 var cocoon_position: Vector2 = Vector2.ZERO
 var cocoon_spawned: bool = false
+var cocoon_shards: int = 0
 
 var player_facing_right: bool = true
 
@@ -258,6 +259,7 @@ func _build_save_data(checkpoint_x: float, checkpoint_y: float) -> Dictionary:
 		"cocoon_position_x": cocoon_position.x,
 		"cocoon_position_y": cocoon_position.y,
 		"cocoon_spawned": cocoon_spawned,
+		"cocoon_shards": cocoon_shards,
 		"broken_objects": broken_objects,
 		"defeated_bosses": defeated_bosses,
 		"discovered_locations": discovered_locations,
@@ -301,7 +303,7 @@ func apply_debug_save_state(state: Dictionary) -> String:
 		if state.has(key) and typeof(state[key]) != type_by_key[key]:
 			return "Invalid value type for '%s'." % key
 
-	var numeric_keys := ["max_health", "max_silk", "checkpoint_x", "checkpoint_y", "shards_collected", "cocoon_position_x", "cocoon_position_y", "rubigo_dialogue_step", "playtime"]
+	var numeric_keys := ["max_health", "max_silk", "checkpoint_x", "checkpoint_y", "shards_collected", "cocoon_position_x", "cocoon_position_y", "cocoon_shards", "rubigo_dialogue_step", "playtime"]
 	for key in numeric_keys:
 		if state.has(key) and typeof(state[key]) != TYPE_INT and typeof(state[key]) != TYPE_FLOAT:
 			return "Expected a number for '%s'." % key
@@ -331,6 +333,7 @@ func apply_debug_save_state(state: Dictionary) -> String:
 	cocoon_scene_path = str(state.get("cocoon_saved_scene", cocoon_scene_path))
 	cocoon_position = Vector2(float(state.get("cocoon_position_x", cocoon_position.x)), float(state.get("cocoon_position_y", cocoon_position.y)))
 	cocoon_spawned = bool(state.get("cocoon_spawned", cocoon_spawned))
+	cocoon_shards = int(state.get("cocoon_shards", cocoon_shards))
 	broken_objects = state.get("broken_objects", broken_objects)
 	defeated_bosses = state.get("defeated_bosses", defeated_bosses)
 	discovered_locations = state.get("discovered_locations", discovered_locations)
@@ -433,6 +436,7 @@ func load_game(slot:int = -1):
 		cocoon_scene_path = save_data.get("cocoon_saved_scene", "")
 		cocoon_position = Vector2(save_data.get("cocoon_position_x", 0.0), save_data.get("cocoon_position_y", 0.0))
 		cocoon_spawned = save_data.get("cocoon_spawned", false)
+		cocoon_shards = int(save_data.get("cocoon_shards", 0))
 		
 		broken_objects = save_data.get("broken_objects", {})
 		defeated_bosses = save_data.get("defeated_bosses", {})

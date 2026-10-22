@@ -2,6 +2,7 @@ extends Area2D # Changed from Node2D/StaticBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 var cocoon_health: int = 1
+var is_breaking: bool = false
 
 func _ready() -> void:
 	add_to_group("cocoon")
@@ -21,6 +22,10 @@ func take_cocoon_damage(amount: int) -> void:
 		break_cocoon()
 
 func break_cocoon() -> void:
+	if is_breaking:
+		return
+	is_breaking = true
+
 	if animated_sprite and animated_sprite.sprite_frames.has_animation("break"):
 		animated_sprite.play("break")
 		await get_tree().create_timer(0.3).timeout
@@ -33,5 +38,8 @@ func break_cocoon() -> void:
 			player.break_cocoon()
 			
 	Global.cocoon_spawned = false
+	Global.cocoon_scene_path = ""
+	Global.cocoon_position = Vector2.ZERO
+	Global.save_game(false)
 			
 	queue_free()

@@ -62,6 +62,11 @@ func _start_game() -> void:
 	Global.player_current_silk = 0
 	Global.has_needle = false
 	Global.player_is_sitting = false
+	Global.shards_collected = 0
+	Global.cocoon_spawned = false
+	Global.cocoon_shards = 0
+	Global.cocoon_scene_path = ""
+	Global.cocoon_position = Vector2.ZERO
 	Global.collected_items.clear()
 	Global.reset_modules()
 	Global.discovered_locations.clear()
