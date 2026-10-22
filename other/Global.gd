@@ -125,6 +125,7 @@ var is_dialogue_active: bool = false
 
 var broken_objects: Dictionary = {} # Format: {"res://levels/room1.tscn:BreakableObject3": true}
 var discovered_locations: Dictionary = {}
+var visited_rooms: Dictionary = {}
 var defeated_bosses: Dictionary = {}
 
 var has_talked_to_bella: bool = false
@@ -260,6 +261,7 @@ func _build_save_data(checkpoint_x: float, checkpoint_y: float) -> Dictionary:
 		"broken_objects": broken_objects,
 		"defeated_bosses": defeated_bosses,
 		"discovered_locations": discovered_locations,
+		"visited_rooms": visited_rooms,
 		"has_talked_to_bella": has_talked_to_bella,
 		"rubigo_dialogue_step": rubigo_dialogue_step,
 		"accepted_wishes": accepted_wishes,
@@ -289,6 +291,7 @@ func apply_debug_save_state(state: Dictionary) -> String:
 		"broken_objects": TYPE_DICTIONARY,
 		"defeated_bosses": TYPE_DICTIONARY,
 		"discovered_locations": TYPE_DICTIONARY,
+		"visited_rooms": TYPE_DICTIONARY,
 		"has_talked_to_bella": TYPE_BOOL,
 		"accepted_wishes": TYPE_ARRAY,
 		"wish_progress": TYPE_DICTIONARY,
@@ -331,6 +334,7 @@ func apply_debug_save_state(state: Dictionary) -> String:
 	broken_objects = state.get("broken_objects", broken_objects)
 	defeated_bosses = state.get("defeated_bosses", defeated_bosses)
 	discovered_locations = state.get("discovered_locations", discovered_locations)
+	visited_rooms = state.get("visited_rooms", visited_rooms)
 	has_talked_to_bella = bool(state.get("has_talked_to_bella", has_talked_to_bella))
 	rubigo_dialogue_step = int(state.get("rubigo_dialogue_step", rubigo_dialogue_step))
 	accepted_wishes = state.get("accepted_wishes", accepted_wishes)
@@ -433,6 +437,7 @@ func load_game(slot:int = -1):
 		broken_objects = save_data.get("broken_objects", {})
 		defeated_bosses = save_data.get("defeated_bosses", {})
 		discovered_locations = save_data.get("discovered_locations", {})
+		visited_rooms = save_data.get("visited_rooms", {})
 		
 		has_talked_to_bella = save_data.get("has_talked_to_bella", false)
 	
@@ -459,6 +464,10 @@ func enter_region(region_id: String, region_display_name: String, show_first_vis
 	if region_id.is_empty():
 		return
 
+	var room_is_new: bool = not current_scene_path.is_empty() and not has_visited_room(current_scene_path)
+	if room_is_new:
+		visited_rooms[current_scene_path] = true
+
 	var region_was_discovered: bool = bool(discovered_locations.get(region_id, false))
 	if not region_was_discovered:
 		discovered_locations[region_id] = true
@@ -467,6 +476,8 @@ func enter_region(region_id: String, region_display_name: String, show_first_vis
 			_show_region_banner(LOCATION_BANNER, region_display_name)
 	elif subregion_display_name.is_empty() and region_transition_pending and transition_origin_region_id != region_id:
 		_show_region_banner(REGION_RETURN_BANNER, region_display_name)
+	if room_is_new and (region_was_discovered or not show_first_visit_banner):
+		save_game(false)
 
 	if not subregion_display_name.is_empty():
 		_show_region_banner(REGION_RETURN_BANNER, subregion_display_name)
@@ -474,6 +485,9 @@ func enter_region(region_id: String, region_display_name: String, show_first_vis
 	current_region_id = region_id
 	transition_origin_region_id = ""
 	region_transition_pending = false
+
+func has_visited_room(room_path: String) -> bool:
+	return bool(visited_rooms.get(room_path, false))
 
 func _show_region_banner(banner_scene: PackedScene, region_display_name: String) -> void:
 	var current_scene := get_tree().current_scene

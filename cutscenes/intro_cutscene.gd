@@ -64,6 +64,11 @@ func _start_game() -> void:
 	Global.player_is_sitting = false
 	Global.collected_items.clear()
 	Global.reset_modules()
+	Global.discovered_locations.clear()
+	Global.visited_rooms.clear()
+	Global.current_region_id = ""
+	Global.transition_origin_region_id = ""
+	Global.region_transition_pending = false
 	Global.intro_dialogue_played = false
 	Global.should_reposition = false
 	Global.target_position = Vector2.ZERO
