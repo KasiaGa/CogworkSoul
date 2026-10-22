@@ -561,6 +561,7 @@ theme_override_font_sizes/font_size = 25
 [node name="Bench" parent="." unique_id=1253106123 instance=ExtResource("13_5at20")]
 position = Vector2(116.00001, 502.00003)
 scale = Vector2(0.42, 0.42)
+save_preview_image_path = "res://assets/images/gui/cogwork_factory_save_slot3.PNG"
 
 [node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("17_1wo6k")]
 position = Vector2(2351, 492)

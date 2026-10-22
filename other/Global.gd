@@ -148,38 +148,16 @@ var wishes_database: Dictionary = {
 	}
 }
 
-var location_metadata: Dictionary = {
-	"res://world/main.tscn": {
-		"name": "Cogwork Nest",
-		"image": "res://assets/images/locations/cogwork_factory.png"
-	},
-	"res://world/CogworkCore.tscn": {
-		"name": "Cogwork Factory",
-		"image": "res://assets/images/gui/cogwork_factory_save_slot3.PNG"
-	},
-	"res://world/cogwork_factory_2.tscn": {
-		"name": "Cogwork Factory",
-		"image": "res://assets/images/locations/factory_2.png"
-	},
-	"res://world/cogwork_factory_3.tscn": {
-		"name": "Cogwork Factory",
-		"image": "res://assets/images/locations/factory_3.png"
-	},
-	"res://world/bellas_cave.tscn": {
-		"name": "Bella's Cave",
-		"image": "res://assets/images/locations/bellas_cave.png"
-	}
+var location_names: Dictionary = {
+	"res://world/main.tscn": "Cogwork Nest",
+	"res://world/CogworkCore.tscn": "Cogwork Factory",
+	"res://world/cogwork_factory_2.tscn": "Cogwork Factory",
+	"res://world/cogwork_factory_3.tscn": "Cogwork Factory",
+	"res://world/bellas_cave.tscn": "Bella's Cave"
 }
 
 func get_location_name(scene_path: String) -> String:
-	if scene_path in location_metadata:
-		return location_metadata[scene_path]["name"]
-	return scene_path
-
-func get_location_image(scene_path: String) -> String:
-	if scene_path in location_metadata:
-		return location_metadata[scene_path]["image"]
-	return ""
+	return location_names.get(scene_path, scene_path)
 
 var should_play_lie_animation: bool = false
 var should_play_get_up_animation: bool = false
@@ -188,8 +166,10 @@ var total_playtime: float = 0.0  # in seconds
 
 const SAVE_PATH_FORMAT = "user://save_slot_%d.save"
 const SLOT_COUNT = 5
+# Preview shown when the save has not recorded a bench checkpoint yet.
+const NO_BENCH_PREVIEW_IMAGE_PATH: String = "res://assets/images/world/device1.png"
 var current_slot: int = 1
-var last_bench_texture_path: String = ""
+var last_bench_preview_path: String = ""
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -268,7 +248,7 @@ func _build_save_data(checkpoint_x: float, checkpoint_y: float) -> Dictionary:
 		"rubigo_dialogue_step": rubigo_dialogue_step,
 		"accepted_wishes": accepted_wishes,
 		"wish_progress": wish_progress,
-		"thumbnail": last_bench_texture_path,
+		"bench_preview_path": last_bench_preview_path,
 		"saved_at": Time.get_unix_time_from_system(),
 		"playtime": total_playtime
 	}
@@ -297,7 +277,7 @@ func apply_debug_save_state(state: Dictionary) -> String:
 		"has_talked_to_bella": TYPE_BOOL,
 		"accepted_wishes": TYPE_ARRAY,
 		"wish_progress": TYPE_DICTIONARY,
-		"thumbnail": TYPE_STRING
+		"bench_preview_path": TYPE_STRING
 	}
 	for key in type_by_key:
 		if state.has(key) and typeof(state[key]) != type_by_key[key]:
@@ -342,7 +322,7 @@ func apply_debug_save_state(state: Dictionary) -> String:
 	rubigo_dialogue_step = int(state.get("rubigo_dialogue_step", rubigo_dialogue_step))
 	accepted_wishes = state.get("accepted_wishes", accepted_wishes)
 	wish_progress = state.get("wish_progress", wish_progress)
-	last_bench_texture_path = str(state.get("thumbnail", last_bench_texture_path))
+	last_bench_preview_path = str(state.get("bench_preview_path", last_bench_preview_path))
 	total_playtime = float(state.get("playtime", total_playtime))
 
 	_refresh_debug_player_state()
@@ -432,6 +412,7 @@ func load_game(slot:int = -1):
 		print("current_target_position reset to: ", current_target_position)
 		
 		scene_path = save_data.get("saved_scene", scene_path)
+		last_bench_preview_path = str(save_data.get("bench_preview_path", ""))
 		
 		cocoon_scene_path = save_data.get("cocoon_saved_scene", "")
 		cocoon_position = Vector2(save_data.get("cocoon_position_x", 0.0), save_data.get("cocoon_position_y", 0.0))
@@ -521,7 +502,16 @@ func get_save_slots() -> Array:
 			if f:
 				var d = f.get_var()
 				f.close()
-				meta = {"slot": i, "exists": true, "scene": d.get("saved_scene", ""), "checkpoint_x": d.get("checkpoint_x", 0), "checkpoint_y": d.get("checkpoint_y", 0), "thumbnail": d.get("thumbnail", ""), "saved_at": d.get("saved_at", 0), "playtime": d.get("playtime", 0.0)}
+				meta = {
+					"slot": i,
+					"exists": true,
+					"scene": d.get("saved_scene", ""),
+					"checkpoint_x": d.get("checkpoint_x", 0),
+					"checkpoint_y": d.get("checkpoint_y", 0),
+					"bench_preview_path": d.get("bench_preview_path", ""),
+					"saved_at": d.get("saved_at", 0),
+					"playtime": d.get("playtime", 0.0)
+				}
 		else:
 			meta = {"slot": i, "exists": false}
 		slots.append(meta)

@@ -69,19 +69,18 @@ func refresh_slots() -> void:
 			delete_label.visible = true
 			new_game_label.visible = false
 			
-			# Try to load location image first, then fallback to thumbnail
-			var location_image = Global.get_location_image(slot_meta.get("scene", ""))
-			if location_image != "" and ResourceLoader.exists(location_image):
-				var tex = load(location_image)
-				if tex:
-					texture_rect.texture = tex
-			else:
-				# Fallback to thumbnail if location image doesn't exist
-				var thumb_path = slot_meta.get("thumbnail", "")
-				if thumb_path != "" and ResourceLoader.exists(thumb_path):
-					var tex = load(thumb_path)
-					if tex:
-						texture_rect.texture = tex
+			texture_rect.texture = null
+			var preview_paths = [
+				str(slot_meta.get("bench_preview_path", "")),
+				Global.NO_BENCH_PREVIEW_IMAGE_PATH
+			]
+			for preview_path in preview_paths:
+				if preview_path.is_empty() or not ResourceLoader.exists(preview_path):
+					continue
+				var preview_texture = load(preview_path)
+				if preview_texture:
+					texture_rect.texture = preview_texture
+					break
 			slot_info.visible = true
 		else:
 			slot_number_label.text = str(i)

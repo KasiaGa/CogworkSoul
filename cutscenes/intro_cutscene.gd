@@ -62,6 +62,7 @@ func _start_game() -> void:
 	Global.player_current_silk = 0
 	Global.has_needle = false
 	Global.player_is_sitting = false
+	Global.last_bench_preview_path = ""
 	Global.shards_collected = 0
 	Global.cocoon_spawned = false
 	Global.cocoon_shards = 0
