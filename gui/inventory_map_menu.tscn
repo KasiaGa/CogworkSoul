@@ -531,21 +531,18 @@ alignment = 1
 [node name="Slot1Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=1579571403]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-toggle_mode = true
 text = "Slot 1
 Empty"
 
 [node name="Slot2Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=797322923]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-toggle_mode = true
 text = "Slot 2
 Empty"
 
 [node name="Slot3Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=2126585250]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-toggle_mode = true
 text = "Slot 3
 Empty"
 

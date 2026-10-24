@@ -77,6 +77,7 @@ func _ready() -> void:
 		slot_button.add_theme_font_size_override("font_size", 14)
 		_create_selection_overlay(slot_button, "SelectionOverlay")
 		module_slot_buttons.append(slot_button)
+		slot_button.focus_entered.connect(_on_module_slot_focused.bind(slot_index))
 		slot_button.pressed.connect(_on_module_slot_pressed.bind(slot_index))
 	
 	# Connect focus events directly to the nodes themselves
@@ -329,7 +330,6 @@ func _refresh_module_slots() -> void:
 	for slot_index in range(module_slot_buttons.size()):
 		var module_id = Global.equipped_modules[slot_index]
 		var slot_button = module_slot_buttons[slot_index]
-		slot_button.button_pressed = slot_index == selected_module_slot
 		var selection_overlay = slot_button.get_node_or_null("SelectionOverlay") as TextureRect
 		if selection_overlay != null:
 			if slot_index == selected_module_slot:
@@ -357,12 +357,20 @@ func _refresh_module_buttons() -> void:
 		if equipped_slot >= 0:
 			child.text += "  (Equipped: Slot %d)" % (equipped_slot + 1)
 
+func _on_module_slot_focused(slot_index: int) -> void:
+	_select_module_slot(slot_index)
+
 func _on_module_slot_pressed(slot_index: int) -> void:
-	selected_module_slot = slot_index
-	_refresh_module_slots()
+	_select_module_slot(slot_index)
 	var focused_control = get_viewport().gui_get_focus_owner()
 	if focused_control is Button and focused_control.name.begins_with("Module_"):
 		_on_module_focused(focused_control, focused_control.name.trim_prefix("Module_"))
+
+func _select_module_slot(slot_index: int) -> void:
+	if selected_module_slot == slot_index:
+		return
+	selected_module_slot = slot_index
+	_refresh_module_slots()
 
 func _on_module_focused(module_button: Button, module_id: String) -> void:
 	if not modules_view.visible:
