@@ -14,8 +14,11 @@ extends CanvasLayer
 
 @onready var item_grid: GridContainer = $Background/MenuContainer/InventoryView/ItemGrid
 @onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow/ItemTitle
+@onready var item_title_start_decor: TextureRect = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow/TitleDecorStart
+@onready var item_title_end_decor: TextureRect = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow/TitleDecorEnd
 @onready var item_desc: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemDesc
-@onready var shards_label: Label = $Background/MenuContainer/InventoryView/ShardsLabel
+@onready var item_selection_overlay: TextureRect = $Background/MenuContainer/InventoryView/ItemSelectionOverlay
+@onready var shards_label: Label = $Background/MenuContainer/InventoryView/ShardsDisplay/ShardsLabel
 
 @onready var wish_grid: VBoxContainer = $Background/MenuContainer/WishsView/WishGrid
 @onready var wish_title: Label = $Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitle
@@ -67,7 +70,7 @@ func _ready() -> void:
 			slot.focus_mode = Control.FOCUS_ALL
 			slot.focus_entered.connect(_on_item_focused.bind(slot))
 			slot.focus_exited.connect(_on_item_unfocused.bind(slot))
-			slot.gui_input.connect(_on_item_slot_input.bind(slot.name))
+				slot.gui_input.connect(_on_item_slot_input.bind(slot))
 			slot.mouse_entered.connect(func(): if slot.visible: slot.grab_focus())
 
 func _process(_delta: float) -> void:
@@ -318,6 +321,7 @@ func update_inventory_display() -> void:
 	# Clear out the text boxes by default in case nothing is highlighted yet
 	item_title.text = "???"
 	item_desc.text = "Select an item to inspect."
+	_hide_item_selection()
 	
 	# Update every item visibility based on your real global data
 	for slot in item_grid.get_children():
@@ -478,29 +482,43 @@ func _on_item_focused(slot: TextureRect) -> void:
 	var player_owns_it: bool = (item_id == "needle" and Global.has_needle) or Global.collected_items.has(item_id)
 	
 	if player_owns_it:
-		slot.modulate = Color(1.6, 1.6, 1.6, 1.0) 
+		_show_item_selection(slot)
 		
 		if item_info.has(item_id):
 			item_title.text = item_info[item_id]["name"]
 			item_desc.text = item_info[item_id]["desc"]
 	else:
 		# Fallback just in case a hidden or missing item somehow triggers focus
-		slot.modulate = Color(1, 1, 1, 1) # Keep normal tint if they don't own it
+		_hide_item_selection()
 		item_title.text = "???"
 		item_desc.text = "An undiscovered artifact hidden somewhere in the world."
 
 func _on_item_unfocused(slot: TextureRect) -> void:
-	# RESET TINT: Return back to default white lighting
 	slot.modulate = Color(1, 1, 1, 1)
+	_hide_item_selection()
 	item_title.text = ""
 	item_desc.text = ""
 
-func _on_item_slot_input(event: InputEvent, item_id: String) -> void:
+func _show_item_selection(slot: TextureRect) -> void:
+	item_selection_overlay.global_position = slot.global_position
+	item_selection_overlay.size = slot.size
+	item_selection_overlay.show()
+	item_title_start_decor.show()
+	item_title_end_decor.show()
+
+func _hide_item_selection() -> void:
+	item_selection_overlay.hide()
+	item_title_start_decor.hide()
+	item_title_end_decor.hide()
+
+func _on_item_slot_input(event: InputEvent, slot: TextureRect) -> void:
 	# Detect when the mouse hovers or clicks an item to display information
 	if event is InputEventMouseMotion or (event is InputEventMouseButton and event.pressed):
+		var item_id: String = slot.name
 		var player_owns_it: bool = (item_id == "needle" and Global.has_needle) or Global.collected_items.has(item_id)
 		
 		if player_owns_it and item_info.has(item_id):
+			_show_item_selection(slot)
 			item_title.text = item_info[item_id]["name"]
 			item_desc.text = item_info[item_id]["desc"]
 

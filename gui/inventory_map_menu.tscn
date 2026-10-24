@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://cr7bwkxhmadis" path="res://assets/images/item/flower1.png" id="7_jrc3s"]
 [ext_resource type="Texture2D" path="res://assets/images/gui/menuDecor2.png" id="8_description_divider"]
 [ext_resource type="Texture2D" path="res://assets/images/gui/meuDecor3.png" id="9_item_title_decor"]
+[ext_resource type="Texture2D" path="res://assets/images/gui/itemelected.png" id="10_item_selection_overlay"]
+[ext_resource type="Texture2D" path="res://assets/images/item/shard.png" id="11_shard_icon"]
 
 [sub_resource type="SystemFont" id="SystemFont_vg86a"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -127,12 +129,24 @@ layout_mode = 2
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
 
-[node name="ShardsLabel" type="Label" parent="Background/MenuContainer/InventoryView" unique_id=1722245629]
+[node name="ShardsDisplay" type="HBoxContainer" parent="Background/MenuContainer/InventoryView"]
 layout_mode = 0
 offset_left = 15.0
-offset_top = 9.0
-offset_right = 73.0
-offset_bottom = 32.0
+offset_top = 5.0
+offset_right = 230.0
+offset_bottom = 39.0
+theme_override_constants/separation = 6
+
+[node name="ShardIcon" type="TextureRect" parent="Background/MenuContainer/InventoryView/ShardsDisplay"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture = ExtResource("11_shard_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ShardsLabel" type="Label" parent="Background/MenuContainer/InventoryView/ShardsDisplay" unique_id=1722245629]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_qblpg")
 theme_override_font_sizes/font_size = 25
 text = "Shards: 0"
@@ -147,6 +161,14 @@ offset_transform_enabled = true
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 7
+
+[node name="ItemSelectionOverlay" type="TextureRect" parent="Background/MenuContainer/InventoryView"]
+visible = false
+mouse_filter = 2
+texture = ExtResource("10_item_selection_overlay")
+expand_mode = 1
+stretch_mode = 5
+z_index = 1
 
 [node name="needle" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=1039175191]
 custom_minimum_size = Vector2(150, 0)
@@ -180,10 +202,10 @@ expand_mode = 4
 
 [node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/InventoryView"]
 layout_mode = 0
-offset_left = 926.0
-offset_top = 67.0
-offset_right = 979.0
-offset_bottom = 369.0
+offset_left = 921.0
+offset_top = 47.0
+offset_right = 984.0
+offset_bottom = 389.0
 mouse_filter = 2
 texture = ExtResource("8_description_divider")
 expand_mode = 1
@@ -194,9 +216,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -303.0
+offset_left = -343.0
 offset_top = 21.0
-offset_right = -6.0
+offset_right = -46.0
 offset_bottom = 314.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
@@ -216,6 +238,7 @@ layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow"]
+visible = false
 custom_minimum_size = Vector2(38, 24)
 layout_mode = 2
 texture = ExtResource("9_item_title_decor")
@@ -231,6 +254,7 @@ horizontal_alignment = 1
 clip_text = true
 
 [node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow"]
+visible = false
 custom_minimum_size = Vector2(38, 24)
 layout_mode = 2
 texture = ExtResource("9_item_title_decor")
