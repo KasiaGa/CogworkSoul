@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://npc/ami.gd" id="1_ami_script"]
+[ext_resource type="Texture2D" path="res://assets/images/npc/ami_mock.svg" id="2_ami_mock"]
+[ext_resource type="PackedScene" path="res://interaction/interaction_area.tscn" id="3_interaction_area"]
+
+[sub_resource type="CapsuleShape2D" id="BodyCapsule"]
+radius = 71.0
+height = 598.0
+
+[sub_resource type="CapsuleShape2D" id="InteractionCapsule"]
+radius = 400.0
+height = 800.0
+
+[node name="Ami" type="CharacterBody2D"]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_ami_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ami_mock")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("BodyCapsule")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_interaction_area")]
+action_name = "Speak"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("InteractionCapsule")

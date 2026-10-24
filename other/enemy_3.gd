@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var silk_container: HBoxContainer = $"../CanvasLayer/SilkContainer"
 
 const SHARD_SCENE = preload("res://other/shard.tscn")
+const JOURNAL_ENEMY_ID: String = "factory_stalker"
 
 @export var follow_speed: float = 120.0
 @export var acceleration: float = 600.0
@@ -58,6 +59,7 @@ func take_damage(amount: int) -> void:
 		die_and_drop_shards()
 
 func die_and_drop_shards() -> void:
+	Global.mark_enemy_defeated(JOURNAL_ENEMY_ID)
 	var drop_count = Global.get_enemy_shard_drop_count(min_shards_dropped, max_shards_dropped)
 	for _index in range(drop_count):
 		var shard_instance = SHARD_SCENE.instantiate() as RigidBody2D

@@ -72,6 +72,8 @@ func _start_game() -> void:
 	Global.reset_modules()
 	Global.discovered_locations.clear()
 	Global.visited_rooms.clear()
+	Global.defeated_bosses.clear()
+	Global.defeated_enemies.clear()
 	Global.current_region_id = ""
 	Global.transition_origin_region_id = ""
 	Global.region_transition_pending = false

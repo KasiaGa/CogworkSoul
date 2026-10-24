@@ -2,6 +2,7 @@ extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var silk_container: HBoxContainer = $"../CanvasLayer/SilkContainer"
 const SHARD_SCENE = preload("res://other/shard.tscn")
+const JOURNAL_ENEMY_ID: String = "flying_cogbug"
 
 @export var speed = 100
 @export var limit = 5.0 # Increased slightly to ensure target detection works smoothly
@@ -49,6 +50,7 @@ func take_damage(amount: int):
 		die_and_drop_shards()
 		
 func die_and_drop_shards():
+	Global.mark_enemy_defeated(JOURNAL_ENEMY_ID)
 	var drop_count = Global.get_enemy_shard_drop_count(min_shards_dropped, max_shards_dropped)
 	
 	for i in range(drop_count):

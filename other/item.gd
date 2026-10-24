@@ -7,6 +7,8 @@ extends StaticBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if item_type == Global.ItemType.JOURNAL:
+		item_id = Global.JOURNAL_ITEM_ID
 	# 1. Check if this specific item has already been picked up in the past
 	if (item_type == Global.ItemType.MODULE and Global.collected_modules.has(item_id)) or (item_type != Global.ItemType.MODULE and Global.collected_items.has(item_id)):
 		queue_free() # Delete it instantly before the player even sees it
@@ -67,6 +69,9 @@ func _on_interact():
 			var module_data = Global.get_module_data(item_id)
 			if canvas_layer:
 				canvas_layer.show_notification("Acquired: " + module_data.name)
+		Global.ItemType.JOURNAL:
+			if canvas_layer:
+				canvas_layer.show_notification("Acquired: Journal")
 	
 	Global.save_game()
 	

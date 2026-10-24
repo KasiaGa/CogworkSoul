@@ -102,6 +102,13 @@ theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
 text = "Modules"
 
+[node name="JournalButton" type="Button" parent="Background/MenuContainer/Tabs"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_oexcg")
+theme_override_font_sizes/font_size = 25
+text = "Journal"
+
 [node name="MapButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=431280213]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
@@ -378,6 +385,84 @@ theme_override_font_sizes/font_size = 18
 text = "Choose a slot above, then select a module to equip it. Select its slot and activate it again to unequip."
 autowrap_mode = 3
 
+[node name="JournalView" type="Control" parent="Background/MenuContainer"]
+visible = false
+custom_minimum_size = Vector2(1450, 710)
+layout_mode = 2
+
+[node name="EnemyScroll" type="ScrollContainer" parent="Background/MenuContainer/JournalView"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 370.0
+offset_bottom = 700.0
+
+[node name="EnemyGrid" type="GridContainer" parent="Background/MenuContainer/JournalView/EnemyScroll"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 3
+
+[node name="JournalEmptyLabel" type="Label" parent="Background/MenuContainer/JournalView"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 350.0
+offset_bottom = 80.0
+theme_override_fonts/font = SubResource("SystemFont_jtgip")
+theme_override_font_sizes/font_size = 20
+text = "Defeat an enemy to add it to your Journal."
+autowrap_mode = 3
+
+[node name="EnemyArtwork" type="TextureRect" parent="Background/MenuContainer/JournalView"]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 20.0
+offset_right = 930.0
+offset_bottom = 690.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EnemyArtworkFallback" type="Label" parent="Background/MenuContainer/JournalView"]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 20.0
+offset_right = 930.0
+offset_bottom = 690.0
+theme_override_fonts/font = SubResource("SystemFont_jtgip")
+theme_override_font_sizes/font_size = 22
+text = "Artwork unavailable."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JournalColumnDivider" type="ColorRect" parent="Background/MenuContainer/JournalView"]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 20.0
+offset_right = 952.0
+offset_bottom = 690.0
+color = Color(0.58431375, 0.5254902, 0.37254903, 0.9)
+
+[node name="EnemyName" type="Label" parent="Background/MenuContainer/JournalView"]
+layout_mode = 0
+offset_left = 980.0
+offset_top = 32.0
+offset_right = 1430.0
+offset_bottom = 82.0
+theme_override_fonts/font = SubResource("SystemFont_okbrl")
+theme_override_font_sizes/font_size = 32
+clip_text = true
+
+[node name="EnemyDescription" type="Label" parent="Background/MenuContainer/JournalView"]
+layout_mode = 0
+offset_left = 980.0
+offset_top = 105.0
+offset_right = 1430.0
+offset_bottom = 430.0
+theme_override_fonts/font = SubResource("SystemFont_jtgip")
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+
 [node name="ReferenceRect" type="ReferenceRect" parent="Background" unique_id=1270295291]
 visible = false
 layout_mode = 1
@@ -393,4 +478,5 @@ editor_only = false
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/InventoryButton" to="." method="show_inventory_tab"]
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/WishsButton" to="." method="show_wishs_tab"]
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/ModulesButton" to="." method="show_modules_tab"]
+[connection signal="focus_entered" from="Background/MenuContainer/Tabs/JournalButton" to="." method="show_journal_tab"]
 [connection signal="focus_entered" from="Background/MenuContainer/Tabs/MapButton" to="." method="show_map_tab"]

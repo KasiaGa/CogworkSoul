@@ -28,8 +28,31 @@ var cocoon_shards: int = 0
 
 var player_facing_right: bool = true
 
-enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE, FLOWER, MODULE }
+enum ItemType { NEEDLE, COGWORK_BATTERY, KEY_TO_LAB_21, HEALTH_UPGRADE, SILK_UPGRADE, FLOWER, MODULE, JOURNAL }
 var collected_items: Array[String] = []
+const JOURNAL_ITEM_ID: String = "journal"
+const ENEMY_JOURNAL_DATA: Dictionary = {
+	"cogbug": {
+		"name": "Cogbug",
+		"description": "A stubborn clockwork crawler that patrols the factory floor.",
+		"image_path": "res://assets/images/enemy/cogbug.png"
+	},
+	"flying_cogbug": {
+		"name": "Flying Cogbug",
+		"description": "A winged cogbug that drifts through open spaces and pursues intruders.",
+		"image_path": "res://assets/images/enemy/flying_cogbug.png"
+	},
+	"factory_stalker": {
+		"name": "Factory Stalker",
+		"description": "A relentless hunter that accelerates toward anything it sees moving.",
+		"image_path": "res://assets/images/enemy/enemy2223.png"
+	},
+	"tangled_guardian": {
+		"name": "Tangled Guardian",
+		"description": "A massive guardian that lashes out with long, tangled cables to protect the factory.",
+		"image_path": "res://assets/images/npc/tangled_guardian_resized.png"
+	}
+}
 
 const MODULE_SLOT_COUNT: int = 3
 var collected_modules: Array[String] = []
@@ -128,6 +151,7 @@ var broken_objects: Dictionary = {} # Format: {"res://levels/room1.tscn:Breakabl
 var discovered_locations: Dictionary = {}
 var visited_rooms: Dictionary = {}
 var defeated_bosses: Dictionary = {}
+var defeated_enemies: Dictionary = {}
 
 var has_talked_to_bella: bool = false
 var rubigo_dialogue_step: int = 0
@@ -242,6 +266,7 @@ func _build_save_data(checkpoint_x: float, checkpoint_y: float) -> Dictionary:
 		"cocoon_shards": cocoon_shards,
 		"broken_objects": broken_objects,
 		"defeated_bosses": defeated_bosses,
+		"defeated_enemies": defeated_enemies,
 		"discovered_locations": discovered_locations,
 		"visited_rooms": visited_rooms,
 		"has_talked_to_bella": has_talked_to_bella,
@@ -272,6 +297,7 @@ func apply_debug_save_state(state: Dictionary) -> String:
 		"cocoon_spawned": TYPE_BOOL,
 		"broken_objects": TYPE_DICTIONARY,
 		"defeated_bosses": TYPE_DICTIONARY,
+		"defeated_enemies": TYPE_DICTIONARY,
 		"discovered_locations": TYPE_DICTIONARY,
 		"visited_rooms": TYPE_DICTIONARY,
 		"has_talked_to_bella": TYPE_BOOL,
@@ -316,6 +342,7 @@ func apply_debug_save_state(state: Dictionary) -> String:
 	cocoon_shards = int(state.get("cocoon_shards", cocoon_shards))
 	broken_objects = state.get("broken_objects", broken_objects)
 	defeated_bosses = state.get("defeated_bosses", defeated_bosses)
+	defeated_enemies = state.get("defeated_enemies", defeated_enemies)
 	discovered_locations = state.get("discovered_locations", discovered_locations)
 	visited_rooms = state.get("visited_rooms", visited_rooms)
 	has_talked_to_bella = bool(state.get("has_talked_to_bella", has_talked_to_bella))
@@ -421,6 +448,7 @@ func load_game(slot:int = -1):
 		
 		broken_objects = save_data.get("broken_objects", {})
 		defeated_bosses = save_data.get("defeated_bosses", {})
+		defeated_enemies = save_data.get("defeated_enemies", {})
 		discovered_locations = save_data.get("discovered_locations", {})
 		visited_rooms = save_data.get("visited_rooms", {})
 		
@@ -442,6 +470,16 @@ func mark_boss_defeated(boss_id: String) -> void:
 	if boss_id.is_empty() or is_boss_defeated(boss_id):
 		return
 	defeated_bosses[boss_id] = true
+	defeated_enemies[boss_id] = true
+	save_game(false)
+
+func is_enemy_defeated(enemy_id: String) -> bool:
+	return bool(defeated_enemies.get(enemy_id, false) or defeated_bosses.get(enemy_id, false))
+
+func mark_enemy_defeated(enemy_id: String) -> void:
+	if enemy_id.is_empty() or is_enemy_defeated(enemy_id):
+		return
+	defeated_enemies[enemy_id] = true
 	save_game(false)
 
 func enter_region(region_id: String, region_display_name: String, show_first_visit_banner: bool = true, subregion_display_name: String = "") -> void:

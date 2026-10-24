@@ -4,11 +4,13 @@ extends CanvasLayer
 @onready var map_view: Control = $Background/MenuContainer/MapView
 @onready var wishs_view: Control = $Background/MenuContainer/WishsView
 @onready var modules_view: Control = $Background/MenuContainer/ModulesView
+@onready var journal_view: Control = $Background/MenuContainer/JournalView
 
 @onready var inventory_button: Button = $Background/MenuContainer/Tabs/InventoryButton
 @onready var map_button: Button = $Background/MenuContainer/Tabs/MapButton
 @onready var wishs_button: Button = $Background/MenuContainer/Tabs/WishsButton
 @onready var modules_button: Button = $Background/MenuContainer/Tabs/ModulesButton
+@onready var journal_button: Button = $Background/MenuContainer/Tabs/JournalButton
 
 @onready var item_grid: GridContainer = $Background/MenuContainer/InventoryView/ItemGrid
 @onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitle
@@ -24,9 +26,16 @@ extends CanvasLayer
 @onready var module_empty_label: Label = $Background/MenuContainer/ModulesView/ModuleScroll/ModuleList/EmptyModulesLabel
 @onready var module_title: Label = $Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitle
 @onready var module_desc: Label = $Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleDesc
+@onready var journal_enemy_grid: GridContainer = $Background/MenuContainer/JournalView/EnemyScroll/EnemyGrid
+@onready var journal_artwork: TextureRect = $Background/MenuContainer/JournalView/EnemyArtwork
+@onready var journal_artwork_fallback: Label = $Background/MenuContainer/JournalView/EnemyArtworkFallback
+@onready var journal_enemy_name: Label = $Background/MenuContainer/JournalView/EnemyName
+@onready var journal_enemy_description: Label = $Background/MenuContainer/JournalView/EnemyDescription
+@onready var journal_empty_label: Label = $Background/MenuContainer/JournalView/JournalEmptyLabel
 
 var module_slot_buttons: Array[Button] = []
 var selected_module_slot: int = 0
+var journal_enemy_buttons: Dictionary = {}
 
 # Simple local item database matching your exact naming style for descriptions
 var item_info: Dictionary = {
@@ -34,7 +43,8 @@ var item_info: Dictionary = {
 	"cogwork_battery": {"name": "Cogwork Battery", "desc": "A buzzing brass cell filled with residual energy. Powers strange machinery."},
 	"key_to_lab_21": {"name": "Lab 21 Key", "desc": "An old, grease-stained key. Accesses the restricted sector of the Desultory Lab."},
 	"health_upgrade": {"name": "Mask Shard", "desc": "An ancient fragment. Collect more to increase your maximum health."},
-	"silk_upgrade": {"name": "Silk Vessel", "desc": "A fragile spool that increases your maximum capacity for silk."}
+	"silk_upgrade": {"name": "Silk Vessel", "desc": "A fragile spool that increases your maximum capacity for silk."},
+	"journal": {"name": "Journal", "desc": "A field journal for recording the creatures you defeat."}
 }
 
 func _ready() -> void:
@@ -45,6 +55,7 @@ func _ready() -> void:
 	map_button.pressed.connect(show_map_tab)
 	wishs_button.pressed.connect(show_wishs_tab)
 	modules_button.pressed.connect(show_modules_tab)
+	journal_button.pressed.connect(show_journal_tab)
 	for slot_index in range(module_slots.get_child_count()):
 		var slot_button = module_slots.get_child(slot_index) as Button
 		module_slot_buttons.append(slot_button)
@@ -77,6 +88,8 @@ func open_menu() -> void:
 	# 2. Update wishes display
 	update_wishs_display()
 	update_modules_display()
+	_update_journal_access()
+	update_journal_display()
 	
 	# 3. Build navigation map ONLY using the visible items!
 	setup_navigation_paths()
@@ -99,24 +112,109 @@ func show_inventory_tab() -> void:
 	map_view.hide()
 	wishs_view.hide()
 	modules_view.hide()
+	journal_view.hide()
 
 func show_map_tab() -> void:
 	inventory_view.hide()
 	map_view.show()
 	wishs_view.hide()
 	modules_view.hide()
+	journal_view.hide()
 
 func show_wishs_tab() -> void:
 	inventory_view.hide()
 	map_view.hide()
 	wishs_view.show()
 	modules_view.hide()
+	journal_view.hide()
 
 func show_modules_tab() -> void:
 	inventory_view.hide()
 	map_view.hide()
 	wishs_view.hide()
 	modules_view.show()
+	journal_view.hide()
+
+func show_journal_tab() -> void:
+	if not Global.collected_items.has(Global.JOURNAL_ITEM_ID):
+		_update_journal_access()
+		return
+	inventory_view.hide()
+	map_view.hide()
+	wishs_view.hide()
+	modules_view.hide()
+	journal_view.show()
+	update_journal_display()
+
+func _update_journal_access() -> void:
+	journal_button.visible = Global.collected_items.has(Global.JOURNAL_ITEM_ID)
+	if not journal_button.visible and journal_view.visible:
+		show_inventory_tab()
+
+func update_journal_display() -> void:
+	for child in journal_enemy_grid.get_children():
+		journal_enemy_grid.remove_child(child)
+		child.queue_free()
+	journal_enemy_buttons.clear()
+	journal_artwork.texture = null
+	journal_artwork.hide()
+	journal_artwork_fallback.hide()
+
+	if not Global.collected_items.has(Global.JOURNAL_ITEM_ID):
+		journal_enemy_name.text = "Journal Locked"
+		journal_enemy_description.text = "Find the Journal to record defeated enemies."
+		journal_empty_label.hide()
+		return
+
+	var first_enemy_id: String = ""
+	for enemy_id in Global.ENEMY_JOURNAL_DATA:
+		if not Global.is_enemy_defeated(enemy_id):
+			continue
+		var enemy_data: Dictionary = Global.ENEMY_JOURNAL_DATA[enemy_id]
+		var icon_button := Button.new()
+		icon_button.name = "Enemy_" + enemy_id
+		icon_button.custom_minimum_size = Vector2(94, 94)
+		icon_button.icon_max_width = 76
+		icon_button.focus_mode = Control.FOCUS_ALL
+		icon_button.tooltip_text = enemy_data.get("name", enemy_id)
+		var image_path: String = enemy_data.get("image_path", "")
+		if not image_path.is_empty() and ResourceLoader.exists(image_path):
+			icon_button.icon = load(image_path) as Texture2D
+		else:
+			icon_button.text = str(enemy_data.get("name", enemy_id)).left(2).to_upper()
+		icon_button.pressed.connect(_select_journal_enemy.bind(enemy_id))
+		icon_button.focus_entered.connect(_select_journal_enemy.bind(enemy_id))
+		icon_button.mouse_entered.connect(func(): icon_button.grab_focus())
+		journal_enemy_grid.add_child(icon_button)
+		journal_enemy_buttons[enemy_id] = icon_button
+		if first_enemy_id.is_empty():
+			first_enemy_id = enemy_id
+
+	journal_empty_label.visible = first_enemy_id.is_empty()
+	if first_enemy_id.is_empty():
+		journal_enemy_name.text = "No entries yet"
+		journal_enemy_description.text = "Defeat an enemy to add it to your Journal."
+		return
+	_select_journal_enemy(first_enemy_id)
+
+func _select_journal_enemy(enemy_id: String) -> void:
+	var enemy_data: Dictionary = Global.ENEMY_JOURNAL_DATA.get(enemy_id, {})
+	if enemy_data.is_empty():
+		return
+	journal_enemy_name.text = enemy_data.get("name", enemy_id)
+	journal_enemy_description.text = enemy_data.get("description", "No field notes are available for this enemy yet.")
+	journal_artwork.texture = null
+	journal_artwork.hide()
+	journal_artwork_fallback.text = "Artwork unavailable."
+	journal_artwork_fallback.show()
+	var image_path: String = enemy_data.get("image_path", "")
+	if not image_path.is_empty() and ResourceLoader.exists(image_path):
+		journal_artwork.texture = load(image_path) as Texture2D
+		journal_artwork.show()
+		journal_artwork_fallback.hide()
+	for button_enemy_id in journal_enemy_buttons:
+		var enemy_button: Button = journal_enemy_buttons[button_enemy_id]
+		enemy_button.modulate = Color(1.6, 1.6, 1.6, 1.0) if button_enemy_id == enemy_id else Color.WHITE
 
 func update_modules_display() -> void:
 	module_title.text = "Modules"
@@ -336,15 +434,14 @@ func setup_navigation_paths() -> void:
 	# Get a clean array containing ONLY the slots that are currently visible
 	var visible_items = item_grid.get_children().filter(func(node): return node.visible)
 	
-	# Set up tab navigation: Items -> Wishes -> Modules -> Map -> Items
-	inventory_button.focus_neighbor_right = wishs_button.get_path()
-	wishs_button.focus_neighbor_left = inventory_button.get_path()
-	wishs_button.focus_neighbor_right = modules_button.get_path()
-	modules_button.focus_neighbor_left = wishs_button.get_path()
-	modules_button.focus_neighbor_right = map_button.get_path()
-	map_button.focus_neighbor_left = modules_button.get_path()
-	map_button.focus_neighbor_right = inventory_button.get_path()
-	inventory_button.focus_neighbor_left = map_button.get_path()
+	# Keep the tab cycle in sync with the Journal's unlock state.
+	var tabs: Array[Button] = [inventory_button, wishs_button, modules_button]
+	if journal_button.visible:
+		tabs.append(journal_button)
+	tabs.append(map_button)
+	for tab_index in range(tabs.size()):
+		tabs[tab_index].focus_neighbor_right = tabs[(tab_index + 1) % tabs.size()].get_path()
+		tabs[tab_index].focus_neighbor_left = tabs[(tab_index - 1 + tabs.size()) % tabs.size()].get_path()
 	
 	if visible_items.size() == 0:
 		# If the inventory is completely empty, tabs cycle but items aren't involved

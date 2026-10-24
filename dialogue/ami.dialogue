@@ -1,0 +1,13 @@
+~ start
+Rant: Hello?
+Ami: Oh! Who are you? (takes out weapon)
+Rant: I won't do you any harm.
+Ami: Oof fine, you ssscared me. I thought I needed to fight another automaton.
+Rant: Why do you fight the automatons?
+Ami: To keep track of them and maintain their population. I keep a journal of all the distinct sssspecies. 
+Ami: You look like someone who visits all the weird corners here, would you like to help me with my journal?
+=> END
+
+~ already_has_journal
+Ami: Keep adding to that Journal, Rant. There is always something new to discover.
+=> END
