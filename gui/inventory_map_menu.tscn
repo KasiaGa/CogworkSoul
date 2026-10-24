@@ -2,11 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://bc1iyf761gbl6" path="res://assets/images/gui/map.png" id="1_4wr3o"]
 [ext_resource type="Script" uid="uid://d4mldrc2hjgfq" path="res://gui/inventory_map_menu.gd" id="1_n3od0"]
+[ext_resource type="Texture2D" uid="uid://b5x6tq1ye8xqj" path="res://assets/images/gui/menuDecor.png" id="2_0x6eu"]
 [ext_resource type="Texture2D" uid="uid://bt0wsyphlugcj" path="res://assets/images/item/needle.png" id="2_okbrl"]
 [ext_resource type="Texture2D" uid="uid://cncaq75ufuuww" path="res://assets/images/world/battery_colored.png" id="3_oexcg"]
-[ext_resource type="Texture2D" uid="uid://ba52ned4dav28" path="res://assets/images/world/cog1.png" id="4_qblpg"]
-[ext_resource type="Texture2D" uid="uid://cxhpgksuuqyeo" path="res://assets/images/world/bell6.png" id="5_0x6eu"]
-[ext_resource type="Texture2D" uid="uid://tiridibhl6tk" path="res://assets/images/item/item.png" id="6_qblpg"]
+[ext_resource type="Texture2D" uid="uid://pf7o6k407dei" path="res://assets/images/item/key_to_lab_21.png" id="5_0x6eu"]
+[ext_resource type="Texture2D" uid="uid://dcbc1407infot" path="res://assets/images/item/journal.png" id="6_0amtv"]
+[ext_resource type="Texture2D" uid="uid://cr7bwkxhmadis" path="res://assets/images/item/flower1.png" id="7_jrc3s"]
 
 [sub_resource type="SystemFont" id="SystemFont_vg86a"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -51,6 +52,21 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.03137255, 0, 0, 0.92156863)
 
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=1802632994]
+position = Vector2(1490, 140)
+texture = ExtResource("2_0x6eu")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background" unique_id=889353890]
+position = Vector2(1486, 766)
+texture = ExtResource("2_0x6eu")
+flip_v = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="Background" unique_id=771729147]
+position = Vector2(122, 768)
+texture = ExtResource("2_0x6eu")
+flip_h = true
+flip_v = true
+
 [node name="MenuContainer" type="VBoxContainer" parent="Background" unique_id=1965935282]
 layout_mode = 1
 anchors_preset = -1
@@ -58,10 +74,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -715.5
-offset_top = -391.5
-offset_right = 737.5
-offset_bottom = 382.5
+offset_left = -706.5
+offset_top = -368.5
+offset_right = 694.5
+offset_bottom = 374.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -80,7 +96,7 @@ theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
 text = "Wishes"
 
-[node name="ModulesButton" type="Button" parent="Background/MenuContainer/Tabs"]
+[node name="ModulesButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=147927860]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
@@ -91,6 +107,10 @@ layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
 text = "Map"
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer" unique_id=1237928224]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
 
 [node name="InventoryView" type="Control" parent="Background/MenuContainer" unique_id=293217413]
 custom_minimum_size = Vector2(500, 200)
@@ -103,15 +123,15 @@ offset_top = 9.0
 offset_right = 73.0
 offset_bottom = 32.0
 theme_override_fonts/font = SubResource("SystemFont_qblpg")
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 25
 text = "Shards: 0"
 
 [node name="ItemGrid" type="GridContainer" parent="Background/MenuContainer/InventoryView" unique_id=470268612]
 layout_mode = 0
 offset_left = 18.0
-offset_top = 44.0
-offset_right = 695.0
-offset_bottom = 346.0
+offset_top = 67.0
+offset_right = 808.0
+offset_bottom = 369.0
 offset_transform_enabled = true
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
@@ -123,57 +143,29 @@ layout_mode = 2
 texture = ExtResource("2_okbrl")
 expand_mode = 4
 
-[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/needle" unique_id=1712112236]
-z_index = -1
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 150.0
-
 [node name="cogwork_battery" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=672894153]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 texture = ExtResource("3_oexcg")
 expand_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/cogwork_battery" unique_id=966168266]
-z_index = -1
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 150.0
-
 [node name="key_to_lab_21" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=611539053]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
-texture = ExtResource("4_qblpg")
+texture = ExtResource("5_0x6eu")
+expand_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/key_to_lab_21" unique_id=1007492812]
-z_index = -1
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 150.0
-
-[node name="health_upgrade" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=357184808]
+[node name="journal" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=357184808]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
-texture = ExtResource("5_0x6eu")
-
-[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/health_upgrade" unique_id=1903540252]
-z_index = -1
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 150.0
+texture = ExtResource("6_0amtv")
+expand_mode = 2
 
 [node name="flower" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=1607755856]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-texture = ExtResource("6_qblpg")
+texture = ExtResource("7_jrc3s")
 expand_mode = 4
-
-[node name="ColorRect" type="ColorRect" parent="Background/MenuContainer/InventoryView/ItemGrid/flower" unique_id=270462907]
-z_index = -1
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 150.0
 
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/InventoryView" unique_id=431507155]
 self_modulate = Color(1, 0.76036006, 0.71446484, 1)
@@ -181,13 +173,14 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -241.0
-offset_top = 42.0
+offset_left = -303.0
+offset_top = 21.0
 offset_right = -6.0
 offset_bottom = 314.0
 grow_horizontal = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel" unique_id=1605739397]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -239,7 +232,7 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -241.0
+offset_left = -301.0
 offset_top = 42.0
 offset_right = -6.0
 offset_bottom = 314.0
@@ -267,12 +260,12 @@ theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
 
-[node name="ModulesView" type="Control" parent="Background/MenuContainer"]
+[node name="ModulesView" type="Control" parent="Background/MenuContainer" unique_id=1364910848]
 visible = false
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
 
-[node name="LoadoutTitle" type="Label" parent="Background/MenuContainer/ModulesView"]
+[node name="LoadoutTitle" type="Label" parent="Background/MenuContainer/ModulesView" unique_id=1247796578]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 8.0
@@ -282,7 +275,7 @@ theme_override_fonts/font = SubResource("SystemFont_qblpg")
 theme_override_font_sizes/font_size = 24
 text = "Equipped Modules"
 
-[node name="ModuleSlots" type="HBoxContainer" parent="Background/MenuContainer/ModulesView"]
+[node name="ModuleSlots" type="HBoxContainer" parent="Background/MenuContainer/ModulesView" unique_id=975756004]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 44.0
@@ -290,25 +283,28 @@ offset_right = 710.0
 offset_bottom = 150.0
 theme_override_constants/separation = 12
 
-[node name="Slot1Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots"]
+[node name="Slot1Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=1579571403]
 custom_minimum_size = Vector2(215, 100)
 layout_mode = 2
 toggle_mode = true
-text = "Slot 1\nEmpty"
+text = "Slot 1
+Empty"
 
-[node name="Slot2Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots"]
+[node name="Slot2Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=797322923]
 custom_minimum_size = Vector2(215, 100)
 layout_mode = 2
 toggle_mode = true
-text = "Slot 2\nEmpty"
+text = "Slot 2
+Empty"
 
-[node name="Slot3Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots"]
+[node name="Slot3Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=2126585250]
 custom_minimum_size = Vector2(215, 100)
 layout_mode = 2
 toggle_mode = true
-text = "Slot 3\nEmpty"
+text = "Slot 3
+Empty"
 
-[node name="ModuleListTitle" type="Label" parent="Background/MenuContainer/ModulesView"]
+[node name="ModuleListTitle" type="Label" parent="Background/MenuContainer/ModulesView" unique_id=70887683]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 168.0
@@ -318,26 +314,26 @@ theme_override_fonts/font = SubResource("SystemFont_qblpg")
 theme_override_font_sizes/font_size = 22
 text = "Collected Modules"
 
-[node name="ModuleScroll" type="ScrollContainer" parent="Background/MenuContainer/ModulesView"]
+[node name="ModuleScroll" type="ScrollContainer" parent="Background/MenuContainer/ModulesView" unique_id=1274556181]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 202.0
 offset_right = 700.0
 offset_bottom = 710.0
 
-[node name="ModuleList" type="VBoxContainer" parent="Background/MenuContainer/ModulesView/ModuleScroll"]
+[node name="ModuleList" type="VBoxContainer" parent="Background/MenuContainer/ModulesView/ModuleScroll" unique_id=1474818860]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="EmptyModulesLabel" type="Label" parent="Background/MenuContainer/ModulesView/ModuleScroll/ModuleList"]
+[node name="EmptyModulesLabel" type="Label" parent="Background/MenuContainer/ModulesView/ModuleScroll/ModuleList" unique_id=2000678526]
 custom_minimum_size = Vector2(650, 60)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 20
 text = "No modules collected yet."
 
-[node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/ModulesView"]
+[node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/ModulesView" unique_id=1318090920]
 self_modulate = Color(1, 0.76036006, 0.71446484, 1)
 layout_mode = 1
 anchors_preset = 1
@@ -349,29 +345,29 @@ offset_right = -6.0
 offset_bottom = 500.0
 grow_horizontal = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel" unique_id=551942985]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer" unique_id=1667861834]
 layout_mode = 2
 
-[node name="ModuleTitle" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer"]
+[node name="ModuleTitle" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2091995741]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
 theme_override_font_sizes/font_size = 22
 clip_text = true
 
-[node name="ModuleDesc" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer"]
+[node name="ModuleDesc" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=1725364360]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
 
-[node name="ModuleInstructions" type="Label" parent="Background/MenuContainer/ModulesView"]
+[node name="ModuleInstructions" type="Label" parent="Background/MenuContainer/ModulesView" unique_id=1936278749]
 layout_mode = 0
 offset_left = 1212.0
 offset_top = 518.0
@@ -379,8 +375,8 @@ offset_right = 1440.0
 offset_bottom = 690.0
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 18
-autowrap_mode = 3
 text = "Choose a slot above, then select a module to equip it. Select its slot and activate it again to unequip."
+autowrap_mode = 3
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Background" unique_id=1270295291]
 visible = false
