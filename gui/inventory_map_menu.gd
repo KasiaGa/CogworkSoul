@@ -13,6 +13,7 @@ const SELECTION_OVERLAY_TEXTURE = preload("res://assets/images/gui/itemelected.p
 @onready var wishs_button: Button = $Background/MenuContainer/Tabs/WishsButton
 @onready var modules_button: Button = $Background/MenuContainer/Tabs/ModulesButton
 @onready var journal_button: Button = $Background/MenuContainer/Tabs/JournalButton
+@onready var journal_gap: Control = $Background/MenuContainer/Tabs/JournalGap
 
 @onready var item_grid: GridContainer = $Background/MenuContainer/InventoryView/ItemGrid
 @onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow/ItemTitle
@@ -171,6 +172,7 @@ func _set_active_tab(active_button: Button) -> void:
 
 func _update_journal_access() -> void:
 	journal_button.visible = Global.collected_items.has(Global.JOURNAL_ITEM_ID)
+	journal_gap.visible = journal_button.visible
 	if not journal_button.visible and journal_view.visible:
 		show_inventory_tab()
 
