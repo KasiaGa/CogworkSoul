@@ -347,7 +347,7 @@ layout_mode = 0
 offset_left = 921.0
 offset_top = 47.0
 offset_right = 984.0
-offset_bottom = 389.0
+offset_bottom = 443.0
 mouse_filter = 2
 texture = ExtResource("8_description_divider")
 expand_mode = 1
@@ -382,7 +382,7 @@ theme_override_constants/separation = 4
 
 [node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow" unique_id=959565052]
 visible = false
-custom_minimum_size = Vector2(38, 24)
+custom_minimum_size = Vector2(48, 36)
 layout_mode = 2
 texture = ExtResource("9_item_title_decor")
 expand_mode = 1
@@ -392,13 +392,13 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 clip_text = true
 
 [node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow" unique_id=1986782905]
 visible = false
-custom_minimum_size = Vector2(38, 24)
+custom_minimum_size = Vector2(48, 36)
 layout_mode = 2
 texture = ExtResource("9_item_title_decor")
 expand_mode = 1
@@ -408,7 +408,7 @@ flip_h = true
 [node name="ItemDesc" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2119655486]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 autowrap_mode = 3
 
 [node name="MapView" type="Control" parent="Background/MenuContainer" unique_id=1097567820]
@@ -440,7 +440,7 @@ layout_mode = 0
 offset_left = 921.0
 offset_top = 47.0
 offset_right = 984.0
-offset_bottom = 389.0
+offset_bottom = 443.0
 mouse_filter = 2
 texture = ExtResource("8_description_divider")
 expand_mode = 1
@@ -475,7 +475,7 @@ theme_override_constants/separation = 4
 
 [node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow" unique_id=1566207747]
 visible = false
-custom_minimum_size = Vector2(38, 24)
+custom_minimum_size = Vector2(48, 36)
 layout_mode = 2
 texture = ExtResource("9_item_title_decor")
 expand_mode = 1
@@ -485,7 +485,7 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 clip_text = true
 
@@ -501,7 +501,7 @@ flip_h = true
 [node name="WishDesc" type="Label" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2130693702]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 autowrap_mode = 3
 
 [node name="ModulesView" type="Control" parent="Background/MenuContainer" unique_id=1364910848]
@@ -598,7 +598,7 @@ layout_mode = 0
 offset_left = 921.0
 offset_top = 47.0
 offset_right = 984.0
-offset_bottom = 389.0
+offset_bottom = 443.0
 mouse_filter = 2
 texture = ExtResource("8_description_divider")
 expand_mode = 1
@@ -691,6 +691,17 @@ theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 3
 
+[node name="JournalColumnDivider2" type="TextureRect" parent="Background/MenuContainer/JournalView" unique_id=1743105373]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 47.0
+offset_right = 563.0
+offset_bottom = 443.0
+mouse_filter = 2
+texture = ExtResource("8_description_divider")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="JournalEmptyLabel" type="Label" parent="Background/MenuContainer/JournalView" unique_id=1994275814]
 layout_mode = 0
 offset_left = 24.0
@@ -704,9 +715,9 @@ autowrap_mode = 3
 
 [node name="EnemyArtwork" type="TextureRect" parent="Background/MenuContainer/JournalView" unique_id=1915682221]
 layout_mode = 0
-offset_left = 390.0
+offset_left = 550.0
 offset_top = 20.0
-offset_right = 930.0
+offset_right = 970.0
 offset_bottom = 690.0
 expand_mode = 1
 stretch_mode = 5
@@ -725,10 +736,10 @@ vertical_alignment = 1
 
 [node name="JournalColumnDivider" type="TextureRect" parent="Background/MenuContainer/JournalView" unique_id=412093092]
 layout_mode = 0
-offset_left = 934.0
-offset_top = 30.0
-offset_right = 976.0
-offset_bottom = 426.0
+offset_left = 921.0
+offset_top = 47.0
+offset_right = 984.0
+offset_bottom = 443.0
 mouse_filter = 2
 texture = ExtResource("8_description_divider")
 expand_mode = 1
@@ -736,9 +747,9 @@ stretch_mode = 5
 
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/JournalView" unique_id=2144359952]
 layout_mode = 0
-offset_left = 1060.0
+offset_left = 990.0
 offset_top = 20.0
-offset_right = 1500.0
+offset_right = 1430.0
 offset_bottom = 430.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
 

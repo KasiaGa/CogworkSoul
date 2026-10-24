@@ -60,7 +60,8 @@ var item_info: Dictionary = {
 	"key_to_lab_21": {"name": "Lab 21 Key", "desc": "An old, grease-stained key. Accesses the restricted sector of the Desultory Lab."},
 	"health_upgrade": {"name": "Mask Shard", "desc": "An ancient fragment. Collect more to increase your maximum health."},
 	"silk_upgrade": {"name": "Silk Vessel", "desc": "A fragile spool that increases your maximum capacity for silk."},
-	"journal": {"name": "Journal", "desc": "A field journal for recording the creatures you defeat."}
+	"journal": {"name": "Journal", "desc": "A field journal for recording the creatures you defeat."},
+	"flower": {"name": "Flower", "desc": "A beautiful flower found in the wild."}
 }
 
 func _ready() -> void:
