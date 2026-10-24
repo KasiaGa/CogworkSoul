@@ -79,6 +79,8 @@ func _ready() -> void:
 		module_slot_buttons.append(slot_button)
 		slot_button.focus_entered.connect(_on_module_slot_focused.bind(slot_index))
 		slot_button.pressed.connect(_on_module_slot_pressed.bind(slot_index))
+	for tab_button in [inventory_button, wishs_button, modules_button, journal_button, map_button]:
+		tab_button.focus_entered.connect(_deselect_module_slot)
 	
 	# Connect focus events directly to the nodes themselves
 	for slot in item_grid.get_children():
@@ -370,6 +372,12 @@ func _select_module_slot(slot_index: int) -> void:
 	if selected_module_slot == slot_index:
 		return
 	selected_module_slot = slot_index
+	_refresh_module_slots()
+
+func _deselect_module_slot() -> void:
+	if selected_module_slot < 0:
+		return
+	selected_module_slot = -1
 	_refresh_module_slots()
 
 func _on_module_focused(module_button: Button, module_id: String) -> void:
