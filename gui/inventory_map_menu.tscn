@@ -358,9 +358,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -343.0
+offset_left = -443.0
 offset_top = 21.0
-offset_right = -46.0
+offset_right = -146.0
 offset_bottom = 314.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
@@ -451,9 +451,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -343.0
+offset_left = -443.0
 offset_top = 21.0
-offset_right = -46.0
+offset_right = -146.0
 offset_bottom = 314.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
@@ -531,18 +531,36 @@ alignment = 1
 [node name="Slot1Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=1579571403]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Slot 1
 Empty"
 
 [node name="Slot2Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=797322923]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Slot 2
 Empty"
 
 [node name="Slot3Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=2126585250]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Slot 3
 Empty"
 
@@ -591,9 +609,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -343.0
+offset_left = -443.0
 offset_top = 21.0
-offset_right = -46.0
+offset_right = -146.0
 offset_bottom = 314.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
@@ -646,9 +664,9 @@ autowrap_mode = 3
 
 [node name="ModuleInstructions" type="Label" parent="Background/MenuContainer/ModulesView" unique_id=1936278749]
 layout_mode = 0
-offset_left = 1212.0
+offset_left = 1010.0
 offset_top = 518.0
-offset_right = 1440.0
+offset_right = 1307.0
 offset_bottom = 690.0
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 18
@@ -718,9 +736,9 @@ stretch_mode = 5
 
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/JournalView" unique_id=2144359952]
 layout_mode = 0
-offset_left = 980.0
+offset_left = 1010.0
 offset_top = 20.0
-offset_right = 1430.0
+offset_right = 1450.0
 offset_bottom = 430.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
 

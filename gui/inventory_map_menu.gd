@@ -46,7 +46,7 @@ const SELECTION_OVERLAY_TEXTURE = preload("res://assets/images/gui/itemelected.p
 @onready var journal_empty_label: Label = $Background/MenuContainer/JournalView/JournalEmptyLabel
 
 var module_slot_buttons: Array[Button] = []
-var selected_module_slot: int = 0
+var selected_module_slot: int = -1
 var journal_enemy_buttons: Dictionary = {}
 var _scaled_icon_cache: Dictionary = {}
 var _selected_item_slot: TextureRect
@@ -384,7 +384,9 @@ func _on_module_focused(module_button: Button, module_id: String) -> void:
 	module_title.text = module_data.name
 	module_desc.text = module_data.description
 	var equipped_slot = Global.equipped_modules.find(module_id)
-	if equipped_slot == selected_module_slot:
+	if selected_module_slot < 0:
+		module_desc.text += "\n\nChoose a slot above before equipping or unequipping this module."
+	elif equipped_slot == selected_module_slot:
 		module_desc.text += "\n\nPress Enter or click to unequip this module."
 	else:
 		module_desc.text += "\n\nPress Enter or click to equip it in Slot %d." % (selected_module_slot + 1)
@@ -400,6 +402,10 @@ func _on_module_unfocused(module_button: Button) -> void:
 	module_desc.text = ""
 
 func _on_module_activated(module_id: String) -> void:
+	if selected_module_slot < 0:
+		var module_data = Global.get_module_data(module_id)
+		module_desc.text = module_data.description + "\n\nChoose a slot above before equipping or unequipping this module."
+		return
 	var equipped_slot = Global.equipped_modules.find(module_id)
 	if equipped_slot == selected_module_slot:
 		Global.unequip_module(equipped_slot)
