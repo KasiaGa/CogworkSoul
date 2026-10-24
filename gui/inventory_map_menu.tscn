@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://pf7o6k407dei" path="res://assets/images/item/key_to_lab_21.png" id="5_0x6eu"]
 [ext_resource type="Texture2D" uid="uid://dcbc1407infot" path="res://assets/images/item/journal.png" id="6_0amtv"]
 [ext_resource type="Texture2D" uid="uid://cr7bwkxhmadis" path="res://assets/images/item/flower1.png" id="7_jrc3s"]
+[ext_resource type="Texture2D" path="res://assets/images/gui/menuDecor2.png" id="8_description_divider"]
+[ext_resource type="Texture2D" path="res://assets/images/gui/meuDecor3.png" id="9_item_title_decor"]
 
 [sub_resource type="SystemFont" id="SystemFont_vg86a"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -32,6 +34,8 @@ subpixel_positioning = 0
 [sub_resource type="SystemFont" id="SystemFont_jtgip"]
 font_names = PackedStringArray("Palatino Linotype")
 subpixel_positioning = 0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_item_description"]
 
 [node name="InventoryMapMenu" type="CanvasLayer" unique_id=1439938911]
 process_mode = 3
@@ -174,8 +178,18 @@ layout_mode = 2
 texture = ExtResource("7_jrc3s")
 expand_mode = 4
 
+[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/InventoryView"]
+layout_mode = 0
+offset_left = 926.0
+offset_top = 67.0
+offset_right = 979.0
+offset_bottom = 369.0
+mouse_filter = 2
+texture = ExtResource("8_description_divider")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/InventoryView" unique_id=431507155]
-self_modulate = Color(1, 0.76036006, 0.71446484, 1)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -185,9 +199,9 @@ offset_top = 21.0
 offset_right = -6.0
 offset_bottom = 314.0
 grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
 
 [node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel" unique_id=1605739397]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -197,11 +211,32 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer" unique_id=568140490]
 layout_mode = 2
 
-[node name="ItemTitle" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=612034895]
+[node name="ItemTitleRow" type="HBoxContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow"]
+custom_minimum_size = Vector2(38, 24)
+layout_mode = 2
+texture = ExtResource("9_item_title_decor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemTitle" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow" unique_id=612034895]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
 theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
 clip_text = true
+
+[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow"]
+custom_minimum_size = Vector2(38, 24)
+layout_mode = 2
+texture = ExtResource("9_item_title_decor")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
 
 [node name="ItemDesc" type="Label" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2119655486]
 layout_mode = 2

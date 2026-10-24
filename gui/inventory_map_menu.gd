@@ -13,7 +13,7 @@ extends CanvasLayer
 @onready var journal_button: Button = $Background/MenuContainer/Tabs/JournalButton
 
 @onready var item_grid: GridContainer = $Background/MenuContainer/InventoryView/ItemGrid
-@onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitle
+@onready var item_title: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow/ItemTitle
 @onready var item_desc: Label = $Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemDesc
 @onready var shards_label: Label = $Background/MenuContainer/InventoryView/ShardsLabel
 
