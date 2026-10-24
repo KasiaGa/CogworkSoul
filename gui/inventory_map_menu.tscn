@@ -664,9 +664,9 @@ autowrap_mode = 3
 
 [node name="ModuleInstructions" type="Label" parent="Background/MenuContainer/ModulesView" unique_id=1936278749]
 layout_mode = 0
-offset_left = 1010.0
+offset_left = 1212.0
 offset_top = 518.0
-offset_right = 1307.0
+offset_right = 1440.0
 offset_bottom = 690.0
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 18
