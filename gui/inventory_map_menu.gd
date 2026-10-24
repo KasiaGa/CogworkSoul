@@ -75,6 +75,7 @@ func _ready() -> void:
 	for slot_index in range(module_slots.get_child_count()):
 		var slot_button = module_slots.get_child(slot_index) as Button
 		slot_button.add_theme_font_size_override("font_size", 14)
+		_create_selection_overlay(slot_button, "SelectionOverlay")
 		module_slot_buttons.append(slot_button)
 		slot_button.pressed.connect(_on_module_slot_pressed.bind(slot_index))
 	
@@ -151,6 +152,7 @@ func show_modules_tab() -> void:
 	wishs_view.hide()
 	modules_view.show()
 	journal_view.hide()
+	_refresh_module_slots()
 
 func show_journal_tab() -> void:
 	if not Global.collected_items.has(Global.JOURNAL_ITEM_ID):
@@ -328,6 +330,12 @@ func _refresh_module_slots() -> void:
 		var module_id = Global.equipped_modules[slot_index]
 		var slot_button = module_slot_buttons[slot_index]
 		slot_button.button_pressed = slot_index == selected_module_slot
+		var selection_overlay = slot_button.get_node_or_null("SelectionOverlay") as TextureRect
+		if selection_overlay != null:
+			if slot_index == selected_module_slot:
+				_show_selection_decor(selection_overlay)
+			else:
+				_hide_selection_decor(selection_overlay)
 		if module_id.is_empty():
 			slot_button.text = "Slot %d\nEmpty" % (slot_index + 1)
 			slot_button.tooltip_text = "Slot %d is empty" % (slot_index + 1)
