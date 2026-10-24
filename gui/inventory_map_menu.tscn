@@ -83,10 +83,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -706.5
-offset_top = -368.5
-offset_right = 694.5
-offset_bottom = 374.5
+offset_left = -715.5
+offset_top = -391.5
+offset_right = 737.5
+offset_bottom = 382.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -94,7 +94,6 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="InventoryButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=1744551112]
-custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_vg86a")
 theme_override_font_sizes/font_size = 25
@@ -112,6 +111,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -3.0
+offset_right = 4.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -121,7 +124,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="WishsButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=2145786523]
-custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
@@ -139,6 +141,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -3.0
+offset_right = 4.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -148,7 +154,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ModulesButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=147927860]
-custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
@@ -166,6 +171,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -3.0
+offset_right = 4.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -176,7 +185,6 @@ stretch_mode = 5
 
 [node name="JournalButton" type="Button" parent="Background/MenuContainer/Tabs"]
 visible = false
-custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
@@ -194,6 +202,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -3.0
+offset_right = 4.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -203,7 +215,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="MapButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=431280213]
-custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
@@ -221,6 +232,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -3.0
+offset_right = 4.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
