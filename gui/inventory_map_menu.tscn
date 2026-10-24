@@ -8,16 +8,18 @@
 [ext_resource type="Texture2D" uid="uid://pf7o6k407dei" path="res://assets/images/item/key_to_lab_21.png" id="5_0x6eu"]
 [ext_resource type="Texture2D" uid="uid://dcbc1407infot" path="res://assets/images/item/journal.png" id="6_0amtv"]
 [ext_resource type="Texture2D" uid="uid://cr7bwkxhmadis" path="res://assets/images/item/flower1.png" id="7_jrc3s"]
-[ext_resource type="Texture2D" path="res://assets/images/gui/menuDecor2.png" id="8_description_divider"]
-[ext_resource type="Texture2D" path="res://assets/images/gui/meuDecor3.png" id="9_item_title_decor"]
-[ext_resource type="Texture2D" path="res://assets/images/gui/itemelected.png" id="10_item_selection_overlay"]
-[ext_resource type="Texture2D" path="res://assets/images/item/shard.png" id="11_shard_icon"]
+[ext_resource type="Texture2D" uid="uid://bco60qngaqxfl" path="res://assets/images/gui/menuDecor2.png" id="8_description_divider"]
+[ext_resource type="Texture2D" uid="uid://cxtvxs014g53s" path="res://assets/images/gui/meuDecor3.png" id="9_item_title_decor"]
+[ext_resource type="Texture2D" uid="uid://e8g0ne5p6huu" path="res://assets/images/gui/itemelected.png" id="10_item_selection_overlay"]
+[ext_resource type="Texture2D" uid="uid://b6kbt5du6ldrm" path="res://assets/images/item/shard.png" id="11_shard_icon"]
 [ext_resource type="Texture2D" uid="uid://dynjkwvqgjo3d" path="res://assets/images/gui/textSelected.png" id="12_selected_tab_decor"]
 
 [sub_resource type="SystemFont" id="SystemFont_vg86a"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
 subpixel_positioning = 0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tab"]
 
 [sub_resource type="SystemFont" id="SystemFont_oexcg"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -29,6 +31,8 @@ font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
 subpixel_positioning = 0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_item_description"]
+
 [sub_resource type="SystemFont" id="SystemFont_okbrl"]
 font_names = PackedStringArray("Palatino Linotype")
 font_weight = 999
@@ -37,10 +41,6 @@ subpixel_positioning = 0
 [sub_resource type="SystemFont" id="SystemFont_jtgip"]
 font_names = PackedStringArray("Palatino Linotype")
 subpixel_positioning = 0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_item_description"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tab"]
 
 [node name="InventoryMapMenu" type="CanvasLayer" unique_id=1439938911]
 process_mode = 3
@@ -98,15 +98,16 @@ layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_vg86a")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Items"
 
-[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/InventoryButton"]
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/InventoryButton" unique_id=1542099804]
 visible = false
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,25 +119,29 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-z_index = 1
 texture = ExtResource("12_selected_tab_decor")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/Tabs" unique_id=1357959867]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
 
 [node name="WishsButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=2145786523]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Wishes"
 
-[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/WishsButton"]
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/WishsButton" unique_id=865072048]
 visible = false
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -148,25 +153,29 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-z_index = 1
 texture = ExtResource("12_selected_tab_decor")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="Background/MenuContainer/Tabs" unique_id=1031782864]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
 
 [node name="ModulesButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=147927860]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Modules"
 
-[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/ModulesButton"]
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/ModulesButton" unique_id=146770018]
 visible = false
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,26 +187,30 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-z_index = 1
 texture = ExtResource("12_selected_tab_decor")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="JournalButton" type="Button" parent="Background/MenuContainer/Tabs"]
+[node name="MarginContainer3" type="MarginContainer" parent="Background/MenuContainer/Tabs" unique_id=1503728962]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="JournalButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=298617701]
 visible = false
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Journal"
 
-[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/JournalButton"]
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/JournalButton" unique_id=931586630]
 visible = false
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -209,25 +222,30 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-z_index = 1
 texture = ExtResource("12_selected_tab_decor")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="MarginContainer4" type="MarginContainer" parent="Background/MenuContainer/Tabs" unique_id=1529424324]
+visible = false
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
 
 [node name="MapButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=431280213]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Map"
 
-[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/MapButton"]
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/MapButton" unique_id=1190577547]
 visible = false
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -239,7 +257,6 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-z_index = 1
 texture = ExtResource("12_selected_tab_decor")
 expand_mode = 1
 stretch_mode = 5
@@ -252,7 +269,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
 
-[node name="ShardsDisplay" type="HBoxContainer" parent="Background/MenuContainer/InventoryView"]
+[node name="ShardsDisplay" type="HBoxContainer" parent="Background/MenuContainer/InventoryView" unique_id=2120138441]
 layout_mode = 0
 offset_left = 15.0
 offset_top = 5.0
@@ -260,7 +277,7 @@ offset_right = 230.0
 offset_bottom = 39.0
 theme_override_constants/separation = 6
 
-[node name="ShardIcon" type="TextureRect" parent="Background/MenuContainer/InventoryView/ShardsDisplay"]
+[node name="ShardIcon" type="TextureRect" parent="Background/MenuContainer/InventoryView/ShardsDisplay" unique_id=1144607739]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 texture = ExtResource("11_shard_icon")
@@ -284,14 +301,6 @@ offset_transform_enabled = true
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 7
-
-[node name="ItemSelectionOverlay" type="TextureRect" parent="Background/MenuContainer/InventoryView"]
-visible = false
-mouse_filter = 2
-texture = ExtResource("10_item_selection_overlay")
-expand_mode = 1
-stretch_mode = 5
-z_index = 1
 
 [node name="needle" type="TextureRect" parent="Background/MenuContainer/InventoryView/ItemGrid" unique_id=1039175191]
 custom_minimum_size = Vector2(150, 0)
@@ -323,7 +332,16 @@ layout_mode = 2
 texture = ExtResource("7_jrc3s")
 expand_mode = 4
 
-[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/InventoryView"]
+[node name="ItemSelectionOverlay" type="TextureRect" parent="Background/MenuContainer/InventoryView" unique_id=1533658916]
+visible = false
+z_index = 1
+layout_mode = 0
+mouse_filter = 2
+texture = ExtResource("10_item_selection_overlay")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/InventoryView" unique_id=996415489]
 layout_mode = 0
 offset_left = 921.0
 offset_top = 47.0
@@ -357,11 +375,11 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="ItemTitleRow" type="HBoxContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer"]
+[node name="ItemTitleRow" type="HBoxContainer" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=473672352]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow"]
+[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow" unique_id=959565052]
 visible = false
 custom_minimum_size = Vector2(38, 24)
 layout_mode = 2
@@ -377,7 +395,7 @@ theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 clip_text = true
 
-[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow"]
+[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/InventoryView/DescriptionPanel/MarginContainer/VBoxContainer/ItemTitleRow" unique_id=1986782905]
 visible = false
 custom_minimum_size = Vector2(38, 24)
 layout_mode = 2
@@ -416,7 +434,7 @@ offset_right = 700.0
 offset_bottom = 350.0
 theme_override_constants/separation = 15
 
-[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/WishsView"]
+[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/WishsView" unique_id=482294981]
 layout_mode = 0
 offset_left = 921.0
 offset_top = 47.0
@@ -450,11 +468,11 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="WishTitleRow" type="HBoxContainer" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer"]
+[node name="WishTitleRow" type="HBoxContainer" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=1288929349]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow"]
+[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow" unique_id=1566207747]
 visible = false
 custom_minimum_size = Vector2(38, 24)
 layout_mode = 2
@@ -470,7 +488,7 @@ theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 clip_text = true
 
-[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow"]
+[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow" unique_id=665880710]
 visible = false
 custom_minimum_size = Vector2(38, 24)
 layout_mode = 2
@@ -559,7 +577,7 @@ theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 20
 text = "No modules collected yet."
 
-[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/ModulesView"]
+[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/ModulesView" unique_id=1161012697]
 layout_mode = 0
 offset_left = 921.0
 offset_top = 47.0
@@ -593,11 +611,11 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="ModuleTitleRow" type="HBoxContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer"]
+[node name="ModuleTitleRow" type="HBoxContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=923774117]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow"]
+[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow" unique_id=1146370208]
 visible = false
 custom_minimum_size = Vector2(38, 24)
 layout_mode = 2
@@ -613,7 +631,7 @@ theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 clip_text = true
 
-[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow"]
+[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow" unique_id=537977930]
 visible = false
 custom_minimum_size = Vector2(38, 24)
 layout_mode = 2
@@ -639,25 +657,25 @@ theme_override_font_sizes/font_size = 18
 text = "Choose a slot above, then select a module to equip it. Select its slot and activate it again to unequip."
 autowrap_mode = 3
 
-[node name="JournalView" type="Control" parent="Background/MenuContainer"]
+[node name="JournalView" type="Control" parent="Background/MenuContainer" unique_id=848471171]
 visible = false
 custom_minimum_size = Vector2(1450, 710)
 layout_mode = 2
 
-[node name="EnemyScroll" type="ScrollContainer" parent="Background/MenuContainer/JournalView"]
+[node name="EnemyScroll" type="ScrollContainer" parent="Background/MenuContainer/JournalView" unique_id=28680109]
 layout_mode = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = 370.0
 offset_bottom = 700.0
 
-[node name="EnemyGrid" type="GridContainer" parent="Background/MenuContainer/JournalView/EnemyScroll"]
+[node name="EnemyGrid" type="GridContainer" parent="Background/MenuContainer/JournalView/EnemyScroll" unique_id=742427809]
 layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 3
 
-[node name="JournalEmptyLabel" type="Label" parent="Background/MenuContainer/JournalView"]
+[node name="JournalEmptyLabel" type="Label" parent="Background/MenuContainer/JournalView" unique_id=1994275814]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 24.0
@@ -668,7 +686,7 @@ theme_override_font_sizes/font_size = 20
 text = "Defeat an enemy to add it to your Journal."
 autowrap_mode = 3
 
-[node name="EnemyArtwork" type="TextureRect" parent="Background/MenuContainer/JournalView"]
+[node name="EnemyArtwork" type="TextureRect" parent="Background/MenuContainer/JournalView" unique_id=1915682221]
 layout_mode = 0
 offset_left = 390.0
 offset_top = 20.0
@@ -677,7 +695,7 @@ offset_bottom = 690.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EnemyArtworkFallback" type="Label" parent="Background/MenuContainer/JournalView"]
+[node name="EnemyArtworkFallback" type="Label" parent="Background/MenuContainer/JournalView" unique_id=1429215403]
 layout_mode = 0
 offset_left = 390.0
 offset_top = 20.0
@@ -689,7 +707,7 @@ text = "Artwork unavailable."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="JournalColumnDivider" type="TextureRect" parent="Background/MenuContainer/JournalView"]
+[node name="JournalColumnDivider" type="TextureRect" parent="Background/MenuContainer/JournalView" unique_id=412093092]
 layout_mode = 0
 offset_left = 934.0
 offset_top = 30.0
@@ -700,7 +718,7 @@ texture = ExtResource("8_description_divider")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/JournalView"]
+[node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/JournalView" unique_id=2144359952]
 layout_mode = 0
 offset_left = 980.0
 offset_top = 20.0
@@ -708,22 +726,22 @@ offset_right = 1430.0
 offset_bottom = 430.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel" unique_id=2002676082]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer" unique_id=1977304392]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="EnemyTitleRow" type="HBoxContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer"]
+[node name="EnemyTitleRow" type="HBoxContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=710849896]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow"]
+[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow" unique_id=936614253]
 visible = false
 custom_minimum_size = Vector2(48, 36)
 layout_mode = 2
@@ -731,7 +749,7 @@ texture = ExtResource("9_item_title_decor")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EnemyName" type="Label" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow"]
+[node name="EnemyName" type="Label" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow" unique_id=1016572245]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
@@ -739,7 +757,7 @@ theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 clip_text = true
 
-[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow"]
+[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow" unique_id=1128702844]
 visible = false
 custom_minimum_size = Vector2(48, 36)
 layout_mode = 2
@@ -748,7 +766,7 @@ expand_mode = 1
 stretch_mode = 5
 flip_h = true
 
-[node name="EnemyDescription" type="Label" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer"]
+[node name="EnemyDescription" type="Label" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=462471848]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
