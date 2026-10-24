@@ -4,6 +4,7 @@ const DECOR_TEXTURE: Texture2D = preload("res://assets/images/gui/meuDecor3.png"
 const DECOR_SIZE := Vector2(42.0, 24.0)
 const ACTIVE_SCALE := Vector2(1.15, 1.15)
 const TWEEN_DURATION := 0.2
+const PULSE_DURATION := 0.55
 
 var edge_inset: float = 32.0
 
@@ -13,6 +14,7 @@ var _end_decor: TextureRect
 var _decor_active: bool = false
 var _mouse_hovered: bool = false
 var _decor_tween: Tween
+var _pulse_tween: Tween
 
 func _ready() -> void:
 	_target = get_parent() as Control
@@ -75,17 +77,27 @@ func _update_decor_state() -> void:
 	if _target == null:
 		return
 	var should_be_active := _mouse_hovered or _target.has_focus()
-	if should_be_active == _decor_active:
-		return
-	_decor_active = should_be_active
-	_animate_decor(should_be_active)
+	if should_be_active != _decor_active:
+		_decor_active = should_be_active
+		_animate_decor(should_be_active)
+	if _decor_active:
+		if _mouse_hovered:
+			_start_decor_pulse()
+		elif _pulse_tween and _pulse_tween.is_valid():
+			_animate_decor(true)
 
 func _animate_decor(active: bool) -> void:
 	if _decor_tween and _decor_tween.is_valid():
 		_decor_tween.kill()
+	if _pulse_tween and _pulse_tween.is_valid():
+		_pulse_tween.kill()
+	_pulse_tween = null
 	if active:
 		_start_decor.show()
 		_end_decor.show()
+		if _mouse_hovered:
+			_start_decor_pulse()
+			return
 
 	var target_scale := ACTIVE_SCALE if active else Vector2.ONE
 	_decor_tween = create_tween().set_parallel(true)
@@ -95,6 +107,21 @@ func _animate_decor(active: bool) -> void:
 	_decor_tween.tween_property(_end_decor, "scale", target_scale, TWEEN_DURATION)
 	if not active:
 		_decor_tween.chain().tween_callback(_hide_decor_if_inactive)
+
+func _start_decor_pulse() -> void:
+	if _pulse_tween and _pulse_tween.is_valid():
+		return
+	if _decor_tween and _decor_tween.is_valid():
+		_decor_tween.kill()
+	_start_decor.show()
+	_end_decor.show()
+	_pulse_tween = create_tween().set_loops()
+	_pulse_tween.set_trans(Tween.TRANS_SINE)
+	_pulse_tween.set_ease(Tween.EASE_IN_OUT)
+	_pulse_tween.tween_property(_start_decor, "scale", ACTIVE_SCALE, PULSE_DURATION)
+	_pulse_tween.parallel().tween_property(_end_decor, "scale", ACTIVE_SCALE, PULSE_DURATION)
+	_pulse_tween.chain().tween_property(_start_decor, "scale", Vector2.ONE, PULSE_DURATION)
+	_pulse_tween.parallel().tween_property(_end_decor, "scale", Vector2.ONE, PULSE_DURATION)
 
 func _hide_decor_if_inactive() -> void:
 	if not _decor_active:
