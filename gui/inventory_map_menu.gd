@@ -55,7 +55,7 @@ var _selection_decor_tweens: Dictionary = {}
 
 # Simple local item database matching your exact naming style for descriptions
 var item_info: Dictionary = {
-	"needle": {"name": "Needle", "desc": "A sharp, elegant weapon used to slash enemies and channel silk."},
+	"needle": {"name": "Needle", "desc": "A sharp, elegant weapon used to slash enemies and yield their power."},
 	"cogwork_battery": {"name": "Cogwork Battery", "desc": "A buzzing brass cell filled with residual energy. Powers strange machinery."},
 	"key_to_lab_21": {"name": "Lab 21 Key", "desc": "An old, grease-stained key. Accesses the restricted sector of the Desultory Lab."},
 	"health_upgrade": {"name": "Mask Shard", "desc": "An ancient fragment. Collect more to increase your maximum health."},
