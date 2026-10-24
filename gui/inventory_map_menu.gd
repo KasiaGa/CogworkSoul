@@ -72,6 +72,8 @@ func _ready() -> void:
 	journal_button.pressed.connect(show_journal_tab)
 	for slot_index in range(module_slots.get_child_count()):
 		var slot_button = module_slots.get_child(slot_index) as Button
+		slot_button.icon_max_width = 30
+		slot_button.add_theme_font_size_override("font_size", 14)
 		module_slot_buttons.append(slot_button)
 		slot_button.pressed.connect(_on_module_slot_pressed.bind(slot_index))
 	
@@ -118,6 +120,7 @@ func close_menu() -> void:
 	get_tree().paused = false
 
 func show_inventory_tab() -> void:
+	_set_active_tab(inventory_button)
 	inventory_view.show()
 	map_view.hide()
 	wishs_view.hide()
@@ -125,6 +128,7 @@ func show_inventory_tab() -> void:
 	journal_view.hide()
 
 func show_map_tab() -> void:
+	_set_active_tab(map_button)
 	inventory_view.hide()
 	map_view.show()
 	wishs_view.hide()
@@ -132,6 +136,7 @@ func show_map_tab() -> void:
 	journal_view.hide()
 
 func show_wishs_tab() -> void:
+	_set_active_tab(wishs_button)
 	inventory_view.hide()
 	map_view.hide()
 	wishs_view.show()
@@ -139,6 +144,7 @@ func show_wishs_tab() -> void:
 	journal_view.hide()
 
 func show_modules_tab() -> void:
+	_set_active_tab(modules_button)
 	inventory_view.hide()
 	map_view.hide()
 	wishs_view.hide()
@@ -149,12 +155,19 @@ func show_journal_tab() -> void:
 	if not Global.collected_items.has(Global.JOURNAL_ITEM_ID):
 		_update_journal_access()
 		return
+	_set_active_tab(journal_button)
 	inventory_view.hide()
 	map_view.hide()
 	wishs_view.hide()
 	modules_view.hide()
 	journal_view.show()
 	update_journal_display()
+
+func _set_active_tab(active_button: Button) -> void:
+	for tab_button in [inventory_button, wishs_button, modules_button, journal_button, map_button]:
+		var selected_decor = tab_button.get_node_or_null("SelectedDecor") as TextureRect
+		if selected_decor != null:
+			selected_decor.visible = tab_button == active_button
 
 func _update_journal_access() -> void:
 	journal_button.visible = Global.collected_items.has(Global.JOURNAL_ITEM_ID)
@@ -171,13 +184,15 @@ func update_journal_display() -> void:
 	journal_enemy_buttons.clear()
 	journal_title_start_decor.hide()
 	journal_title_end_decor.hide()
+	journal_enemy_name.text = ""
+	journal_enemy_description.text = ""
 	journal_artwork.texture = null
 	journal_artwork.hide()
 	journal_artwork_fallback.hide()
 
 	if not Global.collected_items.has(Global.JOURNAL_ITEM_ID):
-		journal_enemy_name.text = "Journal Locked"
-		journal_enemy_description.text = "Find the Journal to record defeated enemies."
+		journal_enemy_name.text = ""
+		journal_enemy_description.text = ""
 		journal_empty_label.hide()
 		return
 
@@ -209,10 +224,9 @@ func update_journal_display() -> void:
 
 	journal_empty_label.visible = first_enemy_id.is_empty()
 	if first_enemy_id.is_empty():
-		journal_enemy_name.text = "No entries yet"
-		journal_enemy_description.text = "Defeat an enemy to add it to your Journal."
+		journal_enemy_name.text = ""
+		journal_enemy_description.text = ""
 		return
-	_select_journal_enemy(first_enemy_id)
 
 func _select_journal_enemy(enemy_id: String) -> void:
 	var enemy_data: Dictionary = Global.ENEMY_JOURNAL_DATA.get(enemy_id, {})
@@ -247,10 +261,15 @@ func _on_journal_enemy_unfocused(enemy_button: Button) -> void:
 		_hide_selection_decor(selection_overlay)
 	journal_title_start_decor.hide()
 	journal_title_end_decor.hide()
+	journal_enemy_name.text = ""
+	journal_enemy_description.text = ""
+	journal_artwork.texture = null
+	journal_artwork.hide()
+	journal_artwork_fallback.hide()
 
 func update_modules_display() -> void:
-	module_title.text = "Modules"
-	module_desc.text = "Choose a slot above, then select a module below to equip it."
+	module_title.text = ""
+	module_desc.text = ""
 	module_title_start_decor.hide()
 	module_title_end_decor.hide()
 	for child in module_list.get_children():
@@ -294,10 +313,12 @@ func _refresh_module_slots() -> void:
 		slot_button.button_pressed = slot_index == selected_module_slot
 		if module_id.is_empty():
 			slot_button.text = "Slot %d\nEmpty" % (slot_index + 1)
+			slot_button.tooltip_text = "Slot %d is empty" % (slot_index + 1)
 			slot_button.icon = null
 		else:
 			var module_data = Global.get_module_data(module_id)
-			slot_button.text = "Slot %d\n%s" % [slot_index + 1, module_data.name]
+			slot_button.text = "Slot %d" % (slot_index + 1)
+			slot_button.tooltip_text = "Slot %d: %s" % [slot_index + 1, module_data.name]
 			slot_button.icon = _get_module_icon(module_data)
 
 func _refresh_module_buttons() -> void:
@@ -322,7 +343,6 @@ func _on_module_focused(module_button: Button, module_id: String) -> void:
 	if not modules_view.visible:
 		show_modules_tab()
 	var module_data = Global.get_module_data(module_id)
-	var equipped_slot = Global.equipped_modules.find(module_id)
 	var selection_overlay = module_button.get_node_or_null("SelectionOverlay") as TextureRect
 	if selection_overlay != null:
 		_show_selection_decor(selection_overlay)
@@ -330,6 +350,7 @@ func _on_module_focused(module_button: Button, module_id: String) -> void:
 	module_title_end_decor.show()
 	module_title.text = module_data.name
 	module_desc.text = module_data.description
+	var equipped_slot = Global.equipped_modules.find(module_id)
 	if equipped_slot == selected_module_slot:
 		module_desc.text += "\n\nPress Enter or click to unequip this module."
 	else:
@@ -342,6 +363,8 @@ func _on_module_unfocused(module_button: Button) -> void:
 		_hide_selection_decor(selection_overlay)
 	module_title_start_decor.hide()
 	module_title_end_decor.hide()
+	module_title.text = ""
+	module_desc.text = ""
 
 func _on_module_activated(module_id: String) -> void:
 	var equipped_slot = Global.equipped_modules.find(module_id)
@@ -363,8 +386,8 @@ func _on_module_activated(module_id: String) -> void:
 func update_inventory_display() -> void:
 	shards_label.text = "Shards: " + str(Global.shards_collected)
 	# Clear out the text boxes by default in case nothing is highlighted yet
-	item_title.text = "???"
-	item_desc.text = "Select an item to inspect."
+	item_title.text = ""
+	item_desc.text = ""
 	_hide_item_selection()
 	
 	# Update every item visibility based on your real global data
@@ -392,8 +415,8 @@ func update_wishs_display() -> void:
 		child.queue_free()
 	
 	# Clear description boxes
-	wish_title.text = "???"
-	wish_desc.text = "Select a wish to inspect."
+	wish_title.text = ""
+	wish_desc.text = ""
 	wish_title_start_decor.hide()
 	wish_title_end_decor.hide()
 	
@@ -401,8 +424,8 @@ func update_wishs_display() -> void:
 	var accepted_wishes = Global.get_all_accepted_wishes()
 	
 	if accepted_wishes.is_empty():
-		wish_title.text = "No Wishes"
-		wish_desc.text = "Complete quests to unlock wishes."
+		wish_title.text = ""
+		wish_desc.text = ""
 		return
 	
 	# Create wish items for each accepted wish
@@ -482,10 +505,6 @@ func update_wishs_display() -> void:
 		
 		wish_grid.add_child(wish_container)
 	
-	# Focus on first wish if available
-	if wish_grid.get_child_count() > 0:
-		wish_grid.get_child(0).grab_focus()
-
 func setup_navigation_paths() -> void:
 	# Get a clean array containing ONLY the slots that are currently visible
 	var visible_items = item_grid.get_children().filter(func(node): return node.visible)
@@ -541,8 +560,8 @@ func _on_item_focused(slot: TextureRect) -> void:
 	else:
 		# Fallback just in case a hidden or missing item somehow triggers focus
 		_hide_item_selection()
-		item_title.text = "???"
-		item_desc.text = "An undiscovered artifact hidden somewhere in the world."
+		item_title.text = ""
+		item_desc.text = ""
 
 func _on_item_unfocused(slot: TextureRect) -> void:
 	slot.modulate = Color(1, 1, 1, 1)
@@ -642,7 +661,7 @@ func _on_wish_focused(wish_container: HBoxContainer, wish_id: String) -> void:
 	if wish_data.is_empty():
 		return
 	
-	# Update title and description
+	# Update the selected wish title and description.
 	wish_title.text = wish_data.name
 	wish_desc.text = wish_data.description
 	wish_title_start_decor.show()
@@ -650,8 +669,7 @@ func _on_wish_focused(wish_container: HBoxContainer, wish_id: String) -> void:
 	var selection_overlay = wish_container.get_node_or_null("WishImageFrame/WishImage/SelectionOverlay") as TextureRect
 	if selection_overlay != null:
 		_show_selection_decor(selection_overlay)
-	
-	# Add progress info for collect_items wishes
+
 	if wish_data.type == "collect_items":
 		var progress_info = "\n\nRequired Items:\n"
 		for item_name in wish_data.required_items:
