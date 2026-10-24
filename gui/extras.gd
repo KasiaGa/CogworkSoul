@@ -1,5 +1,7 @@
 extends Control
 
+const BUTTON_DECORATOR_SCRIPT = preload("res://gui/menu_button_decorator.gd")
+
 const GALLERY_IMAGES = [
 	preload("res://gui/loading_animation1.png"),
 	preload("res://gui/loading_animation2.png"),
@@ -15,7 +17,6 @@ var current_image_index: int = 0
 var artwork: TextureRect
 var description_label: Label
 var image_counter: Label
-var text_tweens: Dictionary = {}
 
 func _ready() -> void:
 	var menu_font := SystemFont.new()
@@ -85,7 +86,7 @@ func _build_gallery() -> void:
 	footer.add_child(navigation_row)
 	var back_button := Button.new()
 	back_button.text = "Back to menu"
-	back_button.custom_minimum_size = Vector2(150.0, 42.0)
+	back_button.custom_minimum_size = Vector2(250.0, 42.0)
 	_apply_main_menu_button_style(back_button)
 	back_button.pressed.connect(_on_back_pressed)
 	navigation_row.add_child(back_button)
@@ -104,34 +105,9 @@ func _build_gallery() -> void:
 	navigation_row.add_child(next_button)
 
 func _apply_main_menu_button_style(button: Button) -> void:
-	var empty_style := StyleBoxEmpty.new()
-	for style_name in ["normal", "hover", "pressed", "focus"]:
-		button.add_theme_stylebox_override(style_name, empty_style)
-	button.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	button.set_meta("original_text", button.text)
-	button.mouse_entered.connect(_on_button_hover_enter.bind(button))
-	button.mouse_exited.connect(_on_button_hover_exit.bind(button))
-
-func _on_button_hover_enter(button: Button) -> void:
-	var original_text: String = button.get_meta("original_text")
-	button.text = "> " + original_text + " <"
-	button.pivot_offset = button.size / 2
-	var tween_key = button.name
-	if text_tweens.has(tween_key) and text_tweens[tween_key] and text_tweens[tween_key].is_valid():
-		text_tweens[tween_key].kill()
-	var tween := create_tween()
-	text_tweens[tween_key] = tween
-	tween.tween_property(button, "scale", Vector2(1.15, 1.15), 0.2)
-
-func _on_button_hover_exit(button: Button) -> void:
-	button.text = button.get_meta("original_text")
-	button.pivot_offset = button.size / 2
-	var tween_key = button.name
-	if text_tweens.has(tween_key) and text_tweens[tween_key] and text_tweens[tween_key].is_valid():
-		text_tweens[tween_key].kill()
-	var tween := create_tween()
-	text_tweens[tween_key] = tween
-	tween.tween_property(button, "scale", Vector2.ONE, 0.2)
+	var decorator = BUTTON_DECORATOR_SCRIPT.new()
+	decorator.edge_inset = 10.0
+	button.add_child(decorator)
 
 func _show_current_image() -> void:
 	artwork.texture = GALLERY_IMAGES[current_image_index]
