@@ -216,7 +216,8 @@ func update_journal_display() -> void:
 		icon_button.tooltip_text = enemy_data.get("name", enemy_id)
 		var image_path: String = enemy_data.get("image_path", "")
 		if not image_path.is_empty() and ResourceLoader.exists(image_path):
-			icon_button.icon = _get_icon_with_max_width(load(image_path) as Texture2D, 76)
+			icon_button.icon = _get_square_icon(load(image_path) as Texture2D, 76)
+			icon_button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		else:
 			icon_button.text = str(enemy_data.get("name", enemy_id)).left(2).to_upper()
 		icon_button.pressed.connect(_select_journal_enemy.bind(enemy_id))
@@ -294,7 +295,7 @@ func update_modules_display() -> void:
 		module_button.custom_minimum_size = Vector2(650, 76)
 		module_button.icon = _get_module_icon(module_data, 54)
 		module_button.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		module_button.text_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		module_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		module_button.focus_mode = Control.FOCUS_ALL
 		module_button.focus_entered.connect(_on_module_focused.bind(module_button, module_id))
 		module_button.focus_exited.connect(_on_module_unfocused.bind(module_button))
@@ -328,6 +329,33 @@ func _get_icon_with_max_width(texture: Texture2D, max_width: int) -> Texture2D:
 	var scaled_texture := ImageTexture.create_from_image(image)
 	_scaled_icon_cache[cache_key] = scaled_texture
 	return scaled_texture
+
+func _get_square_icon(texture: Texture2D, size: int) -> Texture2D:
+	if texture == null or size <= 0:
+		return texture
+
+	var cache_key := "square:%d:%d" % [texture.get_instance_id(), size]
+	if _scaled_icon_cache.has(cache_key):
+		return _scaled_icon_cache[cache_key] as Texture2D
+
+	var image: Image = texture.get_image()
+	if image == null or image.is_empty():
+		return texture
+
+	var scale_factor := minf(float(size) / image.get_width(), float(size) / image.get_height())
+	var scaled_width := maxi(1, roundi(float(image.get_width()) * scale_factor))
+	var scaled_height := maxi(1, roundi(float(image.get_height()) * scale_factor))
+	image.resize(scaled_width, scaled_height)
+	var square_image := Image.create(size, size, false, Image.FORMAT_RGBA8)
+	square_image.fill(Color(0, 0, 0, 0))
+	var image_offset := Vector2i(
+		floori(float(size - scaled_width) / 2.0),
+		floori(float(size - scaled_height) / 2.0)
+	)
+	square_image.blit_rect(image, Rect2i(Vector2i.ZERO, Vector2i(scaled_width, scaled_height)), image_offset)
+	var square_texture := ImageTexture.create_from_image(square_image)
+	_scaled_icon_cache[cache_key] = square_texture
+	return square_texture
 
 func _refresh_module_slots() -> void:
 	for slot_index in range(module_slot_buttons.size()):
@@ -565,6 +593,16 @@ func setup_navigation_paths() -> void:
 	for tab_index in range(tabs.size()):
 		tabs[tab_index].focus_neighbor_right = tabs[(tab_index + 1) % tabs.size()].get_path()
 		tabs[tab_index].focus_neighbor_left = tabs[(tab_index - 1 + tabs.size()) % tabs.size()].get_path()
+
+	if journal_button.visible:
+		var journal_enemies = journal_enemy_grid.get_children()
+		journal_button.focus_neighbor_bottom = journal_button.get_path()
+		if not journal_enemies.is_empty():
+			journal_button.focus_neighbor_bottom = journal_enemies[0].get_path()
+			var first_row_size := mini(journal_enemy_grid.columns, journal_enemies.size())
+			for enemy_index in range(first_row_size):
+				var enemy_button = journal_enemies[enemy_index] as Control
+				enemy_button.focus_neighbor_top = journal_button.get_path()
 	
 	# Inventory has no content target when the player owns no items.
 	inventory_button.focus_neighbor_bottom = inventory_button.get_path()
