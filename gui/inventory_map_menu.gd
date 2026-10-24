@@ -100,13 +100,8 @@ func open_menu() -> void:
 	setup_navigation_paths()
 	show_inventory_tab()
 	
-	# Focus on the first visible item
-	var visible_items = item_grid.get_children().filter(func(node): return node.visible)
-	if visible_items.size() > 0:
-		visible_items[0].grab_focus()
-	else:
-		# If player has absolutely zero items, default focus directly to the tabs instead
-		inventory_button.grab_focus()
+	# Start in the tab row; Down enters the selected tab's content.
+	inventory_button.grab_focus()
 
 func close_menu() -> void:
 	_hide_item_selection()
@@ -450,12 +445,16 @@ func setup_navigation_paths() -> void:
 		tabs[tab_index].focus_neighbor_right = tabs[(tab_index + 1) % tabs.size()].get_path()
 		tabs[tab_index].focus_neighbor_left = tabs[(tab_index - 1 + tabs.size()) % tabs.size()].get_path()
 	
+	# Inventory has no content target when the player owns no items.
+	inventory_button.focus_neighbor_bottom = inventory_button.get_path()
+
 	if visible_items.size() == 0:
-		# If the inventory is completely empty, tabs cycle but items aren't involved
+		# Keep tab navigation available, but don't jump into unrelated controls.
 		return
 		
 	var first_item = visible_items[0] as Control
 	var last_item = visible_items[visible_items.size() - 1] as Control
+	inventory_button.focus_neighbor_bottom = first_item.get_path()
 	
 	# CLEAN ALL NEIGHBORS: Stops hidden elements from pulling focus up or down randomly
 	for item in visible_items:
@@ -464,16 +463,11 @@ func setup_navigation_paths() -> void:
 		item.focus_neighbor_top = NodePath("")
 		item.focus_neighbor_bottom = NodePath("")
 	
-	# 1. Last item -> Wishes button (next tab after the items)
-	last_item.focus_neighbor_right = wishs_button.get_path()
+	# Horizontal movement stays within the grid instead of switching tabs.
+	first_item.focus_neighbor_left = first_item.get_path()
+	last_item.focus_neighbor_right = last_item.get_path()
 	
-	# 2. Inventory button -> First item
-	inventory_button.focus_neighbor_right = first_item.get_path()
-	
-	# 3. Connect the items to the tab cycle in both directions
-	first_item.focus_neighbor_left = inventory_button.get_path()
-	
-	# 4. Prevent UP Arrow on items from breaking UI. It will now jump cleanly back up to the tabs
+	# Up always returns from an item to the Inventory tab.
 	for item in visible_items:
 		item.focus_neighbor_top = inventory_button.get_path()
 
