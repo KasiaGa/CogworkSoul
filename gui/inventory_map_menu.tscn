@@ -226,7 +226,7 @@ texture = ExtResource("12_selected_tab_decor")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="JournalGap" type="Control" parent="Background/MenuContainer/Tabs"]
+[node name="JournalGap" type="Control" parent="Background/MenuContainer/Tabs" unique_id=1740300047]
 visible = false
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -358,9 +358,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -443.0
+offset_left = -393.0
 offset_top = 21.0
-offset_right = -146.0
+offset_right = -96.0
 offset_bottom = 314.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
@@ -451,9 +451,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -443.0
+offset_left = -393.0
 offset_top = 21.0
-offset_right = -146.0
+offset_right = -96.0
 offset_bottom = 314.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
@@ -532,8 +532,8 @@ alignment = 1
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
@@ -544,8 +544,8 @@ Empty"
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
@@ -556,8 +556,8 @@ Empty"
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
@@ -609,10 +609,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -443.0
-offset_top = 21.0
-offset_right = -146.0
-offset_bottom = 314.0
+offset_left = -479.0
+offset_top = 1060.0
+offset_right = -182.0
+offset_bottom = 1353.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
 
@@ -736,9 +736,9 @@ stretch_mode = 5
 
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/JournalView" unique_id=2144359952]
 layout_mode = 0
-offset_left = 1010.0
+offset_left = 1060.0
 offset_top = 20.0
-offset_right = 1450.0
+offset_right = 1500.0
 offset_bottom = 430.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
 
