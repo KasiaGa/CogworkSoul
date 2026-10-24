@@ -39,6 +39,8 @@ extends CanvasLayer
 var module_slot_buttons: Array[Button] = []
 var selected_module_slot: int = 0
 var journal_enemy_buttons: Dictionary = {}
+var _selected_item_slot: TextureRect
+var _selection_pulse_tween: Tween
 
 # Simple local item database matching your exact naming style for descriptions
 var item_info: Dictionary = {
@@ -70,7 +72,7 @@ func _ready() -> void:
 			slot.focus_mode = Control.FOCUS_ALL
 			slot.focus_entered.connect(_on_item_focused.bind(slot))
 			slot.focus_exited.connect(_on_item_unfocused.bind(slot))
-				slot.gui_input.connect(_on_item_slot_input.bind(slot))
+			slot.gui_input.connect(_on_item_slot_input.bind(slot))
 			slot.mouse_entered.connect(func(): if slot.visible: slot.grab_focus())
 
 func _process(_delta: float) -> void:
@@ -107,6 +109,7 @@ func open_menu() -> void:
 		inventory_button.grab_focus()
 
 func close_menu() -> void:
+	_hide_item_selection()
 	hide()
 	get_tree().paused = false
 
@@ -500,13 +503,28 @@ func _on_item_unfocused(slot: TextureRect) -> void:
 	item_desc.text = ""
 
 func _show_item_selection(slot: TextureRect) -> void:
+	var selection_changed: bool = _selected_item_slot != slot or not item_selection_overlay.visible
+	_selected_item_slot = slot
 	item_selection_overlay.global_position = slot.global_position
 	item_selection_overlay.size = slot.size
+	item_selection_overlay.pivot_offset = item_selection_overlay.size / 2.0
 	item_selection_overlay.show()
 	item_title_start_decor.show()
 	item_title_end_decor.show()
+	if selection_changed:
+		if _selection_pulse_tween != null:
+			_selection_pulse_tween.kill()
+		item_selection_overlay.scale = Vector2.ONE
+		_selection_pulse_tween = create_tween().set_loops()
+		_selection_pulse_tween.tween_property(item_selection_overlay, "scale", Vector2(1.06, 1.06), 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		_selection_pulse_tween.tween_property(item_selection_overlay, "scale", Vector2.ONE, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 func _hide_item_selection() -> void:
+	if _selection_pulse_tween != null:
+		_selection_pulse_tween.kill()
+		_selection_pulse_tween = null
+	_selected_item_slot = null
+	item_selection_overlay.scale = Vector2.ONE
 	item_selection_overlay.hide()
 	item_title_start_decor.hide()
 	item_title_end_decor.hide()
