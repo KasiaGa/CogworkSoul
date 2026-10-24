@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" path="res://assets/images/gui/meuDecor3.png" id="9_item_title_decor"]
 [ext_resource type="Texture2D" path="res://assets/images/gui/itemelected.png" id="10_item_selection_overlay"]
 [ext_resource type="Texture2D" path="res://assets/images/item/shard.png" id="11_shard_icon"]
+[ext_resource type="Texture2D" uid="uid://dynjkwvqgjo3d" path="res://assets/images/gui/textSelected.png" id="12_selected_tab_decor"]
 
 [sub_resource type="SystemFont" id="SystemFont_vg86a"]
 font_names = PackedStringArray("Palatino Linotype")
@@ -38,6 +39,8 @@ font_names = PackedStringArray("Palatino Linotype")
 subpixel_positioning = 0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_item_description"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tab"]
 
 [node name="InventoryMapMenu" type="CanvasLayer" unique_id=1439938911]
 process_mode = 3
@@ -91,35 +94,140 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="InventoryButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=1744551112]
+custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_vg86a")
 theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Items"
 
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/InventoryButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 1
+texture = ExtResource("12_selected_tab_decor")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="WishsButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=2145786523]
+custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Wishes"
 
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/WishsButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 1
+texture = ExtResource("12_selected_tab_decor")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="ModulesButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=147927860]
+custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Modules"
+
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/ModulesButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 1
+texture = ExtResource("12_selected_tab_decor")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="JournalButton" type="Button" parent="Background/MenuContainer/Tabs"]
 visible = false
+custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Journal"
 
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/JournalButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 1
+texture = ExtResource("12_selected_tab_decor")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="MapButton" type="Button" parent="Background/MenuContainer/Tabs" unique_id=431280213]
+custom_minimum_size = Vector2(160, 66)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_oexcg")
 theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tab")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tab")
 text = "Map"
+
+[node name="SelectedDecor" type="TextureRect" parent="Background/MenuContainer/Tabs/MapButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 1
+texture = ExtResource("12_selected_tab_decor")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer" unique_id=1237928224]
 custom_minimum_size = Vector2(0, 20)
@@ -382,25 +490,26 @@ layout_mode = 0
 offset_left = 18.0
 offset_top = 44.0
 offset_right = 710.0
-offset_bottom = 150.0
+offset_bottom = 144.0
 theme_override_constants/separation = 12
+alignment = 1
 
 [node name="Slot1Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=1579571403]
-custom_minimum_size = Vector2(215, 100)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 toggle_mode = true
 text = "Slot 1
 Empty"
 
 [node name="Slot2Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=797322923]
-custom_minimum_size = Vector2(215, 100)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 toggle_mode = true
 text = "Slot 2
 Empty"
 
 [node name="Slot3Button" type="Button" parent="Background/MenuContainer/ModulesView/ModuleSlots" unique_id=2126585250]
-custom_minimum_size = Vector2(215, 100)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 toggle_mode = true
 text = "Slot 3

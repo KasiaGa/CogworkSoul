@@ -72,6 +72,8 @@ func _ready() -> void:
 	journal_button.pressed.connect(show_journal_tab)
 	for slot_index in range(module_slots.get_child_count()):
 		var slot_button = module_slots.get_child(slot_index) as Button
+		slot_button.icon_max_width = 30
+		slot_button.add_theme_font_size_override("font_size", 14)
 		module_slot_buttons.append(slot_button)
 		slot_button.pressed.connect(_on_module_slot_pressed.bind(slot_index))
 	
@@ -118,6 +120,7 @@ func close_menu() -> void:
 	get_tree().paused = false
 
 func show_inventory_tab() -> void:
+	_set_active_tab(inventory_button)
 	inventory_view.show()
 	map_view.hide()
 	wishs_view.hide()
@@ -125,6 +128,7 @@ func show_inventory_tab() -> void:
 	journal_view.hide()
 
 func show_map_tab() -> void:
+	_set_active_tab(map_button)
 	inventory_view.hide()
 	map_view.show()
 	wishs_view.hide()
@@ -132,6 +136,7 @@ func show_map_tab() -> void:
 	journal_view.hide()
 
 func show_wishs_tab() -> void:
+	_set_active_tab(wishs_button)
 	inventory_view.hide()
 	map_view.hide()
 	wishs_view.show()
@@ -139,6 +144,7 @@ func show_wishs_tab() -> void:
 	journal_view.hide()
 
 func show_modules_tab() -> void:
+	_set_active_tab(modules_button)
 	inventory_view.hide()
 	map_view.hide()
 	wishs_view.hide()
@@ -149,12 +155,19 @@ func show_journal_tab() -> void:
 	if not Global.collected_items.has(Global.JOURNAL_ITEM_ID):
 		_update_journal_access()
 		return
+	_set_active_tab(journal_button)
 	inventory_view.hide()
 	map_view.hide()
 	wishs_view.hide()
 	modules_view.hide()
 	journal_view.show()
 	update_journal_display()
+
+func _set_active_tab(active_button: Button) -> void:
+	for tab_button in [inventory_button, wishs_button, modules_button, journal_button, map_button]:
+		var selected_decor = tab_button.get_node_or_null("SelectedDecor") as TextureRect
+		if selected_decor != null:
+			selected_decor.visible = tab_button == active_button
 
 func _update_journal_access() -> void:
 	journal_button.visible = Global.collected_items.has(Global.JOURNAL_ITEM_ID)
@@ -300,10 +313,12 @@ func _refresh_module_slots() -> void:
 		slot_button.button_pressed = slot_index == selected_module_slot
 		if module_id.is_empty():
 			slot_button.text = "Slot %d\nEmpty" % (slot_index + 1)
+			slot_button.tooltip_text = "Slot %d is empty" % (slot_index + 1)
 			slot_button.icon = null
 		else:
 			var module_data = Global.get_module_data(module_id)
-			slot_button.text = "Slot %d\n%s" % [slot_index + 1, module_data.name]
+			slot_button.text = "Slot %d" % (slot_index + 1)
+			slot_button.tooltip_text = "Slot %d: %s" % [slot_index + 1, module_data.name]
 			slot_button.icon = _get_module_icon(module_data)
 
 func _refresh_module_buttons() -> void:
