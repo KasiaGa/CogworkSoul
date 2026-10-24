@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const SELECTION_OVERLAY_TEXTURE = preload("res://assets/images/gui/itemelected.png")
+
 @onready var inventory_view: Control = $Background/MenuContainer/InventoryView
 @onready var map_view: Control = $Background/MenuContainer/MapView
 @onready var wishs_view: Control = $Background/MenuContainer/WishsView
@@ -21,19 +23,25 @@ extends CanvasLayer
 @onready var shards_label: Label = $Background/MenuContainer/InventoryView/ShardsDisplay/ShardsLabel
 
 @onready var wish_grid: VBoxContainer = $Background/MenuContainer/WishsView/WishGrid
-@onready var wish_title: Label = $Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitle
+@onready var wish_title: Label = $Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow/WishTitle
+@onready var wish_title_start_decor: TextureRect = $Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow/TitleDecorStart
+@onready var wish_title_end_decor: TextureRect = $Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow/TitleDecorEnd
 @onready var wish_desc: Label = $Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishDesc
 
 @onready var module_slots: HBoxContainer = $Background/MenuContainer/ModulesView/ModuleSlots
 @onready var module_list: VBoxContainer = $Background/MenuContainer/ModulesView/ModuleScroll/ModuleList
 @onready var module_empty_label: Label = $Background/MenuContainer/ModulesView/ModuleScroll/ModuleList/EmptyModulesLabel
-@onready var module_title: Label = $Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitle
+@onready var module_title: Label = $Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow/ModuleTitle
+@onready var module_title_start_decor: TextureRect = $Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow/TitleDecorStart
+@onready var module_title_end_decor: TextureRect = $Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow/TitleDecorEnd
 @onready var module_desc: Label = $Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleDesc
 @onready var journal_enemy_grid: GridContainer = $Background/MenuContainer/JournalView/EnemyScroll/EnemyGrid
 @onready var journal_artwork: TextureRect = $Background/MenuContainer/JournalView/EnemyArtwork
 @onready var journal_artwork_fallback: Label = $Background/MenuContainer/JournalView/EnemyArtworkFallback
-@onready var journal_enemy_name: Label = $Background/MenuContainer/JournalView/EnemyName
-@onready var journal_enemy_description: Label = $Background/MenuContainer/JournalView/EnemyDescription
+@onready var journal_enemy_name: Label = $Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow/EnemyName
+@onready var journal_title_start_decor: TextureRect = $Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow/TitleDecorStart
+@onready var journal_title_end_decor: TextureRect = $Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow/TitleDecorEnd
+@onready var journal_enemy_description: Label = $Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyDescription
 @onready var journal_empty_label: Label = $Background/MenuContainer/JournalView/JournalEmptyLabel
 
 var module_slot_buttons: Array[Button] = []
@@ -41,6 +49,7 @@ var selected_module_slot: int = 0
 var journal_enemy_buttons: Dictionary = {}
 var _selected_item_slot: TextureRect
 var _selection_pulse_tween: Tween
+var _selection_decor_tweens: Dictionary = {}
 
 # Simple local item database matching your exact naming style for descriptions
 var item_info: Dictionary = {
@@ -154,9 +163,14 @@ func _update_journal_access() -> void:
 
 func update_journal_display() -> void:
 	for child in journal_enemy_grid.get_children():
+		var selection_overlay = child.get_node_or_null("SelectionOverlay") as TextureRect
+		if selection_overlay != null:
+			_hide_selection_decor(selection_overlay)
 		journal_enemy_grid.remove_child(child)
 		child.queue_free()
 	journal_enemy_buttons.clear()
+	journal_title_start_decor.hide()
+	journal_title_end_decor.hide()
 	journal_artwork.texture = null
 	journal_artwork.hide()
 	journal_artwork_fallback.hide()
@@ -185,7 +199,9 @@ func update_journal_display() -> void:
 			icon_button.text = str(enemy_data.get("name", enemy_id)).left(2).to_upper()
 		icon_button.pressed.connect(_select_journal_enemy.bind(enemy_id))
 		icon_button.focus_entered.connect(_select_journal_enemy.bind(enemy_id))
+		icon_button.focus_exited.connect(_on_journal_enemy_unfocused.bind(icon_button))
 		icon_button.mouse_entered.connect(func(): icon_button.grab_focus())
+		_create_selection_overlay(icon_button, "SelectionOverlay")
 		journal_enemy_grid.add_child(icon_button)
 		journal_enemy_buttons[enemy_id] = icon_button
 		if first_enemy_id.is_empty():
@@ -215,13 +231,33 @@ func _select_journal_enemy(enemy_id: String) -> void:
 		journal_artwork_fallback.hide()
 	for button_enemy_id in journal_enemy_buttons:
 		var enemy_button: Button = journal_enemy_buttons[button_enemy_id]
-		enemy_button.modulate = Color(1.6, 1.6, 1.6, 1.0) if button_enemy_id == enemy_id else Color.WHITE
+		var selection_overlay = enemy_button.get_node_or_null("SelectionOverlay") as TextureRect
+		if selection_overlay == null:
+			continue
+		if button_enemy_id == enemy_id and journal_view.visible:
+			journal_title_start_decor.show()
+			journal_title_end_decor.show()
+			_show_selection_decor(selection_overlay)
+		else:
+			_hide_selection_decor(selection_overlay)
+
+func _on_journal_enemy_unfocused(enemy_button: Button) -> void:
+	var selection_overlay = enemy_button.get_node_or_null("SelectionOverlay") as TextureRect
+	if selection_overlay != null:
+		_hide_selection_decor(selection_overlay)
+	journal_title_start_decor.hide()
+	journal_title_end_decor.hide()
 
 func update_modules_display() -> void:
 	module_title.text = "Modules"
 	module_desc.text = "Choose a slot above, then select a module below to equip it."
+	module_title_start_decor.hide()
+	module_title_end_decor.hide()
 	for child in module_list.get_children():
 		if child != module_empty_label:
+			var selection_overlay = child.get_node_or_null("SelectionOverlay") as TextureRect
+			if selection_overlay != null:
+				_hide_selection_decor(selection_overlay)
 			child.queue_free()
 
 	module_empty_label.visible = Global.collected_modules.is_empty()
@@ -239,6 +275,7 @@ func update_modules_display() -> void:
 		module_button.focus_exited.connect(_on_module_unfocused.bind(module_button))
 		module_button.pressed.connect(_on_module_activated.bind(module_id))
 		module_button.mouse_entered.connect(func(): module_button.grab_focus())
+		_create_selection_overlay(module_button, "SelectionOverlay", false)
 		module_list.add_child(module_button)
 
 	_refresh_module_slots()
@@ -286,7 +323,11 @@ func _on_module_focused(module_button: Button, module_id: String) -> void:
 		show_modules_tab()
 	var module_data = Global.get_module_data(module_id)
 	var equipped_slot = Global.equipped_modules.find(module_id)
-	module_button.modulate = Color(1.6, 1.6, 1.6, 1.0)
+	var selection_overlay = module_button.get_node_or_null("SelectionOverlay") as TextureRect
+	if selection_overlay != null:
+		_show_selection_decor(selection_overlay)
+	module_title_start_decor.show()
+	module_title_end_decor.show()
 	module_title.text = module_data.name
 	module_desc.text = module_data.description
 	if equipped_slot == selected_module_slot:
@@ -296,6 +337,11 @@ func _on_module_focused(module_button: Button, module_id: String) -> void:
 
 func _on_module_unfocused(module_button: Button) -> void:
 	module_button.modulate = Color(1, 1, 1, 1)
+	var selection_overlay = module_button.get_node_or_null("SelectionOverlay") as TextureRect
+	if selection_overlay != null:
+		_hide_selection_decor(selection_overlay)
+	module_title_start_decor.hide()
+	module_title_end_decor.hide()
 
 func _on_module_activated(module_id: String) -> void:
 	var equipped_slot = Global.equipped_modules.find(module_id)
@@ -340,11 +386,16 @@ func update_inventory_display() -> void:
 func update_wishs_display() -> void:
 	# Clear the wish grid
 	for child in wish_grid.get_children():
+		var selection_overlay = child.get_node_or_null("WishImageFrame/WishImage/SelectionOverlay") as TextureRect
+		if selection_overlay != null:
+			_hide_selection_decor(selection_overlay)
 		child.queue_free()
 	
 	# Clear description boxes
 	wish_title.text = "???"
 	wish_desc.text = "Select a wish to inspect."
+	wish_title_start_decor.hide()
+	wish_title_end_decor.hide()
 	
 	# Get all accepted wishes
 	var accepted_wishes = Global.get_all_accepted_wishes()
@@ -367,10 +418,12 @@ func update_wishs_display() -> void:
 		
 		# Wish image with styled background
 		var wish_image_bg = PanelContainer.new()
+		wish_image_bg.name = "WishImageFrame"
 		wish_image_bg.custom_minimum_size = Vector2(110, 110)
 		wish_image_bg.self_modulate = Color(0.8, 0.8, 0.8, 1.0)
 		
 		var wish_image = TextureRect.new()
+		wish_image.name = "WishImage"
 		wish_image.custom_minimum_size = Vector2(100, 100)
 		wish_image.expand_mode = 2  # EXPAND_FIT_WIDTH_IGNORING_ASPECT_RATIO
 		if ResourceLoader.exists(wish_data.image_path):
@@ -380,6 +433,7 @@ func update_wishs_display() -> void:
 			wish_image.modulate = Color(0.5, 0.5, 0.5, 1.0)
 		
 		wish_image_bg.add_child(wish_image)
+		_create_selection_overlay(wish_image, "SelectionOverlay")
 		wish_container.add_child(wish_image_bg)
 		
 		# Content: Name and Progress (for multi-item wishes)
@@ -523,6 +577,52 @@ func _hide_item_selection() -> void:
 	item_title_start_decor.hide()
 	item_title_end_decor.hide()
 
+func _create_selection_overlay(parent: Control, overlay_name: String, fill_parent: bool = true) -> TextureRect:
+	var overlay = TextureRect.new()
+	overlay.name = overlay_name
+	overlay.texture = SELECTION_OVERLAY_TEXTURE
+	overlay.expand_mode = 1
+	overlay.stretch_mode = 5
+	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	overlay.z_index = 1
+	if fill_parent:
+		overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	else:
+		overlay.position = Vector2.ZERO
+		overlay.size = Vector2(76, 76)
+	parent.add_child(overlay)
+	overlay.hide()
+	return overlay
+
+func _show_selection_decor(overlay: TextureRect) -> void:
+	overlay.show()
+	call_deferred("_start_selection_decor_pulse", overlay)
+
+func _start_selection_decor_pulse(overlay: TextureRect) -> void:
+	if not is_instance_valid(overlay) or not overlay.is_visible_in_tree():
+		return
+	var tween_id = overlay.get_instance_id()
+	if _selection_decor_tweens.has(tween_id):
+		var previous_tween: Tween = _selection_decor_tweens[tween_id]
+		previous_tween.kill()
+	overlay.pivot_offset = overlay.size / 2.0
+	overlay.scale = Vector2.ONE
+	var pulse_tween = create_tween().set_loops()
+	pulse_tween.tween_property(overlay, "scale", Vector2(1.06, 1.06), 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	pulse_tween.tween_property(overlay, "scale", Vector2.ONE, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_selection_decor_tweens[tween_id] = pulse_tween
+
+func _hide_selection_decor(overlay: TextureRect) -> void:
+	if not is_instance_valid(overlay):
+		return
+	var tween_id = overlay.get_instance_id()
+	if _selection_decor_tweens.has(tween_id):
+		var pulse_tween: Tween = _selection_decor_tweens[tween_id]
+		pulse_tween.kill()
+		_selection_decor_tweens.erase(tween_id)
+	overlay.scale = Vector2.ONE
+	overlay.hide()
+
 func _on_item_slot_input(event: InputEvent, slot: TextureRect) -> void:
 	# Detect when the mouse hovers or clicks an item to display information
 	if event is InputEventMouseMotion or (event is InputEventMouseButton and event.pressed):
@@ -545,6 +645,11 @@ func _on_wish_focused(wish_container: HBoxContainer, wish_id: String) -> void:
 	# Update title and description
 	wish_title.text = wish_data.name
 	wish_desc.text = wish_data.description
+	wish_title_start_decor.show()
+	wish_title_end_decor.show()
+	var selection_overlay = wish_container.get_node_or_null("WishImageFrame/WishImage/SelectionOverlay") as TextureRect
+	if selection_overlay != null:
+		_show_selection_decor(selection_overlay)
 	
 	# Add progress info for collect_items wishes
 	if wish_data.type == "collect_items":
@@ -556,13 +661,15 @@ func _on_wish_focused(wish_container: HBoxContainer, wish_id: String) -> void:
 			progress_info += "%s %s: %d / %d\n" % [item_name, "(collected)" if collected >= required else "", collected, required]
 		wish_desc.text += progress_info
 	
-	# Highlight the container
-	wish_container.modulate = Color(1.6, 1.6, 1.6, 1.0)
-
 func _on_wish_unfocused() -> void:
 	# Reset all wish containers' modulate and clear description
 	for child in wish_grid.get_children():
 		if child is HBoxContainer:
 			child.modulate = Color(1, 1, 1, 1)
+			var selection_overlay = child.get_node_or_null("WishImageFrame/WishImage/SelectionOverlay") as TextureRect
+			if selection_overlay != null:
+				_hide_selection_decor(selection_overlay)
+	wish_title_start_decor.hide()
+	wish_title_end_decor.hide()
 	wish_title.text = ""
 	wish_desc.text = ""

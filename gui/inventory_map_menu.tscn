@@ -293,17 +293,28 @@ offset_right = 700.0
 offset_bottom = 350.0
 theme_override_constants/separation = 15
 
+[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/WishsView"]
+layout_mode = 0
+offset_left = 921.0
+offset_top = 42.0
+offset_right = 984.0
+offset_bottom = 314.0
+mouse_filter = 2
+texture = ExtResource("8_description_divider")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/WishsView" unique_id=1584563210]
-self_modulate = Color(1, 0.76036006, 0.71446484, 1)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -301.0
+offset_left = -343.0
 offset_top = 42.0
-offset_right = -6.0
+offset_right = -46.0
 offset_bottom = 314.0
 grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
 
 [node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/WishsView/DescriptionPanel" unique_id=2019835197]
 layout_mode = 2
@@ -314,12 +325,36 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer" unique_id=1742436961]
 layout_mode = 2
+theme_override_constants/separation = 12
 
-[node name="WishTitle" type="Label" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2095898245]
+[node name="WishTitleRow" type="HBoxContainer" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow"]
+visible = false
+custom_minimum_size = Vector2(38, 24)
+layout_mode = 2
+texture = ExtResource("9_item_title_decor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WishTitle" type="Label" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow" unique_id=2095898245]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
 clip_text = true
+
+[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer/WishTitleRow"]
+visible = false
+custom_minimum_size = Vector2(38, 24)
+layout_mode = 2
+texture = ExtResource("9_item_title_decor")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
 
 [node name="WishDesc" type="Label" parent="Background/MenuContainer/WishsView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2130693702]
 layout_mode = 2
@@ -400,17 +435,28 @@ theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 20
 text = "No modules collected yet."
 
+[node name="DescriptionDivider" type="TextureRect" parent="Background/MenuContainer/ModulesView"]
+layout_mode = 0
+offset_left = 921.0
+offset_top = 202.0
+offset_right = 984.0
+offset_bottom = 500.0
+mouse_filter = 2
+texture = ExtResource("8_description_divider")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/ModulesView" unique_id=1318090920]
-self_modulate = Color(1, 0.76036006, 0.71446484, 1)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -241.0
+offset_left = -343.0
 offset_top = 202.0
-offset_right = -6.0
+offset_right = -46.0
 offset_bottom = 500.0
 grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
 
 [node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel" unique_id=551942985]
 layout_mode = 2
@@ -421,12 +467,36 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer" unique_id=1667861834]
 layout_mode = 2
+theme_override_constants/separation = 12
 
-[node name="ModuleTitle" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=2091995741]
+[node name="ModuleTitleRow" type="HBoxContainer" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow"]
+visible = false
+custom_minimum_size = Vector2(38, 24)
+layout_mode = 2
+texture = ExtResource("9_item_title_decor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ModuleTitle" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow" unique_id=2091995741]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_okbrl")
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
 clip_text = true
+
+[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer/ModuleTitleRow"]
+visible = false
+custom_minimum_size = Vector2(38, 24)
+layout_mode = 2
+texture = ExtResource("9_item_title_decor")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
 
 [node name="ModuleDesc" type="Label" parent="Background/MenuContainer/ModulesView/DescriptionPanel/MarginContainer/VBoxContainer" unique_id=1725364360]
 layout_mode = 2
@@ -495,30 +565,68 @@ text = "Artwork unavailable."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="JournalColumnDivider" type="ColorRect" parent="Background/MenuContainer/JournalView"]
+[node name="JournalColumnDivider" type="TextureRect" parent="Background/MenuContainer/JournalView"]
 layout_mode = 0
-offset_left = 950.0
+offset_left = 934.0
+offset_top = 30.0
+offset_right = 976.0
+offset_bottom = 426.0
+mouse_filter = 2
+texture = ExtResource("8_description_divider")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DescriptionPanel" type="PanelContainer" parent="Background/MenuContainer/JournalView"]
+layout_mode = 0
+offset_left = 980.0
 offset_top = 20.0
-offset_right = 952.0
-offset_bottom = 690.0
-color = Color(0.58431375, 0.5254902, 0.37254903, 0.9)
-
-[node name="EnemyName" type="Label" parent="Background/MenuContainer/JournalView"]
-layout_mode = 0
-offset_left = 980.0
-offset_top = 32.0
-offset_right = 1430.0
-offset_bottom = 82.0
-theme_override_fonts/font = SubResource("SystemFont_okbrl")
-theme_override_font_sizes/font_size = 32
-clip_text = true
-
-[node name="EnemyDescription" type="Label" parent="Background/MenuContainer/JournalView"]
-layout_mode = 0
-offset_left = 980.0
-offset_top = 105.0
 offset_right = 1430.0
 offset_bottom = 430.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_item_description")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="EnemyTitleRow" type="HBoxContainer" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleDecorStart" type="TextureRect" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow"]
+visible = false
+custom_minimum_size = Vector2(48, 36)
+layout_mode = 2
+texture = ExtResource("9_item_title_decor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EnemyName" type="Label" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = SubResource("SystemFont_okbrl")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+clip_text = true
+
+[node name="TitleDecorEnd" type="TextureRect" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer/EnemyTitleRow"]
+visible = false
+custom_minimum_size = Vector2(48, 36)
+layout_mode = 2
+texture = ExtResource("9_item_title_decor")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="EnemyDescription" type="Label" parent="Background/MenuContainer/JournalView/DescriptionPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_fonts/font = SubResource("SystemFont_jtgip")
 theme_override_font_sizes/font_size = 22
 autowrap_mode = 3
