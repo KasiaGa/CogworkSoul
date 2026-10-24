@@ -100,6 +100,15 @@ func _process(_delta: float) -> void:
 		else:
 			open_menu()
 
+func _input(event: InputEvent) -> void:
+	if not visible or not journal_view.visible or not event.is_action_pressed("ui_up"):
+		return
+	var focused_control = get_viewport().gui_get_focus_owner()
+	if focused_control == null or focused_control.get_parent() != journal_enemy_grid:
+		return
+	journal_button.grab_focus()
+	get_viewport().set_input_as_handled()
+
 func open_menu() -> void:
 	show()
 	get_tree().paused = true
@@ -169,6 +178,7 @@ func show_journal_tab() -> void:
 	modules_view.hide()
 	journal_view.show()
 	update_journal_display()
+	setup_navigation_paths()
 
 func _set_active_tab(active_button: Button) -> void:
 	for tab_button in [inventory_button, wishs_button, modules_button, journal_button, map_button]:
@@ -212,6 +222,9 @@ func update_journal_display() -> void:
 		var icon_button := Button.new()
 		icon_button.name = "Enemy_" + enemy_id
 		icon_button.custom_minimum_size = Vector2(94, 94)
+		var empty_button_style := StyleBoxEmpty.new()
+		for style_name in ["normal", "hover", "pressed", "hover_pressed", "disabled", "focus"]:
+			icon_button.add_theme_stylebox_override(style_name, empty_button_style)
 		icon_button.focus_mode = Control.FOCUS_ALL
 		icon_button.tooltip_text = enemy_data.get("name", enemy_id)
 		var image_path: String = enemy_data.get("image_path", "")
@@ -223,7 +236,6 @@ func update_journal_display() -> void:
 		icon_button.pressed.connect(_select_journal_enemy.bind(enemy_id))
 		icon_button.focus_entered.connect(_select_journal_enemy.bind(enemy_id))
 		icon_button.focus_exited.connect(_on_journal_enemy_unfocused.bind(icon_button))
-		icon_button.mouse_entered.connect(func(): icon_button.grab_focus())
 		_create_selection_overlay(icon_button, "SelectionOverlay")
 		journal_enemy_grid.add_child(icon_button)
 		journal_enemy_buttons[enemy_id] = icon_button
@@ -293,7 +305,7 @@ func update_modules_display() -> void:
 		var module_button = Button.new()
 		module_button.name = "Module_" + module_id
 		module_button.custom_minimum_size = Vector2(650, 76)
-		module_button.icon = _get_module_icon(module_data, 54)
+		module_button.icon = _get_square_icon(_get_module_icon(module_data, 54), 54)
 		module_button.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		module_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		module_button.focus_mode = Control.FOCUS_ALL
@@ -301,8 +313,8 @@ func update_modules_display() -> void:
 		module_button.focus_exited.connect(_on_module_unfocused.bind(module_button))
 		module_button.pressed.connect(_on_module_activated.bind(module_id))
 		module_button.mouse_entered.connect(func(): module_button.grab_focus())
-		_create_selection_overlay(module_button, "SelectionOverlay", false)
 		module_list.add_child(module_button)
+		_create_selection_overlay(module_button, "SelectionOverlay", false)
 
 	_refresh_module_slots()
 	_refresh_module_buttons()
@@ -373,9 +385,10 @@ func _refresh_module_slots() -> void:
 			slot_button.icon = null
 		else:
 			var module_data = Global.get_module_data(module_id)
-			slot_button.text = "Slot %d" % (slot_index + 1)
+			slot_button.text = ""
 			slot_button.tooltip_text = "Slot %d: %s" % [slot_index + 1, module_data.name]
-			slot_button.icon = _get_module_icon(module_data, 30)
+			slot_button.icon = _get_square_icon(_get_module_icon(module_data, 64), 64)
+			slot_button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 func _refresh_module_buttons() -> void:
 	for child in module_list.get_children():
@@ -596,13 +609,13 @@ func setup_navigation_paths() -> void:
 
 	if journal_button.visible:
 		var journal_enemies = journal_enemy_grid.get_children()
-		journal_button.focus_neighbor_bottom = journal_button.get_path()
+		journal_button.focus_neighbor_bottom = journal_button.get_path_to(journal_button)
 		if not journal_enemies.is_empty():
-			journal_button.focus_neighbor_bottom = journal_enemies[0].get_path()
-			var first_row_size := mini(journal_enemy_grid.columns, journal_enemies.size())
-			for enemy_index in range(first_row_size):
-				var enemy_button = journal_enemies[enemy_index] as Control
-				enemy_button.focus_neighbor_top = journal_button.get_path()
+			var first_enemy_button = journal_enemies[0] as Control
+			journal_button.focus_neighbor_bottom = journal_button.get_path_to(first_enemy_button)
+			for enemy_node in journal_enemies:
+				var enemy_button = enemy_node as Control
+				enemy_button.focus_neighbor_top = enemy_button.get_path_to(journal_button)
 	
 	# Inventory has no content target when the player owns no items.
 	inventory_button.focus_neighbor_bottom = inventory_button.get_path()
@@ -693,8 +706,17 @@ func _create_selection_overlay(parent: Control, overlay_name: String, fill_paren
 	if fill_parent:
 		overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	else:
-		overlay.position = Vector2.ZERO
-		overlay.size = Vector2(76, 76)
+		var left_margin := 0.0
+		var top_margin := 0.0
+		var bottom_margin := 0.0
+		var normal_style := parent.get_theme_stylebox("normal")
+		if normal_style != null:
+			left_margin = normal_style.get_content_margin(SIDE_LEFT)
+			top_margin = normal_style.get_content_margin(SIDE_TOP)
+			bottom_margin = normal_style.get_content_margin(SIDE_BOTTOM)
+		var content_height := parent.custom_minimum_size.y - top_margin - bottom_margin
+		overlay.position = Vector2(left_margin, top_margin + maxf(0.0, (content_height - 54.0) / 2.0))
+		overlay.size = Vector2(54, 54)
 	parent.add_child(overlay)
 	overlay.hide()
 	return overlay
