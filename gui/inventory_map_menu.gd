@@ -47,6 +47,7 @@ const SELECTION_OVERLAY_TEXTURE = preload("res://assets/images/gui/itemelected.p
 var module_slot_buttons: Array[Button] = []
 var selected_module_slot: int = 0
 var journal_enemy_buttons: Dictionary = {}
+var _scaled_icon_cache: Dictionary = {}
 var _selected_item_slot: TextureRect
 var _selection_pulse_tween: Tween
 var _selection_decor_tweens: Dictionary = {}
@@ -72,7 +73,6 @@ func _ready() -> void:
 	journal_button.pressed.connect(show_journal_tab)
 	for slot_index in range(module_slots.get_child_count()):
 		var slot_button = module_slots.get_child(slot_index) as Button
-		slot_button.icon_max_width = 30
 		slot_button.add_theme_font_size_override("font_size", 14)
 		module_slot_buttons.append(slot_button)
 		slot_button.pressed.connect(_on_module_slot_pressed.bind(slot_index))
@@ -204,12 +204,11 @@ func update_journal_display() -> void:
 		var icon_button := Button.new()
 		icon_button.name = "Enemy_" + enemy_id
 		icon_button.custom_minimum_size = Vector2(94, 94)
-		icon_button.icon_max_width = 76
 		icon_button.focus_mode = Control.FOCUS_ALL
 		icon_button.tooltip_text = enemy_data.get("name", enemy_id)
 		var image_path: String = enemy_data.get("image_path", "")
 		if not image_path.is_empty() and ResourceLoader.exists(image_path):
-			icon_button.icon = load(image_path) as Texture2D
+			icon_button.icon = _get_icon_with_max_width(load(image_path) as Texture2D, 76)
 		else:
 			icon_button.text = str(enemy_data.get("name", enemy_id)).left(2).to_upper()
 		icon_button.pressed.connect(_select_journal_enemy.bind(enemy_id))
@@ -285,8 +284,7 @@ func update_modules_display() -> void:
 		var module_button = Button.new()
 		module_button.name = "Module_" + module_id
 		module_button.custom_minimum_size = Vector2(650, 76)
-		module_button.icon = _get_module_icon(module_data)
-		module_button.icon_max_width = 54
+		module_button.icon = _get_module_icon(module_data, 54)
 		module_button.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		module_button.text_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		module_button.focus_mode = Control.FOCUS_ALL
@@ -300,11 +298,28 @@ func update_modules_display() -> void:
 	_refresh_module_slots()
 	_refresh_module_buttons()
 
-func _get_module_icon(module_data: Dictionary) -> Texture2D:
+func _get_module_icon(module_data: Dictionary, max_width: int) -> Texture2D:
 	var image_path: String = module_data.get("image_path", "")
 	if not image_path.is_empty() and ResourceLoader.exists(image_path):
-		return load(image_path) as Texture2D
-	return load("res://assets/images/item/item.png") as Texture2D
+		return _get_icon_with_max_width(load(image_path) as Texture2D, max_width)
+	return _get_icon_with_max_width(load("res://assets/images/item/item.png") as Texture2D, max_width)
+
+func _get_icon_with_max_width(texture: Texture2D, max_width: int) -> Texture2D:
+	if texture == null or max_width <= 0 or texture.get_width() <= max_width:
+		return texture
+
+	var cache_key := "%d:%d" % [texture.get_instance_id(), max_width]
+	if _scaled_icon_cache.has(cache_key):
+		return _scaled_icon_cache[cache_key] as Texture2D
+
+	var image: Image = texture.get_image()
+	if image == null or image.is_empty() or image.get_width() <= max_width:
+		return texture
+	var scaled_height := maxi(1, roundi(float(image.get_height()) * max_width / image.get_width()))
+	image.resize(max_width, scaled_height)
+	var scaled_texture := ImageTexture.create_from_image(image)
+	_scaled_icon_cache[cache_key] = scaled_texture
+	return scaled_texture
 
 func _refresh_module_slots() -> void:
 	for slot_index in range(module_slot_buttons.size()):
@@ -319,7 +334,7 @@ func _refresh_module_slots() -> void:
 			var module_data = Global.get_module_data(module_id)
 			slot_button.text = "Slot %d" % (slot_index + 1)
 			slot_button.tooltip_text = "Slot %d: %s" % [slot_index + 1, module_data.name]
-			slot_button.icon = _get_module_icon(module_data)
+			slot_button.icon = _get_module_icon(module_data, 30)
 
 func _refresh_module_buttons() -> void:
 	for child in module_list.get_children():

@@ -159,7 +159,7 @@ text = "Esc"
 horizontal_alignment = 2
 
 [node name="BackButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(180, 48)
+custom_minimum_size = Vector2(240, 48)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 22
