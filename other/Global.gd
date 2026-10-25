@@ -61,7 +61,7 @@ var module_database: Dictionary = {
 	"shard_collector": {
 		"name": "Shard Collector",
 		"description": "Enemies drop twice as many shards while this module is equipped.",
-		"image_path": "res://assets/images/item/shard.png",
+		"image_path": "res://assets/images/module/module3_2.png",
 		"shard_drop_multiplier": 2.0
 	},
 	"resonance_coil": {

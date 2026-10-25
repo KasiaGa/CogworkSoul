@@ -73,6 +73,7 @@
 [ext_resource type="Texture2D" uid="uid://bpvtc7b12q0vv" path="res://assets/images/world/wheel005.png" id="70_pnd27"]
 [ext_resource type="Texture2D" uid="uid://d2rb2n10rkjhw" path="res://assets/images/world/wheel007.png" id="71_gtllm"]
 [ext_resource type="Texture2D" uid="uid://sywwupw5cjl" path="res://assets/images/world/wheel008.png" id="72_vbrlj"]
+[ext_resource type="PackedScene" uid="uid://16g0x5cxu58u" path="res://other/enemy.tscn" id="74_bfbwb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mjotr"]
 shader = ExtResource("6_v7xp2")
@@ -685,11 +686,16 @@ offset = Vector2(0, -80)
 limit_left = -2706
 limit_top = -2383
 limit_right = 2375
-limit_bottom = 5693
+limit_bottom = 5868
 
 [node name="TransitionZone" parent="." unique_id=704157100 instance=ExtResource("12_gbl7h")]
 position = Vector2(2282, 493)
 target_scene = "uid://unqnjfbb58do"
+spawn_location = Vector2(-1500, 500)
+
+[node name="TransitionZone" parent="TransitionZone" unique_id=1291756953 instance=ExtResource("12_gbl7h")]
+position = Vector2(-27, 5215)
+target_scene = "uid://c6aklvw1ldq36"
 spawn_location = Vector2(-1500, 500)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1707631933]
@@ -869,7 +875,7 @@ modification_stack = SubResource("SkeletonModificationStack2D_da6y2")
 
 [node name="UpperArm" type="Bone2D" parent="MechanicalArm/Skeleton2D" unique_id=831768054]
 position = Vector2(232, 128.00002)
-rotation = -0.7883382
+rotation = -0.78834057
 scale = Vector2(0.9999462, 0.9999462)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 metadata/_local_pose_override_enabled_ = true
@@ -881,6 +887,7 @@ texture = ExtResource("38_itgwo")
 
 [node name="LowerArm" type="Bone2D" parent="MechanicalArm/Skeleton2D/UpperArm" unique_id=1518333441]
 position = Vector2(10.26615, -19.561655)
+rotation = -1.0874972
 scale = Vector2(0.9999997, 0.9999997)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 metadata/_local_pose_override_enabled_ = true
@@ -929,6 +936,13 @@ disabled = true
 [node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=2035173321]
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=1383891527]
+modulate = Color(0.5, 0.5, 0.5, 1)
+position = Vector2(-2639, 6234)
+rotation = 1.5707964
+scale = Vector2(22.916668, 77.929825)
+texture = ExtResource("35_540sl")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3/Sprite2D" unique_id=1150068332]
 modulate = Color(0.81960785, 0.81960785, 0.81960785, 1)
 position = Vector2(-2193, 2917)
 scale = Vector2(22.916668, 77.929825)
@@ -1139,8 +1153,35 @@ texture = ExtResource("8_kmvik")
 position = Vector2(0.83374023, 29.999756)
 shape = SubResource("RectangleShape2D_2t5p2")
 
+[node name="ground_irregular23" type="StaticBody2D" parent="." unique_id=2094322965]
+position = Vector2(593, 5154)
+rotation = -3.1415927
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular23" unique_id=1518588972]
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("8_kmvik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular23" unique_id=1535233283]
+position = Vector2(0.83374023, 29.999756)
+shape = SubResource("RectangleShape2D_2t5p2")
+
+[node name="ground_irregular24" type="StaticBody2D" parent="." unique_id=313867458]
+position = Vector2(1783, 5154)
+rotation = -3.1415927
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular24" unique_id=1444301047]
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("8_kmvik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular24" unique_id=1194080999]
+position = Vector2(0.83374023, 29.999756)
+shape = SubResource("RectangleShape2D_2t5p2")
+
 [node name="TextureRect" type="TextureRect" parent="." unique_id=560918818]
-visible = false
 z_index = 100
 offset_left = -2881.9998
 offset_top = 4655.0
@@ -1190,7 +1231,7 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
 
 [node name="ground_irregular20" type="StaticBody2D" parent="." unique_id=1155259121]
-position = Vector2(266, 5638)
+position = Vector2(264, 5823)
 scale = Vector2(0.6, 0.6)
 metadata/_edit_group_ = true
 
@@ -1200,6 +1241,52 @@ self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
 texture = ExtResource("8_kmvik")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular20" unique_id=790019605]
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular26" type="StaticBody2D" parent="." unique_id=227162620]
+position = Vector2(1455, 5820)
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular26" unique_id=1661926619]
+modulate = Color(0.56, 0.56, 0.56, 1)
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("8_kmvik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular26" unique_id=1220481207]
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular27" type="StaticBody2D" parent="." unique_id=1125715238]
+position = Vector2(2651, 5817)
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular27" unique_id=365629076]
+modulate = Color(0.56, 0.56, 0.56, 1)
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("8_kmvik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular27" unique_id=1305219233]
+position = Vector2(-15.833374, 46.92871)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_53s0n")
+
+[node name="ground_irregular25" type="StaticBody2D" parent="." unique_id=177038958]
+position = Vector2(-364, 6241)
+rotation = 1.5707964
+scale = Vector2(0.6, 0.6)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_irregular25" unique_id=1925127753]
+modulate = Color(0.56, 0.56, 0.56, 1)
+self_modulate = Color(0.827451, 0.827451, 0.827451, 1)
+texture = ExtResource("8_kmvik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground_irregular25" unique_id=1806181504]
 position = Vector2(-15.833374, 46.92871)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_53s0n")
@@ -1314,3 +1401,27 @@ frame_progress = 0.23641412
 position = Vector2(2005, -1387)
 scale = Vector2(0.42, 0.42)
 object_texture = ExtResource("48_lh44e")
+
+[node name="enemy" parent="." unique_id=807049588 node_paths=PackedStringArray("endPoint") instance=ExtResource("74_bfbwb")]
+position = Vector2(-639, 5569)
+limit = 10.0
+endPoint = NodePath("Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="enemy" unique_id=1001290275]
+position = Vector2(185, 22)
+
+[node name="enemy2" parent="." unique_id=1866703521 node_paths=PackedStringArray("endPoint") instance=ExtResource("74_bfbwb")]
+position = Vector2(212, 5759)
+limit = 10.0
+endPoint = NodePath("Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="enemy2" unique_id=5075134]
+position = Vector2(243, 21)
+
+[node name="enemy3" parent="." unique_id=2067532650 node_paths=PackedStringArray("endPoint") instance=ExtResource("74_bfbwb")]
+position = Vector2(516, 5759)
+limit = 10.0
+endPoint = NodePath("Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="enemy3" unique_id=297884946]
+position = Vector2(239, 26)
